@@ -9,7 +9,11 @@ using Jhooa.UI.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddHubOptions(options => options.MaximumReceiveMessageSize = 64 * 1024);
+
+builder.Services.AddControllers();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -36,6 +40,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+builder.Services.AddLocalization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,10 +58,19 @@ else
 
 app.UseHttpsRedirection();
 
+var supportedCultures = new[] { "en-GB", "fr-FR" };
+var localizationOptions = new RequestLocalizationOptions()
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
+
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>();
+app.MapControllers();
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
