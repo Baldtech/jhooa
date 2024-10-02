@@ -1,37 +1,50 @@
-﻿@using System.Globalization
+﻿@using Jhooa.UI.Components.Account
 @using Microsoft.AspNetCore.Localization
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/" />
-    <link rel="stylesheet" href="app.css" />
-    <link rel="stylesheet" href="Jhooa.UI.styles.css" />
-    <HeadOutlet />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <base href="/"/>
+    <link rel="stylesheet" href="app.css"/>
+    <link rel="stylesheet" href="Jhooa.UI.styles.css"/>
+    <HeadOutlet/>
 </head>
 
 <body>
-    <Routes />
-    <script src="_framework/blazor.web.js"></script>
-    <script src="lib/qrcode.min.js"></script>
+<Routes/>
+<script src="_framework/blazor.web.js"></script>
+<script src="lib/qrcode.min.js"></script>
 </body>
 
 </html>
 
 @code {
-    [CascadingParameter]
-    public HttpContext? HttpContext { get; set; }
+    [CascadingParameter] public HttpContext? HttpContext { get; set; }
 
     protected override void OnInitialized()
     {
+        var currentCulture = CultureInfo.CurrentCulture;
+        if (HttpContext?.User.Identity?.IsAuthenticated == true)
+        {
+            if (HttpContext.User.Claims.Any(c => string.Equals(c.Type, Constants.Cookie.Culture, StringComparison.OrdinalIgnoreCase)))
+            {
+                var culture = HttpContext.User.Claims.First(c => string.Equals(c.Type, Constants.Cookie.Culture, StringComparison.OrdinalIgnoreCase)).Value;
+                var cultureInfo = CultureInfo.GetCultureInfo(culture);
+                if (!Equals(cultureInfo, currentCulture))
+                {
+                    currentCulture = cultureInfo;
+                }
+            }
+        }
+
         HttpContext?.Response.Cookies.Append(
-            CookieRequestCultureProvider.DefaultCookieName,
+            Constants.Cookie.Culture,
             CookieRequestCultureProvider.MakeCookieValue(
                 new RequestCulture(
-                    CultureInfo.CurrentCulture,
-                    CultureInfo.CurrentUICulture)));
+                    currentCulture,
+                    currentCulture)));
     }
 }

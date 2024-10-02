@@ -1,11 +1,45 @@
 ﻿@page "/"
 
+@using Jhooa.UI.Components.Account
+@using Jhooa.UI.Data
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Home> Loc
+@inject IdentityUserAccessor UserAccessor
 
 <PageTitle>Home</PageTitle>
 
-<h1>@Loc["Welcome"]</h1>
+<h1>@Loc["Welcome"] @user?.UserName</h1>
+
+<AuthorizeView>
+    @* <Authorized> *@
+    @*     <div class="nav-item px-3"> *@
+    @*         <NavLink class="nav-link" href="Account/Manage"> *@
+    @*             <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name *@
+    @*         </NavLink> *@
+    @*     </div> *@
+    @*     <div class="nav-item px-3"> *@
+    @*         <form action="Account/Logout" method="post"> *@
+    @*             <AntiforgeryToken /> *@
+    @*             <input type="hidden" name="ReturnUrl" value="@_currentUrl" /> *@
+    @*             <button type="submit" class="nav-link"> *@
+    @*                 <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout *@
+    @*             </button> *@
+    @*         </form> *@
+    @*     </div> *@
+    @* </Authorized> *@
+    <NotAuthorized>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Account/Register">
+                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Account/Login">
+                <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
+            </NavLink>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 <ul>
     <li><b>CurrentCulture</b>: @CultureInfo.CurrentCulture</li>
@@ -27,8 +61,16 @@
 </p>
 
 <ul>
-    <li><label><b>Date:</b> <input @bind="dt" /></label></li>
-    <li><label><b>Number:</b> <input @bind="number" /></label></li>
+    <li>
+        <label>
+            <b>Date:</b> <input @bind="dt"/>
+        </label>
+    </li>
+    <li>
+        <label>
+            <b>Number:</b> <input @bind="number"/>
+        </label>
+    </li>
 </ul>
 
 <h2><code>&lt;input&gt;</code> elements that set a <code>type</code></h2>
@@ -39,11 +81,32 @@
 </p>.
 
 <ul>
-    <li><label><b>Date:</b> <input type="date" @bind="dt" /></label></li>
-    <li><label><b>Number:</b> <input type="number" @bind="number" /></label></li>
+    <li>
+        <label>
+            <b>Date:</b> <input type="date" @bind="dt"/>
+        </label>
+    </li>
+    <li>
+        <label>
+            <b>Number:</b> <input type="number" @bind="number"/>
+        </label>
+    </li>
 </ul>
 
 @code {
-private DateTime dt = DateTime.Now;
-private double number = 1999.69;
+    private DateTime dt = DateTime.Now;
+    private double number = 1999.69;
+
+    private ApplicationUser? user = default;
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext.User.Identity?.IsAuthenticated == true)
+        {
+            user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        }
+    }
+
 }

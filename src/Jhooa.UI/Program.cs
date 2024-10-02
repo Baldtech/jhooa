@@ -1,3 +1,4 @@
+using Jhooa.UI;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
@@ -26,9 +27,13 @@ builder.Services.AddAuthentication(options =>
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
     })
-    .AddIdentityCookies();
+    .AddIdentityCookies(cookie =>
+    {
+        cookie.ApplicationCookie?.Configure(config => { config.Cookie.Name = Constants.Cookie.User; });
+    });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -42,6 +47,14 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 builder.Services.AddLocalization();
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.FormFieldName = "AntiforgeryHiddenField";
+    options.Cookie.Name = "X-CSRF-TOKEN";
+    options.HeaderName = "X-XSRF-TOKEN";
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,7 +65,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -62,6 +74,7 @@ var supportedCultures = new[] { "en-GB", "fr-FR" };
 var localizationOptions = new RequestLocalizationOptions()
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures);
+
 app.UseRequestLocalization(localizationOptions);
 
 app.UseStaticFiles();

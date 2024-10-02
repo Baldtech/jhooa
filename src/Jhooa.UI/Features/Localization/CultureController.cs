@@ -1,21 +1,55 @@
+using System.Security.Claims;
+using Jhooa.UI.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jhooa.UI.Features.Localization;
 
 [Route("[controller]/[action]")]
-public class CultureController : Controller
+public class CultureController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : Controller
 {
-    public IActionResult Set(string? culture, string redirectUri)
+    public async Task<IActionResult> Set(string? culture, string redirectUri)
     {
         if (culture != null)
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var user = await userManager.GetUserAsync(User);
+                if (user is not null)
+                {
+                    await ResetUserClaim(culture, user);
+                }
+            }
+
+            var options = new CookieOptions
+            {
+                SameSite = SameSiteMode.Strict,
+                Secure = true,
+                IsEssential = true,
+                HttpOnly = false
+            };
+
             HttpContext.Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
+                Constants.Cookie.Culture,
                 CookieRequestCultureProvider.MakeCookieValue(
-                    new RequestCulture(culture, culture)));
+                    new RequestCulture(culture, culture)), options);
         }
 
         return LocalRedirect(redirectUri);
+    }
+
+    private async Task ResetUserClaim(string culture, ApplicationUser user)
+    {
+        var currentClaim =
+            User.Claims.FirstOrDefault(c => c.Type == Constants.Cookie.Culture);
+
+        if (currentClaim != null)
+        {
+            await userManager.RemoveClaimAsync(user, currentClaim);
+        }
+        await userManager.AddClaimAsync(user, new Claim(Constants.Cookie.Culture, culture));
+        
+        await signInManager.SignInAsync(user, isPersistent: false);
     }
 }
