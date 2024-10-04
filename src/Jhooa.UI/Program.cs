@@ -1,7 +1,9 @@
-using Jhooa.UI;
 using Jhooa.UI.Configuration;
+using Jhooa.UI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.RegisterSerilogAndApplicationInsights();
 
 builder.Services
     .AddIdentity(builder.Configuration)

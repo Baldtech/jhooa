@@ -1,4 +1,6 @@
 using Jhooa.UI.Components;
+using Jhooa.UI.Components.Account;
+using Jhooa.UI.Extensions;
 
 namespace Jhooa.UI.Configuration;
 
@@ -50,6 +52,8 @@ public static partial class DependencyInjection
             app.UseExceptionHandler("/Error", createScopeForErrors: true);
             app.UseHsts();
         }
+        
+        app.RegisterSerilogAndApplicationInsights();
 
         app.UseHttpsRedirection();
 
