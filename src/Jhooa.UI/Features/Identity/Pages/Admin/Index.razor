@@ -1,0 +1,35 @@
+@page "/Admin/Users"
+@attribute [Authorize(Roles = "Admin")]
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+
+@inject ApplicationDbContext DbContext
+
+<h3>List of users</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach(var user in _users)
+        {
+            <tr>
+                <td>@user.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<ApplicationUser> _users = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _users = await DbContext.Users.ToListAsync();
+    }
+    
+}

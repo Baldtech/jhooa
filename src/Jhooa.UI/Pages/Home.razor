@@ -3,6 +3,7 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Home> Loc
 @inject IdentityUserAccessor UserAccessor
+@inject NavigationManager NavigationManager
 
 <PageTitle>Home</PageTitle>
 
@@ -21,18 +22,30 @@
             </NavLink>
         </div>
     </NotAuthorized>
-</AuthorizeView>
+    <Authorized>
+        <form action="Account/Logout" method="post">
+            <AntiforgeryToken />
+            <input type="hidden" name="ReturnUrl" value="@_currentUrl" />
+            <button type="submit" class="nav-link">
+                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+            </button>
+        </form>
+    </Authorized>
 
+</AuthorizeView>
 
 
 @code {
     
     private ApplicationUser? _user;
-
+    private string? _currentUrl;
+    
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
-
+    
     protected override async Task OnInitializedAsync()
     {
+        _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+
         if (HttpContext.User.Identity?.IsAuthenticated == true)
         {
             _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
