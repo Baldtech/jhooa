@@ -35,7 +35,7 @@ public class CultureController(UserManager<ApplicationUser> userManager, SignInM
     private async Task ResetUserClaim(string culture, ApplicationUser user)
     {
         var currentClaim =
-            User.Claims.FirstOrDefault(c => c.Type == Constants.Cookie.Culture);
+            User.Claims.FirstOrDefault(c => string.Equals(c.Type, Constants.Cookie.Culture, StringComparison.OrdinalIgnoreCase));
 
         if (currentClaim != null)
         {
