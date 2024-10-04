@@ -1,0 +1,34 @@
+@using Microsoft.Extensions.Localization
+@inject NavigationManager Navigation
+@inject IStringLocalizer<CultureSelector> Loc
+
+<p>
+    <ul>
+        <li>
+            <img src="images/flags/france_rounded.png" width="30" height="30" alt="fr" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'/>
+        </li>
+        <li>
+            <img src="images/flags/uk_rounded.png" width="30" height="30" alt="en" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'/>
+        </li>
+    </ul>
+</p>
+
+@code
+{
+    private Task ApplySelectedCultureAsync(CultureInfo culture)
+    {
+        if (Equals(CultureInfo.CurrentCulture, culture))
+            return Task.CompletedTask;
+
+        var uri = new Uri(Navigation.Uri)
+            .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+        var cultureEscaped = Uri.EscapeDataString(culture.Name);
+        var uriEscaped = Uri.EscapeDataString(uri);
+
+        Navigation.NavigateTo(
+            $"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}",
+            forceLoad: true);
+
+        return Task.CompletedTask;
+    }
+}
