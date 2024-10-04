@@ -1,6 +1,7 @@
 using Jhooa.UI.Components;
 using Jhooa.UI.Components.Account;
 using Jhooa.UI.Extensions;
+using Microsoft.AspNetCore.Localization;
 
 namespace Jhooa.UI.Configuration;
 
@@ -61,6 +62,11 @@ public static partial class DependencyInjection
         var localizationOptions = new RequestLocalizationOptions()
             .AddSupportedCultures(supportedCultures)
             .AddSupportedUICultures(supportedCultures);
+        
+        localizationOptions.AddInitialRequestCultureProvider(new CookieRequestCultureProvider
+        {
+            CookieName = Constants.Cookie.Culture,
+        });
 
         app.UseRequestLocalization(localizationOptions);
 
