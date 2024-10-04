@@ -8,25 +8,9 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>@Loc["Welcome"] @user?.UserName</h1>
+<h1>@Loc["Welcome"] @_user?.UserName</h1>
 
 <AuthorizeView>
-    @* <Authorized> *@
-    @*     <div class="nav-item px-3"> *@
-    @*         <NavLink class="nav-link" href="Account/Manage"> *@
-    @*             <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name *@
-    @*         </NavLink> *@
-    @*     </div> *@
-    @*     <div class="nav-item px-3"> *@
-    @*         <form action="Account/Logout" method="post"> *@
-    @*             <AntiforgeryToken /> *@
-    @*             <input type="hidden" name="ReturnUrl" value="@_currentUrl" /> *@
-    @*             <button type="submit" class="nav-link"> *@
-    @*                 <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout *@
-    @*             </button> *@
-    @*         </form> *@
-    @*     </div> *@
-    @* </Authorized> *@
     <NotAuthorized>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Account/Register">
@@ -41,63 +25,11 @@
     </NotAuthorized>
 </AuthorizeView>
 
-<ul>
-    <li><b>CurrentCulture</b>: @CultureInfo.CurrentCulture</li>
-    <li><b>CurrentUICulture</b>: @CultureInfo.CurrentUICulture</li>
-</ul>
 
-<h2>Rendered values</h2>
-
-<ul>
-    <li><b>Date</b>: @dt</li>
-    <li><b>Number</b>: @number.ToString("N2")</li>
-</ul>
-
-<h2><code>&lt;input&gt;</code> elements that don't set a <code>type</code></h2>
-
-<p>
-    The following <code>&lt;input&gt;</code> elements use
-    <code>CultureInfo.CurrentCulture</code>.
-</p>
-
-<ul>
-    <li>
-        <label>
-            <b>Date:</b> <input @bind="dt"/>
-        </label>
-    </li>
-    <li>
-        <label>
-            <b>Number:</b> <input @bind="number"/>
-        </label>
-    </li>
-</ul>
-
-<h2><code>&lt;input&gt;</code> elements that set a <code>type</code></h2>
-
-<p>
-    The following <code>&lt;input&gt;</code> elements use
-    <code>CultureInfo.InvariantCulture</code>.
-</p>.
-
-<ul>
-    <li>
-        <label>
-            <b>Date:</b> <input type="date" @bind="dt"/>
-        </label>
-    </li>
-    <li>
-        <label>
-            <b>Number:</b> <input type="number" @bind="number"/>
-        </label>
-    </li>
-</ul>
 
 @code {
-    private DateTime dt = DateTime.Now;
-    private double number = 1999.69;
-
-    private ApplicationUser? user = default;
+    
+    private ApplicationUser? _user;
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
@@ -105,7 +37,7 @@
     {
         if (HttpContext.User.Identity?.IsAuthenticated == true)
         {
-            user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+            _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         }
     }
 

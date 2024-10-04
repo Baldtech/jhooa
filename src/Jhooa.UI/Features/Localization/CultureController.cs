@@ -11,30 +11,22 @@ public class CultureController(UserManager<ApplicationUser> userManager, SignInM
 {
     public async Task<IActionResult> Set(string? culture, string redirectUri)
     {
-        if (culture != null)
+        if (culture == null) 
+            return LocalRedirect(redirectUri);
+        
+        if (User.Identity?.IsAuthenticated == true)
         {
-            if (User.Identity?.IsAuthenticated == true)
+            var user = await userManager.GetUserAsync(User);
+            if (user is not null)
             {
-                var user = await userManager.GetUserAsync(User);
-                if (user is not null)
-                {
-                    await ResetUserClaim(culture, user);
-                }
+                await ResetUserClaim(culture, user);
             }
-
-            var options = new CookieOptions
-            {
-                SameSite = SameSiteMode.Strict,
-                Secure = true,
-                IsEssential = true,
-                HttpOnly = false
-            };
-
-            HttpContext.Response.Cookies.Append(
-                Constants.Cookie.Culture,
-                CookieRequestCultureProvider.MakeCookieValue(
-                    new RequestCulture(culture, culture)), options);
         }
+
+        HttpContext.Response.Cookies.Append(
+            Constants.Cookie.Culture,
+            CookieRequestCultureProvider.MakeCookieValue(
+                new RequestCulture(culture, culture)));
 
         return LocalRedirect(redirectUri);
     }

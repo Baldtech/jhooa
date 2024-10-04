@@ -50,8 +50,8 @@ builder.Services.AddLocalization();
 builder.Services.AddAntiforgery(options =>
 {
     options.FormFieldName = "AntiforgeryHiddenField";
-    options.Cookie.Name = "X-CSRF-TOKEN";
-    options.HeaderName = "X-XSRF-TOKEN";
+    options.Cookie.Name = Constants.Cookie.Xsrf;
+    options.HeaderName = Constants.Cookie.XsrfHeader;
 });
 
 
