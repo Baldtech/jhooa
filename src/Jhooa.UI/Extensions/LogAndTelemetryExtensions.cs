@@ -20,6 +20,12 @@ public static class LogAndTelemetryExtensions
         
         builder.Host.UseSerilog((context, services, loggerConfiguration) =>
         {
+            loggerConfiguration
+                .MinimumLevel.Warning()
+                .Enrich.FromLogContext()
+                .Enrich.WithUserInfo()
+                .Enrich.WithProperty("Environment", context.Configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT"));
+            
             if (!string.IsNullOrWhiteSpace(appInsightsConnectionString))
             {
                 var telemetryConfiguration = services.GetRequiredService<TelemetryConfiguration>();
@@ -29,13 +35,7 @@ public static class LogAndTelemetryExtensions
                         telemetryConfiguration: services.GetRequiredService<TelemetryConfiguration>(),
                         telemetryConverter: TelemetryConverter.Traces);
             }
-            
-            loggerConfiguration
-                .MinimumLevel.Warning()
-                .Enrich.FromLogContext()
-                .Enrich.WithUserInfo()
-                .Enrich.WithProperty("Environment", context.Configuration.GetValue<string>("ASPNETCORE_ENVIRONMENT"));
-            
+
             loggerConfiguration.ReadFrom.Configuration(context.Configuration);
         });
     }
