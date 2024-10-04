@@ -1,4 +1,4 @@
-namespace Jhooa.UI;
+namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
 {

@@ -1,4 +1,5 @@
 using Jhooa.UI;
+using Jhooa.UI.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

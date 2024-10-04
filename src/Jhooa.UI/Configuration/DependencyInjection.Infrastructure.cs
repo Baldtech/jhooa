@@ -1,7 +1,7 @@
 using Jhooa.UI.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Jhooa.UI;
+namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
 {

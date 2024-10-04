@@ -1,6 +1,6 @@
 using Jhooa.UI.Components;
 
-namespace Jhooa.UI;
+namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
 {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 
-namespace Jhooa.UI;
+namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
 {

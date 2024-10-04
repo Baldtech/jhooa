@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Jhooa.UI.Configuration;
 using Jhooa.UI.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
