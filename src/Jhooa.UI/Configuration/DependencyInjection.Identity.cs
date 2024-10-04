@@ -1,5 +1,5 @@
-using Jhooa.UI.Components.Account;
 using Jhooa.UI.Data;
+using Jhooa.UI.Features.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;

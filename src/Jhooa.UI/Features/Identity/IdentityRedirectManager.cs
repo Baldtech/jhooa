@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 
-namespace Jhooa.UI.Components.Account;
+namespace Jhooa.UI.Features.Identity;
 
 internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
 {

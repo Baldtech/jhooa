@@ -1,2 +1,3 @@
 [*.{cs,vb}]
-dotnet_diagnostic.MA0004.severity = none # need investigation
+dotnet_diagnostic.MA0004.severity = none # ConfigureAwait() - need investigation
+dotnet_diagnostic.CA1848.severity = none # Use the LoggerMessage delegates

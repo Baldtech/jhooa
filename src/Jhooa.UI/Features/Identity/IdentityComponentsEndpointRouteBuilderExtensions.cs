@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using System.Text.Json;
-using Jhooa.UI.Components.Account.Pages;
-using Jhooa.UI.Components.Account.Pages.Manage;
 using Jhooa.UI.Data;
+using Jhooa.UI.Features.Identity.Pages;
+using Jhooa.UI.Features.Identity.Pages.Manage;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
-namespace Jhooa.UI.Components.Account;
+namespace Jhooa.UI.Features.Identity;
 
 internal static class IdentityComponentsEndpointRouteBuilderExtensions
 {

@@ -1,6 +1,6 @@
-using Jhooa.UI.Components;
-using Jhooa.UI.Components.Account;
 using Jhooa.UI.Extensions;
+using Jhooa.UI.Features.Identity;
+using Jhooa.UI.Pages;
 using Microsoft.AspNetCore.Localization;
 
 namespace Jhooa.UI.Configuration;

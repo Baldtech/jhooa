@@ -1,7 +1,5 @@
 ﻿@page "/"
-
-@using Jhooa.UI.Components.Account
-@using Jhooa.UI.Data
+@using Jhooa.UI.Features.Identity
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Home> Loc
 @inject IdentityUserAccessor UserAccessor
@@ -9,8 +7,6 @@
 <PageTitle>Home</PageTitle>
 
 <h1>@Loc["Welcome"] @_user?.UserName</h1>
-
-@CultureInfo.CurrentCulture
 
 <AuthorizeView>
     <NotAuthorized>
