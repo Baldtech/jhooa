@@ -1,10 +1,9 @@
 name: Deploy_WebApp
 on:
-  workflow_dispatch:
   workflow_run:
     workflows: [Build_WebApp]
     types: [completed]
-    branches: [features/cd]
+    # branches: [features/cd]
 
 env:
   AZURE_WEBAPP_NAME: 'wapp-jhooa-weu-001'   
