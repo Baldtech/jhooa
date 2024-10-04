@@ -1,5 +1,6 @@
 using Jhooa.UI.Data;
 using Jhooa.UI.Features.Identity;
+using Jhooa.UI.Features.Identity.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;

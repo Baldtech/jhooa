@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Jhooa.UI.Pages {
+namespace Jhooa.UI.Resources {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Home_fr_FR {
+    internal class Shared {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Home_fr_FR() {
+        internal Shared() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Pages.Home_fr_FR", typeof(Home_fr_FR).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Resources.Shared", typeof(Shared).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -45,9 +45,33 @@ namespace Jhooa.UI.Pages {
             }
         }
         
+        internal static string UsersList {
+            get {
+                return ResourceManager.GetString("UsersList", resourceCulture);
+            }
+        }
+        
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        internal static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        internal static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        internal static string DreamsList {
+            get {
+                return ResourceManager.GetString("DreamsList", resourceCulture);
             }
         }
     }

@@ -1,40 +1,42 @@
-@page "/Admin/Users"
+@page "/Admin/Dreams"
 @attribute [Authorize(Roles = "Admin")]
 @layout AdminLayout
 
 @using Jhooa.UI.Components.Layout
-@using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Features.Dreams.Models
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
+@inject IStringLocalizer<Resources.Shared> Loc
 @inject ApplicationDbContext DbContext
-@inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
 
-<h3>@Loc["UsersList"]</h3>
+<h3>@Loc["DreamsList"]</h3>
 
 <table>
     <thead>
     <tr>
-        <th>@Loc["Email"]</th>
+        <th>@Loc["Type"]</th>
+        <th>@Loc["Title"]</th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var user in _users)
+    @foreach (var dream in _dreams)
     {
         <tr>
-            <td>@user.Email</td>
+            <td>@dream.Type</td>
+            <td>@dream.Title</td>
         </tr>
     }
     </tbody>
 </table>
 
 @code {
-    private List<ApplicationUser> _users = [];
+    private List<Dream> _dreams = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _users = await DbContext.Users.ToListAsync();
+        _dreams = await DbContext.Dreams.ToListAsync();
     }
 
 }

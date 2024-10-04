@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Jhooa.UI.Configuration;
 using Jhooa.UI.Data;
+using Jhooa.UI.Features.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;

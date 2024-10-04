@@ -28,44 +28,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Pages\Home.en-GB.resx">
+    <EmbeddedResource Update="Resources\Shared.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Home.en-GB.Designer.cs</LastGenOutput>
+      <LastGenOutput>Shared.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\Home.fr-FR.resx">
+    <EmbeddedResource Update="Features\Localization\Components\CultureSelection.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Home.fr-FR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Features\Culture\Components\Culture.en-GB.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Culture.en-GB.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Features\Localization\Components\CultureSelection.en-GB.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CultureSelection.en-GB.Designer.cs</LastGenOutput>
+      <LastGenOutput>CultureSelection.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Pages\Home.en-GB.Designer.cs">
+    <Compile Update="Resources\Shared.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Home.en-GB.resx</DependentUpon>
+      <DependentUpon>Shared.resx</DependentUpon>
     </Compile>
-    <Compile Update="Pages\Home.fr-FR.Designer.cs">
+    <Compile Update="Features\Localization\Components\CultureSelection.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Home.fr-FR.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Features\Culture\Components\Culture.en-GB.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Culture.en-GB.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Features\Localization\Components\CultureSelection.en-GB.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CultureSelection.en-GB.resx</DependentUpon>
+      <DependentUpon>CultureSelection.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

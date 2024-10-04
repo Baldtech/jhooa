@@ -1,0 +1,28 @@
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Shared> Loc
+
+<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    @Loc["Back to site"]
+</NavLink>
+
+<NavLink class="nav-link" href="/Admin" Match="NavLinkMatch.All">
+    @Loc["Dashboard"]
+</NavLink>
+
+<NavLink class="nav-link" href="/Admin/Users" Match="NavLinkMatch.All">
+    @Loc["Users"]
+</NavLink>
+
+<NavLink class="nav-link" href="/Admin/Dreams" Match="NavLinkMatch.All">
+    @Loc["Dreams"]
+</NavLink>
+
+<NavLink class="nav-link" href="/Admin/Events" Match="NavLinkMatch.All">
+    @Loc["Events"]
+</NavLink>
+
+@code {
+    
+}
