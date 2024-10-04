@@ -1,0 +1,17 @@
+namespace Jhooa.UI;
+
+public static partial class DependencyInjection
+{
+    /// <summary>
+    /// Adds application services to the service collection.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="config">The configuration.</param>
+    /// <returns></returns>
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
+    {
+
+
+        return services;
+    }
+}
