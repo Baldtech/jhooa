@@ -29,8 +29,8 @@ jobs:
        uses: dawidd6/action-download-artifact@v6
        with:
          name: release-webapp
-         github-token: ${{ github.token }}
-         run-id: ${{ github.event.workflow_run.id }}
+         github_token: ${{ github.token }}
+         run_id: ${{ github.event.workflow_run.id }}
 
      - name: Login to Azure
        uses: azure/login@v2
