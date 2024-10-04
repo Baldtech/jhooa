@@ -1,7 +1,9 @@
-﻿@using Jhooa.UI.Components.Account.Shared
+﻿@using Jhooa.UI.Features.Identity.Shared
+@using Jhooa.UI.Components.Layout
+
 <Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)">
             <NotAuthorized>
                 <RedirectToLogin />
             </NotAuthorized>

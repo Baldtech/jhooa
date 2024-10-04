@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Identity;
 using Jhooa.UI.Data;
+using Microsoft.AspNetCore.Identity;
 
-namespace Jhooa.UI.Components.Account;
+namespace Jhooa.UI.Features.Identity;
 
 internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
 {

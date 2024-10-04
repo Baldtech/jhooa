@@ -4,9 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisMode>Recommended</AnalysisMode>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <UserSecretsId>65e3802d-e604-4fa6-a50f-d095813b77b9</UserSecretsId>
+    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +17,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Meziantou.Analyzer.Annotations" Version="1.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +66,57 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CultureSelection.en-GB.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Features\Identity\Pages\AccessDenied.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ConfirmEmail.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ConfirmEmailChange.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ExternalLogin.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ForgotPassword.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ForgotPasswordConfirmation.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\InvalidPasswordReset.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\InvalidUser.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Lockout.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Login.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\LoginWith2fa.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\LoginWithRecoveryCode.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\ChangePassword.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\DeletePersonalData.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\Disable2fa.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\Email.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\EnableAuthenticator.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\ExternalLogins.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\GenerateRecoveryCodes.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\Index.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\PersonalData.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\ResetAuthenticator.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\SetPassword.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\TwoFactorAuthentication.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Manage\_Imports.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\Register.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\RegisterConfirmation.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ResendEmailConfirmation.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ResetPassword.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\ResetPasswordConfirmation.razor" />
+    <AdditionalFiles Include="Features\Identity\Pages\_Imports.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\AccountLayout.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\ExternalLoginPicker.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\ManageLayout.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\ManageNavMenu.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\RedirectToLogin.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\ShowRecoveryCodes.razor" />
+    <AdditionalFiles Include="Features\Identity\Shared\StatusMessage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\AccountLayout.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\ExternalLoginPicker.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\ManageLayout.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\ManageNavMenu.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\RedirectToLogin.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\ShowRecoveryCodes.razor" />
+    <_ContentIncludedByDefault Remove="Components\Account\Shared\StatusMessage.razor" />
   </ItemGroup>
 
 </Project>
