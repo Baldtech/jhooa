@@ -20,9 +20,9 @@ jobs:
     
     permissions:
       id-token: write 
-      contents: write
+      contents: read
       pull-requests: write
-      repository-projects: write
+      actions: read
     
     steps:
      - name: Download artifact from build job
