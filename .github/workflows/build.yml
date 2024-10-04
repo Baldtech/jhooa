@@ -1,0 +1,42 @@
+name: Build_WebApp
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.gitignore'
+      - '**/*.gitattributes'
+
+env:
+  NETCORE_VERSION: '8.0.402'                    # set this to the .NET Core version to use
+  AZURE_WEBAPP_PACKAGE_PATH: './published'      # set this to the path to your web app project, defaults to the repository root
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    
+    steps:
+    - uses: actions/checkout@main
+
+    - name: Setup .NET Core SDK ${{ env.NETCORE_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.NETCORE_VERSION }}
+
+    - name: Restore packages
+      working-directory: ./src/Jhooa.UI
+      run: dotnet restore
+
+    - name: Build app
+      working-directory: ./src/Jhooa.UI
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Publish app for deploy
+      working-directory: ./src/Jhooa.UI
+      run: dotnet publish --configuration Release --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    
+     
