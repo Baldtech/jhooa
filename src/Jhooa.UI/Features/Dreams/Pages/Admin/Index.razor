@@ -1,0 +1,34 @@
+@page "/Admin/Dreams"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Dreams.Components
+@using Jhooa.UI.Features.Dreams.Models
+
+@inject IStringLocalizer<Resources.Shared> Loc
+
+<h3>@Loc["DreamsList"]</h3>
+
+<FilterDreams
+    SelectDreamTypeCallback="HandleDreamTypeSelection">
+</FilterDreams>
+
+<br/>
+
+<DreamsList
+    SelectedDreamType="_selectedDreamType">
+</DreamsList>
+
+@code
+{
+    private DreamTypes? _selectedDreamType;
+
+    private void HandleDreamTypeSelection(DreamTypes? type)
+    {
+        _selectedDreamType = type;
+    }
+}

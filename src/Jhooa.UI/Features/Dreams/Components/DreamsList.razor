@@ -1,0 +1,49 @@
+@using Jhooa.UI.Features.Dreams.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject ApplicationDbContext DbContext
+
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>@Loc["Type"]</th>
+        <th>@Loc["Title"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var dream in _dreams)
+    {
+        <tr>
+            <td>@Loc[dream.Type.ToString()]</td>
+            <td>@dream.Title</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+
+    [Parameter] public DreamTypes? SelectedDreamType { get; set; }
+
+    private List<Dream> _dreams = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _dreams = await DbContext.Dreams.ToListAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (SelectedDreamType is null)
+        {
+            _dreams = await DbContext.Dreams.ToListAsync();
+        }
+        else
+        {
+            _dreams = await DbContext.Dreams.Where(d => d.Type == SelectedDreamType).ToListAsync();
+        }
+    }
+
+}

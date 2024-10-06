@@ -1,0 +1,69 @@
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+
+@implements IDisposable
+
+@inject IStringLocalizer<Shared> Loc
+@inject NavigationManager NavigationManager
+
+
+<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    @Loc["Home"]
+</NavLink>
+
+<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    @Loc["Events"]
+</NavLink>
+
+<AuthorizeView>
+    <Authorized>
+        <NavLink class="nav-link" href="Account/Manage">
+            @context.User.Identity?.Name
+        </NavLink>
+        <form action="Account/Logout" method="post">
+            <AntiforgeryToken/>
+            <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+            <button type="submit" class="nav-link">
+                 Logout
+            </button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="nav-link" href="Account/Register">
+            Register
+        </NavLink>
+        <NavLink class="nav-link" href="Account/Login">
+            Login
+        </NavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin">
+    <NavLink class="nav-link" href="Admin">
+        Administration
+    </NavLink>
+</AuthorizeView>
+
+<hr/>
+
+@code {
+    private string? _currentUrl;
+
+    protected override void OnInitialized()
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+}

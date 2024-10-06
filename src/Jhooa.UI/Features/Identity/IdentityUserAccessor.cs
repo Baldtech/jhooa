@@ -1,4 +1,5 @@
 using Jhooa.UI.Data;
+using Jhooa.UI.Features.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Jhooa.UI.Features.Identity;

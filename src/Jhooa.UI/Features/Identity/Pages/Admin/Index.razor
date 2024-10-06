@@ -1,35 +1,14 @@
 @page "/Admin/Users"
 @attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
 
+@using Jhooa.UI.Components.Layout
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Identity.Components
 
-@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
 
-<h3>List of users</h3>
+<h3>@Loc["UsersList"]</h3>
 
-<table>
-    <thead>
-    <tr>
-        <th>Email</th>
-    </tr>
-    </thead>
-    <tbody>
-        @foreach(var user in _users)
-        {
-            <tr>
-                <td>@user.Email</td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@code {
-    private List<ApplicationUser> _users = [];
-    
-    protected override async Task OnInitializedAsync()
-    {
-        _users = await DbContext.Users.ToListAsync();
-    }
-    
-}
+<UsersList> </UsersList>

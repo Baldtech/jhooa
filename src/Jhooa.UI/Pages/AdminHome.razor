@@ -1,0 +1,51 @@
+@page "/Admin"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Dreams.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+
+@inject ApplicationDbContext DbContext
+
+<h3>Dashboard</h3>
+
+<p>
+    Welcome to the Admin Dashboard.
+</p>
+
+<p>
+    Number of users: @_usersCount
+</p>
+
+<p>
+    Number of dreams
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Count</th>
+        </tr>
+        @foreach(var dream in _dreamsCount)
+        {
+            <tr>
+                <td>@dream.Key</td>
+                <td>@dream.Value</td>
+            </tr>
+        }
+    </table>
+</p>
+
+@code {
+    private int _usersCount;
+    private Dictionary<DreamTypes, int> _dreamsCount = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _usersCount = await DbContext.Users.CountAsync();
+        _dreamsCount = await DbContext.Dreams.GroupBy(g => g.Type).Select(
+            g => new { Type = g.Key, Count = g.Count() }
+        ).ToDictionaryAsync(k => k.Type, v => v.Count);
+    }
+
+}

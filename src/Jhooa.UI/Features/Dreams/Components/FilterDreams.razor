@@ -1,0 +1,18 @@
+@using Jhooa.UI.Features.Dreams.Models
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Shared> Loc
+
+<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Small); })">@Loc["Small"]</button>
+<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Medium); })">@Loc["Medium"]</button>
+<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Big); })">@Loc["Big"]</button>
+<button type="button" @onclick="@(() => { SelectDreamType(null); })">@Loc["All"]</button>
+
+@code
+{
+    [Parameter] public EventCallback<DreamTypes?> SelectDreamTypeCallback { get; set; }
+
+    private void SelectDreamType(DreamTypes? type)
+    {
+        SelectDreamTypeCallback.InvokeAsync(type);
+    }
+}

@@ -1,51 +1,25 @@
 ﻿@page "/"
+
 @using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Home> Loc
+
+@inject IStringLocalizer<Shared> Loc
 @inject IdentityUserAccessor UserAccessor
-@inject NavigationManager NavigationManager
 
 <PageTitle>Home</PageTitle>
 
 <h1>@Loc["Welcome"] @_user?.UserName</h1>
 
-<AuthorizeView>
-    <NotAuthorized>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Account/Register">
-                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Account/Login">
-                <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
-    </NotAuthorized>
-    <Authorized>
-        <form action="Account/Logout" method="post">
-            <AntiforgeryToken />
-            <input type="hidden" name="ReturnUrl" value="@_currentUrl" />
-            <button type="submit" class="nav-link">
-                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
-            </button>
-        </form>
-    </Authorized>
-
-</AuthorizeView>
-
-
 @code {
     
     private ApplicationUser? _user;
-    private string? _currentUrl;
     
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
     
     protected override async Task OnInitializedAsync()
     {
-        _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
-
         if (HttpContext.User.Identity?.IsAuthenticated == true)
         {
             _user = await UserAccessor.GetRequiredUserAsync(HttpContext);

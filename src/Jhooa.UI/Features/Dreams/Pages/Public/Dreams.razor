@@ -1,0 +1,111 @@
+@page "/Account/Manage/Dreams"
+@attribute [Authorize]
+@layout ManageLayout
+
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Features.Dreams.Models
+@using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Features.Identity.Shared
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject IdentityUserAccessor UserAccessor
+@inject ApplicationDbContext DbContext
+
+<PageTitle>@Loc["DreamsManagementPageTitle"]</PageTitle>
+
+<h3>Dreams</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <EditForm Model="Input" FormName="change-dreams" OnValidSubmit="OnValidSubmitAsync" method="post">
+            <DataAnnotationsValidator/>
+            <ValidationSummary class="text-danger" role="alert"/>
+            <div class="form-floating mb-3">
+                <InputText type="text" @bind-Value="Input!.SmallDream" class="form-control" aria-required="true" placeholder="Please enter your small dream."/>
+                <label for="small-dream" class="form-label">@Loc["Small"]</label>
+                <ValidationMessage For="() => Input.SmallDream" class="text-danger"/>
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="text" @bind-Value="Input!.MediumDream" class="form-control" aria-required="true" placeholder="Please enter your medium dream."/>
+                <label for="medium-dream" class="form-label">@Loc["Medium"]</label>
+                <ValidationMessage For="() => Input.MediumDream" class="text-danger"/>
+            </div>
+            <div class="form-floating mb-3">
+                <InputText type="text" @bind-Value="Input!.BigDream" class="form-control" aria-required="true" placeholder="Please enter your big dream."/>
+                <label for="big-dream" class="form-label">@Loc["Big"]</label>
+                <ValidationMessage For="() => Input.BigDream" class="text-danger"/>
+            </div>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private ApplicationUser _user = default!;
+
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+
+        if (Input is null)
+        {
+            Input = new InputModel();
+
+            var dreams = await DbContext.Dreams.Where(d => d.UserId.ToString().ToLower() == _user.Id.ToLower()).ToListAsync();
+
+            Input.SmallDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Small)?.Title ?? "";
+            Input.MediumDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Medium)?.Title ?? "";
+            Input.BigDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Big)?.Title ?? "";
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        await UpdateDream(DreamTypes.Small, Input!.SmallDream);
+        await UpdateDream(DreamTypes.Medium, Input!.MediumDream);
+        await UpdateDream(DreamTypes.Big, Input!.BigDream);
+
+        await DbContext.SaveChangesAsync();
+    }
+
+
+    private async Task UpdateDream(DreamTypes type, string newDream)
+    {
+        await DbContext.Dreams.Where(d => d.UserId.ToString().ToLower() == _user.Id.ToLower() && d.Type == type).ExecuteDeleteAsync();
+
+
+        if (!string.IsNullOrWhiteSpace(newDream))
+        {
+            DbContext.Dreams.Add(new Dream
+            {
+                Title = newDream,
+                Type = type,
+                UserId = new Guid(_user.Id)
+            });
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Small")]
+        public string SmallDream { get; set; } = "";
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Medium")]
+        public string MediumDream { get; set; } = "";
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Big")]
+        public string BigDream { get; set; } = "";
+    }
+
+}

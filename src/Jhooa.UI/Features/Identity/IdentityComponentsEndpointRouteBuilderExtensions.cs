@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text.Json;
 using Jhooa.UI.Data;
+using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Features.Identity.Pages;
 using Jhooa.UI.Features.Identity.Pages.Manage;
 using Microsoft.AspNetCore.Authentication;

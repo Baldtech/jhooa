@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Jhooa.UI.Pages {
+namespace Jhooa.UI.Features.Localization.Components {
     using System;
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Home_fr_FR {
+    internal class CultureSelection {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Home_fr_FR() {
+        internal CultureSelection() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Pages.Home_fr_FR", typeof(Home_fr_FR).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Features.Localization.Components.CultureSelection", typeof(CultureSelection).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -42,12 +42,6 @@ namespace Jhooa.UI.Pages {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        internal static string Welcome {
-            get {
-                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }
