@@ -74,5 +74,59 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("DreamsList", resourceCulture);
             }
         }
+        
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        internal static string Small {
+            get {
+                return ResourceManager.GetString("Small", resourceCulture);
+            }
+        }
+        
+        internal static string Medium {
+            get {
+                return ResourceManager.GetString("Medium", resourceCulture);
+            }
+        }
+        
+        internal static string Big {
+            get {
+                return ResourceManager.GetString("Big", resourceCulture);
+            }
+        }
+        
+        internal static string Dreams {
+            get {
+                return ResourceManager.GetString("Dreams", resourceCulture);
+            }
+        }
+        
+        internal static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        internal static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
     }
 }

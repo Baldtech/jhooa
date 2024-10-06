@@ -33,4 +33,31 @@
     <data name="DreamsList" xml:space="preserve">
         <value>List of dreams</value>
     </data>
+    <data name="Title" xml:space="preserve">
+        <value>Title</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Small" xml:space="preserve">
+        <value>Small</value>
+    </data>
+    <data name="Medium" xml:space="preserve">
+        <value>Medium</value>
+    </data>
+    <data name="Big" xml:space="preserve">
+        <value>Big</value>
+    </data>
+    <data name="Dreams" xml:space="preserve">
+        <value>Dreams</value>
+    </data>
+    <data name="Dashboard" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
+    <data name="Users" xml:space="preserve">
+        <value>Users</value>
+    </data>
+    <data name="EmailAddress" xml:space="preserve">
+        <value>Email address</value>
+    </data>
 </root>

@@ -1,16 +1,13 @@
 @using Jhooa.UI.Features.Localization.Components
 @inherits LayoutComponentBase
 
-<div class="container">
 
-    <AdminNavMenu></AdminNavMenu>
+<AdminNavMenu></AdminNavMenu>
 
-    <article class="bottom-row px-4">
-        <CultureSelector @rendermode="InteractiveServer"/>
-    </article>
+<article class="bottom-row px-4">
+    <CultureSelector @rendermode="InteractiveServer"/>
+</article>
 
-    <hr/>
+<hr/>
 
-    @Body
-
-</div>
+@Body

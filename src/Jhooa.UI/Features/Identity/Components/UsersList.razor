@@ -1,0 +1,32 @@
+@using Jhooa.UI.Features.Identity.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>@Loc["EmailAddress"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in _users)
+        {
+            <tr>
+                <td>@user.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<ApplicationUser> _users = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _users = await DbContext.Users.ToListAsync();
+    }
+
+}
