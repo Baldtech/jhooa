@@ -10,4 +10,6 @@ public class Dream
     public required DreamTypes Type { get; init; } = DreamTypes.Small;
     public required string Title { get; init; }
     public required Guid UserId { get; init; }
+    public ApplicationUser User { get; set; } = null!;
+
 }

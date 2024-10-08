@@ -1,0 +1,152 @@
+@page "/Admin/Event/{id:guid?}"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+@if (Id.HasValue)
+{
+    <h3>Edit Event</h3>
+}
+else
+{
+    <h3>Add Event</h3>
+}
+
+@if (Input != null)
+{
+    <EditForm Model="Input" FormName="formEvent" OnValidSubmit="OnValidSubmitAsync">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+
+        @if (Id.HasValue)
+        {
+            <InputText @bind-Value="Input.EventId" hidden></InputText>
+        }
+
+        <div class="form-floating mb-3">
+            <InputText type="text" @bind-Value="Input!.Title" class="form-control" aria-required="true" placeholder="Please enter the name of the event."/>
+            <label for="small-dream" class="form-label">@Loc["Title"]</label>
+            <ValidationMessage For="() => Input.Title" class="text-danger"/>
+        </div>
+        <div class="form-floating mb-3">
+            <InputTextArea type="" @bind-Value="Input!.Description" class="form-control" aria-required="true" placeholder="Please enter the description of the event."/>
+            <label for="medium-dream" class="form-label">@Loc["Description"]</label>
+            <ValidationMessage For="() => Input.Description" class="text-danger"/>
+        </div>
+        <div class="form-floating mb-3">
+            <InputDate TValue="DateTimeOffset" @bind-Value="Input!.StartDate" class="form-control" aria-required="true"/>
+            <label for="big-dream" class="form-label">@Loc["StartDate"]</label>
+            <ValidationMessage For="() => Input.StartDate" class="text-danger"/>
+        </div>
+        <div class="form-floating mb-3">
+            <InputDate TValue="DateTimeOffset" @bind-Value="Input!.EndDate" class="form-control" aria-required="true"/>
+            <label for="big-dream" class="form-label">@Loc["EndDate"]</label>
+            <ValidationMessage For="() => Input.EndDate" class="text-danger"/>
+        </div>
+
+        <br/>
+        @if (Id.HasValue)
+        {
+            <button class="btn btn-primary" type="submit">Update</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" type="submit">Save</button>
+        }
+        &nbsp;
+        <a href="/Admin/Events" class="btn btn-primary">Close</a>
+
+    </EditForm>
+}
+
+@code {
+    [Parameter] public Guid? Id { get; set; }
+
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id.HasValue)
+        {
+            var ev = await DbContext.Events.FirstOrDefaultAsync(e => e.Id == Id.Value);
+            if (ev is not null)
+            {
+                Input ??= new InputModel()
+                {
+                    EventId = ev.Id.ToString(),
+                    Title = ev.Title,
+                    Description = ev.Description,
+                    StartDate = ev.StartDate,
+                    EndDate = ev.EndDate
+                };
+            }
+        }
+        else
+            Input ??= new InputModel()
+            {
+                Title = "",
+                Description = "",
+                StartDate = DateTime.Now.AddDays(5),
+                EndDate = DateTime.Now.AddDays(10)
+            };
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        if (Input is not null)
+        {
+            if (Input.EventGuid.HasValue)
+            {
+                await DbContext.Events.Where(e => e.Id == Input.EventGuid)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.Title, Input.Title)
+                        .SetProperty(b => b.Description, Input.Description)
+                        .SetProperty(b => b.StartDate, Input.StartDate)
+                        .SetProperty(b => b.EndDate, Input.EndDate));
+            }
+            else
+            {
+                await DbContext.Events.AddAsync(new Event()
+                {
+                    Title = Input.Title,
+                    Description = Input.Description,
+                    StartDate = Input.StartDate,
+                    EndDate = Input.EndDate
+                });
+            }
+
+            await DbContext.SaveChangesAsync();
+        }
+
+        NavigationManager.NavigateTo($"/Admin/Events");
+    }
+
+    private sealed class InputModel
+    {
+        public string? EventId { get; set; }
+        public Guid? EventGuid  => EventId is not null ? Guid.Parse(EventId) : null;
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+        [Display(Name = "Title")]
+        public string Title { get; set; } = "";
+
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
+        [Display(Name = "Description")]
+        public string Description { get; set; } = "";
+
+        [Display(Name = "Start date")] public DateTimeOffset StartDate { get; set; }
+
+        [Display(Name = "End date")] public DateTimeOffset EndDate { get; set; }
+    }
+
+}

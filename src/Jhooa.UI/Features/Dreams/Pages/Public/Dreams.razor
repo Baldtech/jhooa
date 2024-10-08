@@ -39,7 +39,7 @@
                 <label for="big-dream" class="form-label">@Loc["Big"]</label>
                 <ValidationMessage For="() => Input.BigDream" class="text-danger"/>
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
+            <button type="submit" class="w-100 btn btn-lg btn-primary">@Loc["Update dreams"]</button>
         </EditForm>
     </div>
 </div>
@@ -59,7 +59,7 @@
         {
             Input = new InputModel();
 
-            var dreams = await DbContext.Dreams.Where(d => d.UserId.ToString().ToLower() == _user.Id.ToLower()).ToListAsync();
+            var dreams = await DbContext.Dreams.Where(d => d.UserId == _user.Id).ToListAsync();
 
             Input.SmallDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Small)?.Title ?? "";
             Input.MediumDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Medium)?.Title ?? "";
@@ -79,7 +79,7 @@
 
     private async Task UpdateDream(DreamTypes type, string newDream)
     {
-        await DbContext.Dreams.Where(d => d.UserId.ToString().ToLower() == _user.Id.ToLower() && d.Type == type).ExecuteDeleteAsync();
+        await DbContext.Dreams.Where(d => d.UserId == _user.Id && d.Type == type).ExecuteDeleteAsync();
 
 
         if (!string.IsNullOrWhiteSpace(newDream))
@@ -88,22 +88,22 @@
             {
                 Title = newDream,
                 Type = type,
-                UserId = new Guid(_user.Id)
+                UserId = _user.Id
             });
         }
     }
 
     private sealed class InputModel
     {
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
         [Display(Name = "Small")]
         public string SmallDream { get; set; } = "";
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
         [Display(Name = "Medium")]
         public string MediumDream { get; set; } = "";
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
         [Display(Name = "Big")]
         public string BigDream { get; set; } = "";
     }
