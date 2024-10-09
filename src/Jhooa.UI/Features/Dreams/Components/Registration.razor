@@ -1,0 +1,87 @@
+@rendermode InteractiveServer
+
+@using System.Security.Claims
+@using Jhooa.UI.Features.Identity
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject NavigationManager NavigationManager
+@inject ApplicationDbContext DbContext
+@inject IdentityUserAccessor UserAccessor
+@inject AuthenticationStateProvider AuthStateProvider
+
+@if (!_loading)
+{
+    @if (_userId is null)
+    {
+        <p>@Loc["RequiresAuthentication"]</p>
+    }
+    else if (_isRegistered)
+    {
+        <p>@Loc["AlreadyRegistered"]</p>
+        <button type="button" @onclick="@(async () => { await RemoveRegistrationAsync(EventId); })">@Loc["RemoveRegistration"]</button>
+    }
+    else
+    {
+        <button type="button" @onclick="@(async () => { await RegisterAsync(EventId); })">@Loc["Register"]</button>
+    }
+}
+
+@code {
+
+    [Parameter] public Guid EventId { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    private bool _loading = true;
+    private bool _isRegistered;
+    private Guid? _userId;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+            if (authState.User.Identity?.IsAuthenticated == true)
+            {
+                if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
+                {
+                    _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                }
+
+                _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
+                _loading = false;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private async Task RegisterAsync(Guid eventId)
+    {
+        if (_userId is not null)
+        {
+            await DbContext.Registrations.AddAsync(new Jhooa.UI.Features.Events.Models.Registration()
+            {
+                EventId = eventId,
+                UserId = _userId.Value,
+            });
+            await DbContext.SaveChangesAsync();
+
+            _isRegistered = true;
+        }
+    }
+    
+    private async Task RemoveRegistrationAsync(Guid eventId)
+    {
+        if (_userId is not null)
+        {
+            await DbContext.Registrations.Where(r => r.UserId == _userId && r.EventId == EventId).ExecuteDeleteAsync();
+            await DbContext.SaveChangesAsync();
+
+            _isRegistered = false;
+        }
+    }
+
+}

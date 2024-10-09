@@ -1,0 +1,60 @@
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>@Loc["Title"]</th>
+        <th>@Loc["Description"]</th>
+        <th>@Loc["StartDate"]</th>
+        <th>@Loc["EndDate"]</th>
+        <th>@Loc["Participants"]</th>
+        <th>@Loc["Actions"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var ev in _events.OrderByDescending(o => o.StartDate))
+    {
+        <tr>
+            <td>@ev.Title</td>
+            <td>@ev.Description</td>
+            <td>@ev.StartDate.ToString("d")</td>
+            <td>@ev.EndDate.ToString("d")</td>
+            <td>@ev.Registrations.Count</td>
+            <td>
+                <a href="/Admin/Event/@ev.Id">Edit</a> -
+                <EditForm Model="ev"
+                          FormName="@($"form-event-{ev.Id}")"
+                          OnValidSubmit="@(async () => { await DeleteEventAsync(ev.Id); })">
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </EditForm>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+
+    private List<Event> _events = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _events = await DbContext.Events.Include(i => i.Registrations).ToListAsync();
+    }
+
+    private async Task DeleteEventAsync(Guid? eventId)
+    {
+        if (eventId.HasValue)
+        {
+            await DbContext.Events.Where(e => e.Id == eventId).ExecuteDeleteAsync();
+            NavigationManager.NavigateTo("/Admin/Events", true);
+        }
+    }
+
+}

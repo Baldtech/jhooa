@@ -1,0 +1,25 @@
+@page "/Admin/Events"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Events.Components
+
+@inject IStringLocalizer<Resources.Shared> Loc
+
+<h3>@Loc["EventsList"]</h3>
+
+<p>
+    <a href="/Admin/Event" class="btn btn-primary">@Loc["AddEvent"]</a>
+</p>
+
+<EventsList>
+</EventsList>
+
+@code
+{
+
+}

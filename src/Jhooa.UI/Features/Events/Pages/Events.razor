@@ -1,0 +1,38 @@
+@page "/Events"
+
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Dreams.Components
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject ApplicationDbContext DbContext
+
+<h3>@Loc["Events"]</h3>
+
+@if (_events is not null)
+{
+    @foreach (var ev in _events)
+    {
+        <h4>@ev.Title</h4>
+        <h5>@ev.StartDate.ToString("d") - @ev.EndDate.ToString("d")</h5>
+        <p>@ev.Description</p>
+        <br/>
+        <Registration
+            EventId="ev.Id">
+        </Registration>
+        <hr/>
+    }
+}
+
+
+@code {
+
+    private List<Event>? _events;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _events ??= await DbContext.Events.Include(i => i.Registrations).ToListAsync();
+    }
+
+}

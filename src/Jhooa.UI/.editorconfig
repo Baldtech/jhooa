@@ -1,3 +1,5 @@
 [*.{cs,vb}]
 dotnet_diagnostic.MA0004.severity = none # ConfigureAwait() - need investigation
 dotnet_diagnostic.CA1848.severity = none # Use the LoggerMessage delegates
+dotnet_diagnostic.CA1716.severity = none # Identifiers should not match keywords
+dotnet_diagnostic.MA0016.severity = none # Prefer using collection abstraction instead of implementation
