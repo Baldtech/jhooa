@@ -11,20 +11,22 @@
 @inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthStateProvider
 
-@if (_userId is null)
+@if (!_loading)
 {
-    <p>@Loc["RequiresAuthentication"]</p>
+    @if (_userId is null)
+    {
+        <p>@Loc["RequiresAuthentication"]</p>
+    }
+    else if (_isRegistered)
+    {
+        <p>@Loc["AlreadyRegistered"]</p>
+        <button type="button" @onclick="@(async () => { await RemoveRegistrationAsync(EventId); })">@Loc["RemoveRegistration"]</button>
+    }
+    else
+    {
+        <button type="button" @onclick="@(async () => { await RegisterAsync(EventId); })">@Loc["Register"]</button>
+    }
 }
-else if (_isRegistered)
-{
-    <p>@Loc["AlreadyRegistered"]</p>
-    <button type="button" @onclick="@(async () => { await RemoveRegistrationAsync(EventId); })">@Loc["RemoveRegistration"]</button>
-}
-else
-{
-    <button type="button" @onclick="@(async () => { await RegisterAsync(EventId); })">@Loc["Register"]</button>
-}
-
 
 @code {
 
@@ -32,6 +34,7 @@ else
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
+    private bool _loading = true;
     private bool _isRegistered;
     private Guid? _userId;
 
@@ -49,6 +52,7 @@ else
                 }
 
                 _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
+                _loading = false;
                 StateHasChanged();
             }
         }
