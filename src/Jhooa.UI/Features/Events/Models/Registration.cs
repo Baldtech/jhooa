@@ -7,7 +7,7 @@ public class Registration
     public required Guid UserId { get; init; }
     public required Guid EventId { get; init; }
     
-    public required DateTimeOffset RegistrationDate { get; init; } = DateTimeOffset.Now;
+    public DateTimeOffset RegistrationDate { get; init; } = DateTimeOffset.Now;
     
     public ApplicationUser User { get; set; } = null!;
     public Event Event { get; set; } = null!;
