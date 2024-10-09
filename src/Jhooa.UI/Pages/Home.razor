@@ -4,6 +4,7 @@
 @using Jhooa.UI.Features.Identity.Models
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Subscriptions.Components
 
 @inject IStringLocalizer<Shared> Loc
 @inject IdentityUserAccessor UserAccessor
@@ -11,6 +12,8 @@
 <PageTitle>Home</PageTitle>
 
 <h1>@Loc["Welcome"] @_user?.UserName</h1>
+
+<BuySubscription />
 
 @code {
     

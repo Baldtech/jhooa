@@ -1,6 +1,7 @@
 using Jhooa.UI.Features.Dreams.Models;
 using Jhooa.UI.Features.Events.Models;
 using Jhooa.UI.Features.Identity.Models;
+using Jhooa.UI.Features.Subscriptions.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Dream> Dreams { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Registration> Registrations { get; set; }
+    public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
+    
 
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -69,6 +72,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .HasMany(e => e.Dreams)
             .WithOne(e => e.User)
             .HasForeignKey(e => e.UserId)
+            .IsRequired();
+        
+        builder.Entity<SubscriptionHistory>()
+            .Property(b => b.StripeCheckoutSessionId)
+            .HasMaxLength(SubscriptionHistory.StripeCheckoutSessionIdMaxLength)
             .IsRequired();
     }
 }

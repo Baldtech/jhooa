@@ -1,0 +1,47 @@
+@using System.Security.Claims
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+
+@rendermode InteractiveServer
+
+@inject IStripeService StripeService
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+
+<h3>Buy a subscription</h3>
+
+@if (_userId.HasValue)
+{
+    <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyOnce); })">1 month</button>
+    <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualOnce); })">1 year</button>
+}
+else
+{
+    <p>You should create an account to subscribe</p>
+}
+
+
+@code {
+
+    private Guid? _userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
+            {
+                _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            }
+        }
+    }
+
+    private async Task BuySubscriptionAsync(SubscriptionType type)
+    {
+        var sessionUrl = await StripeService.GeneratePaymentIntent(_userId!.Value, type);
+        NavigationManager.NavigateTo(sessionUrl);
+    }
+
+}

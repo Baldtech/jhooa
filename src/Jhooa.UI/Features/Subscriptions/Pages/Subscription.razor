@@ -1,0 +1,56 @@
+@page "/Account/Manage/Subscription"
+@attribute [Authorize]
+@layout ManageLayout
+
+@using Jhooa.UI.Features.Identity.Shared
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+
+@inject IStripeService StriveService
+@inject ApplicationDbContext DbContext
+
+<h3>Subscriptions</h3>
+
+@if (!string.IsNullOrWhiteSpace(Message))
+{
+    <h4 style="color: #26b050">@Message</h4>
+}
+
+@if (_subscriptionHistories is not null)
+{
+    <ul>
+        @foreach(var subscription in _subscriptionHistories)
+        {
+            <li>@subscription.TypeString - @subscription.PaymentStatus - @subscription.BoughtAt.ToString("d")</li>
+        }
+    </ul>
+}
+
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "session-id")]
+    public string? CheckoutSessionId { get; set; }
+
+    private string? Message { get; set; }
+
+    private List<SubscriptionHistory>? _subscriptionHistories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (CheckoutSessionId is not null)
+        {
+            var result = await StriveService.HandleCheckoutSessionCompleted(CheckoutSessionId);
+
+            if (result)
+            {
+                Message = "Payment successful!";
+            }
+        }
+
+        _subscriptionHistories ??= await DbContext.SubscriptionHistories.ToListAsync();
+    }
+
+}
