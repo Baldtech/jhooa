@@ -30,13 +30,9 @@
 
     private List<Event>? _events;
 
-    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
-
-
     protected override async Task OnInitializedAsync()
     {
         _events ??= await DbContext.Events.Include(i => i.Registrations).ToListAsync();
     }
-
 
 }
