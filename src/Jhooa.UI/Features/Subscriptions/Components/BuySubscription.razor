@@ -1,19 +1,23 @@
 @using System.Security.Claims
+@using Jhooa.UI.Features.Identity.Models
 @using Jhooa.UI.Features.Subscriptions.Models
 @using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
 
 @rendermode InteractiveServer
 
 @inject IStripeService StripeService
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthStateProvider
+@inject ApplicationDbContext DbContext
 
 <h3>Buy a subscription</h3>
 
 @if (_userId.HasValue)
 {
     <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyOnce); })">1 month</button>
-    <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualOnce); })">1 year</button>
+    @* <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualOnce); })">1 year</button> *@
+    <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyRecurring); })">1 month - auto renew</button>
 }
 else
 {
@@ -24,6 +28,7 @@ else
 @code {
 
     private Guid? _userId;
+    private ApplicationUser? _user;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,14 +39,52 @@ else
             if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {
                 _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                _user = await DbContext.Users.FirstAsync(u =>
+                    u.Id == _userId);
             }
         }
     }
 
     private async Task BuySubscriptionAsync(SubscriptionType type)
     {
-        var sessionUrl = await StripeService.GeneratePaymentIntent(_userId!.Value, type);
-        NavigationManager.NavigateTo(sessionUrl);
+        if (_user is null) return;
+
+        var session = await StripeService.GeneratePaymentIntent(_user.StripeCustomerId!, type);
+        var sub = new Subscription
+        {
+            Start = GetStartDate(type),
+            End = GetEndDate(type),
+            UserId = _user.Id,
+            StripeSessionCheckoutId = session.SessionId,
+            Type = type
+        };
+
+        await DbContext.Subscriptions.AddAsync(sub);
+        await DbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo(session.SessionUrl);
+    }
+
+    private static DateOnly GetStartDate(SubscriptionType type)
+    {
+        return type switch
+        {
+            SubscriptionType.MonthlyOnce 
+                => DateOnly.FromDateTime(new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1)),
+            SubscriptionType.MonthlyRecurring 
+                => DateOnly.FromDateTime(new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1)),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+    }
+
+    private static DateOnly? GetEndDate(SubscriptionType type)
+    {
+        return type switch
+        {
+            SubscriptionType.MonthlyOnce 
+                => DateOnly.FromDateTime(new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(2).AddDays(-1).Month, 1)),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
     }
 
 }

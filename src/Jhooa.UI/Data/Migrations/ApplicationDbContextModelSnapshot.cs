@@ -114,7 +114,7 @@ namespace Jhooa.UI.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("IdentityRoles", (string)null);
                 });
 
             modelBuilder.Entity("Jhooa.UI.Features.Identity.Models.ApplicationUser", b =>
@@ -136,6 +136,14 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -163,6 +171,9 @@ namespace Jhooa.UI.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("StripeCustomerId")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("INTEGER");
 
@@ -179,24 +190,32 @@ namespace Jhooa.UI.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("IdentityUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Jhooa.UI.Features.Subscriptions.Models.SubscriptionHistory", b =>
+            modelBuilder.Entity("Jhooa.UI.Features.Subscriptions.Models.Subscription", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("BoughtAt")
+                    b.Property<DateOnly?>("End")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PaymentStatus")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("StripeCheckoutSessionId")
+                    b.Property<DateOnly>("Start")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StripePaymentIntentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StripeSessionCheckoutId")
                         .IsRequired()
-                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StripeSubscriptionId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
@@ -207,7 +226,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionHistories");
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -229,7 +248,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("IdentityRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -251,15 +270,15 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("IdentityUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<string>("LoginProvider")
+                    b.Property<string>("ProviderKey")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProviderKey")
+                    b.Property<string>("LoginProvider")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -268,11 +287,11 @@ namespace Jhooa.UI.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("ProviderKey", "LoginProvider");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("IdentityUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -287,7 +306,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("IdentityUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -306,7 +325,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("IdentityUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Jhooa.UI.Features.Dreams.Models.Dream", b =>

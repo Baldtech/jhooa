@@ -34,6 +34,16 @@
                 <ValidationMessage For="() => Input.Email" class="text-danger" />
             </div>
             <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Firstname" class="form-control" autocomplete="firstname" aria-required="true" placeholder="Jean" />
+                <label for="firstname">Firstname</label>
+                <ValidationMessage For="() => Input.Firstname" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Lastname" class="form-control" autocomplete="lastname" aria-required="true" placeholder="Dupont" />
+                <label for="lastname">Lastname</label>
+                <ValidationMessage For="() => Input.Lastname" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label for="password">Password</label>
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
@@ -73,6 +83,7 @@
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        
         var result = await UserManager.CreateAsync(user, Input.Password);
 
         if (!result.Succeeded)
@@ -107,7 +118,11 @@
     {
         try
         {
-            return Activator.CreateInstance<ApplicationUser>();
+            return new ApplicationUser()
+            {
+                FirstName = Input.Firstname,
+                LastName = Input.Lastname
+            };
         }
         catch
         {
@@ -131,6 +146,16 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
+        
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "First name")]
+        public string Firstname { get; set; } = "";
+        
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Last name")]
+        public string Lastname { get; set; } = "";
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

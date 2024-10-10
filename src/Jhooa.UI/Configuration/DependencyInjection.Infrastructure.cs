@@ -1,7 +1,6 @@
 using Jhooa.UI.Data;
 using Jhooa.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Stripe;
 
 namespace Jhooa.UI.Configuration;
 
@@ -42,8 +41,10 @@ public static partial class DependencyInjection
     {
         var stripeApiKey = config.GetValue<string>("Stripe:ApiKey") ??
                            throw new InvalidOperationException("Stripe API key not found.");
-        StripeConfiguration.ApiKey = stripeApiKey;
+        Stripe.StripeConfiguration.ApiKey = stripeApiKey;
         
+        services.Configure<StripeConfiguration>(
+            config.GetSection(StripeConfiguration.SectionName));
         services.AddScoped<IStripeService, StripeService>();
     }
 }

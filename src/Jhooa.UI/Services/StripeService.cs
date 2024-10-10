@@ -1,110 +1,120 @@
+using System.Globalization;
 using Jhooa.UI.Data;
 using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Features.Subscriptions.Models;
-using Microsoft.EntityFrameworkCore;
+using Jhooa.UI.Features.Subscriptions.Models.DTO;
+using Microsoft.Extensions.Options;
+using Stripe;
 using Stripe.Checkout;
 
 namespace Jhooa.UI.Services;
 
-public class StripeService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext) : IStripeService
+public class StripeService(
+    IHttpContextAccessor httpContextAccessor,
+    IOptions<Jhooa.UI.Configuration.StripeConfiguration> stripeConfig) : IStripeService
 {
-    public async Task<string> GeneratePaymentIntent(Guid userId, SubscriptionType subscriptionType)
+    private readonly Jhooa.UI.Configuration.StripeConfiguration _stripeConfig = stripeConfig.Value;
+
+    private static string GetMode(SubscriptionType subscriptionType)
+        => subscriptionType is SubscriptionType.AnnualRecurring or SubscriptionType.MonthlyRecurring
+            ? "subscription"
+            : "payment";
+
+    private string GetPrice(SubscriptionType subscriptionType)
+        => subscriptionType switch
+        {
+            SubscriptionType.MonthlyOnce => _stripeConfig.MonthlyOncePriceId,
+            //SubscriptionType.AnnualOnce => _stripeConfig.,
+            SubscriptionType.MonthlyRecurring => _stripeConfig.MonthlyRecurringPriceId,
+            //SubscriptionType.AnnualRecurring => expr,
+            _ => throw new ArgumentOutOfRangeException(nameof(subscriptionType), subscriptionType, null)
+        };
+
+
+    public async Task<PaymentIntentResponse> GeneratePaymentIntent(string stripeCustomerId,
+        SubscriptionType subscriptionType)
     {
-        var domain = $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host.Value}";
-        var user = dbContext.Users.First(u => u.Id == userId);
-        
-        var options = 
-            subscriptionType switch
-            {
-                SubscriptionType.MonthlyOnce => GenerateOnceMonthlySession(domain, user),
-                SubscriptionType.AnnualOnce => GenerateOnceAnnuallySession(domain, user),
-                _ => throw new ArgumentOutOfRangeException(nameof(subscriptionType), subscriptionType, null),
-            };
+        var domain =
+            $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host.Value}";
 
+        var options = new SessionCreateOptions
+        {
+            Customer = stripeCustomerId,
+            LineItems =
+            [
+                new SessionLineItemOptions
+                {
+                    Price = GetPrice(subscriptionType),
+                    Quantity = 1,
+                },
+            ],
+            Mode = GetMode(subscriptionType),
+            SuccessUrl = domain + "/Account/Manage/Subscription?session-id={CHECKOUT_SESSION_ID}",
+            //CancelUrl = domain + "/cancel.html",
+        };
         var service = new SessionService();
-
         var session = await service.CreateAsync(options);
 
-        await dbContext.SubscriptionHistories.AddAsync(new SubscriptionHistory()
+        return new PaymentIntentResponse()
         {
-            StripeCheckoutSessionId = session.Id,
-            Type = subscriptionType,
-            UserId = userId,
+            SessionId = session.Id,
+            SessionUrl = session.Url,
+        };
+    }
+
+    public async Task<string> EnsureCustomer(ApplicationUser user)
+    {
+        var service = new CustomerService();
+        var result = await service.SearchAsync(new CustomerSearchOptions()
+        {
+            Query = $"email:'{user.Email}'"
         });
-        await dbContext.SaveChangesAsync();
-        
-        return session.Url;
-    }
 
-    private static SessionCreateOptions GenerateOnceMonthlySession(string domain, ApplicationUser user)
-    {
-        var lineItems = new [] { new SessionLineItemOptions
+        if (result.Any())
         {
-            Quantity = 1,
-            PriceData = new SessionLineItemPriceDataOptions
-            {
-                Currency = "eur",
-                UnitAmountDecimal = 5 * 100,
-                ProductData = new SessionLineItemPriceDataProductDataOptions
-                {
-                    Name = "1 month",
-                },
-            },
-        },};
+            return result.First().Id;
+        }
 
-        var options = new SessionCreateOptions
+        var options = new CustomerCreateOptions
         {
-            LineItems = lineItems.ToList(),
-            CustomerEmail = user.Email,
-            Mode = "payment",
-            SuccessUrl = domain + "/Account/Manage/Subscription?session-id={CHECKOUT_SESSION_ID}",
-            CancelUrl = domain,
+            Email = user.Email,
+            Name =
+                $"{user.LastName.ToUpper(CultureInfo.CurrentCulture)} {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(user.FirstName)}",
         };
-        return options;
-    }
-    
-    private static SessionCreateOptions GenerateOnceAnnuallySession(string domain, ApplicationUser user)
-    {
-        var lineItems = new [] { new SessionLineItemOptions
-        {
-            Quantity = 1,
-            PriceData = new SessionLineItemPriceDataOptions
-            {
-                Currency = "eur",
-                UnitAmountDecimal = 50 * 100,
-                ProductData = new SessionLineItemPriceDataProductDataOptions
-                {
-                    Name = "1 year",
-                },
-            },
-        },};
+        var customer = await service.CreateAsync(options);
 
-        var options = new SessionCreateOptions
-        {
-            LineItems = lineItems.ToList(),
-            CustomerEmail = user.Email,
-            Mode = "payment",
-            SuccessUrl = domain + "/Account/Manage/Subscription?session-id={CHECKOUT_SESSION_ID}",
-            CancelUrl = domain,
-        };
-        return options;
+        return customer.Id;
     }
 
-    public async Task<bool> HandleCheckoutSessionCompleted(string sessionId)
+
+    public async Task<CheckoutSessionCompletedResponse?> HandleCheckoutSessionCompleted(string sessionId)
     {
         var sessionService = new SessionService();
         var session = await sessionService.GetAsync(sessionId);
-        
-        if (string.Equals(session.PaymentStatus, "paid", StringComparison.OrdinalIgnoreCase))
-        {
-            await dbContext.SubscriptionHistories.Where(x => x.StripeCheckoutSessionId == sessionId)
-                .ExecuteUpdateAsync(setters => setters
-                    .SetProperty(b => b.PaymentStatus, PaymentStatus.Paid));
-            await dbContext.SaveChangesAsync();
 
-            return true;
-        }
-
-        return false;
+        return string.Equals(session.PaymentStatus, "paid", StringComparison.OrdinalIgnoreCase)
+            ? new CheckoutSessionCompletedResponse()
+            {
+                PaymentIntentId = session.PaymentIntentId,
+                SubscriptionId = session.SubscriptionId,
+            }
+            : null;
     }
+    
+    public async Task<string> RetrieveSubscriptionId(string sessionId)
+    {
+        var sessionService = new SessionService();
+        var session = await sessionService.GetAsync(sessionId);
+
+        return session.SubscriptionId;
+    }
+    
+    public async Task<string> RetrievePaymentIntentId(string sessionId)
+    {
+        var sessionService = new SessionService();
+        var session = await sessionService.GetAsync(sessionId);
+
+        return session.PaymentIntentId;
+    }
+    
 }

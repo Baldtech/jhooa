@@ -2,6 +2,7 @@
 @attribute [Authorize]
 @layout ManageLayout
 
+@using System.Security.Claims
 @using Jhooa.UI.Features.Identity.Shared
 @using Jhooa.UI.Features.Subscriptions.Models
 @using Jhooa.UI.Services
@@ -10,6 +11,7 @@
 
 @inject IStripeService StriveService
 @inject ApplicationDbContext DbContext
+@inject AuthenticationStateProvider AuthStateProvider
 
 <h3>Subscriptions</h3>
 
@@ -18,12 +20,22 @@
     <h4 style="color: #26b050">@Message</h4>
 }
 
-@if (_subscriptionHistories is not null)
+@if (_activeSub is null)
+{
+    <p>No active subscription</p>
+}
+else
+{
+    <p>Active subscription: @_activeSub.Start - @_activeSub.End</p>
+}
+
+
+@if (_subscriptions is not null)
 {
     <ul>
-        @foreach(var subscription in _subscriptionHistories)
+        @foreach (var subscription in _subscriptions.OrderByDescending(o => o.Start))
         {
-            <li>@subscription.TypeString - @subscription.PaymentStatus - @subscription.BoughtAt.ToString("d")</li>
+            <li>@subscription.Start.ToString("MM-yyyy") - @subscription.End?.ToString("MM-yyyy") - @subscription.IsPaid</li>
         }
     </ul>
 }
@@ -36,21 +48,50 @@
 
     private string? Message { get; set; }
 
-    private List<SubscriptionHistory>? _subscriptionHistories;
+    private List<Jhooa.UI.Features.Subscriptions.Models.Subscription>? _subscriptions = new();
+    private Jhooa.UI.Features.Subscriptions.Models.Subscription? _activeSub;
 
     protected override async Task OnInitializedAsync()
     {
-        if (CheckoutSessionId is not null)
-        {
-            var result = await StriveService.HandleCheckoutSessionCompleted(CheckoutSessionId);
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
 
-            if (result)
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {
-                Message = "Payment successful!";
+                var userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+                if (CheckoutSessionId is not null)
+                {
+                    var sub = await DbContext.Subscriptions
+                        .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId && s.UserId == userId);
+
+                    if (sub is not null)
+                    {
+                        if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.AnnualOnce)
+                        {
+                            sub.StripePaymentIntentId = await StriveService.RetrievePaymentIntentId(CheckoutSessionId);
+                        }
+                        else
+                        {
+                            sub.StripeSubscriptionId = await StriveService.RetrieveSubscriptionId(CheckoutSessionId);
+                        }
+                        sub.PaidAt = DateTime.Now;
+                        
+                        await DbContext.SaveChangesAsync();
+                    }
+                }
+
+                _subscriptions = await DbContext.Subscriptions
+                    .Where(s => s.UserId == userId)
+                    .ToListAsync();
+
+                _activeSub = _subscriptions.FirstOrDefault(s =>
+                    s.IsPaid &&
+                    s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
+                    s.End >= DateOnly.FromDateTime(DateTime.Now));
             }
         }
-
-        _subscriptionHistories ??= await DbContext.SubscriptionHistories.ToListAsync();
     }
 
 }
