@@ -1,3 +1,4 @@
+
 using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Features.Subscriptions.Models;
 using Jhooa.UI.Features.Subscriptions.Models.DTO;
@@ -15,8 +16,9 @@ public interface IStripeService
     /// <returns></returns>
     Task<CheckoutSessionCompletedResponse?> HandleCheckoutSessionCompleted(string sessionId);
 
-    Task<string> RetrieveSubscriptionId(string sessionId);
-    Task<string> RetrievePaymentIntentId(string sessionId);
+    Task<Result<string>> RetrieveSubscriptionId(string sessionId);
+    Task<Result<string>> CancelSubscription(string subscriptionId);
+    Task<Result<string>> RetrievePaymentIntentIdIfPaid(string sessionId);
     
     Task<string> EnsureCustomer(ApplicationUser user);
 }

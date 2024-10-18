@@ -1,7 +1,8 @@
 namespace Jhooa.UI.Features.Subscriptions.Models;
 
-public enum PaymentStatus
+public enum SubscriptionStatus
 {
     NotPaid,
-    Paid
+    Paid,
+    Cancelled
 }

@@ -1,5 +1,3 @@
-using System.Globalization;
-using Jhooa.UI.Data;
 using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Features.Subscriptions.Models;
 using Jhooa.UI.Features.Subscriptions.Models.DTO;
@@ -14,21 +12,6 @@ public class StripeService(
     IOptions<Jhooa.UI.Configuration.StripeConfiguration> stripeConfig) : IStripeService
 {
     private readonly Jhooa.UI.Configuration.StripeConfiguration _stripeConfig = stripeConfig.Value;
-
-    private static string GetMode(SubscriptionType subscriptionType)
-        => subscriptionType is SubscriptionType.AnnualRecurring or SubscriptionType.MonthlyRecurring
-            ? "subscription"
-            : "payment";
-
-    private string GetPrice(SubscriptionType subscriptionType)
-        => subscriptionType switch
-        {
-            SubscriptionType.MonthlyOnce => _stripeConfig.MonthlyOncePriceId,
-            //SubscriptionType.AnnualOnce => _stripeConfig.,
-            SubscriptionType.MonthlyRecurring => _stripeConfig.MonthlyRecurringPriceId,
-            //SubscriptionType.AnnualRecurring => expr,
-            _ => throw new ArgumentOutOfRangeException(nameof(subscriptionType), subscriptionType, null)
-        };
 
 
     public async Task<PaymentIntentResponse> GeneratePaymentIntent(string stripeCustomerId,
@@ -50,8 +33,9 @@ public class StripeService(
             ],
             Mode = GetMode(subscriptionType),
             SuccessUrl = domain + "/Account/Manage/Subscription?session-id={CHECKOUT_SESSION_ID}",
-            //CancelUrl = domain + "/cancel.html",
+            CancelUrl = domain,
         };
+        
         var service = new SessionService();
         var session = await service.CreateAsync(options);
 
@@ -62,12 +46,27 @@ public class StripeService(
         };
     }
 
+    private static string GetMode(SubscriptionType subscriptionType)
+        => subscriptionType is SubscriptionType.AnnualRecurring or SubscriptionType.MonthlyRecurring
+            ? "subscription"
+            : "payment";
+
+    private string GetPrice(SubscriptionType subscriptionType)
+        => subscriptionType switch
+        {
+            SubscriptionType.MonthlyOnce => _stripeConfig.MonthlyOncePriceId,
+            SubscriptionType.AnnualOnce => _stripeConfig.AnnualOncePriceId,
+            SubscriptionType.MonthlyRecurring => _stripeConfig.MonthlyRecurringPriceId,
+            SubscriptionType.AnnualRecurring => _stripeConfig.AnnualRecurringPriceId,
+            _ => throw new ArgumentOutOfRangeException(nameof(subscriptionType), subscriptionType, null)
+        };
+
     public async Task<string> EnsureCustomer(ApplicationUser user)
     {
         var service = new CustomerService();
         var result = await service.SearchAsync(new CustomerSearchOptions()
         {
-            Query = $"email:'{user.Email}'"
+            Query = $"email:'{user.Email}'",
         });
 
         if (result.Any())
@@ -100,21 +99,39 @@ public class StripeService(
             }
             : null;
     }
-    
-    public async Task<string> RetrieveSubscriptionId(string sessionId)
+
+    public async Task<Result<string>> RetrieveSubscriptionId(string sessionId)
     {
         var sessionService = new SessionService();
         var session = await sessionService.GetAsync(sessionId);
 
-        return session.SubscriptionId;
+        if (string.Equals(session.PaymentStatus, "Paid", StringComparison.OrdinalIgnoreCase))
+        {
+            return session.SubscriptionId;
+        }
+
+        return Result.Fail("Payment not completed");
+        
     }
-    
-    public async Task<string> RetrievePaymentIntentId(string sessionId)
+
+    public async Task<Result<string>> CancelSubscription(string subscriptionId)
+    {
+        var subService = new SubscriptionService();
+        var result = await subService.CancelAsync(subscriptionId);
+
+        return result.Status;
+    }
+
+    public async Task<Result<string>> RetrievePaymentIntentIdIfPaid(string sessionId)
     {
         var sessionService = new SessionService();
         var session = await sessionService.GetAsync(sessionId);
+        
+        if (string.Equals(session.PaymentStatus, "Paid", StringComparison.OrdinalIgnoreCase))
+        {
+            return session.PaymentIntentId;
+        }
 
-        return session.PaymentIntentId;
+        return Result.Fail("Payment not completed");
     }
-    
 }
