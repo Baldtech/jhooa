@@ -80,7 +80,7 @@ else
 
                     if (sub is not null)
                     {
-                        if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.AnnualOnce)
+                        if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
                         {
                             var result = await StriveService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
                             if (result.IsSuccess)

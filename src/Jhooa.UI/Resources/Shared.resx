@@ -84,4 +84,7 @@
     <data name="ContactFormConfirmationDesc" xml:space="preserve">
         <value>Your message has been successfully sent. Jhooa will get back to you very soon!</value>
     </data>
+    <data name="BackToHome" xml:space="preserve">
+        <value>Back to home</value>
+    </data>
 </root>

@@ -1,0 +1,110 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="CreateAccount" xml:space="preserve">
+        <value>Créer un compte</value>
+    </data>
+    <data name="FormEmail" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="FormPassword" xml:space="preserve">
+        <value>Mot de passe</value>
+    </data>
+    <data name="FormRememberMe" xml:space="preserve">
+        <value>Se rappeler de moi</value>
+    </data>
+    <data name="FormLogin" xml:space="preserve">
+        <value>Se connecter</value>
+    </data>
+    <data name="ForgotPassword" xml:space="preserve">
+        <value>Oublié ton mot de passe ?</value>
+    </data>
+    <data name="AlreadyHaveAccount" xml:space="preserve">
+        <value>J'ai déjà un compte</value>
+    </data>
+    <data name="ResetPassword" xml:space="preserve">
+        <value>Réinitialise mon mot de passe</value>
+    </data>
+    <data name="RegisterIntro" xml:space="preserve">
+        <value>Pour créer votre compte, nous avons besoin de vos informations personnelles et de votre choix d’abonnement. Une fois le paiement effectué, votre compte sera activé et vous pourrez profiter pleinement des services Jhooa!</value>
+    </data>
+    <data name="RegisterMyWishes" xml:space="preserve">
+        <value>Mes voeux</value>
+    </data>
+    <data name="RegisterMySub" xml:space="preserve">
+        <value>Mon abonnement</value>
+    </data>
+    <data name="RegisterButton" xml:space="preserve">
+        <value>Payer et créer mon compte</value>
+    </data>
+    <data name="FormFirstName" xml:space="preserve">
+        <value>Prénom</value>
+    </data>
+    <data name="FormLastName" xml:space="preserve">
+        <value>Nom</value>
+    </data>
+    <data name="FormPasswordVerification" xml:space="preserve">
+        <value>Vérification mot de passe</value>
+    </data>
+    <data name="FormAddress" xml:space="preserve">
+        <value>Adresse</value>
+    </data>
+    <data name="FormZipCode" xml:space="preserve">
+        <value>Code postal</value>
+    </data>
+    <data name="FormCountry" xml:space="preserve">
+        <value>Pays</value>
+    </data>
+    <data name="FormPhoneNumber" xml:space="preserve">
+        <value>Téléphone</value>
+    </data>
+    <data name="RegisterDreamSubTitle" xml:space="preserve">
+        <value>Tentez de réaliser vos rêves</value>
+    </data>
+    <data name="RegisterDreamDescription" xml:space="preserve">
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité.</value>
+    </data>
+    <data name="RegisterMySubSubTitle" xml:space="preserve">
+        <value>Vivez l’expérience ! </value>
+    </data>
+    <data name="RegisterMySubDescription" xml:space="preserve">
+        <value>Abonnez vous mensuellement ou annuellement et gagnez la chance de participer à des évènements hors du commun, de voir un de vos rêves se réaliser et accéder à toutes nos vidéos. L’abonnement mensuel est valable un mois à partir de la date de paiement de celui-ci.</value>
+    </data>
+    <data name="RegisterMonthly" xml:space="preserve">
+        <value>Mensuel</value>
+    </data>
+    <data name="RegisterMonthlyRecurring" xml:space="preserve">
+        <value>Mensuel renouvelable</value>
+    </data>
+    <data name="FormSmallDream" xml:space="preserve">
+        <value>Mon petit rêve</value>
+    </data>
+    <data name="FormMediumDream" xml:space="preserve">
+        <value>Mon moyen rêve</value>
+    </data>
+    <data name="FormBigDream" xml:space="preserve">
+        <value>Mon grand rêve</value>
+    </data>
+    <data name="RegisterYearly" xml:space="preserve">
+        <value>Annuel</value>
+    </data>
+    <data name="SubscribeToNewsletter" xml:space="preserve">
+        <value>Je souhaite recevoir des e-mails concernant des actualités, des offres spéciales et des promotions</value>
+    </data>
+    <data name="AcceptToc" xml:space="preserve">
+        <value>J’ai lu et j’accepte les conditions générales d’utilisation</value>
+    </data>
+    <data name="RegisterYearlyRecurring" xml:space="preserve">
+        <value>Annuel renouvelable</value>
+    </data>
+</root>

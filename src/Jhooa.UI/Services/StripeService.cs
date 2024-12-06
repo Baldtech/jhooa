@@ -14,6 +14,38 @@ public class StripeService(
     private readonly Jhooa.UI.Configuration.StripeConfiguration _stripeConfig = stripeConfig.Value;
 
 
+    public async Task<PaymentIntentResponse> GenerateFirstPaymentIntent(string stripeCustomerId,
+        SubscriptionType subscriptionType)
+    {
+        var domain =
+            $"{httpContextAccessor.HttpContext?.Request.Scheme}://{httpContextAccessor.HttpContext?.Request.Host.Value}";
+
+        var options = new SessionCreateOptions
+        {
+            Customer = stripeCustomerId,
+            LineItems =
+            [
+                new SessionLineItemOptions
+                {
+                    Price = GetPrice(subscriptionType),
+                    Quantity = 1,
+                },
+            ],
+            Mode = GetMode(subscriptionType),
+            SuccessUrl = domain + "/Account/ConfirmAccount?session-id={CHECKOUT_SESSION_ID}",
+            CancelUrl = domain + "?session-id={CHECKOUT_SESSION_ID}&cancel=true",
+        };
+        
+        var service = new SessionService();
+        var session = await service.CreateAsync(options);
+
+        return new PaymentIntentResponse()
+        {
+            SessionId = session.Id,
+            SessionUrl = session.Url,
+        };
+    }
+    
     public async Task<PaymentIntentResponse> GeneratePaymentIntent(string stripeCustomerId,
         SubscriptionType subscriptionType)
     {
@@ -47,7 +79,7 @@ public class StripeService(
     }
 
     private static string GetMode(SubscriptionType subscriptionType)
-        => subscriptionType is SubscriptionType.AnnualRecurring or SubscriptionType.MonthlyRecurring
+        => subscriptionType is SubscriptionType.YearlyRecurring or SubscriptionType.MonthlyRecurring
             ? "subscription"
             : "payment";
 
@@ -55,9 +87,9 @@ public class StripeService(
         => subscriptionType switch
         {
             SubscriptionType.MonthlyOnce => _stripeConfig.MonthlyOncePriceId,
-            SubscriptionType.AnnualOnce => _stripeConfig.AnnualOncePriceId,
+            SubscriptionType.YearlyOnce => _stripeConfig.AnnualOncePriceId,
             SubscriptionType.MonthlyRecurring => _stripeConfig.MonthlyRecurringPriceId,
-            SubscriptionType.AnnualRecurring => _stripeConfig.AnnualRecurringPriceId,
+            SubscriptionType.YearlyRecurring => _stripeConfig.AnnualRecurringPriceId,
             _ => throw new ArgumentOutOfRangeException(nameof(subscriptionType), subscriptionType, null)
         };
 

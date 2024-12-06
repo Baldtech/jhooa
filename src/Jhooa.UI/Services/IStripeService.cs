@@ -7,6 +7,7 @@ namespace Jhooa.UI.Services;
 
 public interface IStripeService
 {
+    Task<PaymentIntentResponse> GenerateFirstPaymentIntent(string stripeCustomerId, SubscriptionType subscriptionType);
     Task<PaymentIntentResponse> GeneratePaymentIntent(string stripeCustomerId, SubscriptionType subscriptionType);
     
     /// <summary>

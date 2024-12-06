@@ -1,0 +1,48 @@
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Localization.Components
+
+@implements IDisposable
+
+@inject IStringLocalizer<Shared> Loc
+@inject NavigationManager NavigationManager
+
+<nav class="max-w-screen-xl mx-auto border-gray-100 text-white">
+    <menu class="grid grid-flow-col">
+        <li class="list-none">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                @Loc["BackToHome"]
+            </NavLink>
+        </li>
+        <li>
+            
+        </li>
+        <li>
+            <CultureSelector @rendermode="InteractiveServer"/>
+        </li>
+    </menu>
+
+</nav>
+<hr class="border-gray-400 border-t-2 my-8" />
+
+@code {
+    private string? _currentUrl;
+
+    protected override void OnInitialized()
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
+}

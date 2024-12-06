@@ -3,9 +3,14 @@
 @using Jhooa.UI.Features.Identity
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Home.Components
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
 
+@inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Features.Home.Resources.Home> Loc
 @inject IdentityUserAccessor UserAccessor
+@inject IStripeService StripeService
 
 <PageTitle>Home</PageTitle>
 
@@ -30,7 +35,32 @@
 <HomeExperience />
 
 @code {
+    [SupplyParameterFromQuery(Name = "session-id")]
+    public string? CheckoutSessionId { get; set; }
     
+    [SupplyParameterFromQuery(Name = "cancel")]
+    public bool? CancelCheckoutSession { get; set; }
     
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (CheckoutSessionId is not null && CancelCheckoutSession == true)
+        {
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
+
+            if (sub is not null)
+            {
+                var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
+                await DbContext.Dreams.Where(d => d.UserId == user.Id)
+                    .ExecuteDeleteAsync();
+                await DbContext.Subscriptions.Where(s => s.UserId == user.Id)
+                    .ExecuteDeleteAsync();
+                await DbContext.Users.Where(u => u.Id == user.Id)
+                    .ExecuteDeleteAsync();
+
+                await DbContext.SaveChangesAsync();
+            }
+        }
+    }
 }

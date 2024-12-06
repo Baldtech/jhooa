@@ -1,0 +1,63 @@
+@page "/Account/ConfirmAccount"
+
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStripeService StripeService
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Identity> Loc
+
+<PageTitle>Payment confirmation</PageTitle>
+
+<section class="max-w-screen-xl mx-auto  text-white">
+    <h3 class="mb-8">@Loc["AccountConfirmed"]</h3>
+
+    <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Login", new Dictionary<string, object?> { }))" class="border-2 border-white p-3 bg-gray-400">@Loc["Connection"]</a>
+
+</section>
+
+@code {
+
+    [SupplyParameterFromQuery(Name = "session-id")]
+    public string? CheckoutSessionId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (CheckoutSessionId is not null)
+        {
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
+
+            if (sub is not null)
+            {
+                var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
+                await DbContext.Users.Where(u => u.Id == user.Id)
+                    .ExecuteUpdateAsync(setters =>
+                        setters.SetProperty(s => s.ActivatedAt, DateTimeOffset.Now));
+
+                if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
+                {
+                    var result = await StripeService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
+                    if (result.IsSuccess)
+                    {
+                        sub.MarkPaymentAsPaid(result.Value);
+                    }
+                }
+                else
+                {
+                    var result = await StripeService.RetrieveSubscriptionId(CheckoutSessionId);
+                    if (result.IsSuccess)
+                    {
+                        sub.MarkSubscriptionAsPaid(result.Value);
+                    }
+                }
+
+                await DbContext.SaveChangesAsync();
+            }
+        }
+    }
+
+}

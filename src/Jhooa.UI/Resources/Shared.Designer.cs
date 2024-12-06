@@ -176,5 +176,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("ContactFormConfirmationDesc", resourceCulture);
             }
         }
+        
+        internal static string BackToHome {
+            get {
+                return ResourceManager.GetString("BackToHome", resourceCulture);
+            }
+        }
     }
 }
