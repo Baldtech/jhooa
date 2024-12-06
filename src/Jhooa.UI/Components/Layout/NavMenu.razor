@@ -1,50 +1,72 @@
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Localization.Components
 
 @implements IDisposable
 
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
 
+<nav class="max-w-screen-xl mx-auto">
+    <menu class="grid grid-flow-col">
+        <li class="list-none">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                @Loc["Home"]
+            </NavLink>
+        </li>
+        <li class="list-none">
+            <NavLink class="nav-link" href="/Events" Match="NavLinkMatch.All">
+                @Loc["Events"]
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="/Videos" Match="NavLinkMatch.All">
+                @Loc["Videos"]
+            </NavLink>
+        </li>
+        <AuthorizeView>
+            <Authorized>
+                <li>
+                    <NavLink class="nav-link" href="Account/Manage">
+                        @context.User.Identity?.Name
+                    </NavLink>
+                </li>
+                <li>
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken/>
+                        <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+                        <button type="submit" class="nav-link">
+                            Logout
+                        </button>
+                    </form>
+                </li>
 
-<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-    @Loc["Home"]
-</NavLink>
+            </Authorized>
+            <NotAuthorized>
+                <li>
 
-<NavLink class="nav-link" href="/Events" Match="NavLinkMatch.All">
-    @Loc["Events"]
-</NavLink>
+                    <NavLink class="nav-link" href="Account/Login">
+                        @Loc["Login"]
+                    </NavLink>
+                </li>
 
-<AuthorizeView>
-    <Authorized>
-        <NavLink class="nav-link" href="Account/Manage">
-            @context.User.Identity?.Name
-        </NavLink>
-        <form action="Account/Logout" method="post">
-            <AntiforgeryToken/>
-            <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
-            <button type="submit" class="nav-link">
-                 Logout
-            </button>
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <NavLink class="nav-link" href="Account/Register">
-            Register
-        </NavLink>
-        <NavLink class="nav-link" href="Account/Login">
-            Login
-        </NavLink>
-    </NotAuthorized>
-</AuthorizeView>
+            </NotAuthorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <li>
+                <NavLink class="nav-link" href="Admin">
+                    @Loc["Administration"]
+                </NavLink>
+            </li>
 
-<AuthorizeView Roles="Admin">
-    <NavLink class="nav-link" href="Admin">
-        Administration
-    </NavLink>
-</AuthorizeView>
+        </AuthorizeView>
+        <li>
+            <CultureSelector @rendermode="InteractiveServer"/>
 
-<hr/>
+        </li>
+    </menu>
+
+</nav>
 
 @code {
     private string? _currentUrl;

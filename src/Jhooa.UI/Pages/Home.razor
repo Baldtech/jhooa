@@ -1,32 +1,36 @@
 ﻿@page "/"
 
 @using Jhooa.UI.Features.Identity
-@using Jhooa.UI.Features.Identity.Models
-@using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
-@using Jhooa.UI.Features.Subscriptions.Components
+@using Jhooa.UI.Features.Home.Components
 
-@inject IStringLocalizer<Shared> Loc
+@inject IStringLocalizer<Features.Home.Resources.Home> Loc
 @inject IdentityUserAccessor UserAccessor
 
 <PageTitle>Home</PageTitle>
 
-<h1>@Loc["Welcome"] @_user?.FirstName</h1>
+<HomeHeader />
 
-<BuySubscription />
+<HomeConcept />
+
+<div class="h-24"></div>
+
+<HomeVideo />
+
+<div class="h-24"></div>
+
+<h3 class="text-center">@Loc["TitleCourage"]</h3>
+
+<div class="h-24"></div>
+
+<HomeEvents />
+
+<div class="h-24"></div>
+
+<HomeExperience />
 
 @code {
     
-    private ApplicationUser? _user;
     
-    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
-    
-    protected override async Task OnInitializedAsync()
-    {
-        if (HttpContext.User.Identity?.IsAuthenticated == true)
-        {
-            _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
-        }
-    }
 
 }

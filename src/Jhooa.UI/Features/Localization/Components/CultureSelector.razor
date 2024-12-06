@@ -2,21 +2,26 @@
 @inject NavigationManager Navigation
 @inject IStringLocalizer<CultureSelector> Loc
 
-<p>
-    <ul>
-        <li>
-            <img src="images/flags/france_rounded.png" width="30" height="30" alt="fr" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'/>
-        </li>
-        <li>
-            <img src="images/flags/uk_rounded.png" width="30" height="30" alt="en" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'/>
-        </li>
-    </ul>
-</p>
+<InputSelect id="fruit" @bind-Value="selectedCulture">
+    <option value="fr-FR" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'>FR</option>
+    <option value="en-GB" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'>EN</option>
+</InputSelect>
+
 
 @code
 {
+    private CultureInfo selectedCulture = CultureInfo.CurrentCulture;
+    private string test = string.Empty;
+    
+    protected override void OnInitialized()
+    {
+        test = selectedCulture.Name;
+    }
+    
+    
     private Task ApplySelectedCultureAsync(CultureInfo culture)
     {
+        
         if (Equals(CultureInfo.CurrentCulture, culture))
             return Task.CompletedTask;
 

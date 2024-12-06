@@ -60,4 +60,28 @@
     <data name="EmailAddress" xml:space="preserve">
         <value>Email address</value>
     </data>
+    <data name="Login" xml:space="preserve">
+        <value>Login</value>
+    </data>
+    <data name="FooterContactUs" xml:space="preserve">
+        <value>Contact us</value>
+    </data>
+    <data name="ContactFormSubmit" xml:space="preserve">
+        <value>Submit</value>
+    </data>
+    <data name="ContactFormEmail" xml:space="preserve">
+        <value>name.lastname@mail.com</value>
+    </data>
+    <data name="ContactFormSubject" xml:space="preserve">
+        <value>subject</value>
+    </data>
+    <data name="ContactFormContent" xml:space="preserve">
+        <value>your message</value>
+    </data>
+    <data name="ContactFormConfirmationTitle" xml:space="preserve">
+        <value>Message sent!</value>
+    </data>
+    <data name="ContactFormConfirmationDesc" xml:space="preserve">
+        <value>Your message has been successfully sent. Jhooa will get back to you very soon!</value>
+    </data>
 </root>

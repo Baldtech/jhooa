@@ -1,0 +1,24 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Home> Loc
+
+
+<section class="max-w-screen-xl mx-auto grid grid-cols-4 gap-4">
+    <div>
+        <img src="https://placehold.co/550x550/eb4034/fff" alt="Header with boat" class="m-auto object-cover" />
+    </div>
+    <div class="col-span-3">
+        <h2>@Loc["ExpTitle"]</h2>
+        <p>@Loc["ExpDescription"]</p>
+        <h3>@Loc["ExpPart1Title"]</h3>
+        <p>@Loc["ExpPart1Desc"]</p>
+        <h3>@Loc["ExpPart2Title"]</h3>
+        <p>@Loc["ExpPart2Desc"]</p>
+        <h3>@Loc["ExpPart3Title"]</h3>
+        <p>@Loc["ExpPart3Desc"]</p>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <p class="bg-orange-100">@Loc["Monthly"] - 5 @Loc["PriceMonthlyDesc"]</p>
+            <p class="bg-blue-100">@Loc["Yearly"] - 5 @Loc["PriceYearlyDesc"]</p>
+        </div>
+    </div>
+</section>

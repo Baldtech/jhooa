@@ -1,0 +1,25 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Home> Loc
+
+<section class="max-w-screen-xl mx-auto grid grid-cols-4 gap-4">
+    <div class=" ">
+        <img src="https://placehold.co/500x650/074a00/fff" alt="" class="object-cover" />
+    </div>
+    <div class=" ">
+        <img src="https://placehold.co/500x650/6ef93d/fff" alt="" class="object-cover "  />
+    </div>
+    <div class="">
+        <p class="text-center ">
+            @Loc["EventsPart1"]
+            <br /><br />
+            @Loc["EventsPart2"]
+            <br /><br />
+            <NavLink class="nav-link" href="/Events" Match="NavLinkMatch.All">
+                @Loc["OurEvents"]
+            </NavLink>
+        </p>
+    </div>
+    <div class="">
+        <img src="https://placehold.co/500x650/eb4034/fff" alt="" class=" bject-cover"  />
+    </div>
+</section>
