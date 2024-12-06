@@ -3,28 +3,28 @@
 @using System.Text
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Jhooa.UI.Data
 @using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IdentityRedirectManager RedirectManager
+@inject IStripeService StripeService
+@inject ApplicationDbContext DbContext
 
 <PageTitle>Confirm email</PageTitle>
 
 <h1>Confirm email</h1>
-<StatusMessage Message="@statusMessage" />
+<StatusMessage Message="@statusMessage"/>
 
 @code {
     private string? statusMessage;
 
-    [CascadingParameter]
-    private HttpContext HttpContext { get; set; } = default!;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
-    [SupplyParameterFromQuery]
-    private string? UserId { get; set; }
+    [SupplyParameterFromQuery] private string? UserId { get; set; }
 
-    [SupplyParameterFromQuery]
-    private string? Code { get; set; }
+    [SupplyParameterFromQuery] private string? Code { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,7 +43,18 @@
         {
             var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Code));
             var result = await UserManager.ConfirmEmailAsync(user, code);
+
+            if (result.Succeeded)
+            {
+                var stripeCustomerId = await StripeService.EnsureCustomer(user);
+                await DbContext.Users.Where(u => u.Id == user.Id)
+                    .ExecuteUpdateAsync(setters => 
+                        setters.SetProperty(s => s.StripeCustomerId, stripeCustomerId));
+                await DbContext.SaveChangesAsync();
+            }
+
             statusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
         }
     }
+
 }

@@ -15,7 +15,7 @@ namespace Jhooa.UI.Features.Identity;
 
 internal static class IdentityComponentsEndpointRouteBuilderExtensions
 {
-    public static IEndpointConventionBuilder MapAdditionalIdentityEndpoints(this IEndpointRouteBuilder endpoints)
+    public static void MapAdditionalIdentityEndpoints(this IEndpointRouteBuilder endpoints)
     {
         ArgumentNullException.ThrowIfNull(endpoints);
 
@@ -28,8 +28,6 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
         var manageGroup = MapLinkExternalLogin(accountGroup);
 
         MapDownloadPersonalData(endpoints, manageGroup);
-
-        return accountGroup;
     }
 
     private static RouteGroupBuilder MapLinkExternalLogin(RouteGroupBuilder accountGroup)

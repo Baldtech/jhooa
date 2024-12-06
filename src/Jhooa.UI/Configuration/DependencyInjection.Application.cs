@@ -1,3 +1,5 @@
+using Jhooa.UI.Services;
+
 namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
@@ -10,6 +12,7 @@ public static partial class DependencyInjection
     /// <returns></returns>
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
     {
+        services.AddScoped<IDreamService, DreamService>();
 
 
         return services;

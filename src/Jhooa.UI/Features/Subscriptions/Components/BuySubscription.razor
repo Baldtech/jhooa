@@ -1,0 +1,99 @@
+@using System.Security.Claims
+@using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
+
+@rendermode InteractiveServer
+
+@inject IStripeService StripeService
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ApplicationDbContext DbContext
+
+<h3>Buy a subscription</h3>
+
+@if (_userId.HasValue)
+{
+    if (_activeSub is not null)
+    {
+        <p>You already have an active subscription (@_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : $" ({_activeSub.Type} - auto-renew)"))</p>
+    }
+    else
+    {
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyOnce); })">1 month</button>
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualOnce); })">1 year</button>
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyRecurring); })">1 month - auto renew</button>
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualRecurring); })">1 year - auto renew</button>
+    }
+}
+else
+{
+    <p>You should create an account to subscribe</p>
+}
+
+
+@code {
+
+    private Guid? _userId;
+    private ApplicationUser? _user;
+    private Subscription? _activeSub;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
+            {
+                _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                _user = await DbContext.Users.FirstAsync(u =>
+                    u.Id == _userId);
+                
+                var subscriptions = await DbContext.Subscriptions
+                    .Where(s => s.UserId == _userId)
+                    .ToListAsync();
+
+                _activeSub = subscriptions.FirstOrDefault(s =>
+                    s.Status == SubscriptionStatus.Paid &&
+                    s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
+                    (s.End is null || s.End >= DateOnly.FromDateTime(DateTime.Now)));
+            }
+        }
+    }
+
+    private async Task BuySubscriptionAsync(SubscriptionType type)
+    {
+        if (_user is null) return;
+
+        var session = await StripeService.GeneratePaymentIntent(_user.StripeCustomerId!, type);
+        var sub = new Subscription
+        {
+            Start = DateOnly.FromDateTime(DateTime.Now),
+            End = GetEndDate(type),
+            UserId = _user.Id,
+            StripeSessionCheckoutId = session.SessionId,
+            Type = type
+        };
+
+        await DbContext.Subscriptions.AddAsync(sub);
+        await DbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo(session.SessionUrl);
+    }
+
+    private static DateOnly? GetEndDate(SubscriptionType type)
+        => type switch
+        {
+            SubscriptionType.MonthlyOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
+            SubscriptionType.AnnualOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
+            SubscriptionType.MonthlyRecurring => null,
+            SubscriptionType.AnnualRecurring => null,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
+
+}
