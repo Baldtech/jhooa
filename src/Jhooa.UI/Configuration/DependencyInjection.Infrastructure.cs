@@ -18,16 +18,16 @@ public static partial class DependencyInjection
         
         var connectionString = config.GetValue<string>("Database:ConnectionString") ??
                                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        if (isDevelopment)
-        {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString));
-        }
-        else
-        {
+        // if (isDevelopment)
+        // {
+        //     services.AddDbContext<ApplicationDbContext>(options =>
+        //         options.UseSqlite(connectionString));
+        // }
+        // else
+        // {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
-        }
+       // }
         
         services.AddDatabaseDeveloperPageExceptionFilter();
         
