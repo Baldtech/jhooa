@@ -63,6 +63,8 @@
 
             await DbContext.ContactFormSubmissions.AddAsync(submission);
             await DbContext.SaveChangesAsync();
+
+            Model = new ContactForm();
             
             NavigationManager.NavigateTo($"/ContactForm/Confirmation");
 
