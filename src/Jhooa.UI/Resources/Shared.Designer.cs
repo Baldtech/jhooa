@@ -128,5 +128,59 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("EmailAddress", resourceCulture);
             }
         }
+        
+        internal static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        internal static string FooterContactUs {
+            get {
+                return ResourceManager.GetString("FooterContactUs", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormSubmit {
+            get {
+                return ResourceManager.GetString("ContactFormSubmit", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormEmail {
+            get {
+                return ResourceManager.GetString("ContactFormEmail", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormSubject {
+            get {
+                return ResourceManager.GetString("ContactFormSubject", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormContent {
+            get {
+                return ResourceManager.GetString("ContactFormContent", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormConfirmationTitle {
+            get {
+                return ResourceManager.GetString("ContactFormConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        internal static string ContactFormConfirmationDesc {
+            get {
+                return ResourceManager.GetString("ContactFormConfirmationDesc", resourceCulture);
+            }
+        }
+        
+        internal static string BackToHome {
+            get {
+                return ResourceManager.GetString("BackToHome", resourceCulture);
+            }
+        }
     }
 }

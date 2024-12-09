@@ -1,0 +1,79 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="OurConcept" xml:space="preserve">
+        <value>Notre concept</value>
+    </data>
+    <data name="OurConceptPart1" xml:space="preserve">
+        <value>Le quotidien, on le connait tous ! Il peut vite nous emporter au profit de nos obligations et nous éloigner de nos besoins et de nos rêves. C’est de ce constat qu’est né Jhooa!, avec l’envie de permettre à chacun de vivre pleinement grâce à la force du collectif. </value>
+    </data>
+    <data name="OurConceptPart2" xml:space="preserve">
+        <value>Imaginez un lieu où vos souhaits, des plus simples aux plus audacieux, prennent vie. Nous offrons à nos membres l’opportunité unique de vivre des moments de joie, de confort, de folie, ou de sérénité, tout ce dont vous avez besoin pour être heureux. </value>
+    </data>
+    <data name="OurConceptPart3" xml:space="preserve">
+        <value>En plus de réaliser vos souhaits, vous aurez la chance de participer à des événements hors du commun : concerts avec nuit d’hôtel, repas d’un chef dans un lieu insolite, pizza à Rome, saut en parachute… nous saurons vous surprendre ! 
+</value>
+    </data>
+    <data name="OurConceptPart4" xml:space="preserve">
+        <value>Jhooa!, c’est bien plus qu’une expérience ; c’est la clé qui ouvre la porte de l’extra dans l’ordinaire, une invitation à bousculer votre quotidien, à toucher l’inaccessible et à vivre en ayant le sentiment que tout devient possible.</value>
+    </data>
+    <data name="TitleCourage" xml:space="preserve">
+        <value>L’audace de rêver ; nous permettre de réaliser.</value>
+    </data>
+    <data name="EventsPart1" xml:space="preserve">
+        <value>Nos événements sont aussi fous que surprenants. Ils n’ont comme limite que celle de notre esprit et comme énergie celle de vous faire vous sentir vivants ;</value>
+    </data>
+    <data name="EventsPart2" xml:space="preserve">
+        <value>Leur but : Créer des moments inoubliables et hors du temps pour contrarier votre quotidien et nourrir ces besoins enfantins qui vivent en chacun : le jeu et la folie</value>
+    </data>
+    <data name="OurEvents" xml:space="preserve">
+        <value>Nos évènements</value>
+    </data>
+    <data name="ExpTitle" xml:space="preserve">
+        <value>Rejoignez l’expérience</value>
+    </data>
+    <data name="ExpDescription" xml:space="preserve">
+        <value>Jhooa! c’est 200.000 abonnés et pas un de plus parmi lesquels chaque mois vous pouvez vous trouver !
+Votre force pour vivre des moments WAW c’est le collectif, votre chance c’est votre individualité !</value>
+    </data>
+    <data name="ExpPart1Title" xml:space="preserve">
+        <value>Tentez de réaliser vos rêves </value>
+    </data>
+    <data name="ExpPart1Desc" xml:space="preserve">
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’ils s’agissent d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité. JHOOA ! contactera la liste des personnes sélectionnées chaque 10 du mois qui suivent les mois pour lesquels elles ont participé en nous partageant leurs voeux.</value>
+    </data>
+    <data name="ExpPart2Title" xml:space="preserve">
+        <value>Accédez à nos contenus vidéos illimités</value>
+    </data>
+    <data name="ExpPart2Desc" xml:space="preserve">
+        <value>En tant que membres vous bénéficiez d’un accès illimité à un contenu vidéo qui vous plonge au coeur des rêves et des évènements, ainsi que dans la vie de Jhooa ! Suivez-nous pour annoncer aux abonnés sélectionnés qu’ils vont voir leur rêve se réaliser, assistez à la concrétisation de ces rêves et revivez la magie de nos évènements. </value>
+    </data>
+    <data name="ExpPart3Title" xml:space="preserve">
+        <value>Saisissez l’opportunité de participer à nos évènements </value>
+    </data>
+    <data name="ExpPart3Desc" xml:space="preserve">
+        <value>Nos abonnés sont invités à participer à des évènements exclusifs et surprenants conçus pour vous émerveiller et marquer vos esprits. Chaque moment passé avec nous constitue une parenthèse enchantée, où l’ordinaire cède place à l’extraordinaire.</value>
+    </data>
+    <data name="Monthly" xml:space="preserve">
+        <value>Mensuel</value>
+    </data>
+    <data name="Yearly" xml:space="preserve">
+        <value>Annuel</value>
+    </data>
+    <data name="PriceYearlyDesc" xml:space="preserve">
+        <value>€/an</value>
+    </data>
+    <data name="PriceMonthlyDesc" xml:space="preserve">
+        <value>€/mois</value>
+    </data>
+</root>

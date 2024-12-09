@@ -22,9 +22,9 @@
     else
     {
         <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyOnce); })">1 month</button>
-        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualOnce); })">1 year</button>
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.YearlyOnce); })">1 year</button>
         <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.MonthlyRecurring); })">1 month - auto renew</button>
-        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.AnnualRecurring); })">1 year - auto renew</button>
+        <button type="button" @onclick="@(async () => { await BuySubscriptionAsync(SubscriptionType.YearlyRecurring); })">1 year - auto renew</button>
     }
 }
 else
@@ -88,10 +88,10 @@ else
         {
             SubscriptionType.MonthlyOnce
                 => DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
-            SubscriptionType.AnnualOnce
+            SubscriptionType.YearlyOnce
                 => DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
             SubscriptionType.MonthlyRecurring => null,
-            SubscriptionType.AnnualRecurring => null,
+            SubscriptionType.YearlyRecurring => null,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 

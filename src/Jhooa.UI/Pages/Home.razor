@@ -1,32 +1,66 @@
 ﻿@page "/"
 
 @using Jhooa.UI.Features.Identity
-@using Jhooa.UI.Features.Identity.Models
-@using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
-@using Jhooa.UI.Features.Subscriptions.Components
+@using Jhooa.UI.Features.Home.Components
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
 
-@inject IStringLocalizer<Shared> Loc
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Features.Home.Resources.Home> Loc
 @inject IdentityUserAccessor UserAccessor
+@inject IStripeService StripeService
 
 <PageTitle>Home</PageTitle>
 
-<h1>@Loc["Welcome"] @_user?.FirstName</h1>
+<HomeHeader />
 
-<BuySubscription />
+<HomeConcept />
+
+<div class="h-24"></div>
+
+<HomeVideo />
+
+<div class="h-24"></div>
+
+<h3 class="text-center">@Loc["TitleCourage"]</h3>
+
+<div class="h-24"></div>
+
+<HomeEvents />
+
+<div class="h-24"></div>
+
+<HomeExperience />
 
 @code {
+    [SupplyParameterFromQuery(Name = "session-id")]
+    public string? CheckoutSessionId { get; set; }
     
-    private ApplicationUser? _user;
+    [SupplyParameterFromQuery(Name = "cancel")]
+    public bool? CancelCheckoutSession { get; set; }
     
-    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
-    
+
     protected override async Task OnInitializedAsync()
     {
-        if (HttpContext.User.Identity?.IsAuthenticated == true)
+        if (CheckoutSessionId is not null && CancelCheckoutSession == true)
         {
-            _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
+
+            if (sub is not null)
+            {
+                var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
+                await DbContext.Dreams.Where(d => d.UserId == user.Id)
+                    .ExecuteDeleteAsync();
+                await DbContext.Subscriptions.Where(s => s.UserId == user.Id)
+                    .ExecuteDeleteAsync();
+                await DbContext.Users.Where(u => u.Id == user.Id)
+                    .ExecuteDeleteAsync();
+
+                await DbContext.SaveChangesAsync();
+            }
         }
     }
-
 }

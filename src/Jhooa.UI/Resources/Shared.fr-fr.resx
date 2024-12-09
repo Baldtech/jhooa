@@ -53,4 +53,31 @@
     <data name="EmailAddress" xml:space="preserve">
         <value>Adresse email</value>
     </data>
+    <data name="Login" xml:space="preserve">
+        <value>Connection</value>
+    </data>
+    <data name="FooterContactUs" xml:space="preserve">
+        <value>Contactez-nous</value>
+    </data>
+    <data name="ContactFormSubmit" xml:space="preserve">
+        <value>Envoyer</value>
+    </data>
+    <data name="ContactFormEmail" xml:space="preserve">
+        <value>nom.prenom@mail.com</value>
+    </data>
+    <data name="ContactFormSubject" xml:space="preserve">
+        <value>sujet</value>
+    </data>
+    <data name="ContactFormContent" xml:space="preserve">
+        <value>votre message</value>
+    </data>
+    <data name="ContactFormConfirmationTitle" xml:space="preserve">
+        <value>Message envoyé !</value>
+    </data>
+    <data name="ContactFormConfirmationDesc" xml:space="preserve">
+        <value>Votre message a bien été envoyé. Jhooa vous recontactera très prochainement !</value>
+    </data>
+    <data name="BackToHome" xml:space="preserve">
+        <value>Retourner au site</value>
+    </data>
 </root>

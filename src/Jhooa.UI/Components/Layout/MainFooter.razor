@@ -1,0 +1,89 @@
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Features.ContactForm.Models
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Shared> Loc
+@inject NavigationManager NavigationManager
+
+<div class="h-24"></div>
+
+<footer class="w-full bg-jhooa-teal-200 text-white py-8">
+    <div class="max-w-screen-xl mx-auto grid grid-cols-4 ">
+        <div>
+            <h3>@Loc["FooterContactUs"]</h3>
+            <ul>
+                <li>Email</li>
+                <li>Facebook</li>
+                <li>TikTok</li>
+                <li>Instagram</li>
+            </ul>
+        </div>
+        <div class="col-span-3">
+            <EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync" FormName="ContactForm" class="space-y-6">
+                <DataAnnotationsValidator></DataAnnotationsValidator>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <InputText @bind-Value="Model!.Email" placeholder="@Loc["ContactFormEmail"]" class="mt-1 block w-full border-2 border-white bg-transparent p-3 focus:outline-none mb-4 placeholder-white"/>
+                        <ValidationMessage For="() => Model!.Email" class="text-danger"/>
+                        <InputText @bind-Value="Model!.Subject" placeholder="@Loc["ContactFormSubject"]" class="mt-1 block w-full border-2 border-white bg-transparent p-3 focus:outline-none placeholder-white"/>
+                        <ValidationMessage For="() => Model!.Subject" class="text-danger"/>
+
+                    </div>
+                    <div>
+                        <InputTextArea @bind-Value="Model!.Content" placeholder="@Loc["ContactFormContent"]" class="mt-1 block w-full border-2 border-white bg-transparent p-3 focus:outline-none placeholder-white mb-4 min-h-[7.5rem]"/>
+                        <ValidationMessage For="() => Model!.Content" class="text-danger"/>
+
+                        <button type="submit" class="border-2 border-white p-3 float-right">@Loc["ContactFormSubmit"]</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+
+</footer>
+
+@code {
+    [SupplyParameterFromForm]
+    private ContactForm? Model { get; set; }
+    
+    protected override void OnInitialized() => Model ??= new ContactForm();
+
+    private async Task OnValidSubmitAsync()
+    {
+        if (Model is not null)
+        {
+            var submission = new ContactFormSubmission()
+            {
+                Content = Model.Content!,
+                Subject = Model.Subject!,
+                Sender = Model.Email!
+            };
+
+            await DbContext.ContactFormSubmissions.AddAsync(submission);
+            await DbContext.SaveChangesAsync();
+            
+            NavigationManager.NavigateTo($"/ContactForm/Confirmation");
+
+        }
+        
+    }
+    
+    public class ContactForm
+    {
+        [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+        
+        [Required]
+        [MinLength(ContactFormSubmission.SubjectMinLength)]
+        [MaxLength(ContactFormSubmission.SubjectMaxLength)]
+        public string? Subject { get; set; }
+        
+        [Required]
+        [MinLength(ContactFormSubmission.ContentMinLength)]
+        [MaxLength(ContactFormSubmission.ContentMaxLength)]
+        public string? Content { get; set; }
+    }
+}
