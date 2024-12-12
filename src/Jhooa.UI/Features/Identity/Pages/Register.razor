@@ -1,7 +1,6 @@
 ﻿@page "/Account/Register"
 
 @using System.ComponentModel.DataAnnotations
-@using Humanizer
 @using Jhooa.UI.Features.Dreams.Models
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
@@ -9,186 +8,151 @@
 @using Jhooa.UI.Services
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Identity.Components
+
 @inject IStringLocalizer<Resources.Identity> Loc
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
-@inject SignInManager<ApplicationUser> SignInManager
-@inject IEmailSender<ApplicationUser> EmailSender
 @inject ILogger<Register> Logger
 @inject NavigationManager NavigationManager
-@inject IdentityRedirectManager RedirectManager
 @inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
 
-<PageTitle>Register</PageTitle>
+<PageTitle>@Loc["Register"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto  text-white">
     <p>@Loc["RegisterIntro"]</p>
+
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
         <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
         <div class="grid grid-cols-3 gap-4">
-        <div class="">
-            <h3 class="mb-5">1 - @Loc["CreateAccount"]</h3>
+            <div class="">
+                <h3 class="mb-5">1 - @Loc["CreateAccount"]</h3>
 
-            <label for="lastname" class="block ">@Loc["FormLastName"]</label>
-            <InputText @bind-Value="Input.Lastname"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="lastname" aria-required="true"/>
-            <ValidationMessage For="() => Input.Lastname" class="text-danger"/>
-
-            <label for="firstname" class="block ">@Loc["FormFirstName"]</label>
-            <InputText @bind-Value="Input.Firstname"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="firstname" aria-required="true"/>
-            <ValidationMessage For="() => Input.Firstname" class="text-danger"/>
-
-            <label for="email" class="block ">@Loc["FormEmail"]</label>
-            <InputText @bind-Value="Input.Email"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="username" aria-required="true"/>
-            <ValidationMessage For="() => Input.Email" class="text-danger"/>
-
-            <label for="address" class="block ">@Loc["FormAddress"]</label>
-            <InputText @bind-Value="Input.Address"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="address" aria-required="true"/>
-            <ValidationMessage For="() => Input.Address" class="text-danger"/>
-
-            <label for="zipcode" class="block ">@Loc["FormZipCode"]</label>
-            <InputText @bind-Value="Input.ZipCode"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="zipcode" aria-required="true"/>
-            <ValidationMessage For="() => Input.ZipCode" class="text-danger"/>
-
-            <label for="country" class="block ">@Loc["FormCountry"]</label>
-            <InputText @bind-Value="Input.Country"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="country" aria-required="true"/>
-            <ValidationMessage For="() => Input.Country" class="text-danger"/>
-
-            <label for="phonenumber" class="block ">@Loc["FormPhoneNumber"]</label>
-            <InputText @bind-Value="Input.PhoneNumber"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="phone" aria-required="true"/>
-            <ValidationMessage For="() => Input.PhoneNumber" class="text-danger"/>
-
-            <label for="password" class="block ">@Loc["FormPassword"]</label>
-            <InputText type="password" @bind-Value="Input.Password"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="current-password" aria-required="true"/>
-            <ValidationMessage For="() => Input.Password" class="text-danger"/>
-
-            <label for="confirmpassword" class="block ">@Loc["FormPasswordVerification"]</label>
-            <InputText type="password" @bind-Value="Input.ConfirmPassword"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="current-password" aria-required="true"/>
-            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger"/>
-
-        </div>
-        <div>
-            <h3 class="mb-5">2 - @Loc["RegisterMyWishes"]</h3>
-            <h4 class="mb-5">@Loc["RegisterDreamSubTitle"]</h4>
-            <p class="mb-5">@Loc["RegisterDreamDescription"]</p>
-
-            <label for="smalldream" class="block ">@Loc["FormSmallDream"]</label>
-            <InputText @bind-Value="Input.SmallDream"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       aria-required="true"/>
-            <ValidationMessage For="() => Input.SmallDream" class="text-danger"/>
-
-            <label for="mediumdream" class="block ">@Loc["FormMediumDream"]</label>
-            <InputText @bind-Value="Input.MediumDream"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       aria-required="true"/>
-            <ValidationMessage For="() => Input.MediumDream" class="text-danger"/>
-
-            <label for="bigdream" class="block ">@Loc["FormBigDream"]</label>
-            <InputText @bind-Value="Input.BigDream"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       aria-required="true"/>
-            <ValidationMessage For="() => Input.BigDream" class="text-danger"/>
-           
-        </div>
-        <div>
-            <h3 class="mb-5">@Loc["RegisterMySub"]</h3>
-
-            <h4 class="mb-5">@Loc["RegisterMySubSubTitle"]</h4>
-            <p class="mb-5">@Loc["RegisterMySubDescription"]</p>
-
-            <InputRadioGroup @bind-Value="Input.SubscriptionType">
-                <div class="flex items-center space-x-2">
-                    <InputRadio id="option1" class="h-5 w-5 rounded-full border-gray-300 " Value="SubscriptionType.MonthlyOnce" />
-                    <label for="option1" class="">@Loc["RegisterMonthly"]</label>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <InputRadio id="option2" class="h-5 w-5 rounded-full border-gray-300 " Value="SubscriptionType.MonthlyRecurring" />
-                    <label for="option2" class="">@Loc["RegisterMonthlyRecurring"]</label>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <InputRadio id="option3" class="h-5 w-5 rounded-full border-gray-300 " Value="SubscriptionType.YearlyOnce" />
-                    <label for="option3" class="">@Loc["RegisterYearly"]</label>
-                </div>
-
-                <div class="flex items-center space-x-2">
-                    <InputRadio id="option4" class="h-5 w-5 rounded-full border-gray-300 " Value="SubscriptionType.YearlyRecurring" />
-                    <label for="option4" class="">@Loc["RegisterYearlyRecurring"]</label>
-                </div>
-            </InputRadioGroup>
-
-            <div class="flex items-center space-x-2 my-5">
-                <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
-                <label for="accepttoc" class="">@Loc["AcceptToc"]</label>
+                <JhooaInputText @bind-Value="Input.Lastname" DisplayName="@Loc["LastName"]"
+                                ValidationFor="@(() => Input.Lastname)" Autocomplete="lastname"/>
+                <JhooaInputText @bind-Value="Input.Firstname" DisplayName="@Loc["FirstName"]"
+                                ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
+                <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
+                                ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
+                <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
+                                ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
+                <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
+                                ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
+                <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]"
+                                ValidationFor="@(() => Input.Country)" Autocomplete="country"/>
+                <JhooaInputText @bind-Value="Input.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"
+                                ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
+                <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]"
+                                ValidationFor="@(() => Input.Password)" Autocomplete="" Type="password"/>
+                <JhooaInputText @bind-Value="Input.ConfirmPassword" DisplayName="@Loc["ConfirmPassword"]"
+                                ValidationFor="@(() => Input.ConfirmPassword)" Type="password"/>
             </div>
+            <div>
+                <h3 class="mb-5">2 - @Loc["RegisterMyWishes"]</h3>
+                <h4 class="mb-5">@Loc["RegisterDreamSubTitle"]</h4>
+                <p class="mb-5">@Loc["RegisterDreamDescription"]</p>
 
-            <div class="flex items-center space-x-2 mb-8">
-                <InputCheckbox @bind-Value="Input.SubscribeToNewsletter" class="h-5 w-5 rounded border-gray-300 "/>
-                <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
+                <JhooaInputText @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
+                                ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                <JhooaInputText @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
+                                ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                <JhooaInputText @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
+                                ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
+
             </div>
+            <div>
+                <h3 class="mb-5">@Loc["RegisterMySub"]</h3>
 
-            <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["RegisterButton"]</button>
-        </div>
+                <h4 class="mb-5">@Loc["RegisterMySubSubTitle"]</h4>
+                <p class="mb-5">@Loc["RegisterMySubDescription"]</p>
+
+                <InputRadioGroup @bind-Value="Input.SubscriptionType">
+                    <div class="flex items-center space-x-2">
+                        <InputRadio id="option1" class="h-5 w-5 rounded-full border-gray-300 "
+                                    Value="SubscriptionType.MonthlyOnce"/>
+                        <label for="option1" class="">@Loc["RegisterMonthly"]</label>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <InputRadio id="option2" class="h-5 w-5 rounded-full border-gray-300 "
+                                    Value="SubscriptionType.MonthlyRecurring"/>
+                        <label for="option2" class="">@Loc["RegisterMonthlyRecurring"]</label>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <InputRadio id="option3" class="h-5 w-5 rounded-full border-gray-300 "
+                                    Value="SubscriptionType.YearlyOnce"/>
+                        <label for="option3" class="">@Loc["RegisterYearly"]</label>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <InputRadio id="option4" class="h-5 w-5 rounded-full border-gray-300 "
+                                    Value="SubscriptionType.YearlyRecurring"/>
+                        <label for="option4" class="">@Loc["RegisterYearlyRecurring"]</label>
+                    </div>
+                </InputRadioGroup>
+
+                <div class="flex items-center space-x-2 my-5">
+                    <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
+                    <label for="accepttoc" class="">@Loc["AcceptToc"]</label>
+                </div>
+
+                <div class="flex items-center space-x-2 mb-8">
+                    <InputCheckbox @bind-Value="Input.SubscribeToNewsletter" class="h-5 w-5 rounded border-gray-300 "/>
+                    <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
+                </div>
+
+                <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["RegisterButton"]</button>
+            </div>
         </div>
     </EditForm>
 </section>
 
 
 @code {
-    private IEnumerable<IdentityError>? identityErrors;
+    private IEnumerable<IdentityError>? _identityErrors;
 
     [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
 
     [SupplyParameterFromQuery] private string? ReturnUrl { get; set; }
 
-    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
-    
-#if DEBUG
-    protected override void OnInitialized()
-    {
-        if (string.IsNullOrWhiteSpace(Input.Lastname))
-        {
-            Input.Firstname = Guid.NewGuid().ToString();
-            Input.Lastname = Guid.NewGuid().ToString();
-            Input.Email = $"{Guid.NewGuid().ToString()}@example.com";
-            Input.Address = Guid.NewGuid().ToString();
-            Input.ZipCode = Guid.NewGuid().ToString();
-            Input.Country = Guid.NewGuid().ToString();
-            Input.PhoneNumber = Guid.NewGuid().ToString();
-            Input.Password = Input.ConfirmPassword = "Abc123!";
-            Input.SmallDream = Guid.NewGuid().ToString();
-            Input.MediumDream = Guid.NewGuid().ToString();
-            Input.BigDream = Guid.NewGuid().ToString();
-            Input.AcceptToc = true;
-            Input.SubscribeToNewsletter = true;
-        }
-    }
-#endif
-    
+    private string? Message => _identityErrors is null ? null : $"{Loc["Error"]}: {string.Join(", ", _identityErrors.Select(error => error.Description))}";
+
+// #if DEBUG
+//     protected override void OnInitialized()
+//     {
+//         if (string.IsNullOrWhiteSpace(Input.Lastname))
+//         {
+//             Input.Firstname = Guid.NewGuid().ToString();
+//             Input.Lastname = Guid.NewGuid().ToString();
+//             Input.Email = $"{Guid.NewGuid().ToString()}@example.com";
+//             Input.Address = Guid.NewGuid().ToString();
+//             Input.ZipCode = Guid.NewGuid().ToString();
+//             Input.Country = Guid.NewGuid().ToString();
+//             Input.PhoneNumber = Guid.NewGuid().ToString();
+//             Input.Password = Input.ConfirmPassword = "Abc123!";
+//             Input.SmallDream = Guid.NewGuid().ToString();
+//             Input.MediumDream = Guid.NewGuid().ToString();
+//             Input.BigDream = Guid.NewGuid().ToString();
+//             Input.AcceptToc = true;
+//             Input.SubscribeToNewsletter = true;
+//         }
+//     }
+// #endif
+
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
+
+        // Delete not activated user if found based on email
+        var existingUser = await UserManager.FindByEmailAsync(Input.Email);
+        if (existingUser is not null && existingUser.ActivatedAt is null)
+        {
+            await UserManager.DeleteAsync(existingUser);
+            await DbContext.SaveChangesAsync();
+        }
 
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
@@ -198,7 +162,7 @@
 
         if (!result.Succeeded)
         {
-            identityErrors = result.Errors;
+            _identityErrors = result.Errors;
             return;
         }
 
@@ -222,15 +186,15 @@
             Type = DreamTypes.Big,
             UserId = user.Id
         };
-        
+
         DbContext.Dreams.AddRange(smallDream, mediumDream, bigDream);
-        
+
         var stripeCustomerId = await StripeService.EnsureCustomer(user);
         await DbContext.Users.Where(u => u.Id == user.Id)
-            .ExecuteUpdateAsync(setters => 
+            .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(s => s.StripeCustomerId, stripeCustomerId));
-        
-        var session = await StripeService.GenerateFirstPaymentIntent(user.StripeCustomerId!, Input.SubscriptionType);
+
+        var session = await StripeService.GenerateFirstPaymentIntent(stripeCustomerId, Input.SubscriptionType);
         var sub = new Subscription
         {
             Start = DateOnly.FromDateTime(DateTime.Now),
@@ -244,27 +208,8 @@
         await DbContext.SaveChangesAsync();
 
         NavigationManager.NavigateTo(session.SessionUrl);
-        
-        // var userId = await UserManager.GetUserIdAsync(user);
-        // var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-        // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        // var callbackUrl = NavigationManager.GetUriWithQueryParameters(
-        //     NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-        //     new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
-        //
-        // await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
-        //
-        // if (UserManager.Options.SignIn.RequireConfirmedAccount)
-        // {
-        //     RedirectManager.RedirectTo(
-        //         "Account/RegisterConfirmation",
-        //         new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
-        // }
-        //
-        // await SignInManager.SignInAsync(user, isPersistent: false);
-        // RedirectManager.RedirectTo(ReturnUrl);
     }
-    
+
     private static DateOnly? GetEndDate(SubscriptionType type)
         => type switch
         {
@@ -313,59 +258,61 @@
 
     private sealed class InputModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [EmailAddress(ErrorMessageResourceName = "EmailInvalid", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Email { get; set; } = "";
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Firstname { get; set; } = "";
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Lastname { get; set; } = "";
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Address { get; set; } = "";
-        
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string ZipCode { get; set; } = "";
-        
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Country { get; set; } = "";
-        
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string PhoneNumber { get; set; } = "";
-        
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessageResourceName = "PasswordNotMatching", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string ConfirmPassword { get; set; } = "";
-        
-        
-        
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string SmallDream { get; set; } = "";
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string MediumDream { get; set; } = "";
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string BigDream { get; set; } = "";
-        
-        [Required]
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public SubscriptionType SubscriptionType { get; set; }
 
-        
+
         public bool AcceptToc { get; set; }
         public bool SubscribeToNewsletter { get; set; }
     }

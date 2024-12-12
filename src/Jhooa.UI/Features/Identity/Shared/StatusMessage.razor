@@ -1,13 +1,16 @@
-﻿@if (!string.IsNullOrEmpty(DisplayMessage))
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Identity> Loc
+
+@if (!string.IsNullOrEmpty(DisplayMessage))
 {
-    var statusMessageClass = DisplayMessage.StartsWith("Error") ? "danger" : "success";
+    var statusMessageClass = DisplayMessage.StartsWith(Loc["Error"]) ? "danger" : "success";
     <div class="alert alert-@statusMessageClass" role="alert">
         @DisplayMessage
     </div>
 }
 
 @code {
-    private string? messageFromCookie;
+    private string? _messageFromCookie;
 
     [Parameter]
     public string? Message { get; set; }
@@ -15,13 +18,13 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    private string? DisplayMessage => Message ?? messageFromCookie;
+    private string? DisplayMessage => Message ?? _messageFromCookie;
 
     protected override void OnInitialized()
     {
-        messageFromCookie = HttpContext.Request.Cookies[IdentityRedirectManager.StatusCookieName];
+        _messageFromCookie = HttpContext.Request.Cookies[IdentityRedirectManager.StatusCookieName];
 
-        if (messageFromCookie is not null)
+        if (_messageFromCookie is not null)
         {
             HttpContext.Response.Cookies.Delete(IdentityRedirectManager.StatusCookieName);
         }

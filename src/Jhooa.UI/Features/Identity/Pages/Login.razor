@@ -5,39 +5,31 @@
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resources.Identity> Loc
+@using Jhooa.UI.Features.Identity.Components
 
+@inject IStringLocalizer<Resources.Identity> Loc
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
+@inject UserManager<ApplicationUser> UserManager
 
-<PageTitle>Log in</PageTitle>
+<PageTitle>@Loc["Login"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto grid grid-cols-2 gap-4 text-white">
     <div>
         <h3 class="mb-8">@Loc["CreateAccount"]</h3>
-        <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))" class="border-2 border-white p-3 bg-gray-400">@Loc["CreateAccount"]</a>
+        <JhooaButtonLink Text="@Loc["CreateAccount"]" Url="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { }))" />
     </div>
     <div>
         <h3>@Loc["AlreadyHaveAccount"]</h3>
-        <StatusMessage Message="@errorMessage"/>
+        <StatusMessage Message="@_errorMessage"/>
         <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login" class="space-y-6">
             <DataAnnotationsValidator/>
-            <ValidationSummary class="text-danger" role="alert"/>
-
-            <label for="email" class="block text-sm font-medium ">@Loc["FormEmail"]</label>
-            <InputText @bind-Value="Input.Email"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="username" aria-required="true"/>
-            <ValidationMessage For="() => Input.Email" class="text-danger"/>
-
-            <label for="password" class="block text-sm font-medium ">@Loc["FormPassword"]</label>
-            <InputText type="password" @bind-Value="Input.Password"
-                       class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none"
-                       autocomplete="current-password" aria-required="true"/>
-            <ValidationMessage For="() => Input.Password" class="text-danger"/>
-
+            
+            <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]" ValidationFor="@(() => Input.Email)" />
+            <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]" ValidationFor="@(() => Input.Password)" Type="password" />
+            
             <div class="flex items-center space-x-2">
                 <InputCheckbox @bind-Value="Input.RememberMe" class="h-5 w-5 rounded border-gray-300 "/>
                 <label for="rememberme" class="">@Loc["FormRememberMe"]</label>
@@ -55,8 +47,8 @@
 </section>
 
 @code {
-    private string? errorMessage;
-
+    private string? _errorMessage;
+    
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
@@ -67,7 +59,6 @@
     {
         if (HttpMethods.IsGet(HttpContext.Request.Method))
         {
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
         }
     }
@@ -91,21 +82,35 @@
             Logger.LogWarning("User account locked out.");
             RedirectManager.RedirectTo("Account/Lockout");
         }
+        else if (result.IsNotAllowed)
+        {
+            var user = await UserManager.FindByEmailAsync(Input.Email);
+            if (user is not null && !(await UserManager.IsEmailConfirmedAsync(user)))
+            {
+                _errorMessage = Loc["LoginEmailNotConfirmed"];
+            }
+            else
+            {
+                _errorMessage = Loc["LoginInvalidAttempt"];
+            }
+        }
         else
         {
-            errorMessage = "Error: Invalid login attempt.";
+            _errorMessage = Loc["LoginInvalidAttempt"];
         }
     }
 
     private sealed class InputModel
     {
-        [Required] [EmailAddress] public string Email { get; set; } = "";
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))] 
+        [EmailAddress(ErrorMessageResourceName = "EmailInvalid", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string Email { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))] 
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
-        [Display(Name = "Remember me?")] public bool RememberMe { get; set; }
+        public bool RememberMe { get; set; }
     }
 
 }

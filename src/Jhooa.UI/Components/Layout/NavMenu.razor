@@ -1,3 +1,5 @@
+@using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Identity.Models
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Localization.Components
@@ -6,6 +8,7 @@
 
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
+@inject IdentityUserAccessor UserAccessor
 
 <nav class="max-w-screen-xl mx-auto">
     <menu class="grid grid-flow-col">
@@ -28,7 +31,7 @@
             <Authorized>
                 <li>
                     <NavLink class="nav-link" href="Account/Manage">
-                        @context.User.Identity?.Name
+                        @_user?.FirstName @_user?.LastName
                     </NavLink>
                 </li>
                 <li>
@@ -69,11 +72,22 @@
 
 @code {
     private string? _currentUrl;
+    private ApplicationUser? _user;
+    
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     protected override void OnInitialized()
     {
         _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext.User.Identity?.IsAuthenticated == true)
+        {
+            _user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+        }
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

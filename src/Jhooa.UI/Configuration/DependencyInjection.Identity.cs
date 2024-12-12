@@ -39,7 +39,7 @@ public static partial class DependencyInjection
             .AddSignInManager()
             .AddDefaultTokenProviders();
         
-        services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+        services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 
         return services;
     }

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.16.0" />
+    <PackageReference Include="jcamp.FluentEmail.SendGrid" Version="3.8.0" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.169">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -74,16 +75,12 @@
   <ItemGroup>
     <AdditionalFiles Include="Features\Identity\Pages\AccessDenied.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\ConfirmEmail.razor" />
-    <AdditionalFiles Include="Features\Identity\Pages\ConfirmEmailChange.razor" />
-    <AdditionalFiles Include="Features\Identity\Pages\ExternalLogin.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\ForgotPassword.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\ForgotPasswordConfirmation.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\InvalidPasswordReset.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\InvalidUser.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Lockout.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Login.razor" />
-    <AdditionalFiles Include="Features\Identity\Pages\LoginWith2fa.razor" />
-    <AdditionalFiles Include="Features\Identity\Pages\LoginWithRecoveryCode.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Manage\ChangePassword.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Manage\DeletePersonalData.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Manage\Disable2fa.razor" />

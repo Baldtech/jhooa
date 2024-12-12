@@ -236,5 +236,215 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("RegisterYearlyRecurring", resourceCulture);
             }
         }
+        
+        internal static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        internal static string AccessDeniedResource {
+            get {
+                return ResourceManager.GetString("AccessDeniedResource", resourceCulture);
+            }
+        }
+        
+        internal static string ConfirmEmail {
+            get {
+                return ResourceManager.GetString("ConfirmEmail", resourceCulture);
+            }
+        }
+        
+        internal static string ConfirmEmailThankYou {
+            get {
+                return ResourceManager.GetString("ConfirmEmailThankYou", resourceCulture);
+            }
+        }
+        
+        internal static string ConfirmEmailError {
+            get {
+                return ResourceManager.GetString("ConfirmEmailError", resourceCulture);
+            }
+        }
+        
+        internal static string EmailInvalid {
+            get {
+                return ResourceManager.GetString("EmailInvalid", resourceCulture);
+            }
+        }
+        
+        internal static string ForgotPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("ForgotPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        internal static string ForgotPasswordEmailReset {
+            get {
+                return ResourceManager.GetString("ForgotPasswordEmailReset", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidPasswordReset {
+            get {
+                return ResourceManager.GetString("InvalidPasswordReset", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidPasswordResetLink {
+            get {
+                return ResourceManager.GetString("InvalidPasswordResetLink", resourceCulture);
+            }
+        }
+        
+        internal static string InvalidUser {
+            get {
+                return ResourceManager.GetString("InvalidUser", resourceCulture);
+            }
+        }
+        
+        internal static string LockedOut {
+            get {
+                return ResourceManager.GetString("LockedOut", resourceCulture);
+            }
+        }
+        
+        internal static string LockedOutTryLater {
+            get {
+                return ResourceManager.GetString("LockedOutTryLater", resourceCulture);
+            }
+        }
+        
+        internal static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        internal static string LoginEmailNotConfirmed {
+            get {
+                return ResourceManager.GetString("LoginEmailNotConfirmed", resourceCulture);
+            }
+        }
+        
+        internal static string LoginInvalidAttempt {
+            get {
+                return ResourceManager.GetString("LoginInvalidAttempt", resourceCulture);
+            }
+        }
+        
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        internal static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        internal static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        internal static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        internal static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        internal static string ZipCode {
+            get {
+                return ResourceManager.GetString("ZipCode", resourceCulture);
+            }
+        }
+        
+        internal static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        internal static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
+            }
+        }
+        
+        internal static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        internal static string FieldLength {
+            get {
+                return ResourceManager.GetString("FieldLength", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordNotMatching {
+            get {
+                return ResourceManager.GetString("PasswordNotMatching", resourceCulture);
+            }
+        }
+        
+        internal static string RegisterConfirmation {
+            get {
+                return ResourceManager.GetString("RegisterConfirmation", resourceCulture);
+            }
+        }
+        
+        internal static string AccountCreatedAndPaymentDone {
+            get {
+                return ResourceManager.GetString("AccountCreatedAndPaymentDone", resourceCulture);
+            }
+        }
+        
+        internal static string CheckEmailForConfirmation {
+            get {
+                return ResourceManager.GetString("CheckEmailForConfirmation", resourceCulture);
+            }
+        }
+        
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        internal static string ResetPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("ResetPasswordConfirmation", resourceCulture);
+            }
+        }
     }
 }

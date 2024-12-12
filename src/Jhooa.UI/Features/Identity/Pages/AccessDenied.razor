@@ -1,8 +1,12 @@
 ﻿@page "/Account/AccessDenied"
+@using Microsoft.Extensions.Localization
 
-<PageTitle>Access denied</PageTitle>
+@inject IStringLocalizer<Resources.Identity> Loc
 
-<header>
-    <h1 class="text-danger">Access denied</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
+
+<PageTitle>@Loc["AccessDenied"]</PageTitle>
+
+<header class="max-w-screen-xl mx-auto text-white">
+    <h1 class="text-danger">@Loc["AccessDenied"]</h1>
+    <p class="text-danger">@Loc["AccessDeniedResource"]</p>
 </header>

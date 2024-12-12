@@ -487,3 +487,6 @@ $RECYCLE.BIN/
 
 # Custom
 *.db
+
+# content below from:
+/src/default

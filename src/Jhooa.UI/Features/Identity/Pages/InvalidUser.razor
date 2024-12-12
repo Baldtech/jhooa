@@ -1,7 +1,12 @@
 ﻿@page "/Account/InvalidUser"
 
-<PageTitle>Invalid user</PageTitle>
+@using Microsoft.Extensions.Localization
 
-<h3>Invalid user</h3>
+@inject IStringLocalizer<Resources.Identity> Loc
 
-<StatusMessage />
+<PageTitle>@Loc["InvalidUser"]</PageTitle>
+
+<header class="max-w-screen-xl mx-auto text-white">
+    <h1>@Loc["InvalidUser"]</h1>
+    <StatusMessage/>
+</header>

@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-danger {
+.text-danger, .alert-danger {
     color: red;
 }

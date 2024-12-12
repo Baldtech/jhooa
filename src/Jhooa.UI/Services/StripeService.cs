@@ -32,7 +32,7 @@ public class StripeService(
                 },
             ],
             Mode = GetMode(subscriptionType),
-            SuccessUrl = domain + "/Account/ConfirmAccount?session-id={CHECKOUT_SESSION_ID}",
+            SuccessUrl = domain + "/Account/RegisterConfirmation?session-id={CHECKOUT_SESSION_ID}",
             CancelUrl = domain + "?session-id={CHECKOUT_SESSION_ID}&cancel=true",
         };
         

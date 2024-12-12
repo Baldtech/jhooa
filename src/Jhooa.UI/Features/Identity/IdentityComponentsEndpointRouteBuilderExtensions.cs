@@ -20,9 +20,7 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
         ArgumentNullException.ThrowIfNull(endpoints);
 
         var accountGroup = endpoints.MapGroup("/Account");
-
-        MapPerformExternalLogin(accountGroup);
-
+        
         MapLogout(accountGroup);
 
         var manageGroup = MapLinkExternalLogin(accountGroup);
@@ -62,28 +60,6 @@ internal static class IdentityComponentsEndpointRouteBuilderExtensions
         {
             await signInManager.SignOutAsync().ConfigureAwait(true);
             return TypedResults.LocalRedirect($"~/{returnUrl}");
-        });
-    }
-
-    private static void MapPerformExternalLogin(RouteGroupBuilder accountGroup)
-    {
-        accountGroup.MapPost("/PerformExternalLogin", (
-            HttpContext context,
-            [FromServices] SignInManager<ApplicationUser> signInManager,
-            [FromForm] string provider,
-            [FromForm] string returnUrl) =>
-        {
-            IEnumerable<KeyValuePair<string, StringValues>> query = [
-                new("ReturnUrl", returnUrl),
-                new("Action", ExternalLogin.LoginCallbackAction)];
-
-            var redirectUrl = UriHelper.BuildRelative(
-                context.Request.PathBase,
-                "/Account/ExternalLogin",
-                QueryString.Create(query));
-
-            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return TypedResults.Challenge(properties, [provider]);
         });
     }
 

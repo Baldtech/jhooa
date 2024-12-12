@@ -107,4 +107,109 @@
     <data name="RegisterYearlyRecurring" xml:space="preserve">
         <value>Annuel renouvelable</value>
     </data>
+    <data name="AccessDenied" xml:space="preserve">
+        <value>Accès refusé</value>
+    </data>
+    <data name="AccessDeniedResource" xml:space="preserve">
+        <value>Vous n’avez pas accès à cette ressource.</value>
+    </data>
+    <data name="ConfirmEmail" xml:space="preserve">
+        <value>Confirmation de l'adresse email</value>
+    </data>
+    <data name="ConfirmEmailThankYou" xml:space="preserve">
+        <value>Merci d’avoir confirmé votre adresse e-mail.</value>
+    </data>
+    <data name="ConfirmEmailError" xml:space="preserve">
+        <value>Erreur lors de la confirmation de votre adresse e-mail.</value>
+    </data>
+    <data name="EmailInvalid" xml:space="preserve">
+        <value>Adresse e-mail non valide</value>
+    </data>
+    <data name="ForgotPasswordConfirmation" xml:space="preserve">
+        <value>Confirmation de réinitialisation du mot de passe.</value>
+    </data>
+    <data name="ForgotPasswordEmailReset" xml:space="preserve">
+        <value>Veuillez vérifier votre e-mail pour réinitialiser votre mot de passe.</value>
+    </data>
+    <data name="InvalidPasswordReset" xml:space="preserve">
+        <value>Réinitialisation du mot de passe invalide.</value>
+    </data>
+    <data name="InvalidPasswordResetLink" xml:space="preserve">
+        <value>Le lien de réinitialisation du mot de passe est invalide.</value>
+    </data>
+    <data name="InvalidUser" xml:space="preserve">
+        <value>Utilisateur non-valide</value>
+    </data>
+    <data name="LockedOut" xml:space="preserve">
+        <value>Compte bloqué</value>
+    </data>
+    <data name="LockedOutTryLater" xml:space="preserve">
+        <value>Ce compte a été verrouillé, veuillez réessayer plus tard.</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>Se connecter</value>
+    </data>
+    <data name="LoginEmailNotConfirmed" xml:space="preserve">
+        <value>Erreur : Vous devez confirmer votre adresse e-mail.</value>
+    </data>
+    <data name="LoginInvalidAttempt" xml:space="preserve">
+        <value>Erreur : Tentative de connexion invalide.</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value>Requis</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Erreur</value>
+    </data>
+    <data name="Register" xml:space="preserve">
+        <value>Inscription</value>
+    </data>
+    <data name="EmailAddress" xml:space="preserve">
+        <value>Adresse email</value>
+    </data>
+    <data name="Password" xml:space="preserve">
+        <value>Mot de passe</value>
+    </data>
+    <data name="LastName" xml:space="preserve">
+        <value>Nom</value>
+    </data>
+    <data name="FirstName" xml:space="preserve">
+        <value>Prénom</value>
+    </data>
+    <data name="Address" xml:space="preserve">
+        <value>Adresse</value>
+    </data>
+    <data name="ZipCode" xml:space="preserve">
+        <value>Code postal</value>
+    </data>
+    <data name="Country" xml:space="preserve">
+        <value>Pays</value>
+    </data>
+    <data name="PhoneNumber" xml:space="preserve">
+        <value>Numéro de téléphone</value>
+    </data>
+    <data name="ConfirmPassword" xml:space="preserve">
+        <value>Confirmation du mot de passe</value>
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value>Ce champs doit contenir au moins {2} caractères et au maximum {1} caractères.</value>
+    </data>
+    <data name="PasswordNotMatching" xml:space="preserve">
+        <value>Le mot de passe et la confirmation du mot de passe ne correspondent pas.</value>
+    </data>
+    <data name="RegisterConfirmation" xml:space="preserve">
+        <value>Confirmation d’inscription</value>
+    </data>
+    <data name="AccountCreatedAndPaymentDone" xml:space="preserve">
+        <value>Votre compte a été créé et votre paiement a été traité.</value>
+    </data>
+    <data name="CheckEmailForConfirmation" xml:space="preserve">
+        <value>Veuillez vérifier votre e-mail pour confirmer votre compte.</value>
+    </data>
+    <data name="Reset" xml:space="preserve">
+        <value>Réinitialiser</value>
+    </data>
+    <data name="ResetPasswordConfirmation" xml:space="preserve">
+        <value>Confirmation de réinitialisation du mot de passe.</value>
+    </data>
 </root>

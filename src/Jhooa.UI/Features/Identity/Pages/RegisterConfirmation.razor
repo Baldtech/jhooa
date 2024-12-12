@@ -1,69 +1,88 @@
 ﻿@page "/Account/RegisterConfirmation"
 
 @using System.Text
+@using System.Text.Encodings.Web
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using Jhooa.UI.Data
 @using Jhooa.UI.Features.Identity.Models
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Identity.Components
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IEmailSender<ApplicationUser> EmailSender
 @inject NavigationManager NavigationManager
-@inject IdentityRedirectManager RedirectManager
+@inject ApplicationDbContext DbContext
+@inject IStripeService StripeService
+@inject IStringLocalizer<Resources.Identity> Loc
 
-<PageTitle>Register confirmation</PageTitle>
+<PageTitle>@Loc["RegisterConfirmation"]</PageTitle>
 
-<h1>Register confirmation</h1>
-
-<StatusMessage Message="@statusMessage" />
-
-@if (emailConfirmationLink is not null)
+@if (CheckoutSessionId is not null)
 {
-    <p>
-        This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-        Normally this would be emailed: <a href="@emailConfirmationLink">Click here to confirm your account</a>
-    </p>
-}
-else
-{
-    <p>Please check your email to confirm your account.</p>
+    <section class="max-w-screen-xl mx-auto  text-white">
+        <h3 class="mb-8">@Loc["RegisterConfirmation"]</h3>
+
+        <p>@Loc["AccountCreatedAndPaymentDone"]</p>
+        <p class="mb-8">@Loc["CheckEmailForConfirmation"]</p>
+
+        <JhooaButtonLink Text="@Loc["Login"]"
+                         Url="@(NavigationManager.GetUriWithQueryParameters("Account/Login", new Dictionary<string, object?> { }))"/>
+
+    </section>
 }
 
 @code {
-    private string? emailConfirmationLink;
-    private string? statusMessage;
 
-    [CascadingParameter]
-    private HttpContext HttpContext { get; set; } = default!;
+    [SupplyParameterFromQuery(Name = "session-id")]
+    public string? CheckoutSessionId { get; set; }
 
-    [SupplyParameterFromQuery]
-    private string? Email { get; set; }
-
-    [SupplyParameterFromQuery]
-    private string? ReturnUrl { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (Email is null)
+        if (CheckoutSessionId is not null)
         {
-            RedirectManager.RedirectTo("");
-        }
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
 
-        var user = await UserManager.FindByEmailAsync(Email);
-        if (user is null)
-        {
-            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-            statusMessage = "Error finding user for unspecified email";
-        }
-        else if (EmailSender is IdentityNoOpEmailSender)
-        {
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
-            var userId = await UserManager.GetUserIdAsync(user);
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            emailConfirmationLink = NavigationManager.GetUriWithQueryParameters(
-                NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-                new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
+            if (sub is not null)
+            {
+                var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
+                await DbContext.Users.Where(u => u.Id == user.Id)
+                    .ExecuteUpdateAsync(setters =>
+                        setters.SetProperty(s => s.ActivatedAt, DateTimeOffset.Now));
+
+                if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
+                {
+                    var result = await StripeService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
+                    if (result.IsSuccess)
+                    {
+                        sub.MarkPaymentAsPaid(result.Value);
+                    }
+                }
+                else
+                {
+                    var result = await StripeService.RetrieveSubscriptionId(CheckoutSessionId);
+                    if (result.IsSuccess)
+                    {
+                        sub.MarkSubscriptionAsPaid(result.Value);
+                    }
+                }
+
+                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                var callbackUrl = NavigationManager.GetUriWithQueryParameters(
+                    NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
+                    new Dictionary<string, object?> { ["userId"] = user.Id, ["code"] = code });
+
+                await EmailSender.SendConfirmationLinkAsync(user, user.Email!, HtmlEncoder.Default.Encode(callbackUrl));
+
+                await DbContext.SaveChangesAsync();
+            }
         }
     }
+
 }
