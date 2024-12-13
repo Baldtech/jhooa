@@ -3,10 +3,10 @@
 @inherits InputBase<string>
 
 <div>
-    <label for="@_fiedId" class="block">@DisplayName</label>
+    <label for="@_fieldId" class="block">@DisplayName</label>
 
     <input
-        id="@_fiedId"
+        id="@_fieldId"
         type="@Type"
         name="@NameAttributeValue"
         class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none @CssClass"
@@ -19,7 +19,7 @@
     [Parameter] public string? Type { get; set; } = "text";
     [Parameter] public string? Autocomplete { get; set; }
     
-    private Guid _fiedId = Guid.NewGuid();
+    private readonly Guid _fieldId = Guid.NewGuid();
     
     protected override void OnInitialized()
     {

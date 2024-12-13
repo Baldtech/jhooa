@@ -1,0 +1,12 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Events> Loc
+
+<section class="max-w-screen-xl mx-auto grid grid-cols-4 gap-4">
+    <div>
+        <img src="https://placehold.co/550x550/eb4034/fff" alt="" class="m-auto object-cover" />
+    </div>
+    <div class="col-span-3">
+        <h2>@Loc["HowToRegisterTitle"]</h2>
+        <p>@Loc["HowToRegisterDesc"]</p>
+    </div>
+</section>

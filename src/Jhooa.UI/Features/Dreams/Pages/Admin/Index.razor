@@ -9,19 +9,23 @@
 @using Jhooa.UI.Features.Dreams.Components
 @using Jhooa.UI.Features.Dreams.Models
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Dreams> Loc
+<PageTitle>@Loc["DreamsList"]</PageTitle>
 
-<h3>@Loc["DreamsList"]</h3>
+<section class="max-w-screen-xl mx-auto">
+    <h1>@Loc["DreamsList"]</h1>
 
-<FilterDreams
-    SelectDreamTypeCallback="HandleDreamTypeSelection">
-</FilterDreams>
+    <FilterDreams
+        SelectDreamTypeCallback="HandleDreamTypeSelection">
+    </FilterDreams>
 
-<br/>
+    <div class="mb-8"></div>
 
-<DreamsList
-    SelectedDreamType="_selectedDreamType">
-</DreamsList>
+    <DreamsList
+        SelectedDreamType="_selectedDreamType">
+    </DreamsList>
+</section>
+
 
 @code
 {

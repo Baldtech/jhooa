@@ -1,0 +1,7 @@
+<button type="button" class=" border-2 border-white p-3 bg-gray-400" @onclick="@Action">@Text</button>
+
+@code {
+    [Parameter] public required Action Action { get; set; }
+
+    [Parameter] public required string Text { get; set; }
+}

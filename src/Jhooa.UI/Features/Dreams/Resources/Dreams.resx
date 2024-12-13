@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="MyDreams" xml:space="preserve">
+        <value>My dreams</value>
+    </data>
+    <data name="AttemptToTitle" xml:space="preserve">
+        <value>Dare to Make Your Dreams Come True</value>
+    </data>
+    <data name="AttemptToDesc" xml:space="preserve">
+        <value>As a subscriber, you have the unique opportunity to share three wishes: small, medium, and large. Whether it’s a magical moment, something missing from your daily life, or anything else close to your heart, each month, one or more of you will see their dreams come true.</value>
+    </data>
+    <data name="SaveChanges" xml:space="preserve">
+        <value>Save changes</value>
+    </data>
+    <data name="SmallDream" xml:space="preserve">
+        <value>My small dream</value>
+    </data>
+    <data name="MediumDream" xml:space="preserve">
+        <value>My medium dream</value>
+    </data>
+    <data name="BigDream" xml:space="preserve">
+        <value>My big dream</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value>Required</value>
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value>This field must be at least {2} and at max {1} characters long.</value>
+    </data>
+    <data name="DreamsList" xml:space="preserve">
+        <value>Dreams list</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="Title" xml:space="preserve">
+        <value>Title</value>
+    </data>
+    <data name="All" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="Small" xml:space="preserve">
+        <value>Small</value>
+    </data>
+    <data name="Medium" xml:space="preserve">
+        <value>Medium</value>
+    </data>
+    <data name="Big" xml:space="preserve">
+        <value>Big</value>
+    </data>
+</root>

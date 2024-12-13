@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
     <PackageReference Include="FluentResults" Version="3.16.0" />
     <PackageReference Include="jcamp.FluentEmail.Azure.Email" Version="3.8.0" />
     <PackageReference Include="jcamp.FluentEmail.SendGrid" Version="3.8.0" />
@@ -26,6 +27,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.9.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
     <PackageReference Include="Stripe.net" Version="47.1.0" />
@@ -47,6 +49,18 @@
     <EmbeddedResource Update="Features\Identity\Resources\Identity.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Identity.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Features\Dreams\Resources\Dreams.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dreams.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Features\Subscriptions\Resources\Subscriptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Subscriptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Features\Events\Resources\Events.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Events.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
@@ -70,6 +84,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Identity.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Dreams\Resources\Dreams.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Dreams.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Subscriptions\Resources\Subscriptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Subscriptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Events\Resources\Events.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Events.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

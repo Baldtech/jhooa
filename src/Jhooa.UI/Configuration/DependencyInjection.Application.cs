@@ -1,3 +1,4 @@
+using Jhooa.UI.Managers;
 using Jhooa.UI.Services;
 
 namespace Jhooa.UI.Configuration;
@@ -15,7 +16,7 @@ public static partial class DependencyInjection
         services.AddSingleton(services);
         
         services.AddScoped<IDreamService, DreamService>();
-
+        services.AddScoped<RedirectManager>();
 
         return services;
     }

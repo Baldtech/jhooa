@@ -5,3 +5,7 @@
 .text-danger, .alert-danger {
     color: red;
 }
+
+.text-success, .alert-success {
+    color: green;
+}

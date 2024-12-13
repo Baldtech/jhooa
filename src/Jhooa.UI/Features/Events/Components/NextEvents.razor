@@ -1,0 +1,42 @@
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Events> Loc
+@inject ApplicationDbContext DbContext
+
+
+<section class="max-w-screen-xl mx-auto">
+    <h1>@Loc["NextEvents"]</h1>
+
+    <div class="flex space-x-4">
+        @if (_events is not null && _events.Count > 0)
+        {
+            @foreach (var ev in _events.OrderBy(ev => ev.StartDate))
+            {
+                <EventCard Event="ev" />
+            }
+        }
+        else if (_events is not null && _events.Count == 0)
+        {
+            <p>@Loc["NoNextEvents"]</p>
+        }
+        else
+        {
+            <p>@Loc["Loading"]</p>
+        }
+    </div>
+    
+</section>
+
+
+@code {
+
+    private List<Event>? _events;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _events ??= await DbContext.Events.Where(ev => ev.StartDate >= DateTimeOffset.Now).Include(i => i.Registrations).ToListAsync();
+    }
+
+}

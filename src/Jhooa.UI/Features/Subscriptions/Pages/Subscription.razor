@@ -1,6 +1,6 @@
 @page "/Account/Manage/Subscription"
 @attribute [Authorize]
-@layout ManageLayout
+@layout AccountLayout
 
 @using System.Security.Claims
 @using Jhooa.UI.Features.Identity.Shared
@@ -8,43 +8,69 @@
 @using Jhooa.UI.Services
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
 
+@inject IStringLocalizer<Resources.Subscriptions> Loc
 @inject IStripeService StriveService
 @inject ApplicationDbContext DbContext
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IDreamService DreamService
 
-<h3>Subscriptions</h3>
+<PageTitle>@Loc["MySubscription"]</PageTitle>
 
-@if (!string.IsNullOrWhiteSpace(Message))
-{
-    <h4 style="color: #26b050">@Message</h4>
-}
+<section class="max-w-screen-xl mx-auto  text-white">
+    <h3>@Loc["MySubscriptionTitle"]</h3>
+    <p>@Loc["MySubscriptionDesc"]</p>
 
-@if (_activeSub is null)
-{
-    <p>No active subscription</p>
-}
-else
-{
-    <p>Active subscription (access to events & videos): @_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : $" ({_activeSub.Type} - auto-renew)")</p>
-    <p>Next dreams eligibility</p>
-    <ul>
-        @foreach(var month in _eligibleMonths)
-        {
-            <li>@month.ToString("Y") (winners announced early @month.AddMonths(1).ToString("Y"))</li>
-        }
-    </ul>
-    @if (_activeSub.End is null)
-    {
-        <p><strong>As long as the subscription is active, you will be eligible.</strong></p>
-        <EditForm Model="Input" FormName="cancel-subscription" OnValidSubmit="OnValidSubmitAsync" method="post">
-            <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert" />
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Cancel subscription</button>
-        </EditForm>
-    }
-}
+    @* @if (Input is not null) *@
+    @* { *@
+    @*     <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="login" class="space-y-6"> *@
+    @*         <StatusMessage/> *@
+    @*         <DataAnnotationsValidator/> *@
+    @* *@
+    @*         <div class="grid grid-cols-1 gap-4"> *@
+    @*             <div class=""> *@
+    @*                 *@
+    @*             </div> *@
+    @* *@
+    @*             <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["SaveChanges"]</button> *@
+    @* *@
+    @*         </div> *@
+    @*     </EditForm> *@
+    @* } *@
+</section>
+
+@* <h3>Subscriptions</h3> *@
+@* *@
+@* @if (!string.IsNullOrWhiteSpace(Message)) *@
+@* { *@
+@*     <h4 style="color: #26b050">@Message</h4> *@
+@* } *@
+@* *@
+@* @if (_activeSub is null) *@
+@* { *@
+@*     <p>No active subscription</p> *@
+@* } *@
+@* else *@
+@* { *@
+@*     <p>Active subscription (access to events & videos): @_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : $" ({_activeSub.Type} - auto-renew)")</p> *@
+@*     <p>Next dreams eligibility</p> *@
+@*     <ul> *@
+@*         @foreach(var month in _eligibleMonths) *@
+@*         { *@
+@*             <li>@month.ToString("Y") (winners announced early @month.AddMonths(1).ToString("Y"))</li> *@
+@*         } *@
+@*     </ul> *@
+@*     @if (_activeSub.End is null) *@
+@*     { *@
+@*         <p><strong>As long as the subscription is active, you will be eligible.</strong></p> *@
+@*         <EditForm Model="Input" FormName="cancel-subscription" OnValidSubmit="OnValidSubmitAsync" method="post"> *@
+@*             <DataAnnotationsValidator /> *@
+@*             <ValidationSummary class="text-danger" role="alert" /> *@
+@*             <button type="submit" class="w-100 btn btn-lg btn-primary">Cancel subscription</button> *@
+@*         </EditForm> *@
+@*     } *@
+@* } *@
 
 
 @code {

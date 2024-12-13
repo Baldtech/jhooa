@@ -1,28 +1,116 @@
+@* @using Jhooa.UI.Resources *@
+@* @using Microsoft.Extensions.Localization *@
+@* *@
+@* @inject IStringLocalizer<Shared> Loc *@
+@* *@
+@* <NavLink class="nav-link" href="" Match="NavLinkMatch.All"> *@
+@*     @Loc["Back to site"] *@
+@* </NavLink> *@
+@* *@
+@* <NavLink class="nav-link" href="/Admin" Match="NavLinkMatch.All"> *@
+@*     @Loc["Dashboard"] *@
+@* </NavLink> *@
+@* *@
+@* <NavLink class="nav-link" href="/Admin/Users" Match="NavLinkMatch.All"> *@
+@*     @Loc["Users"] *@
+@* </NavLink> *@
+@* *@
+@* <NavLink class="nav-link" href="/Admin/Dreams" Match="NavLinkMatch.All"> *@
+@*     @Loc["Dreams"] *@
+@* </NavLink> *@
+@* *@
+@* <NavLink class="nav-link" href="/Admin/Events" Match="NavLinkMatch.All"> *@
+@*     @Loc["Events"] *@
+@* </NavLink> *@
+
+
+
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Localization.Components
+
+@implements IDisposable
 
 @inject IStringLocalizer<Shared> Loc
+@inject NavigationManager NavigationManager
 
-<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-    @Loc["Back to site"]
-</NavLink>
+<nav class="max-w-screen-xl mx-auto border-gray-100 text-black">
+    <menu class="grid grid-flow-col">
+        <li class="list-none">
+            <NavLink class="nav-link underline" href="/" Match="NavLinkMatch.All">
+                @Loc["BackToHome"]
+            </NavLink>
+        </li>
+        <li>
+            <img src="https://placehold.co/180x70/fff/000?text=Jhooa" alt="Header with balloons" class="m-auto h-banner object-cover"/>
+        </li>
+        <AuthorizeView>
+            <Authorized>
+                <li>
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken/>
+                        <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+                        <button type="submit" class="nav-link underline">
+                            Logout
+                        </button>
+                    </form>
+                </li>
 
-<NavLink class="nav-link" href="/Admin" Match="NavLinkMatch.All">
-    @Loc["Dashboard"]
-</NavLink>
+            </Authorized>
+        </AuthorizeView>
+        <li>
+            <CultureSelector @rendermode="InteractiveServer"/>
+        </li>
+    </menu>
 
-<NavLink class="nav-link" href="/Admin/Users" Match="NavLinkMatch.All">
-    @Loc["Users"]
-</NavLink>
+</nav>
+<hr class="border-gray-400 border-t-2 my-8" />
 
-<NavLink class="nav-link" href="/Admin/Dreams" Match="NavLinkMatch.All">
-    @Loc["Dreams"]
-</NavLink>
+<nav class="max-w-screen-xl mx-auto border-gray-100 text-black mb-16">
+    <menu class="grid grid-flow-col">
+        <li class="list-none">
+            <NavLink class="nav-link underline" href="/Admin" Match="NavLinkMatch.All">
+                @Loc["Dashboard"]
+            </NavLink>
+        </li>
+        <li class="list-none">
+            <NavLink class="nav-link underline" href="/Admin/Users" Match="NavLinkMatch.All">
+                @Loc["Users"]
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link underline" href="/Admin/Dreams" Match="NavLinkMatch.All">
+                @Loc["Dreams"]
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link underline" href="/Admin/Events" Match="NavLinkMatch.All">
+                @Loc["Events"]
+            </NavLink>
+        </li>
+    </menu>
 
-<NavLink class="nav-link" href="/Admin/Events" Match="NavLinkMatch.All">
-    @Loc["Events"]
-</NavLink>
+</nav>
+<hr />
 
 @code {
-    
+    private string? _currentUrl;
+
+    protected override void OnInitialized()
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+
 }

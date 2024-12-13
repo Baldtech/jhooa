@@ -1,0 +1,34 @@
+@using Jhooa.UI.Managers
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Shared> Loc
+
+<section class="max-w-screen-xl mx-auto">
+    @if (!string.IsNullOrEmpty(DisplayMessage))
+    {
+        var statusMessageClass = DisplayMessage.StartsWith(Loc["Error"]) ? "danger" : "success";
+        <div class="alert alert-@statusMessageClass" role="alert">
+            @DisplayMessage
+        </div>
+    }
+</section>
+
+@code {
+    private string? _messageFromCookie;
+
+    [Parameter] public string? Message { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    private string? DisplayMessage => Message ?? _messageFromCookie;
+
+    protected override void OnInitialized()
+    {
+        _messageFromCookie = HttpContext.Request.Cookies[RedirectManager.StatusCookieName];
+
+        if (_messageFromCookie is not null)
+        {
+            HttpContext.Response.Cookies.Delete(RedirectManager.StatusCookieName);
+        }
+    }
+
+}

@@ -1,6 +1,6 @@
 @page "/Account/Manage/Dreams"
 @attribute [Authorize]
-@layout ManageLayout
+@layout AccountLayout
 
 @using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Features.Dreams.Models
@@ -10,39 +10,40 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Identity.Components
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Dreams> Loc
 @inject IdentityUserAccessor UserAccessor
 @inject ApplicationDbContext DbContext
 
-<PageTitle>@Loc["DreamsManagementPageTitle"]</PageTitle>
+<PageTitle>@Loc["MyDreams"]</PageTitle>
 
-<h3>Dreams</h3>
+<section class="max-w-screen-xl mx-auto  text-white">
+    <h3>@Loc["AttemptToTitle"]</h3>
+    <p>@Loc["AttemptToDesc"]</p>
 
-<div class="row">
-    <div class="col-md-6">
-        <EditForm Model="Input" FormName="change-dreams" OnValidSubmit="OnValidSubmitAsync" method="post">
-            <DataAnnotationsValidator/>
-            <ValidationSummary class="text-danger" role="alert"/>
-            <div class="form-floating mb-3">
-                <InputText type="text" @bind-Value="Input!.SmallDream" class="form-control" aria-required="true" placeholder="Please enter your small dream."/>
-                <label for="small-dream" class="form-label">@Loc["Small"]</label>
-                <ValidationMessage For="() => Input.SmallDream" class="text-danger"/>
+@if (Input is not null)
+{
+    <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="login" class="space-y-6">
+        <StatusMessage/>
+        <DataAnnotationsValidator/>
+
+        <div class="grid grid-cols-1 gap-4">
+            <div class="">
+                <JhooaInputText @bind-Value="Input.SmallDream" DisplayName="@Loc["SmallDream"]"
+                                ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                <JhooaInputText @bind-Value="Input.MediumDream" DisplayName="@Loc["MediumDream"]"
+                                ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                <JhooaInputText @bind-Value="Input.BigDream" DisplayName="@Loc["BigDream"]"
+                                ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
             </div>
-            <div class="form-floating mb-3">
-                <InputText type="text" @bind-Value="Input!.MediumDream" class="form-control" aria-required="true" placeholder="Please enter your medium dream."/>
-                <label for="medium-dream" class="form-label">@Loc["Medium"]</label>
-                <ValidationMessage For="() => Input.MediumDream" class="text-danger"/>
-            </div>
-            <div class="form-floating mb-3">
-                <InputText type="text" @bind-Value="Input!.BigDream" class="form-control" aria-required="true" placeholder="Please enter your big dream."/>
-                <label for="big-dream" class="form-label">@Loc["Big"]</label>
-                <ValidationMessage For="() => Input.BigDream" class="text-danger"/>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">@Loc["Update dreams"]</button>
-        </EditForm>
-    </div>
-</div>
+            
+            <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["SaveChanges"]</button>
+
+        </div>
+    </EditForm>
+}
+</section>
 
 @code {
     private ApplicationUser _user = default!;
@@ -57,13 +58,14 @@
 
         if (Input is null)
         {
-            Input = new InputModel();
-
             var dreams = await DbContext.Dreams.Where(d => d.UserId == _user.Id).ToListAsync();
 
-            Input.SmallDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Small)?.Title ?? "";
-            Input.MediumDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Medium)?.Title ?? "";
-            Input.BigDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Big)?.Title ?? "";
+            Input = new InputModel
+            {
+                SmallDream = dreams.First(d => d.Type == DreamTypes.Small).Title,
+                MediumDream = dreams.First(d => d.Type == DreamTypes.Medium).Title,
+                BigDream = dreams.First(d => d.Type == DreamTypes.Big).Title
+            };
         }
     }
 
@@ -95,16 +97,16 @@
 
     private sealed class InputModel
     {
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-        [Display(Name = "Small")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string SmallDream { get; set; } = "";
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-        [Display(Name = "Medium")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string MediumDream { get; set; } = "";
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-        [Display(Name = "Big")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string BigDream { get; set; } = "";
     }
 

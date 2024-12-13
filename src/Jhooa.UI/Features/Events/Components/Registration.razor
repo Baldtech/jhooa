@@ -1,87 +1,89 @@
-@rendermode InteractiveServer
-
 @using System.Security.Claims
 @using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Managers
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Events> Loc
 @inject NavigationManager NavigationManager
 @inject ApplicationDbContext DbContext
 @inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthStateProvider
+@inject RedirectManager RedirectManager
 
-@if (!_loading)
+@if (!IsPast)
 {
     @if (_userId is null)
     {
-        <p>@Loc["RequiresAuthentication"]</p>
+        <p class="text-sm">@Loc["RequiresAuthentication"]</p>
     }
     else if (_isRegistered)
     {
         <p>@Loc["AlreadyRegistered"]</p>
-        <button type="button" @onclick="@(async () => { await RemoveRegistrationAsync(EventId); })">@Loc["RemoveRegistration"]</button>
+        <EditForm Model="EventId" class="inline"
+                  FormName="@($"form-event-unregister-{EventId}")"
+                  OnValidSubmit="@(async () => { await UnregisterToEventAsync(EventId); })">
+            <button type="submit" class="underline">@Loc["RemoveRegistration"]</button>
+        </EditForm>
     }
     else
     {
-        <button type="button" @onclick="@(async () => { await RegisterAsync(EventId); })">@Loc["Register"]</button>
+        <EditForm Model="EventId" class="inline"
+                  FormName="@($"form-event-{EventId}")"
+                  OnValidSubmit="@(async () => { await RegisterToEventAsync(EventId); })">
+            <button type="submit" class="underline">@Loc["Register"]</button>
+        </EditForm>
     }
 }
 
 @code {
 
+
     [Parameter] public Guid EventId { get; set; }
+    [Parameter] public bool IsPast { get; set; }
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
-    private bool _loading = true;
     private bool _isRegistered;
     private Guid? _userId;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task RegisterToEventAsync(Guid? eventId)
     {
-        if (firstRender)
-        {
-            var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-
-            if (authState.User.Identity?.IsAuthenticated == true)
-            {
-                if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
-                {
-                    _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-                }
-
-                _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
-                _loading = false;
-                StateHasChanged();
-            }
-        }
-    }
-
-    private async Task RegisterAsync(Guid eventId)
-    {
-        if (_userId is not null)
+        if (eventId.HasValue && _userId is not null)
         {
             await DbContext.Registrations.AddAsync(new Jhooa.UI.Features.Events.Models.Registration()
             {
-                EventId = eventId,
+                EventId = EventId,
                 UserId = _userId.Value,
             });
             await DbContext.SaveChangesAsync();
-
-            _isRegistered = true;
+            RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Registered"], HttpContext);
         }
     }
     
-    private async Task RemoveRegistrationAsync(Guid eventId)
+    private async Task UnregisterToEventAsync(Guid? eventId)
     {
-        if (_userId is not null)
+        if (eventId.HasValue && _userId is not null)
         {
             await DbContext.Registrations.Where(r => r.UserId == _userId && r.EventId == EventId).ExecuteDeleteAsync();
             await DbContext.SaveChangesAsync();
-
-            _isRegistered = false;
+            RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Unregistered"], HttpContext);
         }
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
+            {
+                _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            }
+
+            _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
+                
+        }
+    }
 }

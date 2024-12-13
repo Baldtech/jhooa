@@ -8,16 +8,19 @@
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Events.Components
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Events> Loc
 
-<h3>@Loc["EventsList"]</h3>
+<PageTitle>@Loc["EventsList"]</PageTitle>
 
-<p>
-    <a href="/Admin/Event" class="btn btn-primary">@Loc["AddEvent"]</a>
-</p>
+<section class="max-w-screen-xl mx-auto">
+    <h1 class="mb-8">@Loc["EventsList"]</h1>
 
-<EventsList>
-</EventsList>
+    <a href="/Admin/Event" class="order-2 border-white p-3 bg-gray-400">@Loc["AddEvent"]</a>
+
+    <div class="mb-8"></div>
+
+    <EventsList />
+</section>
 
 @code
 {

@@ -1,0 +1,39 @@
+@using System.Diagnostics.CodeAnalysis
+@using System.Linq.Expressions
+@inherits InputBase<DateTimeOffset>
+
+<div>
+    <label for="@_fieldId" class="block">@DisplayName</label>
+
+    <input
+        id="@_fieldId"
+        type="date"
+        name="@NameAttributeValue"
+        class="mt-1 block w-full border-2 border-white shadow-sm bg-transparent p-3 focus:outline-none @CssClass"
+        @bind="@CurrentValue"/>
+    <ValidationMessage For="@ValidationFor" class="text-danger"/>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Expression<Func<DateTimeOffset>> ValidationFor { get; set; } = default!;
+    [Parameter] public string? Autocomplete { get; set; }
+    
+    private readonly Guid _fieldId = Guid.NewGuid();
+    
+    protected override void OnInitialized()
+    {
+        if (ValidationFor == null)
+        {
+            throw new InvalidOperationException($"{nameof(JhooaInputText)} requires a {nameof(ValidationFor)} parameter.");
+        }
+
+        base.OnInitialized();
+    }
+
+    protected override bool TryParseValueFromString(string? value, out DateTimeOffset result, [NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = !string.IsNullOrWhiteSpace(value) ? DateTimeOffset.TryParse(value, out var date) ? date : DateTimeOffset.MinValue : DateTimeOffset.MinValue;
+        validationErrorMessage = null;
+        return true;    }
+
+}

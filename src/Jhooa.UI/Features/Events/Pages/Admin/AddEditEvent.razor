@@ -5,75 +5,66 @@
 @using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Components.Layout
 @using Jhooa.UI.Features.Events.Models
+@using Jhooa.UI.Services
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
+@inject IBlobService BlobService
 
-@if (Id.HasValue)
-{
-    <h3>Edit Event</h3>
-}
-else
-{
-    <h3>Add Event</h3>
-}
+<PageTitle>@Loc["EventsList"]</PageTitle>
 
-@if (Input != null)
-{
-    <EditForm Model="Input" FormName="formEvent" OnValidSubmit="OnValidSubmitAsync">
-        <DataAnnotationsValidator></DataAnnotationsValidator>
-        <ValidationSummary></ValidationSummary>
-
+<section class="max-w-screen-xl mx-auto ">
+    <div>
         @if (Id.HasValue)
         {
-            <InputText @bind-Value="Input.EventId" hidden></InputText>
-        }
-
-        <div class="form-floating mb-3">
-            <InputText type="text" @bind-Value="Input!.Title" class="form-control" aria-required="true" placeholder="Please enter the name of the event."/>
-            <label for="small-dream" class="form-label">@Loc["Title"]</label>
-            <ValidationMessage For="() => Input.Title" class="text-danger"/>
-        </div>
-        <div class="form-floating mb-3">
-            <InputTextArea type="" @bind-Value="Input!.Description" class="form-control" aria-required="true" placeholder="Please enter the description of the event."/>
-            <label for="medium-dream" class="form-label">@Loc["Description"]</label>
-            <ValidationMessage For="() => Input.Description" class="text-danger"/>
-        </div>
-        <div class="form-floating mb-3">
-            <InputDate TValue="DateTimeOffset" @bind-Value="Input!.StartDate" class="form-control" aria-required="true"/>
-            <label for="big-dream" class="form-label">@Loc["StartDate"]</label>
-            <ValidationMessage For="() => Input.StartDate" class="text-danger"/>
-        </div>
-        <div class="form-floating mb-3">
-            <InputDate TValue="DateTimeOffset" @bind-Value="Input!.EndDate" class="form-control" aria-required="true"/>
-            <label for="big-dream" class="form-label">@Loc["EndDate"]</label>
-            <ValidationMessage For="() => Input.EndDate" class="text-danger"/>
-        </div>
-
-        <br/>
-        @if (Id.HasValue)
-        {
-            <button class="btn btn-primary" type="submit">Update</button>
+            <h1>@Loc["EditEvent"]</h1>
         }
         else
         {
-            <button class="btn btn-primary" type="submit">Save</button>
+            <h1>@Loc["AddEvent"]</h1>
         }
-        &nbsp;
-        <a href="/Admin/Events" class="btn btn-primary">Close</a>
+        @if (Input != null)
+        {
+            <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formEvent" class="space-y-6" enctype="multipart/form-data" Enhance>
+                <DataAnnotationsValidator/>
 
-    </EditForm>
-}
+                @if (Id.HasValue)
+                {
+                    <InputText @bind-Value="Input.EventId" hidden></InputText>
+                }
+
+                <JhooaInputText @bind-Value="Input.Title" DisplayName="@Loc["Title"]" ValidationFor="@(() => Input.Title)"/>
+                <JhooaInputText @bind-Value="Input.Description" DisplayName="@Loc["Description"]" ValidationFor="@(() => Input.Description)"/>
+                <JhooaInputDate @bind-Value="Input.StartDate" DisplayName="@Loc["StartDate"]" ValidationFor="@(() => Input.StartDate)" />
+                <JhooaInputDate @bind-Value="Input.EndDate" DisplayName="@Loc["EndDate"]" ValidationFor="@(() => Input.EndDate)" />
+                
+                @if (!Id.HasValue)
+                {
+                    <InputFile name="Input.Image" />
+                }
+
+                <button type="submit" class=" border-2 border-white p-3 bg-gray-400">@Loc["Save"]</button>
+                <JhooaButtonLink
+                    Url="/Admin/Events"
+                    Text="@Loc["Cancel"]"
+                    />
+
+            </EditForm>
+        }
+    </div>
+</section>
+
+
 
 @code {
     [Parameter] public Guid? Id { get; set; }
 
     [SupplyParameterFromForm] private InputModel? Input { get; set; }
-
+    
     protected override async Task OnParametersSetAsync()
     {
         if (Id.HasValue)
@@ -116,13 +107,21 @@ else
             }
             else
             {
-                await DbContext.Events.AddAsync(new Event()
+                var newEvent = new Event()
                 {
                     Title = Input.Title,
                     Description = Input.Description,
                     StartDate = Input.StartDate,
                     EndDate = Input.EndDate
-                });
+                };
+                
+                if (Input.Image is not null)
+                {
+                    var blobService = BlobService.GetBlobService("events");
+                    newEvent.ImageUrl = await blobService.UploadAsync($"{newEvent.Id}/{Input.Image.FileName}", Input.Image.OpenReadStream());
+                }
+
+                await DbContext.Events.AddAsync(newEvent);
             }
 
             await DbContext.SaveChangesAsync();
@@ -136,17 +135,19 @@ else
         public string? EventId { get; set; }
         public Guid? EventGuid  => EventId is not null ? Guid.Parse(EventId) : null;
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-        [Display(Name = "Title")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string Title { get; set; } = "";
 
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
-        [Display(Name = "Description")]
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
+        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string Description { get; set; } = "";
 
-        [Display(Name = "Start date")] public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        [Display(Name = "End date")] public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
+        
+        public IFormFile? Image { get; set; }
     }
 
 }

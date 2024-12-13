@@ -1,0 +1,23 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="MySubscription" xml:space="preserve">
+        <value>Mon abonnement</value>
+    </data>
+    <data name="MySubscriptionTitle" xml:space="preserve">
+        <value>Vivez l’expérience ! </value>
+    </data>
+    <data name="MySubscriptionDesc" xml:space="preserve">
+        <value>Abonnez vous mensuellement ou annuellement et gagnez la chance de participer à des évènements hors du commun, de voir un de vos rêves se réaliser et accéder à toutes nos vidéos. L’abonnement mensuel est valable un mois à partir de la date de paiement de celui-ci.</value>
+    </data>
+</root>

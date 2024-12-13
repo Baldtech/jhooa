@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="EventsList" xml:space="preserve">
+        <value>Events</value>
+    </data>
+    <data name="AddEvent" xml:space="preserve">
+        <value>Add an event</value>
+    </data>
+    <data name="EditEvent" xml:space="preserve">
+        <value>Update the event</value>
+    </data>
+    <data name="Title" xml:space="preserve">
+        <value>Title</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value />
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value />
+    </data>
+    <data name="HowToRegisterTitle" xml:space="preserve">
+        <value>How to register?</value>
+    </data>
+    <data name="HowToRegisterDesc" xml:space="preserve">
+        <value>I can view events and register for those that fall within my subscription period (e.g., March and April if I subscribed to a one-month plan overlapping these two months). The selection of participants for the events will take place on the 15th of the month following the proposed event month.</value>
+    </data>
+    <data name="StartDate" xml:space="preserve">
+        <value>Start date</value>
+    </data>
+    <data name="EndDate" xml:space="preserve">
+        <value>End date</value>
+    </data>
+    <data name="Participants" xml:space="preserve">
+        <value>Participants</value>
+    </data>
+    <data name="Actions" xml:space="preserve">
+        <value>Actions</value>
+    </data>
+    <data name="NextEvents" xml:space="preserve">
+        <value>Next events</value>
+    </data>
+    <data name="NoPastEvents" xml:space="preserve">
+        <value>No past events</value>
+    </data>
+    <data name="Loading" xml:space="preserve">
+        <value>Loading..</value>
+    </data>
+    <data name="PastEvents" xml:space="preserve">
+        <value>Past events</value>
+    </data>
+    <data name="NoNextEvents" xml:space="preserve">
+        <value>No next events</value>
+    </data>
+    <data name="BackToEvents" xml:space="preserve">
+        <value>Back to the events</value>
+    </data>
+    <data name="Pictures" xml:space="preserve">
+        <value>In pictures</value>
+    </data>
+    <data name="RequiresAuthentication" xml:space="preserve">
+        <value>Requires a subscription</value>
+    </data>
+    <data name="AlreadyRegistered" xml:space="preserve">
+        <value>Already registered</value>
+    </data>
+    <data name="RemoveRegistration" xml:space="preserve">
+        <value>Unregister</value>
+    </data>
+    <data name="Register" xml:space="preserve">
+        <value>Register</value>
+    </data>
+    <data name="Registered" xml:space="preserve">
+        <value>You are registered for this event</value>
+    </data>
+    <data name="Unregistered" xml:space="preserve">
+        <value>You are unregistered to this event</value>
+    </data>
+</root>

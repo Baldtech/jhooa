@@ -1,0 +1,33 @@
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Events> Loc
+
+
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+    <div class="w-52 h-36 overflow-hidden">
+        <a href="/Events/@Event.Id">
+            @if (string.IsNullOrWhiteSpace(Event.ImageUrl))
+            {
+                <img class="rounded-t-lg" src="https://placehold.co/550x550/B79E98/fff?text=event" alt=""/>
+            }
+            else
+            {
+                <img class="rounded-t-lg" src="@Event.ImageUrl" alt=""/>
+            }
+        </a>
+    </div>
+
+    <div class="p-5">
+        <a href="#">
+            <h5 class="mb-2 font-bold tracking-tight text-gray-900 ">@Event.StartDate.ToString("d")</h5>
+        </a>
+        <p class="mb-3 text-lg font-normal text-gray-700 ">@Event.Title</p>
+        <Registration EventId="Event.Id" IsPast="Event.IsPast"/>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter] public required Event Event { get; set; }
+}

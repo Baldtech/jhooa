@@ -1,0 +1,66 @@
+@page "/Events/{id:guid}"
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Events.Components
+@using Jhooa.UI.Services
+
+@inject IStringLocalizer<Resources.Events> Loc
+@inject ApplicationDbContext DbContext
+@inject IBlobService BlobService
+
+@if (_ev is not null)
+{
+    <PageTitle>@_ev.Title</PageTitle>
+}
+
+<EventHeader/>
+
+<div class="mb-16"></div>
+
+<JhooaStatusMessage />
+
+@if (_ev is not null)
+{
+    <section class="max-w-screen-xl mx-auto">
+        <a href="/Events" class="underline mb-16">@Loc["BackToEvents"]</a>
+
+        <h2 class="mb-3">@_ev.StartDate.ToString("d")</h2>
+        <h1 class="mb-8">@_ev.Title</h1>
+
+        <p class="mb-16">@_ev.Description</p>
+        
+        <Registration EventId="@_ev.Id" IsPast="@_ev.IsPast"/>
+        
+        @if (_pictures is not null && _pictures.Count > 1)
+        {
+            <h3 class="mb-6 mt-16">@Loc["Pictures"]</h3>
+
+            <div class="flex flex-wrap space-x-4">
+
+                @foreach (var picture in _pictures)
+                {
+                    <img src="@picture" alt="Event picture" class="w-1/5"/>
+                }
+            </div>
+        }
+    </section>
+}
+
+
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    
+    private Event? _ev;
+    private List<string>? _pictures;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _ev = await DbContext.Events.FirstAsync(e => e.Id == Id);
+
+        var blobService = BlobService.GetBlobService("events");
+        _pictures = await blobService.GetAllBlobs($"{_ev.Id}/");
+    }
+
+}

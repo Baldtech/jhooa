@@ -2,11 +2,11 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Dreams> Loc
 @inject ApplicationDbContext DbContext
 
-<table class="styled-table">
-    <thead>
+<table class="w-full  text-left text-gray-500">
+    <thead class="text-gray-700 uppercase bg-gray-50">
     <tr>
         <th>@Loc["Type"]</th>
         <th>@Loc["Title"]</th>
@@ -15,7 +15,7 @@
     <tbody>
     @foreach (var dream in _dreams)
     {
-        <tr>
+        <tr class="bg-white border-b  ">
             <td>@Loc[dream.Type.ToString()]</td>
             <td>@dream.Title</td>
         </tr>

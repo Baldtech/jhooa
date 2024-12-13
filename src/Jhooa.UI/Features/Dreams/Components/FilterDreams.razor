@@ -1,11 +1,11 @@
 @using Jhooa.UI.Features.Dreams.Models
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Dreams> Loc
 
-<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Small); })">@Loc["Small"]</button>
-<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Medium); })">@Loc["Medium"]</button>
-<button type="button" @onclick="@(() => { SelectDreamType(DreamTypes.Big); })">@Loc["Big"]</button>
-<button type="button" @onclick="@(() => { SelectDreamType(null); })">@Loc["All"]</button>
+<FilterButton Text="@Loc["Small"]" Action="@(() => { SelectDreamType(DreamTypes.Small); })" />
+<FilterButton Text="@Loc["Medium"]" Action="@(() => { SelectDreamType(DreamTypes.Medium); })" />
+<FilterButton Text="@Loc["Big"]" Action="@(() => { SelectDreamType(DreamTypes.Big); })" />
+<FilterButton Text="@Loc["All"]" Action="@(() => { SelectDreamType(null); })" />
 
 @code
 {
