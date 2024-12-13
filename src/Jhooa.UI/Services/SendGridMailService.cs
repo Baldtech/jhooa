@@ -1,12 +1,13 @@
 using FluentEmail.Core;
 using FluentEmail.Core.Models;
 using FluentEmail.SendGrid;
+using Jhooa.UI.Exceptions;
 
 namespace Jhooa.UI.Services;
 
-public class MailService(ILogger<MailService> logger, IFluentEmail fluentEmail) : IMailService
+public class SendGridMailService(ILogger<SendGridMailService> logger, IFluentEmail fluentEmail) : IMailService
 {
-    public async Task<SendResponse> SendWithTemplateAsync(string to, string templateId, object templateData)
+    public async Task<SendResponse> SendWithTemplateAsync(string to, string templateId, object templateData, string? subject = default)
     {
         try
         {
@@ -28,6 +29,5 @@ public class MailService(ILogger<MailService> logger, IFluentEmail fluentEmail) 
         }
     }
 
-    private sealed class MailException(string to, string template, List<string> errors)
-        : Exception($"Failed to send email to '{to}' with template '{template}' : {string.Join(", ", errors)}");
+    
 }

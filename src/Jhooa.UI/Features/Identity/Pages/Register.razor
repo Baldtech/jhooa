@@ -287,7 +287,7 @@
         public string PhoneNumber { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 6, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 

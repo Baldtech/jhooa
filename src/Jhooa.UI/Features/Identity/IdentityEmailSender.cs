@@ -1,14 +1,19 @@
-using System.Text.Json;
 using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace Jhooa.UI.Features.Identity;
 
-internal sealed class IdentityEmailSender (IMailService mailService) : IEmailSender<ApplicationUser>
+internal sealed class IdentityEmailSender (IMailService mailService, IServiceCollection serviceCollection) : IEmailSender<ApplicationUser>
 {
     public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink)
     {
+        var serviceDescriptor = serviceCollection.First(descriptor => descriptor.ServiceType == typeof(IMailService));
+        
+        var templateId = serviceDescriptor.ImplementationType == typeof(SendGridMailService)
+            ? "d-e34c8749182e49bfb4c27547774adb6d"
+            : "AccountConfirmation";
+        
         return mailService.SendWithTemplateAsync(email, "d-e34c8749182e49bfb4c27547774adb6d",
             new
             {
@@ -19,12 +24,18 @@ internal sealed class IdentityEmailSender (IMailService mailService) : IEmailSen
 
     public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)
     {
-        return mailService.SendWithTemplateAsync(email, "d-71b3a3ee1e604455ae589d58612a17a8",
+        var serviceDescriptor = serviceCollection.First(descriptor => descriptor.ServiceType == typeof(IMailService));
+        
+        var templateId = serviceDescriptor.ImplementationType == typeof(SendGridMailService)
+            ? "d-71b3a3ee1e604455ae589d58612a17a8"
+            : "ResetPassword";
+        
+        return mailService.SendWithTemplateAsync(email, templateId,
             new
             {
                 User_Name = user.FirstName,
-                Reset_Link = resetLink
-            });
+                Reset_Link = resetLink,
+            }, subject: "Reset your password");
     }
 
     public Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode)

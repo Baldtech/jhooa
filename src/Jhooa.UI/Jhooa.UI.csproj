@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.16.0" />
+    <PackageReference Include="jcamp.FluentEmail.Azure.Email" Version="3.8.0" />
     <PackageReference Include="jcamp.FluentEmail.SendGrid" Version="3.8.0" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.169">
       <PrivateAssets>all</PrivateAssets>
@@ -96,7 +97,6 @@
     <AdditionalFiles Include="Features\Identity\Pages\Manage\_Imports.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\Register.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\RegisterConfirmation.razor" />
-    <AdditionalFiles Include="Features\Identity\Pages\ResendEmailConfirmation.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\ResetPassword.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\ResetPasswordConfirmation.razor" />
     <AdditionalFiles Include="Features\Identity\Pages\_Imports.razor" />
@@ -119,6 +119,15 @@
     <_ContentIncludedByDefault Remove="Components\Account\Shared\StatusMessage.razor" />
     <_ContentIncludedByDefault Remove="wwwroot\images\flags\france_rounded.png" />
     <_ContentIncludedByDefault Remove="wwwroot\images\flags\uk_rounded.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\EmailTemplates\AccountConfirmation.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\EmailTemplates\ResetPassword.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

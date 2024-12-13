@@ -13,24 +13,24 @@
 <nav class="max-w-screen-xl mx-auto">
     <menu class="grid grid-flow-col">
         <li class="list-none">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link underline" href="" Match="NavLinkMatch.All">
                 @Loc["Home"]
             </NavLink>
         </li>
         <li class="list-none">
-            <NavLink class="nav-link" href="/Events" Match="NavLinkMatch.All">
+            <NavLink class="nav-link underline" href="/Events" Match="NavLinkMatch.All">
                 @Loc["Events"]
             </NavLink>
         </li>
         <li>
-            <NavLink class="nav-link" href="/Videos" Match="NavLinkMatch.All">
+            <NavLink class="nav-link underline" href="/Videos" Match="NavLinkMatch.All">
                 @Loc["Videos"]
             </NavLink>
         </li>
         <AuthorizeView>
             <Authorized>
                 <li>
-                    <NavLink class="nav-link" href="Account/Manage">
+                    <NavLink class="nav-link underline" href="Account/Manage">
                         @_user?.FirstName @_user?.LastName
                     </NavLink>
                 </li>
@@ -38,7 +38,7 @@
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken/>
                         <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
-                        <button type="submit" class="nav-link">
+                        <button type="submit" class="nav-link underline">
                             Logout
                         </button>
                     </form>
@@ -48,7 +48,7 @@
             <NotAuthorized>
                 <li>
 
-                    <NavLink class="nav-link" href="Account/Login">
+                    <NavLink class="nav-link underline" href="Account/Login">
                         @Loc["Login"]
                     </NavLink>
                 </li>
@@ -57,7 +57,7 @@
         </AuthorizeView>
         <AuthorizeView Roles="Admin">
             <li>
-                <NavLink class="nav-link" href="Admin">
+                <NavLink class="nav-link underline" href="Admin">
                     @Loc["Administration"]
                 </NavLink>
             </li>

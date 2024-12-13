@@ -446,5 +446,65 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("ResetPasswordConfirmation", resourceCulture);
             }
         }
+        
+        internal static string MyAccount {
+            get {
+                return ResourceManager.GetString("MyAccount", resourceCulture);
+            }
+        }
+        
+        internal static string MyDreams {
+            get {
+                return ResourceManager.GetString("MyDreams", resourceCulture);
+            }
+        }
+        
+        internal static string MySubscription {
+            get {
+                return ResourceManager.GetString("MySubscription", resourceCulture);
+            }
+        }
+        
+        internal static string SaveChanges {
+            get {
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
+            }
+        }
+        
+        internal static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        internal static string UpdatePassword {
+            get {
+                return ResourceManager.GetString("UpdatePassword", resourceCulture);
+            }
+        }
+        
+        internal static string OldPassword {
+            get {
+                return ResourceManager.GetString("OldPassword", resourceCulture);
+            }
+        }
+        
+        internal static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        internal static string ConfirmNewPassword {
+            get {
+                return ResourceManager.GetString("ConfirmNewPassword", resourceCulture);
+            }
+        }
+        
+        internal static string PasswordChanged {
+            get {
+                return ResourceManager.GetString("PasswordChanged", resourceCulture);
+            }
+        }
     }
 }

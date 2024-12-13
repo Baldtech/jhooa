@@ -220,4 +220,34 @@
     <data name="ResetPasswordConfirmation" xml:space="preserve">
         <value>Reset password confirmation</value>
     </data>
+    <data name="MyAccount" xml:space="preserve">
+        <value>My account</value>
+    </data>
+    <data name="MyDreams" xml:space="preserve">
+        <value>My dreams</value>
+    </data>
+    <data name="MySubscription" xml:space="preserve">
+        <value>My subscription</value>
+    </data>
+    <data name="SaveChanges" xml:space="preserve">
+        <value>Save changes</value>
+    </data>
+    <data name="ChangePassword" xml:space="preserve">
+        <value>Update your password</value>
+    </data>
+    <data name="UpdatePassword" xml:space="preserve">
+        <value>Update password</value>
+    </data>
+    <data name="OldPassword" xml:space="preserve">
+        <value>Old password</value>
+    </data>
+    <data name="NewPassword" xml:space="preserve">
+        <value>New password</value>
+    </data>
+    <data name="ConfirmNewPassword" xml:space="preserve">
+        <value>Confirm your new password</value>
+    </data>
+    <data name="PasswordChanged" xml:space="preserve">
+        <value>Your password has been changed.</value>
+    </data>
 </root>

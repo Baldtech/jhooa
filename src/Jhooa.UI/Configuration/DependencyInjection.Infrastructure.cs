@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Jhooa.UI.Data;
 using Jhooa.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -6,8 +7,10 @@ namespace Jhooa.UI.Configuration;
 
 public static partial class DependencyInjection
 {
-    private const string EmailDefaultFromEmailKey = "SendGrid:DefaultFromEmail";
-    private const string SendGridApiKey = "SendGrid:ApiKey";
+    private const string EmailDefaultFromEmailKey = "Email:DefaultFromEmail";
+    private const string EmailModeKey = "Email:Mode";
+    private const string SendGridApiKey = "Email:SendGridApiKey";
+    private const string AzureCommunicationServiceEndpointKey = "Email:AzureCommunicationServiceEndpoint";
     
     /// <summary>
     ///     Adds infrastructure services to the service collection.
@@ -24,7 +27,7 @@ public static partial class DependencyInjection
             options.UseSqlServer(connectionString));
 
         services.AddDatabaseDeveloperPageExceptionFilter();
-        
+
         services.AddStripeIntegration(config);
         services.AddMessageServices(config);
 
@@ -41,23 +44,36 @@ public static partial class DependencyInjection
             config.GetSection(StripeConfiguration.SectionName));
         services.AddScoped<IStripeService, StripeService>();
     }
-    
+
     private static IServiceCollection AddMessageServices(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<IMailService, MailService>();
+        var mode = configuration.GetValue<string>(EmailModeKey);
 
         var defaultFromEmail = configuration.GetValue<string>(EmailDefaultFromEmailKey);
+
         var apiKey = configuration.GetValue<string>(SendGridApiKey);
-        if (!string.IsNullOrWhiteSpace(apiKey))
+
+        var endpoint = configuration.GetValue<string>(AzureCommunicationServiceEndpointKey);
+
+        if (string.Equals(mode, "SendGrid", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(apiKey))
         {
+            services.AddSingleton<IMailService, SendGridMailService>();
+
             services.AddFluentEmail(defaultFromEmail)
                 .AddSendGridSender(apiKey);
+        }
+        else if (string.Equals(mode, "Azure", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(endpoint))
+        {
+            services.AddSingleton<IMailService, AzureMailService>();
+
+            services.AddFluentEmail(defaultFromEmail)
+                .AddAzureEmailSender(new Uri(endpoint), new DefaultAzureCredential());
         }
         else
         {
             throw new InvalidOperationException(
-                "No email sender configuration found. Please configure either an Azure Communication Service connection string or endpoint.");
+                "No email sender configuration found. Please configure either an Azure Communication Service endpoint or SendGrid.");
         }
 
         return services;

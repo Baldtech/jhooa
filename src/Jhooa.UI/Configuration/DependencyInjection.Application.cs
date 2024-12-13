@@ -12,6 +12,8 @@ public static partial class DependencyInjection
     /// <returns></returns>
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
     {
+        services.AddSingleton(services);
+        
         services.AddScoped<IDreamService, DreamService>();
 
 

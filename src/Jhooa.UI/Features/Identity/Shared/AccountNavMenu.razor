@@ -10,13 +10,27 @@
 <nav class="max-w-screen-xl mx-auto border-gray-100 text-white">
     <menu class="grid grid-flow-col">
         <li class="list-none">
-            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+            <NavLink class="nav-link underline" href="/" Match="NavLinkMatch.All">
                 @Loc["BackToHome"]
             </NavLink>
         </li>
         <li>
-            
+            <img src="https://placehold.co/180x70/000/fff?text=Jhooa" alt="Header with balloons" class="m-auto h-banner object-cover"/>
         </li>
+        <AuthorizeView>
+            <Authorized>
+                <li>
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken/>
+                        <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+                        <button type="submit" class="nav-link underline">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+
+            </Authorized>
+        </AuthorizeView>
         <li>
             <CultureSelector @rendermode="InteractiveServer"/>
         </li>

@@ -212,4 +212,34 @@
     <data name="ResetPasswordConfirmation" xml:space="preserve">
         <value>Confirmation de réinitialisation du mot de passe.</value>
     </data>
+    <data name="MyAccount" xml:space="preserve">
+        <value>Mon compte</value>
+    </data>
+    <data name="MyDreams" xml:space="preserve">
+        <value>Mes voeux</value>
+    </data>
+    <data name="MySubscription" xml:space="preserve">
+        <value>Mon abonnement</value>
+    </data>
+    <data name="SaveChanges" xml:space="preserve">
+        <value>Sauvegarder les changements</value>
+    </data>
+    <data name="ChangePassword" xml:space="preserve">
+        <value>Modifie ton mot de passe</value>
+    </data>
+    <data name="UpdatePassword" xml:space="preserve">
+        <value>Modifie mot de passe</value>
+    </data>
+    <data name="OldPassword" xml:space="preserve">
+        <value>Ancien mot de passe</value>
+    </data>
+    <data name="NewPassword" xml:space="preserve">
+        <value>Nouveau mot de passe</value>
+    </data>
+    <data name="ConfirmNewPassword" xml:space="preserve">
+        <value>Confirmation du nouveau mot de passe</value>
+    </data>
+    <data name="PasswordChanged" xml:space="preserve">
+        <value>Votre mot de passe a été modifié.</value>
+    </data>
 </root>
