@@ -1,0 +1,80 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Actions" xml:space="preserve">
+        <value>Actions</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Annuler</value>
+    </data>
+    <data name="AddVideo" xml:space="preserve">
+        <value>Ajouter une vidéo</value>
+    </data>
+    <data name="Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Suppression</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edition</value>
+    </data>
+    <data name="EditVideo" xml:space="preserve">
+        <value>Edite une vidéo</value>
+    </data>
+    <data name="Months" xml:space="preserve">
+        <value>Mois</value>
+    </data>
+    <data name="NoVideosFound" xml:space="preserve">
+        <value>Aucune vidéo trouvée</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value>Requis</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Sauvegarder</value>
+    </data>
+    <data name="Theme" xml:space="preserve">
+        <value>Thématique</value>
+    </data>
+    <data name="Themes" xml:space="preserve">
+        <value>Thématiques</value>
+    </data>
+    <data name="TheVideos" xml:space="preserve">
+        <value>Les vidéos</value>
+    </data>
+    <data name="VideoId" xml:space="preserve">
+        <value>ID Vimeo</value>
+    </data>
+    <data name="VideosPageText1" xml:space="preserve">
+        <value>Bienvenue dans votre espace dédié aux contenus vidéo. 
+</value>
+    </data>
+    <data name="VideosPageText2" xml:space="preserve">
+        <value>Découvrez ici les rêves devenus réalité pour les abonnés sélectionnés par JHOOA ! Plongez au coeur de ces expériences uniques qui viennent bousculer leur quotidien et partagez leurs émotions les plus intenses. 
+</value>
+    </data>
+    <data name="VideosPageText3" xml:space="preserve">
+        <value>Retrouvez également nos évènements exceptionnels pensés pour vous offrir des moments inoubliables, où chaque instant vous réserve son lot de surprises et d’émerveillement. 
+</value>
+    </data>
+    <data name="VideosPageText4" xml:space="preserve">
+        <value>Enfin, restez informés de notre actualité grâce à des vidéos exclusives. Découvrez les coulisses de notre société, suivez-nous lors de nos déplacements, … Restez connectés pour ne rien manquer des dernières nouveautés et informations JHOOA !</value>
+    </data>
+    <data name="VideosPageTitle" xml:space="preserve">
+        <value>Revivez les moments forts de l’expérience JHOOA !</value>
+    </data>
+    <data name="Years" xml:space="preserve">
+        <value>Années</value>
+    </data>
+</root>

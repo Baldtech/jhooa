@@ -212,5 +212,17 @@ namespace Jhooa.UI.Features.Events.Resources {
                 return ResourceManager.GetString("Unregistered", resourceCulture);
             }
         }
+        
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
     }
 }

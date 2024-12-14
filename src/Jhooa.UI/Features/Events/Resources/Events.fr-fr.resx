@@ -89,4 +89,10 @@
     <data name="Unregistered" xml:space="preserve">
         <value>Vous avez été désinscrit de cette évènement</value>
     </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Modfication</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Supression</value>
+    </data>
 </root>

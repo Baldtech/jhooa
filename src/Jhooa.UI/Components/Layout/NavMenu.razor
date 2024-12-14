@@ -22,13 +22,14 @@
                 @Loc["Events"]
             </NavLink>
         </li>
-        <li>
-            <NavLink class="nav-link underline" href="/Videos" Match="NavLinkMatch.All">
-                @Loc["Videos"]
-            </NavLink>
-        </li>
+        
         <AuthorizeView>
             <Authorized>
+                <li>
+                    <NavLink class="nav-link underline" href="/Videos" Match="NavLinkMatch.All">
+                        @Loc["Videos"]
+                    </NavLink>
+                </li>
                 <li>
                     <NavLink class="nav-link underline" href="Account/Manage">
                         @_user?.FirstName @_user?.LastName

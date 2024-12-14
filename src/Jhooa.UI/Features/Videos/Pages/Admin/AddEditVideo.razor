@@ -1,0 +1,174 @@
+@page "/Admin/Video/{id:guid?}"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@rendermode InteractiveServer
+
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Videos.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Videos> Loc
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+<PageTitle>@Loc["Videos"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto ">
+    <div>
+        @if (Id.HasValue)
+        {
+            <h1>@Loc["EditVideo"]</h1>
+        }
+        else
+        {
+            <h1>@Loc["AddVideo"]</h1>
+        }
+        @if (Input != null)
+        {
+            <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formVideo"
+                      class="space-y-6">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                @if (Id.HasValue)
+                {
+                    <InputText @bind-Value="Input.VideoId" hidden></InputText>
+                }
+
+                <JhooaInputText @bind-Value="Input.VimeoId" DisplayName="@Loc["VideoId"]"
+                                ValidationFor="@(() => Input.VimeoId)"/>
+                <JhooaInputDate @bind-Value="Input.Date" DisplayName="@Loc["Date"]"
+                                ValidationFor="@(() => Input.Date)"/>
+
+
+                @foreach (var theme in Input.Themes)
+                {
+                    @* <input type="hidden" @bind="theme.Id"/> *@
+                    @* <input type="hidden" @bind="theme.Name"/> *@
+                    <InputCheckbox @bind-Value="theme.IsSelected"/>
+                    <label>@theme.Name</label>
+                }
+
+
+
+                <button type="submit" class=" border-2 border-white p-3 bg-gray-400">@Loc["Save"]</button>
+                <JhooaButtonLink
+                    Url="/Admin/Videos"
+                    Text="@Loc["Cancel"]"
+                />
+
+            </EditForm>
+        }
+    </div>
+</section>
+
+
+
+@code {
+    [Parameter] public Guid? Id { get; set; }
+
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    private List<VideoTheme> _themes = [];
+    private Video? _video;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _themes = await DbContext.VideoThemes.ToListAsync();
+        var iMThemes  = _themes.Select(t => new ThemeInputModel
+        {
+            Id = t.Id,
+            Name = CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr,
+            IsSelected = false
+        }).ToList();
+        
+        if (Id.HasValue)
+        {
+            _video = await DbContext.Videos.Include(i => i.Themes).FirstOrDefaultAsync(e => e.Id == Id.Value);
+            if (_video is not null)
+            {
+                Input ??= new InputModel()
+                {
+                    Date = _video.Date,
+                    VideoId = _video.Id.ToString(),
+                    VimeoId = _video.VideoUrl,
+                    Themes = iMThemes
+                };
+
+                foreach (var theme in _video.Themes)
+                {
+                    Input.Themes.First(t => t.Id == theme.Id).IsSelected = true;
+                }
+            }
+        }
+        else
+        {
+            Input ??= new InputModel()
+            {
+                VimeoId = "",
+                Date = DateTime.Now,
+                Themes = iMThemes
+            };
+        }
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        if (Input is not null)
+        {
+            var selectedThemes = Input.Themes.Where(t => t.IsSelected).Select(t => t.Id).ToList();
+            if (Input.VideoGuid.HasValue && _video is not null)
+            {
+                await DbContext.Videos.Where(e => e.Id == Input.VideoGuid)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.VideoUrl, Input.VimeoId)
+                        .SetProperty(b => b.Date, Input.Date));
+                
+                DbContext.Videos.Attach(_video);
+
+                _video.ResetThemes(_themes.Where(t => selectedThemes.Contains(t.Id)).ToList());
+            }
+            else
+            {
+                var newVideo = new Video()
+                {
+                    Id = Guid.NewGuid(),
+                    VideoUrl = Input.VimeoId,
+                    Date = Input.Date,
+                };
+                
+                newVideo.ResetThemes(_themes.Where(t => selectedThemes.Contains(t.Id)).ToList());
+
+                await DbContext.Videos.AddAsync(newVideo);
+            }
+
+            await DbContext.SaveChangesAsync();
+        }
+
+        NavigationManager.NavigateTo($"/Admin/Videos");
+    }
+
+    private sealed class InputModel
+    {
+        public string? VideoId { get; set; }
+        public Guid? VideoGuid => VideoId is not null ? Guid.Parse(VideoId) : null;
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Videos))]
+        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Videos))]
+        public required string VimeoId { get; set; }
+
+        public DateTimeOffset Date { get; set; }
+
+        public List<ThemeInputModel> Themes { get; set; } = [];
+    }
+
+    private sealed class ThemeInputModel
+    {
+        public Guid Id { get; set; }
+        public string? Name { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
+}

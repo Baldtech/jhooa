@@ -1,0 +1,66 @@
+@using Jhooa.UI.Features.Videos.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Resources.Videos> Loc
+
+<div class="grid grid-cols-3 gap-4 mt-8">
+    @if (_videos.Count == 0)
+    {
+        <p>@Loc["NoVideosFound"]</p>
+    }
+    else
+    {
+        @foreach (var video in _videos)
+        {
+            <div class=" w-full h-60 overflow-hidden">
+                <div class="relative pb-[56.25%] h-0 overflow-hidden">
+                    <iframe
+                        src="https://player.vimeo.com/video/@video.VideoUrl"
+                        class="absolute top-0 left-0 w-full h-full"
+                        frameborder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        }
+    }
+    
+</div>
+
+@code {
+    
+    [Parameter] public Guid? SelectedTheme { get; set; }
+    [Parameter] public int? SelectedYear { get; set; }
+    [Parameter] public int? SelectedMonth { get; set; }
+    
+    private List<Video> _videos = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _videos = await DbContext.Videos.ToListAsync();
+    }
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        var query = DbContext.Videos.AsQueryable();
+        
+        if (SelectedTheme is not null)
+        {
+            query = query.Include(i => i.Themes).Where(v => v.Themes.Any(t => t.Id == SelectedTheme));
+        }
+        
+        if (SelectedYear is not null)
+        {
+            query = query.Where(v => v.Date.Year == SelectedYear);
+        }
+        
+        if (SelectedMonth is not null)
+        {
+            query = query.Where(v => v.Date.Month == SelectedMonth);
+        }
+        
+        _videos = await query.ToListAsync();
+    }
+}

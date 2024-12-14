@@ -62,6 +62,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Events.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Features\Videos\Resources\Videos.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Videos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -99,6 +103,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Events.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Videos\Resources\Videos.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Videos.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

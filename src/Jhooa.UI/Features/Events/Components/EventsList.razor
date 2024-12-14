@@ -25,11 +25,11 @@
             <td>@ev.EndDate.ToString("d")</td>
             <td>@ev.Registrations.Count</td>
             <td>
-                <a href="/Admin/Event/@ev.Id">Edit</a> -
+                <a href="/Admin/Event/@ev.Id">@Loc["Edit"]</a> -
                 <EditForm Model="ev" class="inline"
                           FormName="@($"form-event-{ev.Id}")"
                           OnValidSubmit="@(async () => { await DeleteEventAsync(ev.Id); })">
-                    <button type="submit" class="inline">Delete</button>
+                    <button type="submit" class="inline">@Loc["Delete"]</button>
                 </EditForm>
             </td>
         </tr>

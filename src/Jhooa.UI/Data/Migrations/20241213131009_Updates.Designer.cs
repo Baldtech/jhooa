@@ -4,6 +4,7 @@ using Jhooa.UI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jhooa.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241213131009_Updates")]
+    partial class Updates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,42 +298,6 @@ namespace Jhooa.UI.Data.Migrations
                     b.ToTable("Subscriptions");
                 });
 
-            modelBuilder.Entity("Jhooa.UI.Features.Videos.Models.Video", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("Date")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Videos");
-                });
-
-            modelBuilder.Entity("Jhooa.UI.Features.Videos.Models.VideoTheme", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameFr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("VideoThemes");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
@@ -434,21 +401,6 @@ namespace Jhooa.UI.Data.Migrations
                     b.ToTable("IdentityUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("VideoVideoTheme", b =>
-                {
-                    b.Property<Guid>("ThemesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("VideosId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ThemesId", "VideosId");
-
-                    b.HasIndex("VideosId");
-
-                    b.ToTable("VideoVideoTheme");
-                });
-
             modelBuilder.Entity("Jhooa.UI.Features.Dreams.Models.Dream", b =>
                 {
                     b.HasOne("Jhooa.UI.Features.Identity.Models.ApplicationUser", "User")
@@ -526,21 +478,6 @@ namespace Jhooa.UI.Data.Migrations
                     b.HasOne("Jhooa.UI.Features.Identity.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("VideoVideoTheme", b =>
-                {
-                    b.HasOne("Jhooa.UI.Features.Videos.Models.VideoTheme", null)
-                        .WithMany()
-                        .HasForeignKey("ThemesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Jhooa.UI.Features.Videos.Models.Video", null)
-                        .WithMany()
-                        .HasForeignKey("VideosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

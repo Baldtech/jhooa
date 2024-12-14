@@ -92,4 +92,7 @@
     <data name="Error" xml:space="preserve">
         <value>Erreur</value>
     </data>
+    <data name="Videos" xml:space="preserve">
+        <value>Vidéos</value>
+    </data>
 </root>

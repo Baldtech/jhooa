@@ -102,4 +102,10 @@
     <data name="Unregistered" xml:space="preserve">
         <value>You are unregistered to this event</value>
     </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
 </root>

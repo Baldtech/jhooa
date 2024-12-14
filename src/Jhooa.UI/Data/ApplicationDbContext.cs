@@ -4,6 +4,7 @@ using Jhooa.UI.Features.Dreams.Models;
 using Jhooa.UI.Features.Events.Models;
 using Jhooa.UI.Features.Identity.Models;
 using Jhooa.UI.Features.Subscriptions.Models;
+using Jhooa.UI.Features.Videos.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Subscription> Subscriptions { get; set; }
     
     public DbSet<ContactFormSubmission> ContactFormSubmissions { get; set; }
+    
+    public DbSet<Video> Videos { get; set; }
+    public DbSet<VideoTheme> VideoThemes { get; set; }
     
 
     protected override void OnModelCreating(ModelBuilder builder)

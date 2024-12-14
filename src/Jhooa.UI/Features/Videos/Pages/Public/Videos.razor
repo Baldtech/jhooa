@@ -1,0 +1,56 @@
+@page "/Videos"
+@rendermode InteractiveServer
+
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Videos.Components
+@using Jhooa.UI.Features.Videos.Models
+
+@inject IStringLocalizer<Resources.Videos> Loc
+
+<PageTitle>@Loc["Videos"]</PageTitle>
+
+<VideosHeader/>
+
+<div class="mb-16"></div>
+<section class="max-w-screen-xl mx-auto">
+
+    <h1>@Loc["VideosPageTitle"]</h1>
+
+    <div class="mb-16"></div>
+
+    <p class="mb-4">@Loc["VideosPageText1"]</p>
+    <p class="mb-4">@Loc["VideosPageText2"]</p>
+    <p class="mb-4">@Loc["VideosPageText3"]</p>
+    <p class="mb-4">@Loc["VideosPageText4"]</p>
+
+    <div class="mb-16"></div>
+
+    <h2 class="mb-8">@Loc["TheVideos"]</h2>
+
+    <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
+                  SelectYearCallback="HandleYearSelection"/>
+    
+    <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" />
+</section>
+
+@code {
+    private Guid? _selectedTheme;
+    private int? _selectedMonth;
+    private int? _selectedYear;
+
+    private void HandleThemeSelection(Guid? theme)
+    {
+        _selectedTheme = theme;
+    }
+
+    private void HandleYearSelection(int? year)
+    {
+        _selectedYear = year;
+    }
+
+    private void HandleMonthSelection(int? month)
+    {
+        _selectedMonth = month;
+    }
+
+}

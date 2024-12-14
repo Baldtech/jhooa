@@ -1,0 +1,27 @@
+@page "/Admin/Videos"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Videos.Components
+
+@inject IStringLocalizer<Resources.Videos> Loc
+
+<PageTitle>@Loc["Videos"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto">
+    <h1 class="mb-8">@Loc["Videos"]</h1>
+
+    <a href="/Admin/Video" class="order-2 border-white p-3 bg-gray-400">@Loc["AddVideo"]</a>
+
+    <div class="mb-8"></div>
+
+    <AdminVideosList />
+</section>
+
+@code
+{
+
+}

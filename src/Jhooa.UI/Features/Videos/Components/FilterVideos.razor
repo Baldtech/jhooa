@@ -1,0 +1,94 @@
+@using Jhooa.UI.Features.Videos.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Videos> Loc
+@inject ApplicationDbContext DbContext
+
+<div class="grid grid-cols-3">
+    <div>
+        @Loc["Theme"] <br />
+        <InputSelect id="theme" @bind-Value="_selectedTheme" class="text-black">
+            <option
+                @onclick="() => ApplySelectedThemeAsync(null)"> </option>
+            @foreach (var theme in _themes)
+            {
+                <option
+                    @onclick='(() => ApplySelectedThemeAsync(theme.Id))'>@(CultureInfo.CurrentCulture.Name == "en-GB" ? theme.NameEn : theme.NameFr)</option>
+            }
+        </InputSelect>
+
+    </div>
+    <div>
+        @Loc["Months"] <br />
+        <InputSelect id="month" @bind-Value="_selectedMonth" class="text-black">
+            <option
+                @onclick="() => ApplySelectedMonthAsync(null)"> </option>
+            @foreach (var month in _months)
+            {
+                <option
+                    @onclick='(() => ApplySelectedMonthAsync(month))'>@month.Name</option>
+            }
+        </InputSelect>
+
+    </div>
+    <div>
+        @Loc["Years"] <br />
+        <InputSelect id="year" @bind-Value="_selectedYear" class="text-black">
+            <option
+                @onclick="() => ApplySelectedYearAsync(null)"> </option>
+            @foreach (var year in _years)
+            {
+                <option
+                    @onclick='(() => ApplySelectedYearAsync(year))'>@year</option>
+            }
+        </InputSelect>
+
+    </div>
+</div>
+
+@code
+
+{
+    [Parameter] public EventCallback<Guid?> SelectThemeCallback { get; set; }
+    private Guid? _selectedTheme;
+    
+    [Parameter] public EventCallback<int?> SelectMonthCallback { get; set; }
+    private string? _selectedMonth;
+    
+    [Parameter] public EventCallback<int?> SelectYearCallback { get; set; }
+    private int? _selectedYear;
+
+    private List<VideoTheme> _themes = [];
+    private List<MonthModel> _months = [];
+    private List<int> _years = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _themes = await DbContext.VideoThemes.ToListAsync();
+        _years = Enumerable.Range(2024, 3).ToList();
+        _months = Enumerable.Range(1, 12).Select(x => new MonthModel()
+        {
+            Number = x,
+            Name = new DateTime(2024, x, 1).ToString("MMMM")
+        }).ToList();
+    }
+
+    private void ApplySelectedThemeAsync(Guid? themeId)
+    {
+        SelectThemeCallback.InvokeAsync(themeId);
+    }
+    private void ApplySelectedMonthAsync(MonthModel? month)
+    {
+        SelectMonthCallback.InvokeAsync(month?.Number);
+    }
+    private void ApplySelectedYearAsync(int? year)
+    {
+        SelectYearCallback.InvokeAsync(year);
+    }
+
+    sealed class MonthModel
+    {
+        public required int Number { get; init; }
+        public required string Name { get; init; }
+    }
+}

@@ -1,0 +1,62 @@
+@using Jhooa.UI.Features.Videos.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Videos> Loc
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+<table class="w-full  text-left text-gray-500">
+    <thead class="text-gray-700 uppercase bg-gray-50">
+    <tr>
+        <th>@Loc["Date"]</th>
+        <th>@Loc["VideoId"]</th>
+        <th>@Loc["Themes"]</th>
+        <th>@Loc["Actions"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (_videos != null)
+    {
+        @foreach (var video in _videos.OrderByDescending(o => o.Date))
+        {
+            <tr class="bg-white border-b  ">
+                <td>@video.Date.ToString("d")</td>
+                <td>@video.VideoUrl</td>
+                <td>@string.Join(", ", video.Themes.Select(t => CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr))</td>
+                <td>
+                    <a href="/Admin/Video/@video.Id">@Loc["Edit"]</a> -
+                    <EditForm Model="video" class="inline"
+                              FormName="@($"form-video-{video.Id}")"
+                              OnValidSubmit="@(async () => { await DeleteVideoAsync(video.Id); })">
+                        <button type="submit" class="inline">@Loc["Delete"]</button>
+                    </EditForm>
+                </td>
+            </tr>
+        }
+    }
+    
+    </tbody>
+</table>
+
+@code {
+
+    private List<Video>? _videos = default;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _videos ??= await DbContext.Videos.Include(i => i.Themes).ToListAsync();
+    }
+
+
+
+    private async Task DeleteVideoAsync(Guid? videoId)
+    {
+        if (videoId.HasValue)
+        {
+            await DbContext.Videos.Where(v => v.Id == videoId).ExecuteDeleteAsync();
+            NavigationManager.NavigateTo("/Admin/Videos", true);
+        }
+    }
+
+}

@@ -9,32 +9,32 @@
 
 @inject ApplicationDbContext DbContext
 
-<h3>Dashboard</h3>
-
-<p>
-    Welcome to the Admin Dashboard.
-</p>
-
-<p>
-    Number of users: @_usersCount
-</p>
-
-<p>
-    Number of dreams
-    <table>
-        <tr>
-            <th>Type</th>
-            <th>Count</th>
-        </tr>
-        @foreach(var dream in _dreamsCount)
-        {
-            <tr>
-                <td>@dream.Key</td>
-                <td>@dream.Value</td>
-            </tr>
-        }
-    </table>
-</p>
+@* <h3>Dashboard</h3> *@
+@* *@
+@* <p> *@
+@*     Welcome to the Admin Dashboard. *@
+@* </p> *@
+@* *@
+@* <p> *@
+@*     Number of users: @_usersCount *@
+@* </p> *@
+@* *@
+@* <p> *@
+@*     Number of dreams *@
+@*     <table> *@
+@*         <tr> *@
+@*             <th>Type</th> *@
+@*             <th>Count</th> *@
+@*         </tr> *@
+@*         @foreach(var dream in _dreamsCount) *@
+@*         { *@
+@*             <tr> *@
+@*                 <td>@dream.Key</td> *@
+@*                 <td>@dream.Value</td> *@
+@*             </tr> *@
+@*         } *@
+@*     </table> *@
+@* </p> *@
 
 @code {
     private int _usersCount;

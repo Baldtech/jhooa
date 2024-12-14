@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="VideosPageTitle" xml:space="preserve">
+        <value>Relive the highlights of the JHOOA! experience!</value>
+    </data>
+    <data name="VideosPageText1" xml:space="preserve">
+        <value>Welcome to your dedicated video content space.
+</value>
+    </data>
+    <data name="VideosPageText2" xml:space="preserve">
+        <value>Here, you can discover the dreams that have come true for subscribers selected by JHOOA! Immerse yourself in these unique experiences that shake up their daily lives and share their most intense emotions.
+</value>
+    </data>
+    <data name="VideosPageText3" xml:space="preserve">
+        <value>You’ll also find our exceptional events designed to offer you unforgettable moments, where every instant is filled with surprises and wonder.
+</value>
+    </data>
+    <data name="VideosPageText4" xml:space="preserve">
+        <value>Finally, stay informed about our latest updates through exclusive videos. Explore behind-the-scenes of our company, follow us during our travels, and more. Stay connected to never miss the latest news and updates from JHOOA!</value>
+    </data>
+    <data name="TheVideos" xml:space="preserve">
+        <value>The videos</value>
+    </data>
+    <data name="Theme" xml:space="preserve">
+        <value>Theme</value>
+    </data>
+    <data name="Months" xml:space="preserve">
+        <value>Months</value>
+    </data>
+    <data name="Years" xml:space="preserve">
+        <value>Years</value>
+    </data>
+    <data name="NoVideosFound" xml:space="preserve">
+        <value>No videos found</value>
+    </data>
+    <data name="AddVideo" xml:space="preserve">
+        <value>Add a video</value>
+    </data>
+    <data name="Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="VideoId" xml:space="preserve">
+        <value>Vimeo ID</value>
+    </data>
+    <data name="Themes" xml:space="preserve">
+        <value>Themes</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="Actions" xml:space="preserve">
+        <value>Actions</value>
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value>TBD</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="EditVideo" xml:space="preserve">
+        <value>Edit a video</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value>Required</value>
+    </data>
+</root>

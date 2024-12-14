@@ -206,5 +206,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
         }
+        
+        internal static string Videos {
+            get {
+                return ResourceManager.GetString("Videos", resourceCulture);
+            }
+        }
     }
 }
