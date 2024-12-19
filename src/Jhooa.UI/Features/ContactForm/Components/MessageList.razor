@@ -1,0 +1,39 @@
+@using Jhooa.UI.Features.ContactForm.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+@inject ApplicationDbContext DbContext
+
+<table class="w-full  text-left text-gray-500">
+    <thead class="text-gray-700 uppercase bg-gray-50">
+    <tr>
+        <th>@Loc["Date"]</th>
+        <th>@Loc["Sender"]</th>
+        <th>@Loc["Subject"]</th>
+        <th>@Loc["Message"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var sub in _submissions.OrderByDescending(o => o.SubmissionDate))
+    {
+        <tr class="bg-white border-b  ">
+            <td>@sub.SubmissionDate.ToString("d")</td>
+            <td>@sub.Sender</td>
+            <td>@sub.Subject</td>
+            <td>@sub.Content</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+
+
+    private List<ContactFormSubmission> _submissions = [];
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _submissions = await DbContext.ContactFormSubmissions.ToListAsync();
+    }
+}

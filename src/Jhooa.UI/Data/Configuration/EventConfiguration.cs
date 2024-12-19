@@ -16,6 +16,12 @@ public class EventConfiguration :
         builder.Property(b => b.Description)
             .HasMaxLength(Event.DescriptionMaxLength)
             .IsRequired();
+        builder.Property(b => b.TitleEn)
+            .HasMaxLength(Event.TitleMaxLength)
+            .IsRequired();
+        builder.Property(b => b.DescriptionEn)
+            .HasMaxLength(Event.DescriptionMaxLength)
+            .IsRequired();
         builder.Property(b => b.StartDate)
             .IsRequired();
         builder.Property(b => b.EndDate)

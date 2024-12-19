@@ -1,0 +1,24 @@
+@page "/Admin/ContactForms"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@using Jhooa.UI.Components.Layout
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.ContactForm.Components
+@using Microsoft.AspNetCore.Authorization
+
+@inject IStringLocalizer<Resources.Shared> Loc
+<PageTitle>@Loc["ContactForms"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto">
+    <h1>@Loc["ContactForms"]</h1>
+
+    <div class="mb-8"></div>
+
+    <MessageList />
+    
+</section>
+
+
+@code
+{
+}

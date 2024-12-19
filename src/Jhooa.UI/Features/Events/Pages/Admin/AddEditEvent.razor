@@ -37,8 +37,10 @@
                     <InputText @bind-Value="Input.EventId" hidden></InputText>
                 }
 
-                <JhooaInputText @bind-Value="Input.Title" DisplayName="@Loc["Title"]" ValidationFor="@(() => Input.Title)"/>
-                <JhooaInputText @bind-Value="Input.Description" DisplayName="@Loc["Description"]" ValidationFor="@(() => Input.Description)"/>
+                <JhooaInputText @bind-Value="Input.Title" DisplayName="@Loc["TitleFr"]" ValidationFor="@(() => Input.Title)"/>
+                <JhooaInputText @bind-Value="Input.Description" DisplayName="@Loc["DescriptionFr"]" ValidationFor="@(() => Input.Description)"/>
+                <JhooaInputText @bind-Value="Input.TitleEn" DisplayName="@Loc["TitleEn"]" ValidationFor="@(() => Input.TitleEn)"/>
+                <JhooaInputText @bind-Value="Input.DescriptionEn" DisplayName="@Loc["DescriptionEn"]" ValidationFor="@(() => Input.DescriptionEn)"/>
                 <JhooaInputDate @bind-Value="Input.StartDate" DisplayName="@Loc["StartDate"]" ValidationFor="@(() => Input.StartDate)" />
                 <JhooaInputDate @bind-Value="Input.EndDate" DisplayName="@Loc["EndDate"]" ValidationFor="@(() => Input.EndDate)" />
                 
@@ -101,7 +103,9 @@
                 await DbContext.Events.Where(e => e.Id == Input.EventGuid)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(b => b.Title, Input.Title)
+                        .SetProperty(b => b.TitleEn, Input.TitleEn)
                         .SetProperty(b => b.Description, Input.Description)
+                        .SetProperty(b => b.DescriptionEn, Input.DescriptionEn)
                         .SetProperty(b => b.StartDate, Input.StartDate)
                         .SetProperty(b => b.EndDate, Input.EndDate));
             }
@@ -112,7 +116,9 @@
                     Title = Input.Title,
                     Description = Input.Description,
                     StartDate = Input.StartDate,
-                    EndDate = Input.EndDate
+                    EndDate = Input.EndDate,
+                    TitleEn = Input.TitleEn,
+                    DescriptionEn = Input.DescriptionEn
                 };
                 
                 if (Input.Image is not null)
@@ -142,6 +148,14 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
         [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string Description { get; set; } = "";
+        
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
+        public string TitleEn { get; set; } = "";
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
+        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
+        public string DescriptionEn { get; set; } = "";
 
         public DateTimeOffset StartDate { get; set; }
 

@@ -8,7 +8,9 @@ public class Event
     
     public Guid Id { get; init; } = Guid.NewGuid();
     public required string Title { get; init; }
+    public required string TitleEn { get; init; }
     public required string Description { get; init; }
+    public required string DescriptionEn { get; init; }
     public string? ImageUrl { get; set; }
     public DateTimeOffset StartDate { get; init; }
     public DateTimeOffset EndDate { get; init; }

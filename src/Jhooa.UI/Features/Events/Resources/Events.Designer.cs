@@ -224,5 +224,29 @@ namespace Jhooa.UI.Features.Events.Resources {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
+        
+        internal static string TitleFr {
+            get {
+                return ResourceManager.GetString("TitleFr", resourceCulture);
+            }
+        }
+        
+        internal static string DescriptionFr {
+            get {
+                return ResourceManager.GetString("DescriptionFr", resourceCulture);
+            }
+        }
+        
+        internal static string DescriptionEn {
+            get {
+                return ResourceManager.GetString("DescriptionEn", resourceCulture);
+            }
+        }
+        
+        internal static string TitleEn {
+            get {
+                return ResourceManager.GetString("TitleEn", resourceCulture);
+            }
+        }
     }
 }

@@ -102,4 +102,19 @@
     <data name="Videos" xml:space="preserve">
         <value>Videos</value>
     </data>
+    <data name="ContactForms" xml:space="preserve">
+        <value>Messages (contact form)</value>
+    </data>
+    <data name="Date" xml:space="preserve">
+        <value>Date</value>
+    </data>
+    <data name="Sender" xml:space="preserve">
+        <value>Sender</value>
+    </data>
+    <data name="Subject" xml:space="preserve">
+        <value>Subject</value>
+    </data>
+    <data name="Message" xml:space="preserve">
+        <value>Message</value>
+    </data>
 </root>

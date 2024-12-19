@@ -95,4 +95,16 @@
     <data name="Delete" xml:space="preserve">
         <value>Supression</value>
     </data>
+    <data name="TitleFr" xml:space="preserve">
+        <value>Titre (français)</value>
+    </data>
+    <data name="DescriptionFr" xml:space="preserve">
+        <value>Description (français)</value>
+    </data>
+    <data name="DescriptionEn" xml:space="preserve">
+        <value>Description (anglais)</value>
+    </data>
+    <data name="TitleEn" xml:space="preserve">
+        <value>Titre (anglais)</value>
+    </data>
 </root>

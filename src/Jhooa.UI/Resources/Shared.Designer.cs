@@ -212,5 +212,35 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Videos", resourceCulture);
             }
         }
+        
+        internal static string ContactForms {
+            get {
+                return ResourceManager.GetString("ContactForms", resourceCulture);
+            }
+        }
+        
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        internal static string Sender {
+            get {
+                return ResourceManager.GetString("Sender", resourceCulture);
+            }
+        }
+        
+        internal static string Subject {
+            get {
+                return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        internal static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
     }
 }

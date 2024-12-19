@@ -108,4 +108,16 @@
     <data name="Delete" xml:space="preserve">
         <value>Delete</value>
     </data>
+    <data name="TitleFr" xml:space="preserve">
+        <value>Title (french)</value>
+    </data>
+    <data name="DescriptionFr" xml:space="preserve">
+        <value>Description (french)</value>
+    </data>
+    <data name="DescriptionEn" xml:space="preserve">
+        <value>Description (english)</value>
+    </data>
+    <data name="TitleEn" xml:space="preserve">
+        <value>Title (english)</value>
+    </data>
 </root>

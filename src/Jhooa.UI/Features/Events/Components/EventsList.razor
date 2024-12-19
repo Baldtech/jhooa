@@ -20,7 +20,7 @@
     @foreach (var ev in _events.OrderByDescending(o => o.StartDate))
     {
         <tr class="bg-white border-b  ">
-            <td>@ev.Title</td>
+            <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title)</td>
             <td>@ev.StartDate.ToString("d")</td>
             <td>@ev.EndDate.ToString("d")</td>
             <td>@ev.Registrations.Count</td>

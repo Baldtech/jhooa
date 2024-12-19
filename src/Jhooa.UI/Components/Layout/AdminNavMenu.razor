@@ -1,30 +1,3 @@
-@* @using Jhooa.UI.Resources *@
-@* @using Microsoft.Extensions.Localization *@
-@* *@
-@* @inject IStringLocalizer<Shared> Loc *@
-@* *@
-@* <NavLink class="nav-link" href="" Match="NavLinkMatch.All"> *@
-@*     @Loc["Back to site"] *@
-@* </NavLink> *@
-@* *@
-@* <NavLink class="nav-link" href="/Admin" Match="NavLinkMatch.All"> *@
-@*     @Loc["Dashboard"] *@
-@* </NavLink> *@
-@* *@
-@* <NavLink class="nav-link" href="/Admin/Users" Match="NavLinkMatch.All"> *@
-@*     @Loc["Users"] *@
-@* </NavLink> *@
-@* *@
-@* <NavLink class="nav-link" href="/Admin/Dreams" Match="NavLinkMatch.All"> *@
-@*     @Loc["Dreams"] *@
-@* </NavLink> *@
-@* *@
-@* <NavLink class="nav-link" href="/Admin/Events" Match="NavLinkMatch.All"> *@
-@*     @Loc["Events"] *@
-@* </NavLink> *@
-
-
-
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Localization.Components
@@ -91,6 +64,11 @@
         <li>
             <NavLink class="nav-link underline" href="/Admin/Videos" Match="NavLinkMatch.All">
                 @Loc["Videos"]
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link underline" href="/Admin/ContactForms" Match="NavLinkMatch.All">
+                @Loc["ContactForms"]
             </NavLink>
         </li>
     </menu>
