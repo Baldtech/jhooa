@@ -2,29 +2,24 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resources.Events> Loc
 
-
-<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-    <div class="w-52 h-36 overflow-hidden">
-        <a href="/Events/@Event.Id">
-            @if (string.IsNullOrWhiteSpace(Event.ImageUrl))
-            {
-                <img class="rounded-t-lg" src="https://placehold.co/550x550/B79E98/fff?text=event" alt=""/>
-            }
-            else
-            {
-                <img class="rounded-t-lg" src="@Event.ImageUrl" alt=""/>
-            }
-        </a>
-    </div>
-
-    <div class="p-5">
-        <h5 class="mb-2 font-bold tracking-tight text-gray-900 ">@Event.StartDate.ToString("d")</h5>
-
-        <a href="/Events/@Event.Id" class="mb-3 text-lg font-normal text-gray-700 underline">@(CultureInfo.CurrentCulture.Name == "en-GB" ? Event.TitleEn : Event.Title)</a>
+<article
+    class="snap-start flex-shrink-0 w-80 bg-white rounded-lg overflow-hidden shadow-md">
+    <a href="/Events/@Event.Id">
+    @if (string.IsNullOrWhiteSpace(Event.ImageUrl))
+    {
+        <img class="w-full h-48 object-cover" src="https://placehold.co/550x550/B79E98/fff?text=event" alt=""/>
+    }
+    else
+    {
+        <img class="w-full h-48 object-cover" src="@Event.ImageUrl" alt=""/>
+    }
+    </a>
+    <div class="p-4">
+        <p class="text-sm text-jhooa-brick-100 mb-1">@Event.StartDate.ToString("d")</p>
+        <a href="/Events/@Event.Id" class="text-lg font-bold mb-3 text-jhooa-teal-200 block">@(CultureInfo.CurrentCulture.Name == "en-GB" ? Event.TitleEn : Event.Title)</a>
         <Registration EventId="Event.Id" IsPast="Event.IsPast"/>
     </div>
-</div>
-
+</article>
 
 
 @code {

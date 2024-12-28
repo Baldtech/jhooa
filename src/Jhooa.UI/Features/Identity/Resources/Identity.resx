@@ -250,4 +250,13 @@
     <data name="PasswordChanged" xml:space="preserve">
         <value>Your password has been changed.</value>
     </data>
+    <data name="SmallDreamPlaceholder" xml:space="preserve">
+        <value>A little something extra in my daily life</value>
+    </data>
+    <data name="MediumDreamPlaceholder" xml:space="preserve">
+        <value>Bring your projects to life</value>
+    </data>
+    <data name="BigDreamPlaceholder" xml:space="preserve">
+        <value>Dare to think big</value>
+    </data>
 </root>

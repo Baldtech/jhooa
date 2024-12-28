@@ -168,4 +168,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\winter_minie\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

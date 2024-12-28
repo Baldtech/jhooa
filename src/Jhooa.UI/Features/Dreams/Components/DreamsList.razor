@@ -5,8 +5,8 @@
 @inject IStringLocalizer<Resources.Dreams> Loc
 @inject ApplicationDbContext DbContext
 
-<table class="w-full  text-left text-gray-500">
-    <thead class="text-gray-700 uppercase bg-gray-50">
+<table class="w-full  text-left ">
+    <thead class="text-gray-700 uppercase ">
     <tr>
         <th>@Loc["Type"]</th>
         <th>@Loc["Title"]</th>
@@ -15,7 +15,7 @@
     <tbody>
     @foreach (var dream in _dreams)
     {
-        <tr class="bg-white border-b  ">
+        <tr class=" border-b  ">
             <td>@Loc[dream.Type.ToString()]</td>
             <td>@dream.Title</td>
         </tr>

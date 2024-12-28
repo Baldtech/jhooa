@@ -2,7 +2,7 @@
 @inject NavigationManager Navigation
 @inject IStringLocalizer<CultureSelector> Loc
 
-<InputSelect id="language" @bind-Value="selectedCulture" class="text-black">
+<InputSelect id="language" @bind-Value="selectedCulture" class="text-white bg-transparent border-0 md:inline-block md:float-end md:mx-5 focus:border-0 active:border-0">
     <option value="fr-FR" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'>FR</option>
     <option value="en-GB" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'>EN</option>
 </InputSelect>

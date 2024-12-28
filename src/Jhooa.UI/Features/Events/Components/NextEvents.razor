@@ -6,27 +6,30 @@
 @inject ApplicationDbContext DbContext
 
 
-<section class="max-w-screen-xl mx-auto">
-    <h1>@Loc["NextEvents"]</h1>
+<section class="mb-8 md:mb-20 w-full bg-jhooa-teal-200">
+    <div class="max-w-screen-xl mx-auto px-8 text-white">
 
-    <div class="flex space-x-4">
-        @if (_events is not null && _events.Count > 0)
-        {
-            @foreach (var ev in _events.OrderBy(ev => ev.StartDate))
+        <h1 class="text-butler text-3xl text-white mb-6 pt-8">@Loc["NextEvents"]</h1>
+
+        <div class="flex space-x-4 pb-10">
+            @if (_events is not null && _events.Count > 0)
             {
-                <EventCard Event="ev" />
+                @foreach (var ev in _events.OrderBy(ev => ev.StartDate))
+                {
+                    <EventCard Event="ev"/>
+                }
             }
-        }
-        else if (_events is not null && _events.Count == 0)
-        {
-            <p>@Loc["NoNextEvents"]</p>
-        }
-        else
-        {
-            <p>@Loc["Loading"]</p>
-        }
+            else if (_events is not null && _events.Count == 0)
+            {
+                <p>@Loc["NoNextEvents"]</p>
+            }
+            else
+            {
+                <p>@Loc["Loading"]</p>
+            }
+        </div>
     </div>
-    
+
 </section>
 
 

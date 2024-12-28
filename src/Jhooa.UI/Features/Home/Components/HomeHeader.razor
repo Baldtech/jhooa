@@ -1,3 +1,67 @@
-<section class="w-full">
-    <img src="https://placehold.co/1280x500/000/fff?text=Jhooa" alt="Header with boat" class="m-auto h-banner object-cover"/>
-</section>
+@using Jhooa.UI.Components.Layout
+@inject NavigationManager NavigationManager
+
+
+<!-- Banner Panel -->
+
+@if (string.IsNullOrWhiteSpace(_currentRoot))
+{
+    <section class="w-full  absolute">
+        <div class="absolute inset-0">
+            <img src="./images/header.svg" alt="Header with boat" class="m-auto h-banner object-cover" />
+        </div>
+    </section>
+
+    <!-- Logo Panel -->
+    <div class="absolute inset-0 mt-96 ml-20 md:hidden">
+        <img src="./images/logo.svg" alt="Header with boat" class="m-auto object-cover" />
+    </div>
+    <section class="w-full absolute">
+        <div class="mt-6 max-w-screen-xl mx-auto ">
+            <div class="absolute mt-72 ml-24 hidden md:block">
+                <img src="./images/logo.svg" alt="Header with boat" class="m-auto object-cover" />
+            </div></div>
+    </section>
+}
+else 
+{
+    <section class="w-full  absolute">
+        <div class="absolute inset-0">
+            <img src="https://placehold.co/1280x500/000/fff?text=." alt="Header with boat" class="m-auto h-banner object-cover" />
+        </div>
+    </section>
+
+    <!-- Logo Panel -->
+    <div class="absolute inset-0 mt-96 ml-20 md:hidden">
+        <img src="./images/logo.svg" alt="Header with boat" class="m-auto object-cover" />
+    </div>
+    <section class="w-full absolute">
+        <div class="mt-6 max-w-screen-xl mx-auto ">
+            <div class="absolute mt-72 ml-24 hidden md:block">
+                <img src="./images/logo.svg" alt="Header with boat" class="m-auto object-cover" />
+            </div></div>
+    </section>
+}
+
+<SocialMediaPanel/>
+
+
+
+@code {
+    private string? _currentUrl;
+    private string _currentRoot = string.Empty;
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        _currentRoot = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
+    }
+    
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+}

@@ -6,81 +6,127 @@
 
 @implements IDisposable
 
-@inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<Shared> Loc
 @inject IdentityUserAccessor UserAccessor
 
-<nav class="max-w-screen-xl mx-auto">
-    <menu class="grid grid-flow-col">
-        <li class="list-none">
-            <NavLink class="nav-link underline" href="" Match="NavLinkMatch.All">
-                @Loc["Home"]
-            </NavLink>
-        </li>
-        <li class="list-none">
-            <NavLink class="nav-link underline" href="/Events" Match="NavLinkMatch.All">
-                @Loc["Events"]
-            </NavLink>
-        </li>
-        
-        <AuthorizeView>
-            <Authorized>
-                <li>
-                    <NavLink class="nav-link underline" href="/Videos" Match="NavLinkMatch.All">
-                        @Loc["Videos"]
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink class="nav-link underline" href="Account/Manage">
-                        @_user?.FirstName @_user?.LastName
-                    </NavLink>
-                </li>
-                <li>
-                    <form action="Account/Logout" method="post">
-                        <AntiforgeryToken/>
-                        <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
-                        <button type="submit" class="nav-link underline">
-                            Logout
-                        </button>
-                    </form>
-                </li>
+<nav class="w-full top-0 z-50 absolute  text-white tracking-widest">
+    <div class="mt-6 max-w-screen-xl mx-auto lowercase">
 
-            </Authorized>
-            <NotAuthorized>
-                <li>
+        <!-- mobile menu icon -->
+        <div class="grid grid-cols-12 ">
+            <div class="col-start-5 col-span-5">
+                <AuthorizeView>
+                    <Authorized>
 
-                    <NavLink class="nav-link underline" href="Account/Login">
-                        @Loc["Login"]
-                    </NavLink>
-                </li>
-            </NotAuthorized>
-        </AuthorizeView>
-        <AuthorizeView Roles="Admin">
-            <li>
-                <NavLink class="nav-link underline" href="Admin">
-                    @Loc["Administration"]
-                </NavLink>
-            </li>
-        </AuthorizeView>
-        <li>
-            <CultureSelector @rendermode="InteractiveServer"/>
-        </li>
-    </menu>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="Account/Login" type="button"
+                           class="border border-white rounded-md px-4 py-2 text-sm md:hidden">
+                            <img src="images/user.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
+                            @Loc["Login"]
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+            <div class="col-end-12 md:hidden">
+                <button type="button" class="mobile-menu-button">
+                    <img src="./images/burger-menu.svg" class="w-8 h-8 -mt-1" alt="menu">
+                </button>
+            </div>
+        </div>
+
+        <!-- desktop menu -->
+        <div class="mt-5 md:mt-1 md:ml-10">
+            <div class="hidden md:block navigation-menu font-butler">
+                <a href="/"
+                   class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block @(string.IsNullOrWhiteSpace(_currentRoot) ? "bg-jhooa-peach-100 bg-opacity-80" : "") rounded-md">
+                    <img src="images/menu-star.svg"
+                         class="w-5 h-5 inline-block mr-1 @(string.IsNullOrWhiteSpace(_currentRoot) ? "inline" : "hidden")"
+                         alt="star"/>
+                    @Loc["Home"]
+                    <img src="images/menu-star.svg"
+                         class="w-5 h-5 inline-block ml-1 @(string.IsNullOrWhiteSpace(_currentRoot) ? "inline" : "hidden")"
+                         alt="star"/>
+                </a>
+                <a href="/Events"
+                   class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block rounded-md @(_currentRoot.StartsWith("Events", StringComparison.OrdinalIgnoreCase) ? "bg-jhooa-peach-100 bg-opacity-80" : "")">
+                    <img src="images/menu-star.svg"
+                         class="w-5 h-5 inline-block mr-1 @(_currentRoot.StartsWith("Events", StringComparison.OrdinalIgnoreCase) ? "inline" : "hidden")"
+                         alt="star"/>
+                    @Loc["Events"]
+                    <img src="images/menu-star.svg"
+                         class="w-5 h-5 inline-block mr-1 @(_currentRoot.StartsWith("Events", StringComparison.OrdinalIgnoreCase) ? "inline" : "hidden")"
+                         alt="star"/>
+                </a>
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="/Videos"
+                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block rounded-md @(_currentRoot.StartsWith("Videos", StringComparison.OrdinalIgnoreCase) ? "bg-jhooa-peach-100 bg-opacity-80" : "")">
+                            <img src="images/menu-star.svg"
+                                 class="w-5 h-5 inline-block mr-1 @(_currentRoot.StartsWith("Videos", StringComparison.OrdinalIgnoreCase) ? "inline" : "hidden")"
+                                 alt="star"/>
+                            @Loc["Videos"]
+                            <img src="images/menu-star.svg"
+                                 class="w-5 h-5 inline-block mr-1 @(_currentRoot.StartsWith("Videos", StringComparison.OrdinalIgnoreCase) ? "inline" : "hidden")"
+                                 alt="star"/>
+                        </a>
+                    </Authorized>
+                </AuthorizeView>
+                <div class="hidden md:inline">
+                    <CultureSelector @rendermode="InteractiveServer"/>
+                </div>
+                <AuthorizeView Roles="Admin">
+                        <a href="/Admin"
+                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@Loc["Administration"]</a>
+                </AuthorizeView>
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="/Account/Manage"
+                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@_user?.FirstName @_user?.LastName</a>
+                        
+                        <form action="Account/Logout" method="post"
+                              class="py-2 px-3 block text-right mx-10 md:inline md:float-end">
+                            <AntiforgeryToken/>
+                            <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+                            <button type="submit" class="lowercase">
+                                @Loc["Logout"]
+                            </button>
+                        </form>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="Account/Login" type="button"
+                           class="border border-white rounded-md px-4 py-2 text-sm hidden md:inline-block md:float-end">
+                            <img src="images/user.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
+                            @Loc["Login"]
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
 
 </nav>
+
+
+
+
 
 @code {
     private string? _currentUrl;
     private ApplicationUser? _user;
-    
+    private string _currentRoot = string.Empty;
+
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     protected override void OnInitialized()
     {
         _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+
+        _currentRoot = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
     }
-    
+
     protected override async Task OnInitializedAsync()
     {
         if (HttpContext.User.Identity?.IsAuthenticated == true)

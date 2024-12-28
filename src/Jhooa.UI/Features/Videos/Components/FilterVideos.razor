@@ -4,10 +4,10 @@
 @inject IStringLocalizer<Resources.Videos> Loc
 @inject ApplicationDbContext DbContext
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <div>
-        @Loc["Theme"] <br />
-        <InputSelect id="theme" @bind-Value="_selectedTheme" class="text-black">
+        <label for="theme" class="block text-gray-700 font-semibold mb-2">@Loc["Theme"]</label>
+        <InputSelect id="theme" @bind-Value="_selectedTheme" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
             <option
                 @onclick="() => ApplySelectedThemeAsync(null)"> </option>
             @foreach (var theme in _themes)
@@ -19,8 +19,8 @@
 
     </div>
     <div>
-        @Loc["Months"] <br />
-        <InputSelect id="month" @bind-Value="_selectedMonth" class="text-black">
+        <label for="month" class="block text-gray-700 font-semibold mb-2">@Loc["Month"]</label>
+        <InputSelect id="month" @bind-Value="_selectedMonth" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
             <option
                 @onclick="() => ApplySelectedMonthAsync(null)"> </option>
             @foreach (var month in _months)
@@ -32,8 +32,8 @@
 
     </div>
     <div>
-        @Loc["Years"] <br />
-        <InputSelect id="year" @bind-Value="_selectedYear" class="text-black">
+        <label for="year" class="block text-gray-700 font-semibold mb-2">@Loc["Years"]</label>
+        <InputSelect id="year" @bind-Value="_selectedYear" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
             <option
                 @onclick="() => ApplySelectedYearAsync(null)"> </option>
             @foreach (var year in _years)
@@ -45,6 +45,7 @@
 
     </div>
 </div>
+
 
 @code
 

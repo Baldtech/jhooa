@@ -21,7 +21,7 @@
         <value>Accueil</value>
     </data>
     <data name="Events" xml:space="preserve">
-        <value>Evènements</value>
+        <value>évènements</value>
     </data>
     <data name="DreamsList" xml:space="preserve">
         <value>Liste des rêves</value>
@@ -109,5 +109,8 @@
     </data>
     <data name="Message" xml:space="preserve">
         <value>Message</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Déconnection</value>
     </data>
 </root>

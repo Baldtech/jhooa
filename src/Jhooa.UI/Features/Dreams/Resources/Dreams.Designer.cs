@@ -140,5 +140,11 @@ namespace Jhooa.UI.Features.Dreams.Resources {
                 return ResourceManager.GetString("Big", resourceCulture);
             }
         }
+        
+        internal static string DreamsUpdated {
+            get {
+                return ResourceManager.GetString("DreamsUpdated", resourceCulture);
+            }
+        }
     }
 }

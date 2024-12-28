@@ -506,5 +506,23 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("PasswordChanged", resourceCulture);
             }
         }
+        
+        internal static string SmallDreamPlaceholder {
+            get {
+                return ResourceManager.GetString("SmallDreamPlaceholder", resourceCulture);
+            }
+        }
+        
+        internal static string MediumDreamPlaceholder {
+            get {
+                return ResourceManager.GetString("MediumDreamPlaceholder", resourceCulture);
+            }
+        }
+        
+        internal static string BigDreamPlaceholder {
+            get {
+                return ResourceManager.GetString("BigDreamPlaceholder", resourceCulture);
+            }
+        }
     }
 }

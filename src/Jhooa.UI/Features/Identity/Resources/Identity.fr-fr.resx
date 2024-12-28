@@ -242,4 +242,13 @@
     <data name="PasswordChanged" xml:space="preserve">
         <value>Votre mot de passe a été modifié.</value>
     </data>
+    <data name="SmallDreamPlaceholder" xml:space="preserve">
+        <value>Un petit plus dans mon quotidien</value>
+    </data>
+    <data name="MediumDreamPlaceholder" xml:space="preserve">
+        <value>Donnez vie à vos projets</value>
+    </data>
+    <data name="BigDreamPlaceholder" xml:space="preserve">
+        <value>Osez voir grand</value>
+    </data>
 </root>

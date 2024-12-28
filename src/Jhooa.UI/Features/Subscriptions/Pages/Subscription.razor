@@ -1,6 +1,6 @@
 @page "/Account/Manage/Subscription"
 @attribute [Authorize]
-@layout AccountLayout
+@layout ManageLayout
 
 @using System.Security.Claims
 @using Jhooa.UI.Features.Identity.Shared
@@ -18,12 +18,10 @@
 
 <PageTitle>@Loc["MySubscription"]</PageTitle>
 
-<ManageNavMenu/>
+<section class="max-w-screen-md mx-auto  text-white">
+    <h2 class="text-xl font-semibold text-center mb-4">@Loc["MySubscriptionTitle"]</h2>
 
-
-<section class="max-w-screen-xl mx-auto  text-white">
-    <h3>@Loc["MySubscriptionTitle"]</h3>
-    <p>@Loc["MySubscriptionDesc"]</p>
+    <p class="text-center mb-4">@Loc["MySubscriptionDesc"]</p>
 
     @* @if (Input is not null) *@
     @* { *@

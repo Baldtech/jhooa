@@ -242,5 +242,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Message", resourceCulture);
             }
         }
+        
+        internal static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
     }
 }

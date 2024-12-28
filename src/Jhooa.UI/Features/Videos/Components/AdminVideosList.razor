@@ -6,8 +6,8 @@
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
-<table class="w-full  text-left text-gray-500">
-    <thead class="text-gray-700 uppercase bg-gray-50">
+<table class="w-full  text-left ">
+    <thead class="text-gray-700 uppercase ">
     <tr>
         <th>@Loc["Date"]</th>
         <th>@Loc["VideoId"]</th>
@@ -20,7 +20,7 @@
     {
         @foreach (var video in _videos.OrderByDescending(o => o.Date))
         {
-            <tr class="bg-white border-b  ">
+            <tr class="border-b  ">
                 <td>@video.Date.ToString("d")</td>
                 <td>@video.VideoUrl</td>
                 <td>@string.Join(", ", video.Themes.Select(t => CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr))</td>

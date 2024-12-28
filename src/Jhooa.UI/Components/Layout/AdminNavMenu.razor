@@ -7,82 +7,222 @@
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
 
-<nav class="max-w-screen-xl mx-auto border-gray-100 text-black">
-    <menu class="grid grid-flow-col">
-        <li class="list-none">
-            <NavLink class="nav-link underline" href="/" Match="NavLinkMatch.All">
+<header class="w-full bg-black">
+    <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
+        <div class="flex items-center space-x-2">
+            <!-- Arrow Icon -->
+            <a href="/" class="focus:outline-none mr-2 flex items-center">
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M10 19l-7-7 7-7"/>
+                    <path d="M3 12h18"/>
+                </svg>
+            </a>
+            <a href="/" class="text-sm hover:underline hidden md:inline-block">
                 @Loc["BackToHome"]
-            </NavLink>
-        </li>
-        <li>
-            <img src="https://placehold.co/180x70/fff/000?text=Jhooa" alt="Header with balloons" class="m-auto h-banner object-cover"/>
-        </li>
-        <AuthorizeView>
-            <Authorized>
-                <li>
+            </a>
+        </div>
+
+        <!-- Center Section: Logo -->
+        <div class="flex-1 flex justify-center">
+            <!-- Replace with your actual logo or brand name -->
+            <h1 class="text-2xl font-semibold tracking-wide">
+                <img src="images/logo.svg" alt="Jhooa" class="h-12"/>
+            </h1>
+        </div>
+
+        <!-- Right Section: Button + Language Selector -->
+        <div class="flex items-center space-x-4">
+            <!-- Connexion Button -->
+            <AuthorizeView>
+                <Authorized>
+
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken/>
                         <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
                         <button type="submit" class="nav-link underline">
-                            Logout
+                            @Loc["Logout"]
                         </button>
                     </form>
-                </li>
+                </Authorized>
+            </AuthorizeView>
 
-            </Authorized>
-        </AuthorizeView>
-        <li>
-            <CultureSelector @rendermode="InteractiveServer"/>
-        </li>
-    </menu>
 
+            <!-- Language Selector -->
+            <div class="relative">
+                <CultureSelector @rendermode="InteractiveServer"/>
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class=" flex items-center justify-center bg-black py-8">
+    <!-- Menu -->
+    <div class="inline-flex">
+        <a
+            href="/Admin"
+            class="
+        px-6 py-2 
+        text-white 
+        @(_currentRoot.EndsWith("Admin") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border border-white
+        rounded-l-full
+      "
+        >
+            @Loc["Dashboard"]
+        </a>
+
+        <a
+            href="/Admin/Users"
+            class="
+        px-6 py-2
+        text-white 
+        @(_currentRoot.StartsWith("Admin/User") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border-t border-b border-r border-white
+      "
+        >
+            @Loc["Users"]
+        </a>
+
+        <a
+            href="/Admin/Dreams"
+            class="
+        px-6 py-2 
+        text-white 
+        @(_currentRoot.StartsWith("Admin/Dream") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border-t border-b border-r border-white
+      "
+        >
+            @Loc["Dreams"]
+        </a>
+
+        <a
+            href="/Admin/Events"
+            class="
+        px-6 py-2 
+        text-white 
+        @(_currentRoot.StartsWith("Admin/Event") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border-t border-b border-r border-white
+      "
+        >
+            @Loc["Events"]
+        </a>
+
+        <a
+            href="/Admin/Videos"
+            class="
+        px-6 py-2 
+        text-white 
+        @(_currentRoot.StartsWith("Admin/Video") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border-t border-b border-white
+      "
+        >
+            @Loc["Videos"]
+        </a>
+
+        <a
+            href="/Admin/ContactForms"
+            class="
+        px-6 py-2 
+        text-white 
+        @(_currentRoot.StartsWith("Admin/ContactForms") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+         border border-white
+        rounded-r-full
+      "
+        >
+            @Loc["ContactForms"]
+        </a>
+    </div>
 </nav>
-<hr class="border-gray-400 border-t-2 my-8" />
 
-<nav class="max-w-screen-xl mx-auto border-gray-100 text-black mb-16">
-    <menu class="grid grid-flow-col">
-        <li class="list-none">
-            <NavLink class="nav-link underline" href="/Admin" Match="NavLinkMatch.All">
-                @Loc["Dashboard"]
-            </NavLink>
-        </li>
-        <li class="list-none">
-            <NavLink class="nav-link underline" href="/Admin/Users" Match="NavLinkMatch.All">
-                @Loc["Users"]
-            </NavLink>
-        </li>
-        <li>
-            <NavLink class="nav-link underline" href="/Admin/Dreams" Match="NavLinkMatch.All">
-                @Loc["Dreams"]
-            </NavLink>
-        </li>
-        <li>
-            <NavLink class="nav-link underline" href="/Admin/Events" Match="NavLinkMatch.All">
-                @Loc["Events"]
-            </NavLink>
-        </li>
-        <li>
-            <NavLink class="nav-link underline" href="/Admin/Videos" Match="NavLinkMatch.All">
-                @Loc["Videos"]
-            </NavLink>
-        </li>
-        <li>
-            <NavLink class="nav-link underline" href="/Admin/ContactForms" Match="NavLinkMatch.All">
-                @Loc["ContactForms"]
-            </NavLink>
-        </li>
-    </menu>
-
-</nav>
-<hr />
+@* <nav class="max-w-screen-xl mx-auto border-gray-100 text-black"> *@
+@*     <menu class="grid grid-flow-col"> *@
+@*         <li class="list-none"> *@
+@*             <NavLink class="nav-link underline" href="/" Match="NavLinkMatch.All"> *@
+@*                 @Loc["BackToHome"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li> *@
+@*             <img src="https://placehold.co/180x70/fff/000?text=Jhooa" alt="Header with balloons" class="m-auto h-banner object-cover"/> *@
+@*         </li> *@
+@*         <AuthorizeView> *@
+@*             <Authorized> *@
+@*                 <li> *@
+@*                     <form action="Account/Logout" method="post"> *@
+@*                         <AntiforgeryToken/> *@
+@*                         <input type="hidden" name="ReturnUrl" value="@_currentUrl"/> *@
+@*                         <button type="submit" class="nav-link underline"> *@
+@*                             Logout *@
+@*                         </button> *@
+@*                     </form> *@
+@*                 </li> *@
+@* *@
+@*             </Authorized> *@
+@*         </AuthorizeView> *@
+@*         <li> *@
+@*             <CultureSelector @rendermode="InteractiveServer"/> *@
+@*         </li> *@
+@*     </menu> *@
+@* *@
+@* </nav> *@
+@* <hr class="border-gray-400 border-t-2 my-8" /> *@
+@* *@
+@* <nav class="max-w-screen-xl mx-auto border-gray-100 text-black mb-16"> *@
+@*     <menu class="grid grid-flow-col"> *@
+@*         <li class="list-none"> *@
+@*             <NavLink class="nav-link underline" href="/Admin" Match="NavLinkMatch.All"> *@
+@*                 @Loc["Dashboard"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li class="list-none"> *@
+@*             <NavLink class="nav-link underline" href="/Admin/Users" Match="NavLinkMatch.All"> *@
+@*                 @Loc["Users"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li> *@
+@*             <NavLink class="nav-link underline" href="/Admin/Dreams" Match="NavLinkMatch.All"> *@
+@*                 @Loc["Dreams"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li> *@
+@*             <NavLink class="nav-link underline" href="/Admin/Events" Match="NavLinkMatch.All"> *@
+@*                 @Loc["Events"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li> *@
+@*             <NavLink class="nav-link underline" href="/Admin/Videos" Match="NavLinkMatch.All"> *@
+@*                 @Loc["Videos"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*         <li> *@
+@*             <NavLink class="nav-link underline" href="/Admin/ContactForms" Match="NavLinkMatch.All"> *@
+@*                 @Loc["ContactForms"] *@
+@*             </NavLink> *@
+@*         </li> *@
+@*     </menu> *@
+@* *@
+@* </nav> *@
+@* <hr /> *@
 
 @code {
     private string? _currentUrl;
+    private string _currentRoot = string.Empty;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
 
     protected override void OnInitialized()
     {
         _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+
+        _currentRoot = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)

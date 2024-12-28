@@ -6,15 +6,55 @@
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
 
-<div class="h-24"></div>
+@* <footer class="w-full bg-jhooa-peach-100 min-h-16"> *@
+@*     <div class="max-w-screen-xl mx-auto grid grid-cols-4"> *@
+@*         <div>Email</div> *@
+@*         <div>Facebook</div> *@
+@*         <div>TikTok</div> *@
+@*         <div>Instagram</div> *@
+@*     </div> *@
+@* </footer>
+ *@
 
-<footer class="w-full bg-jhooa-peach-100 min-h-16">
-    <div class="max-w-screen-xl mx-auto grid grid-cols-4">
-        <div>Email</div>
-        <div>Facebook</div>
-        <div>TikTok</div>
-        <div>Instagram</div>
-    </div>
+<footer class="bg-[#CE8672] text-white">
+ <!-- Constrained container -->
+ <div
+  class="max-w-screen-xl mx-auto px-4 py-4
+               grid grid-cols-1 md:grid-cols-4
+               gap-4 md:gap-8
+               text-center md:text-left"
+ >
+  <!-- Column 1: Email -->
+  <div class="flex justify-center md:justify-start items-center space-x-2">
+   <!-- Envelope Icon -->
+   <img src="images/mail.svg" alt="Facebook" class="w-5 h-5"/>
+
+   <a href="mailto:hello@jhooa.com" class="text-sm hover:underline">
+    hello@jhooa.com
+   </a>
+  </div>
+
+  <!-- Column 2: Facebook -->
+  <div class="flex justify-center md:justify-start items-center space-x-2">
+   <img src="images/fb.svg" alt="Facebook" class="w-5 h-5"/>
+   <span class="text-sm">@@jhooa</span>
+  </div>
+
+  <!-- Column 3: TikTok -->
+  <div class="flex justify-center md:justify-start items-center space-x-2">
+   <img src="images/fb.svg" alt="Facebook" class="w-5 h-5"/>
+
+   
+   <span class="text-sm">@@jhooa</span>
+  </div>
+
+  <!-- Column 4: Instagram -->
+  <div class="flex justify-center md:justify-start items-center space-x-2">
+   <img src="images/instagram.svg" alt="Facebook" class="w-5 h-5"/>
+
+   <span class="text-sm">@@jhooa</span>
+  </div>
+ </div>
 </footer>
 
 @code {

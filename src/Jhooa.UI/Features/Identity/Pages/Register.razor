@@ -20,95 +20,123 @@
 
 <PageTitle>@Loc["Register"]</PageTitle>
 
-<section class="max-w-screen-xl mx-auto  text-white">
+<div class="max-w-screen-xl mx-auto  text-white py-4">
     <p>@Loc["RegisterIntro"]</p>
 
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
         <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
-        <div class="grid grid-cols-3 gap-4">
-            <div class="">
-                <h3 class="mb-5">1 - @Loc["CreateAccount"]</h3>
+        <div class="container mx-auto py-8 px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- COL 1: CRÉER UN COMPTE -->
+                <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
 
-                <JhooaInputText @bind-Value="Input.Lastname" DisplayName="@Loc["LastName"]"
-                                ValidationFor="@(() => Input.Lastname)" Autocomplete="lastname"/>
-                <JhooaInputText @bind-Value="Input.Firstname" DisplayName="@Loc["FirstName"]"
-                                ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
-                <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
-                                ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
-                <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
-                                ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
-                <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
-                                ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
-                <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]"
-                                ValidationFor="@(() => Input.Country)" Autocomplete="country"/>
-                <JhooaInputText @bind-Value="Input.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"
-                                ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
-                <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]"
-                                ValidationFor="@(() => Input.Password)" Autocomplete="" Type="password"/>
-                <JhooaInputText @bind-Value="Input.ConfirmPassword" DisplayName="@Loc["ConfirmPassword"]"
-                                ValidationFor="@(() => Input.ConfirmPassword)" Type="password"/>
-            </div>
-            <div>
-                <h3 class="mb-5">2 - @Loc["RegisterMyWishes"]</h3>
-                <h4 class="mb-5">@Loc["RegisterDreamSubTitle"]</h4>
-                <p class="mb-5">@Loc["RegisterDreamDescription"]</p>
-
-                <JhooaInputText @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
-                                ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
-                <JhooaInputText @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
-                                ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
-                <JhooaInputText @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
-                                ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
-
-            </div>
-            <div>
-                <h3 class="mb-5">@Loc["RegisterMySub"]</h3>
-
-                <h4 class="mb-5">@Loc["RegisterMySubSubTitle"]</h4>
-                <p class="mb-5">@Loc["RegisterMySubDescription"]</p>
-
-                <InputRadioGroup @bind-Value="Input.SubscriptionType">
-                    <div class="flex items-center space-x-2">
-                        <InputRadio id="option1" class="h-5 w-5 rounded-full border-gray-300 "
-                                    Value="SubscriptionType.MonthlyOnce"/>
-                        <label for="option1" class="">@Loc["RegisterMonthly"]</label>
+                    <div class="flex items-center mb-6">
+                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                            <span>1</span>
+                        </div>
+                        <h2 class="text-xl font-semibold">@Loc["CreateAccount"]</h2>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <InputRadio id="option2" class="h-5 w-5 rounded-full border-gray-300 "
-                                    Value="SubscriptionType.MonthlyRecurring"/>
-                        <label for="option2" class="">@Loc["RegisterMonthlyRecurring"]</label>
+                    <div class="space-y-3">
+
+                        <JhooaInputText @bind-Value="Input.Lastname" DisplayName="@Loc["LastName"]"
+                                        ValidationFor="@(() => Input.Lastname)" Autocomplete="lastname"/>
+                        <JhooaInputText @bind-Value="Input.Firstname" DisplayName="@Loc["FirstName"]"
+                                        ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
+                        <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
+                                        ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
+                        <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
+                                        ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
+                        <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
+                                        ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
+                        <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]"
+                                        ValidationFor="@(() => Input.Country)" Autocomplete="country"/>
+                        <JhooaInputText @bind-Value="Input.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"
+                                        ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
+                        <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]"
+                                        ValidationFor="@(() => Input.Password)" Autocomplete="" Type="password"/>
+                        <JhooaInputText @bind-Value="Input.ConfirmPassword" DisplayName="@Loc["ConfirmPassword"]"
+                                        ValidationFor="@(() => Input.ConfirmPassword)" Type="password"/>
+
+                    </div>
+                </section>
+                <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
+                    <div class="flex items-center mb-6 mt-8 lg:mt-0">
+                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                            <span>2</span>
+                        </div>
+                        <h2 class="text-xl font-semibold">@Loc["RegisterMyWishes"]</h2>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">@Loc["RegisterDreamSubTitle"]</h3>
+                    <p class="text-sm mb-6">@Loc["RegisterDreamDescription"]</p>
+                    <div class="space-y-3">
+
+                        <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
+                                         Placeholder="@Loc["SmallDreamPlaceholder"]"
+                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                        <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
+                                         Placeholder="@Loc["MediumDreamPlaceholder"]"
+                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                        <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
+                                         Placeholder="@Loc["BigDreamPlaceholder"]"
+                                         ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
+                    </div>
+                </section>
+                <section class="pb-8 lg:pb-0">
+                    <div class="flex items-center mb-6 mt-8 lg:mt-0">
+                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                            <span>3</span>
+                        </div>
+                        <h2 class="text-xl font-semibold">@Loc["RegisterMySub"]</h2>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <InputRadio id="option3" class="h-5 w-5 rounded-full border-gray-300 "
-                                    Value="SubscriptionType.YearlyOnce"/>
-                        <label for="option3" class="">@Loc["RegisterYearly"]</label>
+                    <h3 class="text-lg font-semibold mb-2">@Loc["RegisterMySubSubTitle"]</h3>
+                    <p class="text-sm mb-6">@Loc["RegisterMySubDescription"]</p>
+
+                    <InputRadioGroup @bind-Value="Input.SubscriptionType">
+                        <div class="flex items-center space-x-2">
+                            <InputRadio id="option1" class="h-5 w-5 rounded-full border-gray-300 "
+                                        Value="SubscriptionType.MonthlyOnce"/>
+                            <label for="option1" class="">@Loc["RegisterMonthly"]</label>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <InputRadio id="option2" class="h-5 w-5 rounded-full border-gray-300 "
+                                        Value="SubscriptionType.MonthlyRecurring"/>
+                            <label for="option2" class="">@Loc["RegisterMonthlyRecurring"]</label>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <InputRadio id="option3" class="h-5 w-5 rounded-full border-gray-300 "
+                                        Value="SubscriptionType.YearlyOnce"/>
+                            <label for="option3" class="">@Loc["RegisterYearly"]</label>
+                        </div>
+
+                        <div class="flex items-center space-x-2">
+                            <InputRadio id="option4" class="h-5 w-5 rounded-full border-gray-300 "
+                                        Value="SubscriptionType.YearlyRecurring"/>
+                            <label for="option4" class="">@Loc["RegisterYearlyRecurring"]</label>
+                        </div>
+                    </InputRadioGroup>
+
+                    <div class="flex items-center space-x-2 my-5">
+                        <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
+                        <label for="accepttoc" class="">@Loc["AcceptToc"]</label>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <InputRadio id="option4" class="h-5 w-5 rounded-full border-gray-300 "
-                                    Value="SubscriptionType.YearlyRecurring"/>
-                        <label for="option4" class="">@Loc["RegisterYearlyRecurring"]</label>
+                    <div class="flex items-center space-x-2 mb-8">
+                        <InputCheckbox @bind-Value="Input.SubscribeToNewsletter"
+                                       class="h-5 w-5 rounded border-gray-300 "/>
+                        <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
                     </div>
-                </InputRadioGroup>
 
-                <div class="flex items-center space-x-2 my-5">
-                    <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
-                    <label for="accepttoc" class="">@Loc["AcceptToc"]</label>
-                </div>
-
-                <div class="flex items-center space-x-2 mb-8">
-                    <InputCheckbox @bind-Value="Input.SubscribeToNewsletter" class="h-5 w-5 rounded border-gray-300 "/>
-                    <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
-                </div>
-
-                <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["RegisterButton"]</button>
+                    <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["RegisterButton"]</button>
+                </section>
             </div>
         </div>
     </EditForm>
-</section>
+</div>
 
 
 @code {
