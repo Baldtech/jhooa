@@ -66,4 +66,7 @@
     <data name="Big" xml:space="preserve">
         <value>Big</value>
     </data>
+    <data name="DreamsUpdated" xml:space="preserve">
+        <value>Your dreams have been updated</value>
+    </data>
 </root>

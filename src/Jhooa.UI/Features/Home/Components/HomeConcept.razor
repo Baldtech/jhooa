@@ -2,19 +2,25 @@
 @inject IStringLocalizer<Resources.Home> Loc
 
 
-<section class="max-w-screen-xl mx-auto grid grid-cols-2">
-    <div>
-        <h2 class="text-3xl font-bold">@Loc["OurConcept"]</h2>
-        <p class="text-lg">@Loc["OurConceptPart1"]
-            <br/><br/>
-            @Loc["OurConceptPart2"]
-            <br/><br/>
-            @Loc["OurConceptPart3"]
-            <br/><br/>
-            @Loc["OurConceptPart4"]
-        </p>
+<section class="mb-8 md:mb-20">
+    <div class="w-full bg-jhooa-teal-200">
+
+        <div class="max-w-screen-xl mx-auto px-8 text-white grid grid-cols-1 md:grid-cols-2 font-winter">
+            <div class="px-4">
+
+                <h2 class="mb-8 text-4xl tracking-wider">@Loc["OurConcept"]</h2>
+            <p class="md:mb-14 font-text">@Loc["OurConceptPart1"]
+                <br/><br/>
+                @Loc["OurConceptPart2"]
+                <br/><br/>
+                @Loc["OurConceptPart3"]
+                <br/><br/>
+                @Loc["OurConceptPart4"]
+            </p>
+        </div>
+            <div class="relative -bottom-10 w-52 m-auto md:w-80 md:-bottom-48 lg:w-96 lg:-bottom-32">
+                <img src="images/home-concept.jpg" alt="Header with boat" class="m-auto object-cover" />
+            </div>
     </div>
-    <div class="">
-        <img src="https://placehold.co/550x550/eb4034/fff" alt="Header with boat" class="m-auto object-cover" />
     </div>
 </section>

@@ -1,24 +1,92 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resources.Home> Loc
 
+<!-- Tailwind “Scaled” Section with Two Images and Responsive Layout -->
+<section class="bg-jhooa-peach-100 text-jhooa-brick-100 ">
+  <div class="max-w-screen-xl mx-auto px-4 py-8">
 
-<section class="max-w-screen-xl mx-auto grid grid-cols-4 gap-4">
-    <div>
-        <img src="https://placehold.co/550x550/eb4034/fff" alt="Header with boat" class="m-auto object-cover" />
-    </div>
-    <div class="col-span-3">
-        <h2>@Loc["ExpTitle"]</h2>
-        <p>@Loc["ExpDescription"]</p>
-        <h3>@Loc["ExpPart1Title"]</h3>
-        <p>@Loc["ExpPart1Desc"]</p>
-        <h3>@Loc["ExpPart2Title"]</h3>
-        <p>@Loc["ExpPart2Desc"]</p>
-        <h3>@Loc["ExpPart3Title"]</h3>
-        <p>@Loc["ExpPart3Desc"]</p>
-        
-        <div class="grid grid-cols-2 gap-4">
-            <p class="bg-orange-100">@Loc["Monthly"] - 5 @Loc["PriceMonthlyDesc"]</p>
-            <p class="bg-blue-100">@Loc["Yearly"] - 5 @Loc["PriceYearlyDesc"]</p>
+    <!-- 2-column layout on desktop, single column on mobile -->
+    <div class="md:grid md:grid-cols-2 md:gap-6 items-center">
+      
+      <!-- LEFT COLUMN: Image #1 on desktop; 
+           On mobile, it’s centered and only 75% wide -->
+      <div class="mb-8 md:mb-0">
+        <img
+          src="images/fly.jpg"
+          alt="Parasailing example 1"
+          class="w-3/4 mx-auto md:w-full h-auto object-cover"
+        />
+      </div>
+
+      <!-- RIGHT COLUMN: Text content (and possibly Image #2) -->
+      <div>
+        <!-- Heading -->
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          @Loc["ExpTitle"]
+        </h2>
+
+        <!-- Intro paragraph -->
+        <p class="mb-6 leading-relaxed">
+          @Loc["ExpDescription"]
+        </p>
+
+        <!-- Some feature blocks (icon + text) as per your screenshot -->
+        <div class="space-y-5 mb-6">
+          <!-- Feature 1 -->
+          <div>
+            <h3 class="flex items-center font-semibold mb-2">
+              <!-- Icon could go here if desired -->
+              @Loc["ExpPart1Title"]
+            </h3>
+            <p class="text-sm leading-relaxed">
+              @Loc["ExpPart1Desc"]
+              <!-- etc. -->
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div>
+            <h3 class="flex items-center font-semibold mb-2">
+              @Loc["ExpPart2Title"]
+            </h3>
+            <p class="text-sm leading-relaxed">
+              @Loc["ExpPart2Desc"]
+              <!-- etc. -->
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div>
+            <h3 class="flex items-center font-semibold mb-2">
+              @Loc["ExpPart3Title"]
+            </h3>
+            <p class="text-sm leading-relaxed">
+              @Loc["ExpPart3Desc"]
+              <!-- etc. -->
+            </p>
+          </div>
         </div>
-    </div>
+
+        <!-- Additional note or badge line -->
+        @* <p class="mb-6 text-sm"> *@
+        @*   <strong class="text-[#2E5F5F]">15</strong> JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois... *@
+        @* </p> *@
+
+        <!-- Pricing CTA buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+          <div 
+            class="bg-jhooa-peach-100 text-white border-2 border-white px-12 py-3 font-semibold text-center"
+          >
+            @Loc["Monthly"] - 5 @Loc["PriceMonthlyDesc"]
+          </div>
+          <div 
+            class="bg-jhooa-teal-200 text-white border-2 border-white px-12 py-3 font-semibold text-center"
+          >
+            @Loc["Yearly"] - 5 @Loc["PriceYearlyDesc"]
+          </div>
+        </div>
+      </div><!-- end RIGHT COLUMN -->
+    </div><!-- end .md:grid -->
+    
+  </div><!-- end container -->
 </section>

@@ -51,7 +51,7 @@
         <value>Actions</value>
     </data>
     <data name="NextEvents" xml:space="preserve">
-        <value>Prochains évènements</value>
+        <value>Evènements à venir</value>
     </data>
     <data name="NoPastEvents" xml:space="preserve">
         <value>Pas d'évènements passés</value>
@@ -60,7 +60,7 @@
         <value>Chargement ...</value>
     </data>
     <data name="PastEvents" xml:space="preserve">
-        <value>Evenements passés</value>
+        <value>Evènements passés</value>
     </data>
     <data name="NoNextEvents" xml:space="preserve">
         <value>Pas de prochains évènements</value>
@@ -81,7 +81,7 @@
         <value>Désinscription</value>
     </data>
     <data name="Register" xml:space="preserve">
-        <value>Inscription</value>
+        <value>S'inscrire</value>
     </data>
     <data name="Registered" xml:space="preserve">
         <value>Vous êtes inscrit à cette évènement</value>

@@ -15,7 +15,7 @@
 {
     @if (_userId is null)
     {
-        <p class="text-sm">@Loc["RequiresAuthentication"]</p>
+        @* <p class="text-sm">@Loc["RequiresAuthentication"]</p> *@
     }
     else if (_isRegistered)
     {
@@ -23,7 +23,10 @@
         <EditForm Model="EventId" class="inline"
                   FormName="@($"form-event-unregister-{EventId}")"
                   OnValidSubmit="@(async () => { await UnregisterToEventAsync(EventId); })">
-            <button type="submit" class="underline">@Loc["RemoveRegistration"]</button>
+            <button
+                class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100">
+                @Loc["RemoveRegistration"]
+            </button>
         </EditForm>
     }
     else
@@ -31,7 +34,10 @@
         <EditForm Model="EventId" class="inline"
                   FormName="@($"form-event-{EventId}")"
                   OnValidSubmit="@(async () => { await RegisterToEventAsync(EventId); })">
-            <button type="submit" class="underline">@Loc["Register"]</button>
+            <button
+                class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100">
+                @Loc["Register"]
+            </button>
         </EditForm>
     }
 }

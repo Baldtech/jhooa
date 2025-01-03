@@ -117,4 +117,7 @@
     <data name="Message" xml:space="preserve">
         <value>Message</value>
     </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Logout</value>
+    </data>
 </root>

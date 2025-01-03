@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: "Butler";
+        font-style: normal;
+        src: url("../fonts/butler/Butler_Regular.otf") format("otf");
+    }
+
+    @font-face {
+        font-family: "AmsiPro";
+        font-style: normal;
+        src: url("../fonts/amsipro/AmsiPro-Regular.otf") format("otf");
+    }
+
+    @font-face {
+        font-family: "WinterMinnie";
+        src: url("../fonts/winter_minie/wm.otf") format("otf");
+    }
+}
+
+td, th {
+    padding: 0.5rem 2rem;
+}
+
 .text-danger, .alert-danger {
     color: red;
 }

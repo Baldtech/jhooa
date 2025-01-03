@@ -5,8 +5,8 @@
 @inject IStringLocalizer<Resources.Shared> Loc
 @inject ApplicationDbContext DbContext
 
-<table class="w-full  text-left text-gray-500">
-    <thead class="text-gray-700 uppercase bg-gray-50">
+<table class="w-full  text-left ">
+    <thead class="text-gray-700 uppercase ">
     <tr>
         <th>@Loc["Date"]</th>
         <th>@Loc["Sender"]</th>
@@ -17,7 +17,7 @@
     <tbody>
     @foreach (var sub in _submissions.OrderByDescending(o => o.SubmissionDate))
     {
-        <tr class="bg-white border-b  ">
+        <tr class=" border-b  ">
             <td>@sub.SubmissionDate.ToString("d")</td>
             <td>@sub.Sender</td>
             <td>@sub.Subject</td>

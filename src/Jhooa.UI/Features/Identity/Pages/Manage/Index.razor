@@ -6,7 +6,7 @@
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Identity.Components
 @using Microsoft.EntityFrameworkCore
-
+@layout ManageLayout
 @inject IStringLocalizer<Resources.Identity> Loc
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
@@ -17,10 +17,10 @@
 
 <PageTitle>@Loc["MyAccount"]</PageTitle>
 
-<ManageNavMenu/>
 
 <section class="max-w-screen-xl mx-auto  text-white">
-    <h3>@Loc["MyAccount"]</h3>
+
+    <h2 class="text-xl font-semibold">@Loc["MyAccount"]</h2>
 
     @if (Input is not null)
     {
@@ -29,7 +29,7 @@
             <DataAnnotationsValidator/>
 
             <div class="grid grid-cols-2 gap-4">
-                <div class="">
+                <div class="space-y-3">                   
                     <JhooaInputText @bind-Value="Input.Lastname" DisplayName="@Loc["LastName"]"
                                     ValidationFor="@(() => Input.Lastname)" Autocomplete="lastname"/>
                     <JhooaInputText @bind-Value="Input.Firstname" DisplayName="@Loc["FirstName"]"
@@ -39,7 +39,8 @@
                                     ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
                 </div>
 
-                <div class="">
+                <div class="space-y-3">
+                    
                     <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                     ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
                     <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
@@ -53,8 +54,10 @@
                     </div>
                 </div>
 
-                <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["SaveChanges"]</button>
-                <JhooaButtonLink Text="@Loc["ChangePassword"]"
+                <button type="submit" class="border-2 border-white p-3 col-span-2 mt-4">@Loc["SaveChanges"]</button>
+                <JhooaButtonLink 
+                    CssClass="mt-4 col-span-2"
+                    Text="@Loc["ChangePassword"]"
                                  Url="@(NavigationManager.GetUriWithQueryParameters("Account/Manage/ChangePassword", new Dictionary<string, object?>()))"/>
 
             </div>

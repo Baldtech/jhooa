@@ -16,15 +16,15 @@
 
 <PageTitle>@Loc["Videos"]</PageTitle>
 
-<section class="max-w-screen-xl mx-auto ">
+<section class="max-w-screen-xl mx-auto w-full">
     <div>
         @if (Id.HasValue)
         {
-            <h1>@Loc["EditVideo"]</h1>
+            <h1 class="mb-8 text-4xl tracking-wider">@Loc["EditVideo"]</h1>
         }
         else
         {
-            <h1>@Loc["AddVideo"]</h1>
+            <h1 class="mb-8 text-4xl tracking-wider">@Loc["AddVideo"]</h1>
         }
         @if (Input != null)
         {

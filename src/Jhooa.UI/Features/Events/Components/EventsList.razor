@@ -6,8 +6,8 @@
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
-<table class="w-full  text-left text-gray-500">
-    <thead class="text-gray-700 uppercase bg-gray-50">
+<table class="w-full  text-left ">
+    <thead class="text-gray-700 uppercase ">
     <tr>
         <th>@Loc["Title"]</th>
         <th>@Loc["StartDate"]</th>
@@ -19,7 +19,7 @@
     <tbody>
     @foreach (var ev in _events.OrderByDescending(o => o.StartDate))
     {
-        <tr class="bg-white border-b  ">
+        <tr class="border-b  ">
             <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title)</td>
             <td>@ev.StartDate.ToString("d")</td>
             <td>@ev.EndDate.ToString("d")</td>

@@ -17,15 +17,15 @@
 
 <PageTitle>@Loc["EventsList"]</PageTitle>
 
-<section class="max-w-screen-xl mx-auto ">
+<section class="max-w-screen-xl mx-auto w-full">
     <div>
         @if (Id.HasValue)
         {
-            <h1>@Loc["EditEvent"]</h1>
+            <h1 class="mb-8 text-4xl tracking-wider">@Loc["EditEvent"]</h1>
         }
         else
         {
-            <h1>@Loc["AddEvent"]</h1>
+            <h1 class="mb-8 text-4xl tracking-wider">@Loc["AddEvent"]</h1>
         }
         @if (Input != null)
         {

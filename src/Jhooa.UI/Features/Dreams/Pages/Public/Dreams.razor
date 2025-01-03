@@ -1,6 +1,6 @@
 @page "/Account/Manage/Dreams"
 @attribute [Authorize]
-@layout AccountLayout
+@layout ManageLayout
 
 @using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Features.Dreams.Models
@@ -15,14 +15,14 @@
 @inject IStringLocalizer<Resources.Dreams> Loc
 @inject IdentityUserAccessor UserAccessor
 @inject ApplicationDbContext DbContext
+@inject IdentityRedirectManager RedirectManager
 
 <PageTitle>@Loc["MyDreams"]</PageTitle>
 
-<ManageNavMenu/>
+<section class="max-w-screen-md mx-auto  text-white">
+    <h2 class="text-xl font-semibold text-center mb-4">@Loc["AttemptToTitle"]</h2>
 
-<section class="max-w-screen-xl mx-auto  text-white">
-    <h3>@Loc["AttemptToTitle"]</h3>
-    <p>@Loc["AttemptToDesc"]</p>
+    <p class="text-center mb-4">@Loc["AttemptToDesc"]</p>
 
 @if (Input is not null)
 {
@@ -31,16 +31,19 @@
         <DataAnnotationsValidator/>
 
         <div class="grid grid-cols-1 gap-4">
-            <div class="">
-                <JhooaInputText @bind-Value="Input.SmallDream" DisplayName="@Loc["SmallDream"]"
-                                ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
-                <JhooaInputText @bind-Value="Input.MediumDream" DisplayName="@Loc["MediumDream"]"
-                                ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
-                <JhooaInputText @bind-Value="Input.BigDream" DisplayName="@Loc["BigDream"]"
-                                ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
+            <div class="space-y-3">
+                <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
+                                 Placeholder="@Loc["SmallDreamPlaceholder"]"
+                                 ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
+                                 Placeholder="@Loc["MediumDreamPlaceholder"]"
+                                 ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
+                                 Placeholder="@Loc["BigDreamPlaceholder"]"
+                                 ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
             </div>
             
-            <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["SaveChanges"]</button>
+            <button type="submit" class="border-2 border-white p-3 ">@Loc["SaveChanges"]</button>
 
         </div>
     </EditForm>
@@ -78,6 +81,9 @@
         await UpdateDream(DreamTypes.Big, Input!.BigDream);
 
         await DbContext.SaveChangesAsync();
+        
+        RedirectManager.RedirectToCurrentPageWithStatus(Loc["DreamsUpdated"], HttpContext);
+
     }
 
 

@@ -5,8 +5,8 @@
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
 
-<table class="w-full  text-left text-gray-500">
-    <thead class="text-gray-700 uppercase bg-gray-50">
+<table class="w-full  text-left ">
+    <thead class="text-gray-700 uppercase ">
     <tr>
         <th>@Loc["EmailAddress"]</th>
         <th>@Loc["FirstName"]</th>
@@ -16,7 +16,7 @@
     <tbody>
     @foreach (var user in _users)
     {
-        <tr class="bg-white border-b  ">
+        <tr class=" border-b  ">
             <td>@user.Email</td>
             <td>@user.FirstName</td>
             <td>@user.LastName</td>

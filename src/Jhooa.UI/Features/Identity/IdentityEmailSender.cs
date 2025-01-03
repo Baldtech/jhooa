@@ -14,12 +14,12 @@ internal sealed class IdentityEmailSender (IMailService mailService, IServiceCol
             ? "d-e34c8749182e49bfb4c27547774adb6d"
             : "AccountConfirmation";
         
-        return mailService.SendWithTemplateAsync(email, "d-e34c8749182e49bfb4c27547774adb6d",
+        return mailService.SendWithTemplateAsync(email, templateId,
             new
             {
                 User_Name = user.FirstName,
                 Confirmation_Link = confirmationLink
-            });
+            }, subject: "Confirm your email");
     }
 
     public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)

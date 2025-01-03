@@ -1,7 +1,12 @@
-﻿@inherits LayoutComponentBase
+﻿@using Jhooa.UI.Features.Home.Components
+@inherits LayoutComponentBase
 
-<NavMenu />
-
+<div class=" h-banner bg-jhooa-teal-200">
+    <div class="container">
+        <NavMenu/>
+        <HomeHeader />
+    </div>
+</div>
 @Body
 
-<MainFooter @rendermode="InteractiveServer" />
+<MainFooter @rendermode="InteractiveServer"/>

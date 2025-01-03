@@ -5,37 +5,60 @@
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
 @using Microsoft.Extensions.Localization
-@using Jhooa.UI.Features.Identity.Components
-
+@layout AccountLayout
 @inject IStringLocalizer<Resources.Identity> Loc
 @inject SignInManager<ApplicationUser> SignInManager
 @inject ILogger<Login> Logger
-@inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject UserManager<ApplicationUser> UserManager
 
 <PageTitle>@Loc["Login"]</PageTitle>
 
-<section class="max-w-screen-xl mx-auto grid grid-cols-2 gap-4 text-white">
-    <div>
-        <h3 class="mb-8">@Loc["CreateAccount"]</h3>
-        <JhooaButtonLink Text="@Loc["CreateAccount"]" Url="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { }))" />
+
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full mx-4 md:mx-auto">
+
+    <div class="flex flex-col items-center justify-center text-center text-white py-8 md:py-0 border-b lg:border-b-0 lg:border-r border-white">
+        <h2 class="text-3xl md:text-4xl font-semibold mb-6">
+            @Loc["CreateAccount"]
+        </h2>
+        <a href="/Account/Register"
+           class="border border-white text-white px-6 py-2 text-sm font-medium bg-gray-400"
+        >
+            @Loc["CreateAccount"]
+        </a>
     </div>
-    <div>
-        <h3>@Loc["AlreadyHaveAccount"]</h3>
+
+
+    <div
+        class="flex flex-col items-center justify-center text-white py-8 md:py-0">
+        <h2 class="text-3xl md:text-4xl font-semibold mb-6">
+            @Loc["AlreadyHaveAccount"]
+        </h2>
+
         <StatusMessage Message="@_errorMessage"/>
-        <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login" class="space-y-6">
+
+        <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login"
+                  class="space-y-4 w-3/4 max-w-sm mx-auto">
             <DataAnnotationsValidator/>
-            
-            <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]" ValidationFor="@(() => Input.Email)" />
-            <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]" ValidationFor="@(() => Input.Password)" Type="password" />
-            
+
+            <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
+                            ValidationFor="@(() => Input.Email)"/>
+            <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]"
+                            ValidationFor="@(() => Input.Password)" Type="password"/>
+
             <div class="flex items-center space-x-2">
                 <InputCheckbox @bind-Value="Input.RememberMe" class="h-5 w-5 rounded border-gray-300 "/>
                 <label for="rememberme" class="">@Loc["FormRememberMe"]</label>
             </div>
-            
-            <button type="submit" class="border-2 border-white p-3 float-right bg-gray-400">@Loc["FormLogin"]</button>
+
+            <button
+                type="submit"
+                class="border border-white text-white px-6 py-2 text-sm font-medium bg-gray-400"
+            >
+                @Loc["FormLogin"]
+            </button>
+
             <div class="clear-both"></div>
             <div>
                 <p>
@@ -44,11 +67,12 @@
             </div>
         </EditForm>
     </div>
-</section>
+</div>
+
 
 @code {
     private string? _errorMessage;
-    
+
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
@@ -102,11 +126,11 @@
 
     private sealed class InputModel
     {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))] 
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [EmailAddress(ErrorMessageResourceName = "EmailInvalid", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Email { get; set; } = "";
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))] 
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 

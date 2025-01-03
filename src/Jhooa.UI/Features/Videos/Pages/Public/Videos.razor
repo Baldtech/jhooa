@@ -9,23 +9,16 @@
 
 <PageTitle>@Loc["Videos"]</PageTitle>
 
-<VideosHeader/>
+<section class="max-w-screen-xl mx-auto text-jhooa-gray">
 
-<div class="mb-16"></div>
-<section class="max-w-screen-xl mx-auto">
-
-    <h1>@Loc["VideosPageTitle"]</h1>
-
-    <div class="mb-16"></div>
-
+    <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosPageTitle"]</h1>
+    
     <p class="mb-4">@Loc["VideosPageText1"]</p>
     <p class="mb-4">@Loc["VideosPageText2"]</p>
     <p class="mb-4">@Loc["VideosPageText3"]</p>
     <p class="mb-4">@Loc["VideosPageText4"]</p>
-
-    <div class="mb-16"></div>
-
-    <h2 class="mb-8">@Loc["TheVideos"]</h2>
+    
+    <h2 class="text-jhooa-teal-200 text-3xl my-10">@Loc["TheVideos"]</h2>
 
     <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
                   SelectYearCallback="HandleYearSelection"/>
