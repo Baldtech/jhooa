@@ -1,3 +1,4 @@
+using BytexDigital.Blazor.Components.CookieConsent;
 using Jhooa.UI.Extensions;
 using Jhooa.UI.Features.Identity;
 using Jhooa.UI.Pages;
@@ -25,6 +26,8 @@ public static partial class DependencyInjection
         services.AddControllers();
 
         services.AddLocalization();
+        
+        services.ConfigureCookie();
 
         services.AddAntiforgery(options =>
         {
@@ -34,6 +37,30 @@ public static partial class DependencyInjection
         });
 
         return services;
+    }
+
+#pragma warning disable MA0051
+    private static void ConfigureCookie(this IServiceCollection services)
+#pragma warning restore MA0051
+    {
+        services.AddCookieConsent(o =>
+        {
+            o.Revision = 1;
+            o.PolicyUrl = "/cookie-policy";
+            o.CookieOptions = new CookieConsentCookieOptions()
+            {
+                CookieName = "CookieConsent",
+            };
+            
+            // Call optional
+            o.UseDefaultConsentPrompt(prompt =>
+            {
+                prompt.Position = ConsentModalPosition.BottomRight;
+                prompt.Layout = ConsentModalLayout.Bar;
+                prompt.SecondaryActionOpensSettings = false;
+                prompt.AcceptAllButtonDisplaysFirst = false;
+            });
+        });
     }
 
     /// <summary>
