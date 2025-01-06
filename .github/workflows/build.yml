@@ -11,7 +11,7 @@ on:
       - '**/*.gitattributes'
 
 env:
-  NETCORE_VERSION: '8.0.402'                    # set this to the .NET Core version to use
+  NETCORE_VERSION: '9.0.101'                    # set this to the .NET Core version to use
 
 jobs:
   build:
