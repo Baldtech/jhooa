@@ -7,10 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A9E3C8C6-880
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhooa.UI", "src\Jhooa.UI\Jhooa.UI.csproj", "{2AD48046-7E5C-4E57-AF01-4456B712EAA3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "default", "default", "{A962B3A2-D020-48A4-A004-14F65377F2EF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "src\default\BlazorApp1\BlazorApp1.csproj", "{0BC26C7D-003D-4328-B394-CDD615BA747A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,13 +20,8 @@ Global
 		{2AD48046-7E5C-4E57-AF01-4456B712EAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AD48046-7E5C-4E57-AF01-4456B712EAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AD48046-7E5C-4E57-AF01-4456B712EAA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BC26C7D-003D-4328-B394-CDD615BA747A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BC26C7D-003D-4328-B394-CDD615BA747A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BC26C7D-003D-4328-B394-CDD615BA747A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BC26C7D-003D-4328-B394-CDD615BA747A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2AD48046-7E5C-4E57-AF01-4456B712EAA3} = {A9E3C8C6-880B-4C9B-A857-0B137F2CE44F}
-		{0BC26C7D-003D-4328-B394-CDD615BA747A} = {A962B3A2-D020-48A4-A004-14F65377F2EF}
 	EndGlobalSection
 EndGlobal
