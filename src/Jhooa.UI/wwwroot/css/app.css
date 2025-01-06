@@ -5,19 +5,17 @@
 @layer base {
     @font-face {
         font-family: "Butler";
-        font-style: normal;
-        src: url("../fonts/butler/Butler_Regular.otf") format("otf");
+        src: url("../fonts/butler/Butler_Regular.otf") format("opentype");
     }
 
     @font-face {
         font-family: "AmsiPro";
-        font-style: normal;
-        src: url("../fonts/amsipro/AmsiPro-Regular.otf") format("otf");
+        src: url("../fonts/amsipro/AmsiPro-Regular.otf") format("opentype");
     }
 
     @font-face {
         font-family: "WinterMinnie";
-        src: url("../fonts/winter_minie/wm.otf") format("otf");
+        src: url("../fonts/winter_minie/wm.otf") format("opentype");
     }
 }
 

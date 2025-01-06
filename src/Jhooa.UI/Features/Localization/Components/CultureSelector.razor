@@ -2,7 +2,8 @@
 @inject NavigationManager Navigation
 @inject IStringLocalizer<CultureSelector> Loc
 
-<InputSelect id="language" @bind-Value="selectedCulture" class="text-white bg-transparent border-0 md:inline-block md:float-end md:mx-5 focus:border-0 active:border-0">
+<InputSelect id="language" @bind-Value="_selectedCulture"
+             class="text-white bg-transparent border-0 md:inline-block md:float-end md:mx-5 focus:border-0 active:border-0">
     <option value="fr-FR" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'>FR</option>
     <option value="en-GB" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'>EN</option>
 </InputSelect>
@@ -10,18 +11,10 @@
 
 @code
 {
-    private CultureInfo selectedCulture = CultureInfo.CurrentCulture;
-    private string test = string.Empty;
-    
-    protected override void OnInitialized()
-    {
-        test = selectedCulture.Name;
-    }
-    
-    
+    private CultureInfo _selectedCulture = CultureInfo.CurrentCulture;
+
     private Task ApplySelectedCultureAsync(CultureInfo culture)
     {
-        
         if (Equals(CultureInfo.CurrentCulture, culture))
             return Task.CompletedTask;
 

@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
     content: ["./**/*.{razor,html,cshtml}", "./node_modules/flowbite/**/*.js"],
     theme: {
@@ -7,9 +10,8 @@ module.exports = {
                 'banner': '700px',
             },
             fontFamily: {
+                sans: ["AmsiPro", ...defaultTheme.fontFamily.sans],
                 butler: ["Butler", "serif"],
-                text: ["AmsiPro", "sans-serif"],
-                winter: ["WinterMinnie", "sans-serif"],
             },
             colors: {
                 'jhooa-teal': {
