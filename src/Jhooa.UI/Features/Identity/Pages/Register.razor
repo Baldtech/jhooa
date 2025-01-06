@@ -131,7 +131,7 @@
 
                     <div class="flex items-center space-x-2 my-5">
                         <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
-                        <label for="accepttoc" class="">@Loc["AcceptToc"]</label>
+                        <label for="accepttoc" class="">@((MarkupString)Loc["AcceptToc"].ToString())</label>
                     </div>
 
                     <div class="flex items-center space-x-2 mb-8">

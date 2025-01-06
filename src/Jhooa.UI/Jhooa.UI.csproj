@@ -71,6 +71,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Videos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Policy.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Policy.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -113,6 +117,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Videos.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Policy.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Policy.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

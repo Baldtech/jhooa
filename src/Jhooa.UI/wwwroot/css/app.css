@@ -30,3 +30,7 @@ td, th {
 .text-success, .alert-success {
     color: green;
 }
+
+label > a {
+    text-decoration: underline;
+}

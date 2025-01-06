@@ -248,5 +248,17 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Logout", resourceCulture);
             }
         }
+        
+        internal static string TermsConditions {
+            get {
+                return ResourceManager.GetString("TermsConditions", resourceCulture);
+            }
+        }
+        
+        internal static string CookiePolicy {
+            get {
+                return ResourceManager.GetString("CookiePolicy", resourceCulture);
+            }
+        }
     }
 }

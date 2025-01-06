@@ -113,4 +113,10 @@
     <data name="Logout" xml:space="preserve">
         <value>Déconnection</value>
     </data>
+    <data name="TermsConditions" xml:space="preserve">
+        <value>Termes et conditions</value>
+    </data>
+    <data name="CookiePolicy" xml:space="preserve">
+        <value>Politique de gestion des cookies</value>
+    </data>
 </root>
