@@ -524,5 +524,23 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("BigDreamPlaceholder", resourceCulture);
             }
         }
+        
+        internal static string France {
+            get {
+                return ResourceManager.GetString("France", resourceCulture);
+            }
+        }
+        
+        internal static string Belgium {
+            get {
+                return ResourceManager.GetString("Belgium", resourceCulture);
+            }
+        }
+        
+        internal static string Luxembourg {
+            get {
+                return ResourceManager.GetString("Luxembourg", resourceCulture);
+            }
+        }
     }
 }

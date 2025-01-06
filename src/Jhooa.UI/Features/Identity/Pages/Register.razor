@@ -50,8 +50,17 @@
                                         ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
                         <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
                                         ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
-                        <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]"
-                                        ValidationFor="@(() => Input.Country)" Autocomplete="country"/>
+                        <div>
+                            <label for="@Input.Country" class="block mb-1 text-sm">@Loc["Country"]</label>
+                            
+                            <InputSelect @bind-Value="Input.Country" class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
+                                <option value="france">@Loc["France"]</option>
+                                <option value="luxembourg">@Loc["Luxembourg"]</option>
+                                <option value="belgium">@Loc["Belgium"]</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => Input.Country)" class="text-danger"/>
+
+                        </div>
                         <JhooaInputText @bind-Value="Input.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"
                                         ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
                         <JhooaInputText @bind-Value="Input.Password" DisplayName="@Loc["Password"]"

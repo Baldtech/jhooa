@@ -251,4 +251,13 @@
     <data name="BigDreamPlaceholder" xml:space="preserve">
         <value>Osez voir grand</value>
     </data>
+    <data name="Belgium" xml:space="preserve">
+        <value>Belgique</value>
+    </data>
+    <data name="France" xml:space="preserve">
+        <value>France métropolitaine</value>
+    </data>
+    <data name="Luxembourg" xml:space="preserve">
+        <value>Luxembourg</value>
+    </data>
 </root>
