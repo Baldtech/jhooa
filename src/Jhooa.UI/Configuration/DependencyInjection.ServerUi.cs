@@ -1,8 +1,12 @@
+using System.Text;
+using System.Text.Json;
 using BytexDigital.Blazor.Components.CookieConsent;
 using Jhooa.UI.Extensions;
 using Jhooa.UI.Features.Identity;
 using Jhooa.UI.Pages;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Jhooa.UI.Configuration;
 
@@ -81,6 +85,11 @@ public static partial class DependencyInjection
             app.UseHsts();
         }
         
+        app.MapHealthChecks("/healthz", new HealthCheckOptions
+        {
+            ResponseWriter = WriteResponse
+        });
+        
         app.RegisterSerilogAndApplicationInsights();
 
         app.UseHttpsRedirection();
@@ -106,5 +115,46 @@ public static partial class DependencyInjection
             .AddInteractiveServerRenderMode();
 
         app.MapAdditionalIdentityEndpoints();
+    }
+    
+    private static async Task WriteResponse(HttpContext context, HealthReport healthReport)
+    {
+        context.Response.ContentType = "application/json; charset=utf-8";
+
+        var options = new JsonWriterOptions { Indented = true };
+
+        using var memoryStream = new MemoryStream();
+        using (var jsonWriter = new Utf8JsonWriter(memoryStream, options))
+        {
+            jsonWriter.WriteStartObject();
+            jsonWriter.WriteString("status", healthReport.Status.ToString());
+            jsonWriter.WriteStartObject("results");
+
+            foreach (var healthReportEntry in healthReport.Entries)
+            {
+                jsonWriter.WriteStartObject(healthReportEntry.Key);
+                jsonWriter.WriteString("status",
+                    healthReportEntry.Value.Status.ToString());
+                jsonWriter.WriteString("description",
+                    healthReportEntry.Value.Description);
+                jsonWriter.WriteStartObject("data");
+
+                foreach (var item in healthReportEntry.Value.Data)
+                {
+                    jsonWriter.WritePropertyName(item.Key);
+
+                    JsonSerializer.Serialize(jsonWriter, item.Value,
+                        item.Value?.GetType() ?? typeof(object));
+                }
+
+                jsonWriter.WriteEndObject();
+                jsonWriter.WriteEndObject();
+            }
+
+            jsonWriter.WriteEndObject();
+            jsonWriter.WriteEndObject();
+        }
+
+        await context.Response.WriteAsync(Encoding.UTF8.GetString(memoryStream.ToArray()));
     }
 }

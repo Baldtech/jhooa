@@ -33,6 +33,9 @@ public static partial class DependencyInjection
         services.AddStripeIntegration(config)
             .AddMessageServices(config)
             .AddAzureServices(config);
+        
+        services.AddHealthChecks()
+            .AddDbContextCheck<ApplicationDbContext>(name: "database");
 
         return services;
     }
