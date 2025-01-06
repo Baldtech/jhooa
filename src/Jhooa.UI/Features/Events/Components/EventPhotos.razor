@@ -1,0 +1,32 @@
+@using Jhooa.UI.Services
+@using Microsoft.Extensions.Localization
+@inject IBlobService BlobService
+@inject IStringLocalizer<Resources.Events> Loc
+@attribute [StreamRendering]
+
+@if (_pictures is not null && _pictures.Count > 1)
+{
+    <h2 class="text-xl font-semibold text-teal-900 mt-8 mb-4">@Loc["Pictures"]</h2>
+
+    <div class="grid grid-cols-4 gap-4">
+        @foreach (var picture in _pictures)
+        {
+            <div class=" w-full h-60 overflow-hidden">
+                <img src="@picture" alt="Image 1" class=" w-full h-full object-cover">
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private List<string>? _pictures;
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        var blobService = BlobService.GetBlobService("events");
+        _pictures = await blobService.GetAllBlobs($"{Id}/");
+    }
+
+}

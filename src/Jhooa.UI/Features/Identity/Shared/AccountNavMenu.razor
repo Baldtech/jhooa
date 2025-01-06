@@ -10,7 +10,6 @@
 <header class="w-full bg-black">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
         <div class="flex items-center space-x-2">
-            <!-- Arrow Icon -->
             <a href="/" class="focus:outline-none mr-2 flex items-center">
                 <svg
                     class="h-5 w-5"
@@ -30,54 +29,43 @@
             </a>
         </div>
 
-        <!-- Center Section: Logo -->
         <div class="flex-1 flex justify-center">
-            <!-- Replace with your actual logo or brand name -->
             <h1 class="text-2xl font-semibold tracking-wide">
                 <img src="images/logo_no_tagline.svg" alt="Jhooa" class="h-12"/>
             </h1>
         </div>
 
-        <!-- Right Section: Button + Language Selector -->
         <div class="flex items-center space-x-4">
-            <!-- Connexion Button -->
             <AuthorizeView>
                 <Authorized>
-                    
-                    <form action="Account/Logout" method="post">
+                    <form action="Account/Logout" method="post"
+                          class="px-3 block text-right md:inline md:float-end">
                         <AntiforgeryToken/>
                         <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
-                        <button type="submit" class="nav-link underline">
+                        <button type="submit"
+                                class="lowercase border border-white rounded-md px-4 py-2 text-sm hidden md:inline-block md:float-end">
+                            <img src="images/login.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
                             @Loc["Logout"]
                         </button>
                     </form>
+
                 </Authorized>
-                <NotAuthorized>
-                    <a href="/Account/Login"
-                       class="bg-[#CE8672] hover:bg-opacity-80 text-white py-2 px-4 rounded flex items-center focus:outline-none"
-                    >
-                        <!-- User Icon -->
-                        <img src="images/login.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
-                        @Loc["Login"]
-                    </a>
-                </NotAuthorized>
+
             </AuthorizeView>
 
-
-            <!-- Language Selector -->
             <div class="relative">
-                <CultureSelector @rendermode="InteractiveServer"/>
+                <CultureSelector />
             </div>
         </div>
     </div>
 </header>
 
 <AuthorizeView>
-<Authorized>
+    <Authorized>
 
-    <ManageNavMenu/>
+        <ManageNavMenu/>
 
-</Authorized>
+    </Authorized>
 </AuthorizeView>
 
 @code {

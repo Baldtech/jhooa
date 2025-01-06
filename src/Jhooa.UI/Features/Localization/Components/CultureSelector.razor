@@ -1,18 +1,30 @@
 @using Microsoft.Extensions.Localization
 @inject NavigationManager Navigation
 @inject IStringLocalizer<CultureSelector> Loc
+@rendermode InteractiveServer
 
-<InputSelect id="language" @bind-Value="_selectedCulture"
+<select id="language" @onchange="OnCultureChange" value="@_selectedCulture.Name"
              class="text-white bg-transparent border-0 md:inline-block md:float-end md:mx-5 focus:border-0 active:border-0">
-    <option value="fr-FR" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("fr-FR")))'>FR</option>
-    <option value="en-GB" @onclick='(() => ApplySelectedCultureAsync(new CultureInfo("en-GB")))'>EN</option>
-</InputSelect>
+    <option value="fr-FR" >FR</option>
+    <option value="en-GB" >EN</option>
+</select>
 
 
 @code
 {
     private CultureInfo _selectedCulture = CultureInfo.CurrentCulture;
 
+    private async Task OnCultureChange(ChangeEventArgs e)
+    {
+        var selectedValue = e.Value?.ToString();
+        if (!string.IsNullOrEmpty(selectedValue))
+        {
+            var culture = new CultureInfo(selectedValue);
+            await ApplySelectedCultureAsync(culture);
+        }
+    }
+    
+    
     private Task ApplySelectedCultureAsync(CultureInfo culture)
     {
         if (Equals(CultureInfo.CurrentCulture, culture))

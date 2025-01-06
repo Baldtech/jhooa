@@ -7,7 +7,6 @@
 
 @inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
-@inject IBlobService BlobService
 
 @if (_ev is not null)
 {
@@ -49,19 +48,7 @@
 
         <Registration EventId="@_ev.Id" IsPast="@_ev.IsPast"/>
 
-        @if (_pictures is not null && _pictures.Count > 1)
-        {
-            <h2 class="text-xl font-semibold text-teal-900 mt-8 mb-4">@Loc["Pictures"]</h2>
-
-            <div class="grid grid-cols-4 gap-4">
-                @foreach (var picture in _pictures)
-                {
-                    <div class=" w-full h-60 overflow-hidden">
-                        <img src="@picture" alt="Image 1" class=" w-full h-full object-cover">
-                    </div>
-                }
-            </div>
-        }
+        <EventPhotos Id="@_ev.Id" />
     </section>
 }
 
@@ -71,14 +58,9 @@
     [Parameter] public Guid Id { get; set; }
 
     private Event? _ev;
-    private List<string>? _pictures;
 
     protected override async Task OnParametersSetAsync()
     {
         _ev = await DbContext.Events.FirstAsync(e => e.Id == Id);
-
-        var blobService = BlobService.GetBlobService("events");
-        _pictures = await blobService.GetAllBlobs($"{_ev.Id}/");
     }
-
 }

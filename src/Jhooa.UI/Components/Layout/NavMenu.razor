@@ -74,25 +74,24 @@
                     </Authorized>
                 </AuthorizeView>
                 <div class="hidden md:inline">
-                    <CultureSelector @rendermode="InteractiveServer"/>
+                    <CultureSelector />
                 </div>
-                <AuthorizeView Roles="Admin">
-                        <a href="/Admin"
-                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@Loc["Administration"]</a>
-                </AuthorizeView>
                 <AuthorizeView>
                     <Authorized>
-                        <a href="/Account/Manage"
-                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@_user?.FirstName @_user?.LastName</a>
+                        
                         
                         <form action="Account/Logout" method="post"
-                              class="py-2 px-3 block text-right mx-10 md:inline md:float-end">
+                              class="px-3 block text-right md:inline md:float-end">
                             <AntiforgeryToken/>
                             <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
-                            <button type="submit" class="lowercase">
+                            <button type="submit" class="lowercase border border-white rounded-md px-4 py-2 text-sm hidden md:inline-block md:float-end">
+                                <img src="images/login.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
                                 @Loc["Logout"]
                             </button>
                         </form>
+
+                        <a href="/Account/Manage"
+                           class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@_user?.FirstName @_user?.LastName</a>
                     </Authorized>
                     <NotAuthorized>
                         <a href="Account/Login" type="button"
@@ -101,6 +100,10 @@
                             @Loc["Login"]
                         </a>
                     </NotAuthorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="Admin">
+                    <a href="/Admin"
+                       class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block md:float-end">@Loc["Administration"]</a>
                 </AuthorizeView>
             </div>
         </div>
