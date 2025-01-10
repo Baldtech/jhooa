@@ -27,4 +27,19 @@
     <data name="MySubscriptionDesc" xml:space="preserve">
         <value>Subscribe monthly or annually and gain the chance to participate in extraordinary events, see one of your dreams come true, and access all our videos. The monthly subscription is valid for one month from the date of payment.</value>
     </data>
+    <data name="NoActiveSubscription" xml:space="preserve">
+        <value>No active subscription</value>
+    </data>
+    <data name="ActiveSubscription" xml:space="preserve">
+        <value>Active subscription:</value>
+    </data>
+    <data name="AutoRenew" xml:space="preserve">
+        <value>Auto renew</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="Cancelled" xml:space="preserve">
+        <value>Cancelled</value>
+    </data>
 </root>

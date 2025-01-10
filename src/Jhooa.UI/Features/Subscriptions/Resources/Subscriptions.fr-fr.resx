@@ -20,4 +20,19 @@
     <data name="MySubscriptionDesc" xml:space="preserve">
         <value>Abonnez vous mensuellement ou annuellement et gagnez la chance de participer à des évènements hors du commun, de voir un de vos rêves se réaliser et accéder à toutes nos vidéos. L’abonnement mensuel est valable un mois à partir de la date de paiement de celui-ci.</value>
     </data>
+    <data name="NoActiveSubscription" xml:space="preserve">
+        <value>Aucune souscription active</value>
+    </data>
+    <data name="ActiveSubscription" xml:space="preserve">
+        <value>Souscription active :</value>
+    </data>
+    <data name="AutoRenew" xml:space="preserve">
+        <value>Renouvellement automatique</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Annulation</value>
+    </data>
+    <data name="Cancelled" xml:space="preserve">
+        <value>Annulée</value>
+    </data>
 </root>

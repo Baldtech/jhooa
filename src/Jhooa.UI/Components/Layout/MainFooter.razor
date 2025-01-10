@@ -47,15 +47,6 @@
                     <img src="images/mail.svg" alt="Facebook icon" class="w-6 h-6"/>
                     <span>hello@jhooa.com</span>
                 </div>
-
-                <div class="flex items-center space-x-2 mb-6">
-                    <a href="/terms-conditions" class="flex items-center space-x-2">
-                        <span>@Loc["TermsConditions"]</span>
-                    </a>
-                    <a href="/cookie-policy" class="flex items-center space-x-2">
-                        <span>@Loc["CookiePolicy"]</span>
-                    </a>
-                </div>
             </div>
 
             <div class="col-span-2">
@@ -104,7 +95,7 @@
         </div>
     </div>
 </footer>
-
+<FooterPolicies />
 
 @code {
     [SupplyParameterFromForm] private ContactForm? Model { get; set; }

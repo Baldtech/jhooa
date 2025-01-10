@@ -12,7 +12,7 @@
 
 @code
 {
-    private CultureInfo _selectedCulture = CultureInfo.CurrentCulture;
+    private CultureInfo _selectedCulture = CultureInfo.CurrentCulture.Name.StartsWith("fr") ? new CultureInfo("fr-FR") : new CultureInfo("en-GB");
 
     private async Task OnCultureChange(ChangeEventArgs e)
     {

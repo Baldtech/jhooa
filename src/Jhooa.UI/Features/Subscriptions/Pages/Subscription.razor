@@ -23,22 +23,24 @@
 
     <p class="text-center mb-4">@Loc["MySubscriptionDesc"]</p>
 
-    @* @if (Input is not null) *@
-    @* { *@
-    @*     <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="login" class="space-y-6"> *@
-    @*         <StatusMessage/> *@
-    @*         <DataAnnotationsValidator/> *@
-    @* *@
-    @*         <div class="grid grid-cols-1 gap-4"> *@
-    @*             <div class=""> *@
-    @*                 *@
-    @*             </div> *@
-    @* *@
-    @*             <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["SaveChanges"]</button> *@
-    @* *@
-    @*         </div> *@
-    @*     </EditForm> *@
-    @* } *@
+    @if (_activeSub is null)
+    {
+        <p class="text-center mb-4 text-red-400">@Loc["NoActiveSubscription"]</p>
+    }
+    else
+    {
+        <p class="text-center mb-4 text-green-400 font-bold">
+            @Loc["ActiveSubscription"] @_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : _activeSub.Status is SubscriptionStatus.Cancelled ? $" ({Loc["Cancelled"]})" : $" ({Loc["AutoRenew"]})")
+        </p>
+
+        if (_activeSub.Type is SubscriptionType.MonthlyRecurring or SubscriptionType.YearlyRecurring && _activeSub.Status is not SubscriptionStatus.Cancelled)
+        {
+            <EditForm Model="CancelSubscriptionInputModel" method="post" OnValidSubmit="CancelSubscriptionAsync"
+                      FormName="cancelSubscription" class="space-y-6">
+                <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["Cancel"]</button>
+            </EditForm>
+        }
+    }
 </section>
 
 @* <h3>Subscriptions</h3> *@
@@ -76,96 +78,132 @@
 
 @code {
 
-    [SupplyParameterFromQuery(Name = "session-id")]
-    public string? CheckoutSessionId { get; set; }
-
-    private string? Message { get; set; }
     private Guid _userId;
-    [SupplyParameterFromForm]
-    private InputModel? Input { get; set; }
-
     private List<Jhooa.UI.Features.Subscriptions.Models.Subscription>? _subscriptions = new();
     private Jhooa.UI.Features.Subscriptions.Models.Subscription? _activeSub;
-    private List<DateOnly> _eligibleMonths = new();
+
+    // [SupplyParameterFromQuery(Name = "session-id")]
+    // public string? CheckoutSessionId { get; set; }
+
+    // private string? Message { get; set; }
+    // 
+    [SupplyParameterFromForm] private CancelSubscriptionModel? CancelSubscriptionInputModel { get; set; } = new();
+    //
+    // private List<Jhooa.UI.Features.Subscriptions.Models.Subscription>? _subscriptions = new();
+    // private Jhooa.UI.Features.Subscriptions.Models.Subscription? _activeSub;
+    // private List<DateOnly> _eligibleMonths = new();
+
+    protected override void OnParametersSet()
+    {
+        CancelSubscriptionInputModel ??= new CancelSubscriptionModel();
+    }
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
 
-        if (authState.User.Identity?.IsAuthenticated == true)
-        {
-            if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
-            {
-                _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        if (authState.User.Identity?.IsAuthenticated != true) return;
+        if (authState.User.Claims.All(c => c.Type != ClaimTypes.NameIdentifier)) return;
 
-                Input ??= new InputModel();
+        _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-                if (CheckoutSessionId is not null)
-                {
-                    var sub = await DbContext.Subscriptions
-                        .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId && s.UserId == _userId);
-
-                    if (sub is not null)
-                    {
-                        if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
-                        {
-                            var result = await StriveService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
-                            if (result.IsSuccess)
-                            {
-                                sub.MarkPaymentAsPaid(result.Value);
-                            }
-                        }
-                        else
-                        {
-                            var result = await StriveService.RetrieveSubscriptionId(CheckoutSessionId);
-                            if (result.IsSuccess)
-                            {
-                                sub.MarkSubscriptionAsPaid(result.Value);
-                            }
-                        }
-                        
-                        await DbContext.SaveChangesAsync();
-                    }
-                }
-
-                await ResetSubscriptions(_userId);
-            }
-        }
-    }
-
-    private async Task ResetSubscriptions(Guid userId)
-    {
-        _subscriptions = await DbContext.Subscriptions
-            .Where(s => s.UserId == userId)
-            .ToListAsync();
-
+        _subscriptions = await DbContext.Subscriptions.Where(s => s.UserId == _userId).ToListAsync();
         _activeSub = _subscriptions.FirstOrDefault(s =>
             s.IsPaid &&
             s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
             (s.End is null || s.End > DateOnly.FromDateTime(DateTime.Now)));
 
-        if (_activeSub is not null)
+
+        // if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
+        // {
+        //     _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        //
+        //     Input ??= new InputModel();
+        //
+        //     if (CheckoutSessionId is not null)
+        //     {
+        //         var sub = await DbContext.Subscriptions
+        //             .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId && s.UserId == _userId);
+        //
+        //         if (sub is not null)
+        //         {
+        //             if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
+        //             {
+        //                 var result = await StriveService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
+        //                 if (result.IsSuccess)
+        //                 {
+        //                     sub.MarkPaymentAsPaid(result.Value);
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 var result = await StriveService.RetrieveSubscriptionId(CheckoutSessionId);
+        //                 if (result.IsSuccess)
+        //                 {
+        //                     sub.MarkSubscriptionAsPaid(result.Value);
+        //                 }
+        //             }
+        //
+        //             await DbContext.SaveChangesAsync();
+        //         }
+        //     }
+        //
+        //     await ResetSubscriptions(_userId);
+        // }
+    }
+
+    // private async Task ResetSubscriptions(Guid userId)
+    // {
+    //     _subscriptions = await DbContext.Subscriptions
+    //         .Where(s => s.UserId == userId)
+    //         .ToListAsync();
+    //
+    //     _activeSub = _subscriptions.FirstOrDefault(s =>
+    //         s.IsPaid &&
+    //         s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
+    //         (s.End is null || s.End > DateOnly.FromDateTime(DateTime.Now)));
+    //
+    //     if (_activeSub is not null)
+    //     {
+    //         _eligibleMonths = DreamService.GetEligibleDates(_activeSub);
+    //     }
+    // }
+    //
+    private async Task CancelSubscriptionAsync()
+    {
+        if (CancelSubscriptionInputModel is not null && _activeSub is not null && !string.IsNullOrWhiteSpace(_activeSub.StripeSubscriptionId))
         {
-            _eligibleMonths = DreamService.GetEligibleDates(_activeSub);
+            await StriveService.CancelSubscription(_activeSub.StripeSubscriptionId);
+
+            var currentDate = DateOnly.FromDateTime(DateTime.Today);
+
+            if (_activeSub.Type is SubscriptionType.MonthlyRecurring)
+            {
+                _activeSub.End = new DateOnly(currentDate.Month == 12 ? currentDate.Year + 1 : currentDate.Year,
+                    currentDate.Month == 12 ? 1 : currentDate.Month + 1,
+                    day: _activeSub.Start.Day);
+            }
+            else if (_activeSub.Type is SubscriptionType.YearlyRecurring)
+            {
+                _activeSub.End = new DateOnly(currentDate.Year + 1,
+                    _activeSub.Start.Month,
+                    day: _activeSub.Start.Day);
+            }
+
+            await DbContext.Subscriptions.Where(e => e.Id == _activeSub.Id)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.End, _activeSub.End)
+                        .SetProperty(b => b.Status, SubscriptionStatus.Cancelled))
+                ;
+            
+            await DbContext.SaveChangesAsync();
         }
+
+        ;
     }
 
-    private async Task OnValidSubmitAsync()
+    private sealed class CancelSubscriptionModel
     {
-        if (_activeSub is null) return;
-
-        await StriveService.CancelSubscription(_activeSub.StripeSubscriptionId!);
-        
-        _activeSub.MarkSubscriptionAsCancelled();
-        await DbContext.SaveChangesAsync();
-        Message = "Subscription cancelled";
-        
-        await ResetSubscriptions(_userId);
-
     }
-    
-    private sealed class InputModel
-    {
 
-    }
 }

@@ -56,5 +56,17 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("TermsConditions", resourceCulture);
             }
         }
+        
+        internal static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        internal static string LegalNotices {
+            get {
+                return ResourceManager.GetString("LegalNotices", resourceCulture);
+            }
+        }
     }
 }

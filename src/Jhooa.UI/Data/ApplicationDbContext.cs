@@ -22,7 +22,23 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     
     public DbSet<Video> Videos { get; set; }
     public DbSet<VideoTheme> VideoThemes { get; set; }
-    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        optionsBuilder.UseSeeding((context, _) =>
+        {
+            var adminRole = context.Set<ApplicationRole>()
+                .FirstOrDefault(b => b.Name == "Admin");
+            if (adminRole == null)
+            {
+                context.Set<ApplicationRole>().Add(new ApplicationRole { Id = Guid.NewGuid(), Name = "Admin" });
+                context.SaveChanges();
+            }
+        });
+
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

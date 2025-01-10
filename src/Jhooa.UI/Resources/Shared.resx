@@ -126,4 +126,13 @@
     <data name="CookiePolicy" xml:space="preserve">
         <value>Cookie policy</value>
     </data>
+    <data name="LegalNotices" xml:space="preserve">
+        <value>Legal notices</value>
+    </data>
+    <data name="PrivacyPolicy" xml:space="preserve">
+        <value>Privacy policy</value>
+    </data>
+    <data name="GeneralTerms" xml:space="preserve">
+        <value>General terms</value>
+    </data>
 </root>

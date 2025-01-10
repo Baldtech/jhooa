@@ -17,4 +17,10 @@
     <data name="TermsConditions" xml:space="preserve">
         <value>Termes et conditions</value>
     </data>
+    <data name="PrivacyPolicy" xml:space="preserve">
+        <value>Politique de confidentialité</value>
+    </data>
+    <data name="LegalNotices" xml:space="preserve">
+        <value>Mentions légales</value>
+    </data>
 </root>

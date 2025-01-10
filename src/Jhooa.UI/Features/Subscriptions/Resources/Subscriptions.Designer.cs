@@ -62,5 +62,35 @@ namespace Jhooa.UI.Features.Subscriptions.Resources {
                 return ResourceManager.GetString("MySubscriptionDesc", resourceCulture);
             }
         }
+        
+        internal static string NoActiveSubscription {
+            get {
+                return ResourceManager.GetString("NoActiveSubscription", resourceCulture);
+            }
+        }
+        
+        internal static string ActiveSubscription {
+            get {
+                return ResourceManager.GetString("ActiveSubscription", resourceCulture);
+            }
+        }
+        
+        internal static string AutoRenew {
+            get {
+                return ResourceManager.GetString("AutoRenew", resourceCulture);
+            }
+        }
+        
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        internal static string Cancelled {
+            get {
+                return ResourceManager.GetString("Cancelled", resourceCulture);
+            }
+        }
     }
 }

@@ -148,10 +148,22 @@ public class StripeService(
 
     public async Task<Result<string>> CancelSubscription(string subscriptionId)
     {
-        var subService = new SubscriptionService();
-        var result = await subService.CancelAsync(subscriptionId);
+        try
+        {
+            var subService = new SubscriptionService();
+            var result = await subService.CancelAsync(subscriptionId);
 
-        return result.Status;
+            return result.Status;
+        }
+        catch (StripeException e) when (string.Equals(e.StripeError?.Code, "resource_missing", StringComparison.Ordinal))
+        {
+            return Result.Ok("Subscription not found but OK");
+        }
+        catch (Exception)
+        {
+            return Result.Fail("Subscription not cancelled");
+        }
+        
     }
 
     public async Task<Result<string>> RetrievePaymentIntentIdIfPaid(string sessionId)

@@ -119,4 +119,13 @@
     <data name="CookiePolicy" xml:space="preserve">
         <value>Politique de gestion des cookies</value>
     </data>
+    <data name="LegalNotices" xml:space="preserve">
+        <value>Mentions légales</value>
+    </data>
+    <data name="PrivacyPolicy" xml:space="preserve">
+        <value>Politique de confidentialité</value>
+    </data>
+    <data name="GeneralTerms" xml:space="preserve">
+        <value>Conditions générales de vente et d’utilisation</value>
+    </data>
 </root>

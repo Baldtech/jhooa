@@ -17,6 +17,7 @@ module.exports = {
                 'jhooa-teal': {
                     100: '#26969F',
                     200: '#005359',
+                    900: '#002C2F'
                 },
                 'jhooa-brick': {
                     100: '#4D2E2E',

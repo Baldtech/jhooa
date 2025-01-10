@@ -46,6 +46,8 @@
                                         ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
                         <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
                                         ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
+                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]" ValidationFor="@(() => Input.BirtDate)" />
+
                         <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                         ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
                         <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
@@ -273,7 +275,8 @@
                 PhoneNumber = Input.PhoneNumber,
                 AcceptTos = Input.AcceptToc,
                 NewsletterActive = Input.SubscribeToNewsletter,
-                CreatedAt = DateTimeOffset.Now
+                CreatedAt = DateTimeOffset.Now,
+                BirthDate = Input.BirtDate
             };
         }
         catch
@@ -306,6 +309,9 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Lastname { get; set; } = "";
+        
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public DateTimeOffset BirtDate { get; set; } = DateTimeOffset.Now;
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
