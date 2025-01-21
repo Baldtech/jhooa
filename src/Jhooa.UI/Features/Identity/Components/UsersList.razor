@@ -6,7 +6,7 @@
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
 
 <table class="w-full  text-left ">
-    <thead class="text-gray-700 uppercase ">
+    <thead class="text-white uppercase border-b-2 font-amsiSemiBold">
     <tr>
         <th>@Loc["EmailAddress"]</th>
         <th>@Loc["FirstName"]</th>
@@ -16,7 +16,7 @@
     <tbody>
     @foreach (var user in _users)
     {
-        <tr class=" border-b  ">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@user.Email</td>
             <td>@user.FirstName</td>
             <td>@user.LastName</td>
@@ -30,7 +30,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _users = await DbContext.Users.ToListAsync();
+        _users = await DbContext.Users.Where(u => u.ActivatedAt != null).ToListAsync();
     }
 
 }

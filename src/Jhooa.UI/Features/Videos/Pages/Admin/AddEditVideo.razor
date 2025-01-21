@@ -36,25 +36,38 @@
                 {
                     <InputText @bind-Value="Input.VideoId" hidden></InputText>
                 }
+                <div class="bg-[#FFFFFF1A] rounded-md px-4 py-6 space-y-6 mb-6">
 
-                <JhooaInputText @bind-Value="Input.VimeoId" DisplayName="@Loc["VideoId"]"
-                                ValidationFor="@(() => Input.VimeoId)"/>
-                <JhooaInputDate @bind-Value="Input.Date" DisplayName="@Loc["Date"]"
-                                ValidationFor="@(() => Input.Date)"/>
+                    <JhooaInputText @bind-Value="Input.VimeoId" DisplayName="@Loc["VideoId"]"
+                                    ValidationFor="@(() => Input.VimeoId)"/>
+                    <JhooaInputDate @bind-Value="Input.Date" DisplayName="@Loc["Date"]"
+                                    ValidationFor="@(() => Input.Date)"/>
 
+                    <div class="flex space-x-8 text-white">
+                    @foreach (var theme in Input.Themes)
+                    {
+                        <label class="flex items-center space-x-2 cursor-pointer">
 
-                @foreach (var theme in Input.Themes)
-                {
-                    @* <input type="hidden" @bind="theme.Id"/> *@
-                    @* <input type="hidden" @bind="theme.Name"/> *@
-                    <InputCheckbox @bind-Value="theme.IsSelected"/>
-                    <label>@theme.Name</label>
-                }
+                            <InputCheckbox @bind-Value="theme.IsSelected" 
+                                           type="checkbox" 
+                                           class="h-5 w-5 border border-white rounded-sm bg-transparent checked:bg-transparent focus:border-0 active:border-0
+                  "
+                            />
+                            <span>@theme.Name</span>
+                        </label>
+                        
+@*                         <InputCheckbox @bind-Value="theme.IsSelected" class="appearance-none h-5 w-5 border border-white rounded-sm  *@
+@*                    checked:bg-white checked:border-white focus:outline-none *@
+@*                    transition duration-150 ease-in-out"/> *@
+@*                         <label>@theme.Name</label> *@
+                    }
+                    </div>
 
+                </div>
 
-
-                <button type="submit" class=" border-2 border-white p-3 bg-gray-400">@Loc["Save"]</button>
-                <JhooaButtonLink
+                <button type="submit"
+                        class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@Loc["Save"]</button>
+                <JhooaAdminActionButton
                     Url="/Admin/Videos"
                     Text="@Loc["Cancel"]"
                 />
@@ -77,13 +90,13 @@
     protected override async Task OnParametersSetAsync()
     {
         _themes = await DbContext.VideoThemes.ToListAsync();
-        var iMThemes  = _themes.Select(t => new ThemeInputModel
+        var iMThemes = _themes.Select(t => new ThemeInputModel
         {
             Id = t.Id,
             Name = CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr,
             IsSelected = false
         }).ToList();
-        
+
         if (Id.HasValue)
         {
             _video = await DbContext.Videos.Include(i => i.Themes).FirstOrDefaultAsync(e => e.Id == Id.Value);
@@ -125,7 +138,7 @@
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(b => b.VideoUrl, Input.VimeoId)
                         .SetProperty(b => b.Date, Input.Date));
-                
+
                 DbContext.Videos.Attach(_video);
 
                 _video.ResetThemes(_themes.Where(t => selectedThemes.Contains(t.Id)).ToList());
@@ -138,7 +151,7 @@
                     VideoUrl = Input.VimeoId,
                     Date = Input.Date,
                 };
-                
+
                 newVideo.ResetThemes(_themes.Where(t => selectedThemes.Contains(t.Id)).ToList());
 
                 await DbContext.Videos.AddAsync(newVideo);

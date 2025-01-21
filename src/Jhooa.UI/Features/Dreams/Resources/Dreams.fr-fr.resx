@@ -62,4 +62,7 @@
     <data name="DreamsUpdated" xml:space="preserve">
         <value>Vos rêves ont été mis à jour</value>
     </data>
+    <data name="Filters" xml:space="preserve">
+        <value>Filtres</value>
+    </data>
 </root>

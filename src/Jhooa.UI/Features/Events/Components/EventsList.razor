@@ -7,7 +7,7 @@
 @inject NavigationManager NavigationManager
 
 <table class="w-full  text-left ">
-    <thead class="text-gray-700 uppercase ">
+    <thead class="text-white uppercase border-b-2 font-amsiSemiBold">
     <tr>
         <th>@Loc["Title"]</th>
         <th>@Loc["StartDate"]</th>
@@ -19,17 +19,17 @@
     <tbody>
     @foreach (var ev in _events.OrderByDescending(o => o.StartDate))
     {
-        <tr class="border-b  ">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title)</td>
             <td>@ev.StartDate.ToString("d")</td>
             <td>@ev.EndDate.ToString("d")</td>
             <td>@ev.Registrations.Count</td>
             <td>
-                <a href="/Admin/Event/@ev.Id">@Loc["Edit"]</a> -
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id">@Loc["Edit"]</a>
                 <EditForm Model="ev" class="inline"
                           FormName="@($"form-event-{ev.Id}")"
                           OnValidSubmit="@(async () => { await DeleteEventAsync(ev.Id); })">
-                    <button type="submit" class="inline">@Loc["Delete"]</button>
+                    <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@Loc["Delete"]</button>
                 </EditForm>
             </td>
         </tr>

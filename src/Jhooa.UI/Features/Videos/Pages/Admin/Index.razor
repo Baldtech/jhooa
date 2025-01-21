@@ -12,13 +12,20 @@
 <PageTitle>@Loc["Videos"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto w-full">
-    <h1 class="mb-8 text-4xl tracking-wider">@Loc["Videos"]</h1>
+    <div class="flex items-center justify-between mb-6">
 
-    <a href="/Admin/Video" class="order-2 border-white p-3 bg-gray-400">@Loc["AddVideo"]</a>
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["Videos"]</h1>
 
-    <div class="mb-8"></div>
+        <div class="flex items-center space-x-2">
+            <JhooaAdminActionButton
+                Url="/Admin/Video"
+                Text="@Loc["AddVideo"]"
+            />
+        </div>
 
-    <AdminVideosList />
+    </div>
+
+    <AdminVideosList/>
 </section>
 
 @code

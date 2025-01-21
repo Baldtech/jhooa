@@ -13,13 +13,15 @@
 <PageTitle>@Loc["DreamsList"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto w-full">
-    <h1 class="mb-8 text-4xl tracking-wider">@Loc["DreamsList"]</h1>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["DreamsList"]</h1>
 
-    <FilterDreams
-        SelectDreamTypeCallback="HandleDreamTypeSelection">
-    </FilterDreams>
+        <FilterDreams
+            SelectDreamTypeCallback="HandleDreamTypeSelection">
+        </FilterDreams>
+    </div>
 
-    <div class="mb-8"></div>
+    <div class="mb-4"></div>
 
     <DreamsList
         SelectedDreamType="_selectedDreamType">

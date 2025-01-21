@@ -2,17 +2,48 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resources.Dreams> Loc
 
-<FilterButton Text="@Loc["Small"]" Action="@(() => { SelectDreamType(DreamTypes.Small); })" />
-<FilterButton Text="@Loc["Medium"]" Action="@(() => { SelectDreamType(DreamTypes.Medium); })" />
-<FilterButton Text="@Loc["Big"]" Action="@(() => { SelectDreamType(DreamTypes.Big); })" />
-<FilterButton Text="@Loc["All"]" Action="@(() => { SelectDreamType(null); })" />
+<div class="flex items-center space-x-2">
+    <label for="filter" class="font-medium">@Loc["Filters"]</label>
+    <select id="filter" @onchange="OnCultureChange" value="@_selectedFilter"
+            class="bg-teal-800 border border-teal-700 text-white rounded px-2 py-1 focus:outline-none">
+        <option value="" >@Loc["All"]</option>
+        <option value="@DreamTypes.Small" >@Loc["Small"]</option>
+        <option value="@DreamTypes.Medium" >@Loc["Medium"]</option>
+        <option value="@DreamTypes.Big" >@Loc["Big"]</option>
+    </select>
+</div>
 
 @code
 {
     [Parameter] public EventCallback<DreamTypes?> SelectDreamTypeCallback { get; set; }
+    private DreamTypes? _selectedFilter = null;
+
 
     private void SelectDreamType(DreamTypes? type)
     {
         SelectDreamTypeCallback.InvokeAsync(type);
+    }
+    
+    
+    private async Task OnCultureChange(ChangeEventArgs e)
+    {
+        var selectedValue = e.Value?.ToString();
+        if (string.IsNullOrWhiteSpace(selectedValue))
+        {
+            await ApplySelectedCultureAsync(null);
+            return;
+        }
+        
+        Enum.TryParse(selectedValue, out DreamTypes dreamType) ;
+        await ApplySelectedCultureAsync(dreamType);
+       
+    }
+    
+    
+    private Task ApplySelectedCultureAsync(DreamTypes? filter)
+    {
+        SelectDreamTypeCallback.InvokeAsync(filter);
+
+        return Task.CompletedTask;
     }
 }

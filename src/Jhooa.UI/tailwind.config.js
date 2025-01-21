@@ -11,12 +11,15 @@ module.exports = {
             },
             fontFamily: {
                 sans: ["AmsiPro", ...defaultTheme.fontFamily.sans],
+                amsiProLight: ["AmsiProLight", "serif"],
+                amsiSemiBold: ["AmsiSemiBold", "serif"],
                 butler: ["Butler", "serif"],
             },
             colors: {
                 'jhooa-teal': {
                     100: '#26969F',
                     200: '#005359',
+                    500: '#3DA2AA',
                     900: '#002C2F'
                 },
                 'jhooa-brick': {
@@ -27,6 +30,13 @@ module.exports = {
                 },
                 'jhooa-gray': {
                     100: '#4B4B4B'
+                },
+                'jhooa-admin': {
+                    100: '#002C2F'
+                },
+                'jhooa-table': {
+                    'even': '#FFFFFF1A',
+                    'odd': '#002C2F'
                 }
             },
         }

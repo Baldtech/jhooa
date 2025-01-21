@@ -1,0 +1,9 @@
+
+<a href="@Url"
+   class="px-10 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@Text</a>
+
+@code {
+   [Parameter] public required string Url { get; set; }
+
+   [Parameter] public required string Text { get; set; }
+}

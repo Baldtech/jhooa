@@ -10,7 +10,23 @@
 
     @font-face {
         font-family: "AmsiPro";
+        font-style: normal;
+        font-weight: 500;
         src: url("../fonts/amsipro/AmsiPro-Regular.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "AmsiProLight";
+        font-style: normal;
+        font-weight: 300;
+        src: url("../fonts/amsipro/AmsiPro-Light.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "AmsiSemiBold";
+        font-style: normal;
+        font-weight: 300;
+        src: url("../fonts/amsipro/AmsiPro-SemiBold.otf") format("opentype");
     }
 
     @font-face {
