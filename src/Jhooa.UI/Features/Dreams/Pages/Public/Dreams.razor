@@ -19,7 +19,7 @@
 
 <PageTitle>@Loc["MyDreams"]</PageTitle>
 
-<section class="max-w-screen-md mx-auto  text-white">
+<section class="max-w-screen-md mx-auto  text-white px-2 mb-4">
     <h2 class="text-xl font-semibold text-center mb-4">@Loc["AttemptToTitle"]</h2>
 
     <p class="text-center mb-4">@Loc["AttemptToDesc"]</p>
@@ -34,13 +34,13 @@
             <div class="space-y-3">
                 <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
                                  Placeholder="@Loc["SmallDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                                 ValidationFor="@(() => Input.SmallDream)" Autocomplete="" DreamType="DreamTypes.Small"/>
                 <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
                                  Placeholder="@Loc["MediumDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                                 ValidationFor="@(() => Input.MediumDream)" Autocomplete="" DreamType="DreamTypes.Medium"/>
                 <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
                                  Placeholder="@Loc["BigDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
+                                 ValidationFor="@(() => Input.BigDream)" Autocomplete="" DreamType="DreamTypes.Big"/>
             </div>
             
             <button type="submit" class="border-2 border-white p-3 ">@Loc["SaveChanges"]</button>

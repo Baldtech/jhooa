@@ -20,10 +20,12 @@ module.exports = {
                     100: '#26969F',
                     200: '#005359',
                     500: '#3DA2AA',
+                    600: '#001B1D',
                     900: '#002C2F'
                 },
                 'jhooa-brick': {
                     100: '#4D2E2E',
+                    500: '#9A432A'
                 },
                 'jhooa-peach': {
                     100: '#E38064'
@@ -37,6 +39,9 @@ module.exports = {
                 'jhooa-table': {
                     'even': '#FFFFFF1A',
                     'odd': '#002C2F'
+                },
+                'jhooa-beige': {
+                    100: '#D1A08D'
                 }
             },
         }

@@ -21,13 +21,15 @@
 <PageTitle>@Loc["Register"]</PageTitle>
 
 <div class="max-w-screen-xl mx-auto  text-white py-4">
-    <p>@Loc["RegisterIntro"]</p>
+    
 
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
         <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
         <div class="container mx-auto py-8 px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <p class="mb-6 max-w-screen-md mx-auto text-center">@Loc["RegisterIntro"]</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                 <!-- COL 1: CRÉER UN COMPTE -->
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
 
@@ -46,7 +48,7 @@
                                         ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
                         <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
                                         ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
-                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]" ValidationFor="@(() => Input.BirtDate)" />
+                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]" ValidationFor="@(() => Input.BirtDate)"/>
 
                         <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                         ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
@@ -54,7 +56,7 @@
                                         ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
                         <div>
                             <label for="@Input.Country" class="block mb-1 text-sm">@Loc["Country"]</label>
-                            
+
                             <InputSelect @bind-Value="Input.Country" class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
                                 <option value="france">@Loc["France"]</option>
                                 <option value="luxembourg">@Loc["Luxembourg"]</option>
@@ -85,13 +87,13 @@
 
                         <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
                                          Placeholder="@Loc["SmallDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete=""/>
+                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete="" DreamType="DreamTypes.Small"/>
                         <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
                                          Placeholder="@Loc["MediumDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete=""/>
+                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete="" DreamType="DreamTypes.Medium"/>
                         <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
                                          Placeholder="@Loc["BigDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.BigDream)" Autocomplete=""/>
+                                         ValidationFor="@(() => Input.BigDream)" Autocomplete="" DreamType="DreamTypes.Big"/>
                     </div>
                 </section>
                 <section class="pb-8 lg:pb-0">
@@ -142,7 +144,7 @@
                         <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
                     </div>
 
-                    <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["RegisterButton"]</button>
+                    <button type="submit" class="border-2 border-white p-3 ">@Loc["RegisterButton"]</button>
                 </section>
             </div>
         </div>

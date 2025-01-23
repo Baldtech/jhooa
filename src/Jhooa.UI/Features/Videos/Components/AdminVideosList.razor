@@ -6,49 +6,42 @@
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
-<table class="w-full  text-left ">
-    <thead class="text-white uppercase border-b-2 font-amsiSemiBold">
-    <tr>
-        <th>@Loc["Date"]</th>
-        <th>@Loc["VideoId"]</th>
-        <th>@Loc["Themes"]</th>
-        <th>@Loc["Actions"]</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if (_videos != null)
-    {
-        @foreach (var video in _videos.OrderByDescending(o => o.Date))
-        {
-            <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
-                <td>@video.Date.ToString("d")</td>
-                <td>@video.VideoUrl</td>
-                <td>@string.Join(", ", video.Themes.Select(t => CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr))</td>
-                <td>
-                    <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Video/@video.Id">@Loc["Edit"]</a>
-                    <EditForm Model="video" class="inline"
-                              FormName="@($"form-video-{video.Id}")"
-                              OnValidSubmit="@(async () => { await DeleteVideoAsync(video.Id); })">
-                        <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@Loc["Delete"]</button>
-                    </EditForm>
-                </td>
-            </tr>
-        }
-    }
-    
-    </tbody>
-</table>
+@rendermode InteractiveServer
+
+<PaginationComponent TItem="Video" Items="_videos" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@Loc["Date"]</th>
+            <th>@Loc["VideoId"]</th>
+            <th>@Loc["Themes"]</th>
+            <th>@Loc["Actions"]</th>
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="video">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
+            <td>@video.Date.ToString("d")</td>
+            <td>@video.VideoUrl</td>
+            <td>@string.Join(", ", video.Themes.Select(t => CultureInfo.CurrentCulture.Name == "en-GB" ? t.NameEn : t.NameFr))</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Video/@video.Id">@Loc["Edit"]</a>
+                <EditForm Model="video" class="inline"
+                          FormName="@($"form-video-{video.Id}")"
+                          OnValidSubmit="@(async () => { await DeleteVideoAsync(video.Id); })">
+                    <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@Loc["Delete"]</button>
+                </EditForm>
+            </td>
+        </tr>
+    </ChildContentRow>
+</PaginationComponent>
 
 @code {
 
-    private List<Video>? _videos = default;
+    private List<Video> _videos = [];
 
     protected override async Task OnParametersSetAsync()
     {
-        _videos ??= await DbContext.Videos.Include(i => i.Themes).ToListAsync();
+        _videos = await DbContext.Videos.Include(i => i.Themes).ToListAsync();
     }
-
-
 
     private async Task DeleteVideoAsync(Guid? videoId)
     {

@@ -7,7 +7,7 @@
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
 
-<header class="w-full bg-gradient-to-b from-jhooa-teal-900 to-jhooa-teal-200">
+<header class="w-full bg-black bg-opacity-50">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
         <div class="flex items-center space-x-2">
             <a href="/" class="focus:outline-none mr-2 flex items-center">
@@ -59,6 +59,14 @@
         </div>
     </div>
 </header>
+
+<AuthorizeView>
+    <Authorized>
+
+        <ManageNavMenu/>
+
+    </Authorized>
+</AuthorizeView>
 
 @code {
     private string? _currentUrl;

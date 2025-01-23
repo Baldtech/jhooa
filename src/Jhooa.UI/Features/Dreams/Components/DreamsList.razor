@@ -4,24 +4,22 @@
 
 @inject IStringLocalizer<Resources.Dreams> Loc
 @inject ApplicationDbContext DbContext
+@rendermode InteractiveServer
 
-<table class="w-full text-left">
-    <thead class="text-white uppercase border-b-2 font-amsiSemiBold">
-    <tr>
-        <th>@Loc["Type"]</th>
-        <th>@Loc["Title"]</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var dream in _dreams)
-    {
+<PaginationComponent TItem="Dream" Items="_dreams" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@Loc["Type"]</th>
+            <th>@Loc["Title"]</th>
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="dream">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@Loc[dream.Type.ToString()]</td>
             <td>@dream.Title</td>
         </tr>
-    }
-    </tbody>
-</table>
+    </ChildContentRow>
+</PaginationComponent>
 
 @code {
 

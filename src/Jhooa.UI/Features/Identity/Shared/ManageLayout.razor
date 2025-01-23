@@ -1,13 +1,22 @@
 ﻿@inherits LayoutComponentBase
 
-<AccountNavMenu/>
+<div class="bg-cover bg-center min-h-screen flex flex-col bg-jhooa-teal-200">
+    <AccountNavMenu />
 
+    <main class="flex-grow grid">
+        <div class="md:mt-6">
+            <AuthorizeView>
+                <Authorized>
 
-<main class="flex-grow bg-cover bg-center grid "
-      style="background-image: url('https://placehold.co/1000x1000/000/808080?text=.')">
+                    <ManageNavMenu/>
 
+                </Authorized>
+            </AuthorizeView>
 
-    @Body
-</main>
+            @Body
+        </div>
+        
+    </main>
 
-<AccountFooter/>
+    <AccountFooter />
+</div>

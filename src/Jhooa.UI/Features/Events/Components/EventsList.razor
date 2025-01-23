@@ -6,19 +6,20 @@
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
-<table class="w-full  text-left ">
-    <thead class="text-white uppercase border-b-2 font-amsiSemiBold">
-    <tr>
-        <th>@Loc["Title"]</th>
-        <th>@Loc["StartDate"]</th>
-        <th>@Loc["EndDate"]</th>
-        <th>@Loc["Participants"]</th>
-        <th>@Loc["Actions"]</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var ev in _events.OrderByDescending(o => o.StartDate))
-    {
+
+@rendermode InteractiveServer
+
+<PaginationComponent TItem="Event" Items="_events" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@Loc["Title"]</th>
+            <th>@Loc["StartDate"]</th>
+            <th>@Loc["EndDate"]</th>
+            <th>@Loc["Participants"]</th>
+            <th>@Loc["Actions"]</th>
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="ev">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title)</td>
             <td>@ev.StartDate.ToString("d")</td>
@@ -33,9 +34,8 @@
                 </EditForm>
             </td>
         </tr>
-    }
-    </tbody>
-</table>
+    </ChildContentRow>
+</PaginationComponent>
 
 @code {
     
