@@ -1,3 +1,5 @@
+using Jhooa.UI.Features.Identity.Models;
+
 namespace Jhooa.UI.Features.Subscriptions.Models;
 
 public class Subscription
@@ -9,6 +11,8 @@ public class Subscription
     public SubscriptionType Type { get; init; }
     public SubscriptionStatus Status { get; private set; } = SubscriptionStatus.NotPaid;
     public required Guid UserId { get; init; }
+    public ApplicationUser User { get; set; } = null!;
+
     public string? StripePaymentIntentId { get; private set; }
     public string? StripeSubscriptionId { get; private set; }
     public required string StripeSessionCheckoutId { get; init; }

@@ -14,7 +14,7 @@
 <section class="max-w-screen-xl mx-auto w-full">
     <div class="flex items-center justify-between mb-6">
 
-        <h1 class="mb-8 text-4xl tracking-wider">@Loc["EventsList"]</h1>
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["EventsList"]  @(_nbEvents is not null ? $"({_nbEvents})" : "")</h1>
 
         <div class="flex items-center space-x-2">
             <JhooaAdminActionButton
@@ -24,5 +24,15 @@
         </div>
     </div>
 
-    <EventsList/>
+    <EventsList NbEventsCallback="HandleNbEvents"/>
 </section>
+
+@code
+{
+    private int? _nbEvents;
+
+    private void HandleNbEvents(int? nbEvents)
+    {
+        _nbEvents = nbEvents;
+    }
+}

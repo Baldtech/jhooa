@@ -1,5 +1,6 @@
 using Jhooa.UI.Features.Dreams.Models;
 using Jhooa.UI.Features.Events.Models;
+using Jhooa.UI.Features.Subscriptions.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Jhooa.UI.Features.Identity.Models;
@@ -21,6 +22,11 @@ public class ApplicationUser : IdentityUser<Guid>
     public DateTimeOffset? ActivatedAt { get; init; }
 
     public List<Registration> Registrations { get; init; } = [];
+    public List<Subscription> Subscriptions { get; init; } = [];
     public List<Dream> Dreams { get; init; } = [];
     
+    
+    public char SubType => Subscriptions.Exists(s => s.Start <= DateOnly.FromDateTime(DateTime.Now) && (s.End >= DateOnly.FromDateTime(DateTime.Now) || s.End is null)) 
+        ? (Subscriptions.First(s => s.Start <= DateOnly.FromDateTime(DateTime.Now) && (s.End >= DateOnly.FromDateTime(DateTime.Now) || s.End is null)).Type is SubscriptionType.MonthlyOnce || Subscriptions.First(s => s.Start <= DateOnly.FromDateTime(DateTime.Now) && (s.End >= DateOnly.FromDateTime(DateTime.Now) || s.End is null)).Type is SubscriptionType.MonthlyRecurring ? 'M' : 'A')
+        : '-';
 }

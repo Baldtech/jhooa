@@ -14,7 +14,7 @@
 <section class="max-w-screen-xl mx-auto w-full">
     <div class="flex items-center justify-between mb-6">
 
-        <h1 class="mb-8 text-4xl tracking-wider">@Loc["Videos"]</h1>
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["Videos"]  @(_nbVideos is not null ? $"({_nbVideos})" : "")</h1>
 
         <div class="flex items-center space-x-2">
             <JhooaAdminActionButton
@@ -25,10 +25,15 @@
 
     </div>
 
-    <AdminVideosList/>
+    <AdminVideosList NbVideosCallback="HandleNbVideos"/>
 </section>
 
 @code
 {
+    private int? _nbVideos;
 
+    private void HandleNbVideos(int? nbVideos)
+    {
+        _nbVideos = nbVideos;
+    }
 }

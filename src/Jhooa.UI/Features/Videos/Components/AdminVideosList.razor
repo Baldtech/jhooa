@@ -37,10 +37,13 @@
 @code {
 
     private List<Video> _videos = [];
+    [Parameter] public EventCallback<int?> NbVideosCallback { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         _videos = await DbContext.Videos.Include(i => i.Themes).ToListAsync();
+        await NbVideosCallback.InvokeAsync(_videos.Count);
+
     }
 
     private async Task DeleteVideoAsync(Guid? videoId)

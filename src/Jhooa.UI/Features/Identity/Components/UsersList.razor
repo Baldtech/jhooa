@@ -12,6 +12,8 @@
             <th>@Loc["EmailAddress"]</th>
             <th>@Loc["FirstName"]</th>
             <th>@Loc["LastName"]</th>
+            <th>@Loc["Type"]</th>
+            <th>@Loc["Actions"]</th>
         </tr>
     </ChildContentHeader>
     <ChildContentRow Context="user">
@@ -19,16 +21,22 @@
             <td>@user.Email</td>
             <td>@user.FirstName</td>
             <td>@user.LastName</td>
+            <td>@user.SubType</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Users/@user.Id">@Loc["Details"]</a>
+            </td>
         </tr>
     </ChildContentRow>
 </PaginationComponent>
 
 @code {
     private List<ApplicationUser> _users = [];
+    [Parameter] public EventCallback<int?> NbUsersCallback { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _users = await DbContext.Users.Where(u => u.ActivatedAt != null).ToListAsync();
+        _users = await DbContext.Users.Where(u => u.ActivatedAt != null).Include(i => i.Subscriptions).ToListAsync();
+        await NbUsersCallback.InvokeAsync(_users.Count);
     }
 
 }

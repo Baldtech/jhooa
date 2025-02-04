@@ -40,10 +40,12 @@
 @code {
     
     private List<Event> _events = [];
+    [Parameter] public EventCallback<int?> NbEventsCallback { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         _events = await DbContext.Events.Include(i => i.Registrations).ToListAsync();
+        await NbEventsCallback.InvokeAsync(_events.Count);
     }
 
     private async Task DeleteEventAsync(Guid? eventId)

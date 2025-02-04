@@ -12,7 +12,17 @@
 <PageTitle>@Loc["UsersList"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto w-full">
-    <h1 class="mb-8 text-4xl tracking-wider">@Loc["UsersList"]</h1>
+    <h1 class="mb-8 text-4xl tracking-wider">@Loc["UsersList"] @(_nbUsers is not null ? $"({_nbUsers})" : "")</h1>
 
-    <UsersList> </UsersList>
+    <UsersList NbUsersCallback="HandleNbUsers" /> 
 </section>
+
+@code
+{
+    private int? _nbUsers;
+
+    private void HandleNbUsers(int? nbUsers)
+    {
+        _nbUsers = nbUsers;
+    }
+}

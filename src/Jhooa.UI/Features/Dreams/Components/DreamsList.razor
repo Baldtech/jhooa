@@ -11,12 +11,17 @@
         <tr>
             <th>@Loc["Type"]</th>
             <th>@Loc["Title"]</th>
+            <th>@Loc["Actions"]</th>
+
         </tr>
     </ChildContentHeader>
     <ChildContentRow Context="dream">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@Loc[dream.Type.ToString()]</td>
             <td>@dream.Title</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Users/@dream.UserId">@Loc["Details"]</a>
+            </td>
         </tr>
     </ChildContentRow>
 </PaginationComponent>
@@ -24,12 +29,14 @@
 @code {
 
     [Parameter] public DreamTypes? SelectedDreamType { get; set; }
+    [Parameter] public EventCallback<int?> NbDreamsCallback { get; set; }
 
     private List<Dream> _dreams = [];
     
     protected override async Task OnInitializedAsync()
     {
         _dreams = await DbContext.Dreams.ToListAsync();
+        //await NbDreamsCallback.InvokeAsync(_dreams.Count);
     }
 
     protected override async Task OnParametersSetAsync()
@@ -42,6 +49,6 @@
         {
             _dreams = await DbContext.Dreams.Where(d => d.Type == SelectedDreamType).ToListAsync();
         }
+        await NbDreamsCallback.InvokeAsync(_dreams.Count);
     }
-
 }

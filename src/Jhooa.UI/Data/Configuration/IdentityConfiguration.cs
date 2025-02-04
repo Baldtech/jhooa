@@ -26,6 +26,10 @@ public class IdentityConfiguration :
             .WithOne(e => e.User)
             .HasForeignKey(e => e.UserId)
             .IsRequired();
+        builder.HasMany(e => e.Subscriptions)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId)
+            .IsRequired();
     }
 
     public void Configure(EntityTypeBuilder<ApplicationRole> builder)
