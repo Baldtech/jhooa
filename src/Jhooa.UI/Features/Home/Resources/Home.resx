@@ -22,16 +22,16 @@
         <value>Our concept</value>
     </data>
     <data name="OurConceptPart1" xml:space="preserve">
-        <value>The daily grind—we all know it! It can quickly sweep us away in favor of our obligations, pulling us away from our needs and dreams. It was from this realization that Jhooa! was born, with the desire to enable everyone to live fully through the power of the collective.</value>
+        <value>The daily grind—we all know it! It can quickly sweep us away in favor of our obligations, pulling us away from our needs and dreams. It was from this realization that &lt;span class="font-amsiProBlack text-jhooa-peach-100"&gt;Jhooa!&lt;/span&gt; was born, with the desire to enable everyone to live fully through the power of the collective.</value>
     </data>
     <data name="OurConceptPart2" xml:space="preserve">
-        <value>Imagine a place where your wishes, from the simplest to the most daring, come to life. We offer our members the unique opportunity to experience moments of joy, comfort, excitement, or serenity—everything you need to be happy.</value>
+        <value>Imagine a place where your wishes, from the simplest to the most daring, come to life. We offer our members the unique opportunity to &lt;span class="font-amsiProBlack"&gt;experience moments of joy, comfort, excitement&lt;/span&gt;, or serenity—everything you need to be happy.</value>
     </data>
     <data name="OurConceptPart3" xml:space="preserve">
-        <value>In addition to fulfilling your wishes, you’ll have the chance to take part in extraordinary events: concerts with hotel stays, gourmet meals by a chef in unique locations, pizza in Rome, skydiving… we’ll be sure to surprise you!</value>
+        <value>In addition to fulfilling your wishes, you’ll have the chance to take part in &lt;span class="font-amsiProBlack"&gt;extraordinary events&lt;/span&gt;: concerts with hotel stays, gourmet meals by a chef in unique locations, pizza in Rome, skydiving… we’ll be sure to surprise you!</value>
     </data>
     <data name="OurConceptPart4" xml:space="preserve">
-        <value>Jhooa! is much more than an experience; it’s the key that unlocks the extraordinary within the ordinary, an invitation to shake up your daily life, reach the unreachable, and live with the feeling that anything is possible.</value>
+        <value>&lt;span class="font-amsiProBlack text-jhooa-peach-100"&gt;Jhooa!&lt;/span&gt; is much more than an experience; it’s the key that unlocks the extraordinary within the ordinary, an invitation to shake up your daily life, reach the unreachable, and live with the feeling that anything is possible.</value>
     </data>
     <data name="TitleCourage" xml:space="preserve">
         <value>The courage to dream; empowering us to achieve.</value>
@@ -56,7 +56,7 @@ Your power to experience WOW moments lies in the collective; your uniqueness is 
         <value>Dare to make your dreams come true.</value>
     </data>
     <data name="ExpPart1Desc" xml:space="preserve">
-        <value>As subscribers, you have the unique opportunity to share three wishes: small, medium, and big. Whether it’s a magical moment, something missing from your daily life, or anything else close to your heart. Each month, one or more of you will see one of your dreams come true. JHOOA! will contact the list of selected individuals on the 10th of the month following the months in which they participated by sharing their wishes.</value>
+        <value>As subscribers, you have the unique opportunity to share three wishes: small, medium, and big. Whether it’s a magical moment, something missing from your daily life, or anything else close to your heart. Each month, one or more of you will see one of your dreams come true. </value>
     </data>
     <data name="ExpPart2Title" xml:space="preserve">
         <value>Unlimited Access to Our Video Content</value>
@@ -81,5 +81,8 @@ Your power to experience WOW moments lies in the collective; your uniqueness is 
     </data>
     <data name="PriceYearlyDesc" xml:space="preserve">
         <value>€/year</value>
+    </data>
+    <data name="ExpContact" xml:space="preserve">
+        <value>JHOOA! will contact the list of selected individuals on the 15th of each month following the months in which they participated by sharing their wishes with us.</value>
     </data>
 </root>

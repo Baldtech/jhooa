@@ -12,8 +12,12 @@ module.exports = {
             fontFamily: {
                 sans: ["AmsiPro", ...defaultTheme.fontFamily.sans],
                 amsiProLight: ["AmsiProLight", "serif"],
+                amsiProBlack: ["AmsiProBlack", "serif"],
                 amsiSemiBold: ["AmsiSemiBold", "serif"],
+                amsiBold: ["AmsiBold", "serif"],
                 butler: ["Butler", "serif"],
+                monetaBold: ["MonetaBold", "serif"],
+                monetaRegular: ["MonetaRegular", "serif"],
             },
             colors: {
                 'jhooa-teal': {

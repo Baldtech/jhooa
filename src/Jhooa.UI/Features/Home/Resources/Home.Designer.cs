@@ -170,5 +170,11 @@ namespace Jhooa.UI.Features.Home.Resources {
                 return ResourceManager.GetString("PriceYearlyDesc", resourceCulture);
             }
         }
+        
+        internal static string ExpContact {
+            get {
+                return ResourceManager.GetString("ExpContact", resourceCulture);
+            }
+        }
     }
 }

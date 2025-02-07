@@ -10,28 +10,37 @@
 
     @font-face {
         font-family: "AmsiPro";
-        font-style: normal;
-        font-weight: 500;
         src: url("../fonts/amsipro/AmsiPro-Regular.otf") format("opentype");
     }
 
     @font-face {
         font-family: "AmsiProLight";
-        font-style: normal;
-        font-weight: 300;
         src: url("../fonts/amsipro/AmsiPro-Light.otf") format("opentype");
     }
 
     @font-face {
+        font-family: "AmsiProBlack";
+        src: url("../fonts/amsipro/AmsiPro-Black.otf") format("opentype");
+    }
+
+    @font-face {
         font-family: "AmsiSemiBold";
-        font-style: normal;
-        font-weight: 300;
         src: url("../fonts/amsipro/AmsiPro-SemiBold.otf") format("opentype");
     }
 
     @font-face {
-        font-family: "WinterMinnie";
-        src: url("../fonts/winter_minie/wm.otf") format("opentype");
+        font-family: "AmsiBold";
+        src: url("../fonts/amsipro/AmsiPro-Bold.otf") format("opentype");
+    }
+
+    @font-face {
+        font-family: "MonetaBold";
+        src: url("../fonts/moneta/Moneta-Bold.woff2") format("woff2");
+    }
+
+    @font-face {
+        font-family: "MonetaRegular";
+        src: url("../fonts/moneta/Moneta-Regular.woff2") format("woff2");
     }
 }
 

@@ -2,25 +2,26 @@
 @inject IStringLocalizer<Resources.Home> Loc
 
 
-<section class="mb-8 md:mb-20">
+<section class="mb-8 md:mb-20 ">
     <div class="w-full bg-jhooa-teal-200">
 
         <div class="max-w-screen-xl mx-auto px-8 text-white grid grid-cols-1 md:grid-cols-2 font-winter">
-            <div class="px-4">
+            <div class="px-4 pt-8">
 
-                <h2 class="mb-8 text-4xl tracking-wider font-butler">@Loc["OurConcept"]</h2>
-            <p class="md:mb-14 font-text">@Loc["OurConceptPart1"]
-                <br/><br/>
-                @Loc["OurConceptPart2"]
-                <br/><br/>
-                @Loc["OurConceptPart3"]
-                <br/><br/>
-                @Loc["OurConceptPart4"]
-            </p>
-        </div>
-            <div class="relative -bottom-10 w-52 m-auto md:w-80 md:-bottom-48 lg:w-96 lg:-bottom-32">
-                <img src="images/home-concept.jpg" alt="Header with boat" class="m-auto object-cover" />
+                <h2 class="mb-8 text-4xl tracking-wider font-monetaBold">@Loc["OurConcept"]</h2>
+                <p class="md:mb-14 font-text">
+                    @((MarkupString)Loc["OurConceptPart1"].ToString())
+                    <br/><br/>
+                    @((MarkupString)Loc["OurConceptPart2"].ToString())
+                    <br/><br/>
+                    @((MarkupString)Loc["OurConceptPart3"].ToString())
+                    <br/><br/>
+                    @((MarkupString)Loc["OurConceptPart4"].ToString())
+                </p>
             </div>
-    </div>
+            <div class="relative -bottom-10 w-64 m-auto md:w-96 md:-bottom-48 lg:w-96 lg:-bottom-32">
+                <ConceptCaroussel />
+            </div>
+        </div>
     </div>
 </section>

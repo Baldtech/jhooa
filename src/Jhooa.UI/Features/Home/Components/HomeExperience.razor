@@ -2,11 +2,11 @@
 @inject IStringLocalizer<Resources.Home> Loc
 
 <!-- Tailwind “Scaled” Section with Two Images and Responsive Layout -->
-<section class="bg-jhooa-peach-100 text-jhooa-brick-100 ">
+<section class="bg-jhooa-beige-100 text-white ">
   <div class="max-w-screen-xl mx-auto px-4 py-8">
 
     <!-- 2-column layout on desktop, single column on mobile -->
-    <div class="md:grid md:grid-cols-2 md:gap-6 items-center">
+    <div class="md:grid md:grid-cols-4 md:gap-6 items-center">
       
       <!-- LEFT COLUMN: Image #1 on desktop; 
            On mobile, it’s centered and only 75% wide -->
@@ -14,27 +14,28 @@
         <img
           src="images/home-experience.jpg"
           alt="Parasailing example 1"
-          class="w-3/4 mx-auto md:w-full h-auto object-cover"
+          class="w-3/4 mx-auto md:w-full h-auto object-cover relative md:-bottom-52" 
         />
       </div>
 
       <!-- RIGHT COLUMN: Text content (and possibly Image #2) -->
-      <div>
-        <!-- Heading -->
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+      <div class="col-span-3">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 font-monetaRegular text-jhooa-brick-500">
           @Loc["ExpTitle"]
         </h2>
 
         <!-- Intro paragraph -->
-        <p class="mb-6 leading-relaxed">
+        <p class="mb-6 leading-relaxed font-amsiSemiBold">
           @Loc["ExpDescription"]
         </p>
+        
+        <div class="grid grid-cols-10 gap-4">
+          <div class="">
+            <img src="images/Meteor_Rain.svg" alt="" />
+          </div>
 
-        <!-- Some feature blocks (icon + text) as per your screenshot -->
-        <div class="space-y-5 mb-6">
-          <!-- Feature 1 -->
-          <div>
-            <h3 class="flex items-center font-semibold mb-2">
+          <div class="col-span-9">
+            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
               <!-- Icon could go here if desired -->
               @Loc["ExpPart1Title"]
             </h3>
@@ -44,9 +45,13 @@
             </p>
           </div>
 
-          <!-- Feature 2 -->
-          <div>
-            <h3 class="flex items-center font-semibold mb-2">
+          <div class="">
+            <img src="images/footage.svg" alt="" />
+          </div>
+
+          <div class="col-span-9">
+            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
+              <!-- Icon could go here if desired -->
               @Loc["ExpPart2Title"]
             </h3>
             <p class="text-sm leading-relaxed">
@@ -55,9 +60,13 @@
             </p>
           </div>
 
-          <!-- Feature 3 -->
-          <div>
-            <h3 class="flex items-center font-semibold mb-2">
+          <div class="">
+            <img src="images/ticket.svg" alt="" />
+          </div>
+
+          <div class="col-span-9">
+            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
+              <!-- Icon could go here if desired -->
               @Loc["ExpPart3Title"]
             </h3>
             <p class="text-sm leading-relaxed">
@@ -65,24 +74,27 @@
               <!-- etc. -->
             </p>
           </div>
-        </div>
 
-        <!-- Additional note or badge line -->
-        @* <p class="mb-6 text-sm"> *@
-        @*   <strong class="text-[#2E5F5F]">15</strong> JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois... *@
-        @* </p> *@
-
-        <!-- Pricing CTA buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <div 
-            class="bg-jhooa-peach-100 text-white border-2 border-white px-12 py-3 font-semibold text-center"
-          >
-            @Loc["Monthly"] - 5 @Loc["PriceMonthlyDesc"]
+          <div class="">
+            <img src="images/ticket.svg" alt="" />
           </div>
-          <div 
-            class="bg-jhooa-teal-200 text-white border-2 border-white px-12 py-3 font-semibold text-center"
-          >
-            @Loc["Yearly"] - 5 @Loc["PriceYearlyDesc"]
+
+          <div class="col-span-9">
+            <p class="mb-6 text-sm text-jhooa-teal-200 font-amsiBold">
+              @Loc["ExpContact"]
+            </p>
+          </div>
+        </div>
+        
+        <!-- Pricing CTA buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-8 mt-10 justify-center">
+          <div
+            class="bg-jhooa-peach-100 text-white border-2 border-white px-8 py-3 font-monetaRegular font-bold text-center">
+            @Loc["Monthly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 @Loc["PriceMonthlyDesc"]
+          </div>
+          <div
+            class="bg-jhooa-teal-100 text-white border-2 border-white px-8 py-3 font-monetaRegular font-bold text-center">
+            @Loc["Yearly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 70 @Loc["PriceYearlyDesc"]
           </div>
         </div>
       </div><!-- end RIGHT COLUMN -->
