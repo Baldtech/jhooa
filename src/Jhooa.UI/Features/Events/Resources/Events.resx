@@ -120,4 +120,7 @@
     <data name="TitleEn" xml:space="preserve">
         <value>Title (english)</value>
     </data>
+    <data name="UpdatePictures" xml:space="preserve">
+        <value>Update pictures</value>
+    </data>
 </root>

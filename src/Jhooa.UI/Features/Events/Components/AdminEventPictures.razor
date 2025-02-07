@@ -1,0 +1,43 @@
+@using Jhooa.UI.Services
+@using Microsoft.Extensions.Localization
+@inject IBlobService BlobService
+@inject IStringLocalizer<Resources.Events> Loc
+@attribute [StreamRendering]
+
+@if (_pictures is not null && _pictures.Count > 1)
+{
+    <h2 class="text-xl font-semibold mt-8 mb-4">@Loc["Pictures"]</h2>
+
+    <div class="grid grid-cols-5 gap-4">
+        @foreach (var picture in _pictures)
+        {
+            <div class="">
+                <img src="@picture" alt="Image 1" class=" w-60 h-60">
+                <button @onclick="() => Delete(picture)">@Loc["Delete"]</button>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private List<string>? _pictures;
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        var blobService = BlobService.GetBlobService("events");
+        _pictures = await blobService.GetAllBlobs($"{Id}/");
+    }
+    
+    async Task Delete(string picture)
+    {
+        var uri = new Uri(picture);
+        var path = uri.AbsolutePath.Replace("/events/", "");
+        
+        var blobService = BlobService.GetBlobService("events");
+        await blobService.DeleteAsync(path);
+        _pictures!.Remove(picture);
+    }  
+
+}

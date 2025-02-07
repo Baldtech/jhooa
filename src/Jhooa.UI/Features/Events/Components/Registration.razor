@@ -10,6 +10,7 @@
 @inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthStateProvider
 @inject RedirectManager RedirectManager
+@rendermode InteractiveServer
 
 @if (!IsPast)
 {
@@ -19,26 +20,18 @@
     }
     else if (_isRegistered)
     {
-        <p>@Loc["AlreadyRegistered"]</p>
-        <EditForm Model="EventId" class="inline"
-                  FormName="@($"form-event-unregister-{EventId}")"
-                  OnValidSubmit="@(async () => { await UnregisterToEventAsync(EventId); })">
-            <button
-                class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100">
-                @Loc["RemoveRegistration"]
-            </button>
-        </EditForm>
+        <p class="text-jhooa-teal-200">@Loc["AlreadyRegistered"]</p>
+        <button
+            class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
+            @Loc["RemoveRegistration"]
+        </button>
     }
     else
     {
-        <EditForm Model="EventId" class="inline"
-                  FormName="@($"form-event-{EventId}")"
-                  OnValidSubmit="@(async () => { await RegisterToEventAsync(EventId); })">
-            <button
-                class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100">
-                @Loc["Register"]
-            </button>
-        </EditForm>
+        <button
+            class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
+            @Loc["Register"]
+        </button>
     }
 }
 
@@ -63,7 +56,9 @@
                 UserId = _userId.Value,
             });
             await DbContext.SaveChangesAsync();
-            RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Registered"], HttpContext);
+            //RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Registered"], HttpContext);
+            _isRegistered = true;
+            StateHasChanged();
         }
     }
     
@@ -73,7 +68,9 @@
         {
             await DbContext.Registrations.Where(r => r.UserId == _userId && r.EventId == EventId).ExecuteDeleteAsync();
             await DbContext.SaveChangesAsync();
-            RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Unregistered"], HttpContext);
+            _isRegistered = false;
+            StateHasChanged();
+            //RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Unregistered"], HttpContext);
         }
     }
 

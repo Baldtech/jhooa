@@ -32,6 +32,7 @@ public static partial class DependencyInjection
         services.AddLocalization();
         
         services.ConfigureCookie();
+        
 
         services.AddAntiforgery(options =>
         {

@@ -1,7 +1,6 @@
 @page "/Admin/Event/{id:guid?}"
 @attribute [Authorize(Roles = "Admin")]
 @layout AdminLayout
-
 @using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Components.Layout
 @using Jhooa.UI.Features.Events.Models
@@ -43,16 +42,18 @@
 
                     <JhooaInputText @bind-Value="Input.Title" DisplayName="@Loc["TitleFr"]"
                                     ValidationFor="@(() => Input.Title)"/>
-                    <JhooaInputText @bind-Value="Input.Description" DisplayName="@Loc["DescriptionFr"]"
+                    <JhooaInputTextarea @bind-Value="Input.Description" DisplayName="@Loc["DescriptionFr"]"
                                     ValidationFor="@(() => Input.Description)"/>
                     <JhooaInputText @bind-Value="Input.TitleEn" DisplayName="@Loc["TitleEn"]"
                                     ValidationFor="@(() => Input.TitleEn)"/>
-                    <JhooaInputText @bind-Value="Input.DescriptionEn" DisplayName="@Loc["DescriptionEn"]"
+                    <JhooaInputTextarea @bind-Value="Input.DescriptionEn" DisplayName="@Loc["DescriptionEn"]"
                                     ValidationFor="@(() => Input.DescriptionEn)"/>
                     <JhooaInputDate @bind-Value="Input.StartDate" DisplayName="@Loc["StartDate"]"
                                     ValidationFor="@(() => Input.StartDate)"/>
                     <JhooaInputDate @bind-Value="Input.EndDate" DisplayName="@Loc["EndDate"]"
                                     ValidationFor="@(() => Input.EndDate)"/>
+
+                    
 
                     @if (!Id.HasValue)
                     {
@@ -73,11 +74,11 @@
 
 
 
+
 @code {
     [Parameter] public Guid? Id { get; set; }
-
     [SupplyParameterFromForm] private InputModel? Input { get; set; }
-
+    
     protected override async Task OnParametersSetAsync()
     {
         if (Id.HasValue)
@@ -91,7 +92,9 @@
                     Title = ev.Title,
                     Description = ev.Description,
                     StartDate = ev.StartDate,
-                    EndDate = ev.EndDate
+                    EndDate = ev.EndDate,
+                    TitleEn = ev.TitleEn,
+                    DescriptionEn = ev.DescriptionEn
                 };
             }
         }

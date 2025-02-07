@@ -107,4 +107,7 @@
     <data name="TitleEn" xml:space="preserve">
         <value>Titre (anglais)</value>
     </data>
+    <data name="UpdatePictures" xml:space="preserve">
+        <value>M-à-j photos</value>
+    </data>
 </root>

@@ -1,0 +1,51 @@
+@page "/Admin/Event/{id:guid}/pictures"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Events.Components
+@using Jhooa.UI.Features.Events.Models
+@using Jhooa.UI.Services
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+@rendermode InteractiveServer
+@inject IBlobService BlobService
+@inject NavigationManager NavigationManager
+
+<section class="max-w-screen-xl mx-auto w-full">
+    @if (_event != null)
+    {
+        <h1 class="mb-8 text-4xl tracking-wider">@_event.Title</h1>
+
+        <InputFile OnChange="LoadFiles" multiple accept=".jpg,.png,jpeg" />
+        
+
+        <AdminEventPictures Id="Id"/>
+    }
+
+</section>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private Event? _event;
+    
+    
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        var blobService = BlobService.GetBlobService("events");
+
+        foreach (var file in e.GetMultipleFiles())
+        {
+            await blobService.UploadAsync($"{Id}/{file.Name}", file.OpenReadStream());
+        }
+        
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _event = await DbContext.Events
+            .FirstAsync(e => e.Id == Id);
+    }
+
+}

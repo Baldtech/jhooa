@@ -27,6 +27,7 @@
             <td>@ev.Registrations.Count</td>
             <td>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id">@Loc["Edit"]</a>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id/pictures">@Loc["UpdatePictures"]</a>
                 <EditForm Model="ev" class="inline"
                           FormName="@($"form-event-{ev.Id}")"
                           OnValidSubmit="@(async () => { await DeleteEventAsync(ev.Id); })">

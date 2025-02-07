@@ -33,6 +33,22 @@ public class BlobContainerService(ILogger<BlobContainerService> logger, BlobCont
             throw;
         }
     }
+    
+    public async Task DeleteAsync(string blobName)
+    {
+        try
+        {
+            await blobContainerClient.DeleteBlobIfExistsAsync(blobName);
+                
+            logger.LogInformation("File '{FileName}' deleted from '{BlobContainer}'", blobName,
+                blobContainerClient.Name);
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(exception, "Failed to upload document {BlobName}", blobName);
+            throw;
+        }
+    }
 
     public async Task<List<string>> GetAllBlobs(string startsWith)
     {
