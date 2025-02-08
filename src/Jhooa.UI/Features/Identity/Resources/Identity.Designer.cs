@@ -542,5 +542,59 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("Luxembourg", resourceCulture);
             }
         }
+        
+        internal static string AcceptDiffusion {
+            get {
+                return ResourceManager.GetString("AcceptDiffusion", resourceCulture);
+            }
+        }
+        
+        internal static string AcceptDiffusionDesc {
+            get {
+                return ResourceManager.GetString("AcceptDiffusionDesc", resourceCulture);
+            }
+        }
+        
+        internal static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        internal static string BirthDate {
+            get {
+                return ResourceManager.GetString("BirthDate", resourceCulture);
+            }
+        }
+        
+        internal static string SubType {
+            get {
+                return ResourceManager.GetString("SubType", resourceCulture);
+            }
+        }
+        
+        internal static string SmallDream {
+            get {
+                return ResourceManager.GetString("SmallDream", resourceCulture);
+            }
+        }
+        
+        internal static string AcceptDistribution {
+            get {
+                return ResourceManager.GetString("AcceptDistribution", resourceCulture);
+            }
+        }
+        
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        internal static string NewsletterAccepted {
+            get {
+                return ResourceManager.GetString("NewsletterAccepted", resourceCulture);
+            }
+        }
     }
 }

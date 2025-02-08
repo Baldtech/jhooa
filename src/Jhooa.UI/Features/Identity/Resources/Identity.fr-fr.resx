@@ -102,7 +102,7 @@
         <value>Je souhaite recevoir des e-mails concernant des actualités, des offres spéciales et des promotions</value>
     </data>
     <data name="AcceptToc" xml:space="preserve">
-        <value>J’ai lu et j’accepte les conditions générales d’utilisation</value>
+        <value>J’ai lu et j’accepte les &lt;a href="/terms-conditions" target="_blank"&gt;Conditions Générales de Vente et d’Utilisation&lt;/a&gt;.</value>
     </data>
     <data name="RegisterYearlyRecurring" xml:space="preserve">
         <value>Annuel renouvelable</value>
@@ -259,5 +259,26 @@
     </data>
     <data name="Luxembourg" xml:space="preserve">
         <value>Luxembourg</value>
+    </data>
+    <data name="AcceptDiffusion" xml:space="preserve">
+        <value>J’ai lu et j’accepte la captation et/ou la diffusion de mon image en cas de sélection.</value>
+    </data>
+    <data name="AcceptDiffusionDesc" xml:space="preserve">
+        <value>(Attention : Seuls les abonnés ayant accepté la captation et/ou la diffusion de leur image pourront être sélectionnés pour la réalisation de leurs vœux et/ou la participation à nos événements. En cas de refus, vous conserverez néanmoins l'accès au contenu vidéo prévu par votre abonnement).</value>
+    </data>
+    <data name="City" xml:space="preserve">
+        <value>Ville</value>
+    </data>
+    <data name="BirthDate" xml:space="preserve">
+        <value>Date de naissance</value>
+    </data>
+    <data name="SubType" xml:space="preserve">
+        <value>Type de souscription</value>
+    </data>
+    <data name="AcceptDistribution" xml:space="preserve">
+        <value>Diffusion acceptée</value>
+    </data>
+    <data name="NewsletterAccepted" xml:space="preserve">
+        <value>Newsletter acceptée</value>
     </data>
 </root>

@@ -128,4 +128,10 @@
     <data name="GeneralTerms" xml:space="preserve">
         <value>Conditions générales de vente et d’utilisation</value>
     </data>
+    <data name="Yes" xml:space="preserve">
+        <value>Oui</value>
+    </data>
+    <data name="No" xml:space="preserve">
+        <value>Non</value>
+    </data>
 </root>

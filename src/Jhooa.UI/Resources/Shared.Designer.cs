@@ -278,5 +278,17 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("GeneralTerms", resourceCulture);
             }
         }
+        
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
     }
 }

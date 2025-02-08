@@ -14,10 +14,12 @@ public class ApplicationUser : IdentityUser<Guid>
     public required string Address { get; init; }
     public required string Country { get; init; }
     public required string ZipCode { get; init; }
+    public required string City { get; init; }
     public required DateTimeOffset BirthDate { get; init; }
     
     public required bool NewsletterActive { get; init; }
     public required bool AcceptTos { get; init; }
+    public required bool AcceptDistribution { get; init; }
     public required DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.Now;
     public DateTimeOffset? ActivatedAt { get; init; }
 

@@ -21,7 +21,7 @@
 <PageTitle>@Loc["Register"]</PageTitle>
 
 <div class="max-w-screen-xl mx-auto  text-white py-4">
-    
+
 
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
         <StatusMessage Message="@Message"/>
@@ -48,16 +48,20 @@
                                         ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
                         <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
                                         ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
-                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]" ValidationFor="@(() => Input.BirtDate)"/>
+                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]"
+                                        ValidationFor="@(() => Input.BirtDate)"/>
 
                         <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                         ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
                         <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
                                         ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
+                        <JhooaInputText @bind-Value="Input.City" DisplayName="@Loc["City"]"
+                                        ValidationFor="@(() => Input.City)" Autocomplete="city"/>
                         <div>
                             <label for="@Input.Country" class="block mb-1 text-sm">@Loc["Country"]</label>
 
-                            <InputSelect @bind-Value="Input.Country" class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
+                            <InputSelect @bind-Value="Input.Country"
+                                         class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
                                 <option value="france">@Loc["France"]</option>
                                 <option value="luxembourg">@Loc["Luxembourg"]</option>
                                 <option value="belgium">@Loc["Belgium"]</option>
@@ -87,13 +91,16 @@
 
                         <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
                                          Placeholder="@Loc["SmallDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete="" DreamType="DreamTypes.Small"/>
+                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete=""
+                                         DreamType="DreamTypes.Small"/>
                         <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
                                          Placeholder="@Loc["MediumDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete="" DreamType="DreamTypes.Medium"/>
+                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete=""
+                                         DreamType="DreamTypes.Medium"/>
                         <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
                                          Placeholder="@Loc["BigDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.BigDream)" Autocomplete="" DreamType="DreamTypes.Big"/>
+                                         ValidationFor="@(() => Input.BigDream)" Autocomplete=""
+                                         DreamType="DreamTypes.Big"/>
                     </div>
                 </section>
                 <section class="pb-8 lg:pb-0">
@@ -107,44 +114,73 @@
                     <h3 class="text-lg font-semibold mb-2">@Loc["RegisterMySubSubTitle"]</h3>
                     <p class="text-sm mb-6">@Loc["RegisterMySubDescription"]</p>
 
-                    <InputRadioGroup @bind-Value="Input.SubscriptionType">
-                        <div class="flex items-center space-x-2">
-                            <InputRadio id="option1" class="h-5 w-5 rounded-full border-gray-300 "
+                    <InputRadioGroup @bind-Value="Input.SubscriptionType" class="mb-8">
+                        <div
+                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                            <InputRadio id="option1" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.MonthlyOnce"/>
-                            <label for="option1" class="">@Loc["RegisterMonthly"]</label>
-                        </div>
 
-                        <div class="flex items-center space-x-2">
-                            <InputRadio id="option2" class="h-5 w-5 rounded-full border-gray-300 "
+                            <div class="flex flex-col space-y-1 w-full">
+                                <label class="text-white font-medium text-lg font-monetaRegular">
+                                    @Loc["RegisterMonthly"]
+                                </label>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                            <InputRadio id="option2" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.MonthlyRecurring"/>
-                            <label for="option2" class="">@Loc["RegisterMonthlyRecurring"]</label>
-                        </div>
 
-                        <div class="flex items-center space-x-2">
-                            <InputRadio id="option3" class="h-5 w-5 rounded-full border-gray-300 "
+                            <div class="flex flex-col space-y-1 w-full">
+                                <label  for="option2" class="text-white font-medium text-lg font-monetaRegular">
+                                    @Loc["RegisterMonthlyRecurring"]
+                                </label>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                            <InputRadio id="option3" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyOnce"/>
-                            <label for="option3" class="">@Loc["RegisterYearly"]</label>
-                        </div>
 
-                        <div class="flex items-center space-x-2">
-                            <InputRadio id="option4" class="h-5 w-5 rounded-full border-gray-300 "
+                            <div class="flex flex-col space-y-1 w-full">
+                                <label for="option3" class="text-white font-medium text-lg font-monetaRegular">
+                                    @Loc["RegisterYearly"]
+                                </label>
+                            </div>
+                        </div>
+                        <div
+                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                            <InputRadio id="option4" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyRecurring"/>
-                            <label for="option4" class="">@Loc["RegisterYearlyRecurring"]</label>
+
+                            <div class="flex flex-col space-y-1 w-full">
+                                <label  for="option4" class="text-white font-medium text-lg font-monetaRegular">
+                                    @Loc["RegisterYearlyRecurring"]
+                                </label>
+                            </div>
                         </div>
                     </InputRadioGroup>
 
-                    <div class="flex items-center space-x-2 my-5">
-                        <InputCheckbox @bind-Value="Input.AcceptToc" class="h-5 w-5 rounded border-gray-300 "/>
+                    <div class="flex space-x-2 my-8 text-sm">
+                        <InputCheckbox @bind-Value="Input.AcceptToc"
+                                       class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
                         <label for="accepttoc" class="">@((MarkupString)Loc["AcceptToc"].ToString())</label>
                     </div>
 
-                    <div class="flex items-center space-x-2 mb-8">
+                    <div class="flex  space-x-2 mb-8  text-sm">
                         <InputCheckbox @bind-Value="Input.SubscribeToNewsletter"
-                                       class="h-5 w-5 rounded border-gray-300 "/>
+                                       class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
                         <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
                     </div>
 
-                    <button type="submit" class="border-2 border-white p-3 ">@Loc["RegisterButton"]</button>
+                    <div class="flex space-x-2 mb-8  text-sm">
+                        <InputCheckbox @bind-Value="Input.AcceptDistribution"
+                                       class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
+                        <label for="acceptdistribution"
+                               class="">@Loc["AcceptDiffusion"] <br/>@Loc["AcceptDiffusionDesc"]</label>
+                    </div>
+
+                    <button type="submit" class="border-2 border-white p-3 md:ml-10">@Loc["RegisterButton"]</button>
                 </section>
             </div>
         </div>
@@ -278,7 +314,9 @@
                 AcceptTos = Input.AcceptToc,
                 NewsletterActive = Input.SubscribeToNewsletter,
                 CreatedAt = DateTimeOffset.Now,
-                BirthDate = Input.BirtDate
+                BirthDate = Input.BirtDate,
+                AcceptDistribution = Input.AcceptDistribution,
+                City = Input.City
             };
         }
         catch
@@ -311,7 +349,7 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string Lastname { get; set; } = "";
-        
+
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public DateTimeOffset BirtDate { get; set; } = DateTimeOffset.Now;
 
@@ -322,6 +360,10 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string ZipCode { get; set; } = "";
+        
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string City { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
@@ -360,6 +402,7 @@
 
         public bool AcceptToc { get; set; }
         public bool SubscribeToNewsletter { get; set; }
+        public bool AcceptDistribution { get; set; }
     }
 
 }

@@ -8,7 +8,9 @@
 @attribute [Authorize(Roles = "Admin")]
 @layout AdminLayout
 @inject ApplicationDbContext DbContext
-@inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
+@inject IStringLocalizer<Resources.Identity> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject IStringLocalizer<Features.Dreams.Resources.Dreams> LocDreams
 
 
 <PageTitle>@(_model != null ? $"{_model.Firstname} {_model.Lastname}" : "")</PageTitle>
@@ -28,6 +30,7 @@
                     <JhooaReadOnlyText @bind-Value="_model.BirtDate" DisplayName="@Loc["BirthDate"]"/>
                     <JhooaReadOnlyText @bind-Value="_model.Address" DisplayName="@Loc["Address"]"/>
                     <JhooaReadOnlyText @bind-Value="_model.ZipCode" DisplayName="@Loc["ZipCode"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.City" DisplayName="@Loc["City"]"/>
                     <JhooaReadOnlyText @bind-Value="_model.Country" DisplayName="@Loc["Country"]"/>
                     <JhooaReadOnlyText @bind-Value="_model.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"/>
                 </div>
@@ -37,9 +40,11 @@
                 <div class="space-y-3">
 
                     <JhooaReadOnlyText @bind-Value="_model.SubscriptionType" DisplayName="@Loc["SubType"]"/>
-                    <JhooaReadOnlyText @bind-Value="_model.SmallDream" DisplayName="@Loc["SmallDream"]"/>
-                    <JhooaReadOnlyText @bind-Value="_model.MediumDream" DisplayName="@Loc["MediumDream"]"/>
-                    <JhooaReadOnlyText @bind-Value="_model.BigDream" DisplayName="@Loc["BigDream"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.SmallDream" DisplayName="@LocDreams["SmallDream"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.MediumDream" DisplayName="@LocDreams["MediumDream"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.BigDream" DisplayName="@LocDreams["BigDream"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.SubscribeToNewsletter" DisplayName="@Loc["NewsletterAccepted"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.AcceptDistribution" DisplayName="@Loc["AcceptDistribution"]"/>
                 </div>
             </section>
 
@@ -65,14 +70,15 @@
             BirtDate = user.BirthDate.ToString("d"),
             Address = user.Address,
             ZipCode = user.ZipCode,
+            City = user.City,
             Country = user.Country,
             PhoneNumber = user.PhoneNumber,
             SmallDream = user.Dreams.FirstOrDefault(d => d.Type == DreamTypes.Small)?.Title ?? "",
             MediumDream = user.Dreams.FirstOrDefault(d => d.Type == DreamTypes.Medium)?.Title ?? "",
             BigDream = user.Dreams.FirstOrDefault(d => d.Type == DreamTypes.Big)?.Title ?? "",
             SubscriptionType = user.SubType.ToString(),
-            // AcceptToc = user.,
-            SubscribeToNewsletter = user.NewsletterActive
+            SubscribeToNewsletter = user.NewsletterActive? LocShared["Yes"] : LocShared["No"],
+            AcceptDistribution = user.AcceptDistribution ? LocShared["Yes"] : LocShared["No"]
         };
     }
 
@@ -85,12 +91,14 @@
         public string Address { get; set; } = "";
         public string ZipCode { get; set; } = "";
         public string Country { get; set; } = "";
+        public string City { get; set; } = "";
         public string? PhoneNumber { get; set; } = "";
         public string SmallDream { get; set; } = "";
         public string MediumDream { get; set; } = "";
         public string BigDream { get; set; } = "";
         public string SubscriptionType { get; set; } = "";
-        public bool SubscribeToNewsletter { get; set; }
+        public string SubscribeToNewsletter { get; set; } = "";
+        public string AcceptDistribution { get; set; } = "";
     }
 
 }
