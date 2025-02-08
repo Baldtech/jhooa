@@ -39,11 +39,11 @@
         </div>
         
 
-        <p class="text-jhooa-brick-100 font-medium mb-2">@_ev.StartDate.ToString("d")</p>
-        <h1 class="text-3xl font-semibold text-teal-900 mb-4">@_ev.Title</h1>
+        <p class="text-jhooa-brick-100 font-medium mb-2">@_ev.StartDate.ToString("MMMM yyyy")</p>
+        <h1 class="text-3xl font-semibold text-teal-900 mb-4">@(CultureInfo.CurrentCulture.Name == "en-GB" ? _ev.TitleEn : _ev.Title)</h1>
 
         <div class="space-y-4 leading-relaxed">
-            <p>@_ev.Description</p>
+            <p>@((MarkupString)(CultureInfo.CurrentCulture.Name == "en-GB" ? _ev.DescriptionEn : _ev.Description))</p>
         </div>
 
         <Registration EventId="@_ev.Id" IsPast="@_ev.IsPast"/>

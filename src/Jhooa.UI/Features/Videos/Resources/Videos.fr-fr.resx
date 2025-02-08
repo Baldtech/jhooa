@@ -77,4 +77,21 @@
     <data name="Years" xml:space="preserve">
         <value>Années</value>
     </data>
+    <data name="VideosOnlyForConnectedUsersTitle" xml:space="preserve">
+        <value>Contenu Exclusif pour les Membres Premium
+</value>
+    </data>
+    <data name="VideosOnlyForConnectedUsersDesc" xml:space="preserve">
+        <value>Cette page est réservée à nos membres payants. Pour accéder à ces vidéos exclusives, veuillez vous connecter à votre compte ou en créer un dès maintenant.
+</value>
+    </data>
+    <data name="VideosOnlyForConnectedUsersThanks" xml:space="preserve">
+        <value>Merci pour votre soutien !</value>
+    </data>
+    <data name="VideosOnlyForConnectedUsersAlreadyUsers" xml:space="preserve">
+        <value>Déjà un membre? &lt;a href="Account/Login" class="text-jhooa-brick-500 underline"&gt;Connectez-vous&lt;/a&gt;</value>
+    </data>
+    <data name="VideosOnlyForConnectedUsersRegister" xml:space="preserve">
+        <value>Nouveau ici ? &lt;a href="Account/Register" class="text-jhooa-brick-500 underline"&gt;Inscrivez-vous&lt;/a&gt; et débloquez du contenu premium dès maintenant !</value>
+    </data>
 </root>

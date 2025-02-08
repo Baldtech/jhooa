@@ -11,19 +11,38 @@
 
 <section class="max-w-screen-xl mx-auto text-jhooa-gray px-4">
 
-    <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosPageTitle"]</h1>
-    
-    <p class="mb-4">@Loc["VideosPageText1"]</p>
-    <p class="mb-4">@Loc["VideosPageText2"]</p>
-    <p class="mb-4">@Loc["VideosPageText3"]</p>
-    <p class="mb-4">@Loc["VideosPageText4"]</p>
-    
-    <h2 class="text-jhooa-teal-200 text-3xl my-10">@Loc["TheVideos"]</h2>
 
-    <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
-                  SelectYearCallback="HandleYearSelection"/>
-    
-    <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" />
+    <AuthorizeView>
+        <Authorized>
+            <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosPageTitle"]</h1>
+
+            <p class="mb-4">@Loc["VideosPageText1"]</p>
+            <p class="mb-4">@Loc["VideosPageText2"]</p>
+            <p class="mb-4">@Loc["VideosPageText3"]</p>
+            <p class="mb-4">@Loc["VideosPageText4"]</p>
+
+            <h2 class="text-jhooa-teal-200 text-3xl my-10">@Loc["TheVideos"]</h2>
+
+            <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
+                          SelectYearCallback="HandleYearSelection"/>
+
+            <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"/>
+        </Authorized>
+        <NotAuthorized>
+            <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
+
+            <p class="mb-4">@Loc["VideosOnlyForConnectedUsersDesc"]</p>
+
+            <ul class="space-y-1  list-disc list-inside mb-4">
+                <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersAlreadyUsers"].ToString())</li>
+                <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersRegister"].ToString())</li>
+            </ul>
+
+            <p>
+                @Loc["VideosOnlyForConnectedUsersThanks"]
+            </p>
+        </NotAuthorized>
+    </AuthorizeView>
 </section>
 
 @code {

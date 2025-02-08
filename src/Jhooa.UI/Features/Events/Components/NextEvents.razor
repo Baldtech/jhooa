@@ -7,7 +7,7 @@
 @inject ApplicationDbContext DbContext
 
 
-<section class="mb-8 md:mb-20 w-full bg-jhooa-teal-200">
+<section class="mb-8 md:mb-10 w-full bg-jhooa-teal-200">
     <div class="max-w-screen-xl mx-auto px-8 text-white">
 
         <h1 class="text-butler text-3xl text-white mb-6 pt-8">@Loc["NextEvents"]</h1>
@@ -40,7 +40,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _events ??= await DbContext.Events.Where(ev => ev.StartDate >= DateTimeOffset.Now).Include(i => i.Registrations).ToListAsync();
+        _events ??= await DbContext.Events.Where(ev => ev.StartDate >= DateTimeOffset.Now).OrderBy(o => o.StartDate).Take(3).Include(i => i.Registrations).ToListAsync();
     }
 
 }

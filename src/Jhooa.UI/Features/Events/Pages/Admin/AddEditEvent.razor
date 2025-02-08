@@ -2,19 +2,25 @@
 @attribute [Authorize(Roles = "Admin")]
 @layout AdminLayout
 @using System.ComponentModel.DataAnnotations
+@using Blazored.TextEditor
 @using Jhooa.UI.Components.Layout
 @using Jhooa.UI.Features.Events.Models
 @using Jhooa.UI.Services
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
-
+@rendermode InteractiveServer
 @inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 @inject IBlobService BlobService
 
 <PageTitle>@Loc["EventsList"]</PageTitle>
+
+<HeadContent>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet">
+</HeadContent>
 
 <section class="max-w-screen-xl mx-auto w-full">
     <div>
@@ -37,27 +43,55 @@
                     <InputText @bind-Value="Input.EventId" hidden></InputText>
                 }
 
-                <div class="bg-[#FFFFFF1A] rounded-md px-4 py-6 space-y-6 mb-6">
+                <div class="bg-[#FFFFFF1A] rounded-md px-4 space-y-4 py-6 mb-6">
 
 
                     <JhooaInputText @bind-Value="Input.Title" DisplayName="@Loc["TitleFr"]"
                                     ValidationFor="@(() => Input.Title)"/>
-                    <JhooaInputTextarea @bind-Value="Input.Description" DisplayName="@Loc["DescriptionFr"]"
-                                    ValidationFor="@(() => Input.Description)"/>
+                    <div>
+                        <label for="" class="block mb-1 text-sm">@Loc["DescriptionFr"]</label>
+
+                        <BlazoredTextEditor
+                            @ref="@_richEditorDescFr"
+                            ToolbarCSSClass=""
+                            ToolbarCssStyle="background: lightgrey">
+                            <ToolbarContent>
+                                @((MarkupString)_toolbar)
+                            </ToolbarContent>
+                            <EditorContent>
+                                @((MarkupString)_bodyFr)
+                            </EditorContent>
+                        </BlazoredTextEditor>
+
+                    </div>
                     <JhooaInputText @bind-Value="Input.TitleEn" DisplayName="@Loc["TitleEn"]"
                                     ValidationFor="@(() => Input.TitleEn)"/>
-                    <JhooaInputTextarea @bind-Value="Input.DescriptionEn" DisplayName="@Loc["DescriptionEn"]"
-                                    ValidationFor="@(() => Input.DescriptionEn)"/>
+                    <div>
+                        <label for="" class="block mb-1 text-sm">@Loc["DescriptionEn"]</label>
+
+                        <BlazoredTextEditor
+                            @ref="@_richEditorDescEn"
+                            ToolbarCSSClass=""
+                            ToolbarCssStyle="background: lightgrey">
+                            <ToolbarContent>
+                                @((MarkupString)_toolbar)
+                            </ToolbarContent>
+                            <EditorContent>
+                                @((MarkupString)_bodyEn)
+                            </EditorContent>
+                        </BlazoredTextEditor>
+
+                    </div>
                     <JhooaInputDate @bind-Value="Input.StartDate" DisplayName="@Loc["StartDate"]"
                                     ValidationFor="@(() => Input.StartDate)"/>
                     <JhooaInputDate @bind-Value="Input.EndDate" DisplayName="@Loc["EndDate"]"
                                     ValidationFor="@(() => Input.EndDate)"/>
 
-                    
+
 
                     @if (!Id.HasValue)
                     {
-                        <InputFile name="Input.Image"/>
+                        <InputFile name="Input.Image" accept=".jpg,.png,jpeg"/>
                     }
                 </div>
                 <button type="submit"
@@ -72,15 +106,49 @@
     </div>
 </section>
 
-
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
+<script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
 
 
 @code {
+
+    BlazoredTextEditor _richEditorDescFr = null!;
+    BlazoredTextEditor _richEditorDescEn = null!;
+    string _toolbar = """...markup here...""";
+    string _bodyFr = """...markup here...""";
+    string _bodyEn = """...markup here...""";
+
+
     [Parameter] public Guid? Id { get; set; }
     [SupplyParameterFromForm] private InputModel? Input { get; set; }
-    
+
     protected override async Task OnParametersSetAsync()
     {
+        _toolbar = """"
+                  <select class="ql-header">
+                      <option selected=""></option>
+                      <option value="1"></option>
+                      <option value="2"></option>
+                      <option value="3"></option>
+                      <option value="4"></option>
+                      <option value="5"></option>
+                  </select>
+                  <span class="ql-formats">
+                      <button class="ql-bold"></button>
+                      <button class="ql-italic"></button>
+                      <button class="ql-underline"></button>
+                      <button class="ql-strike"></button>
+                  </span>
+                  <span class="ql-formats">
+                      <button class="ql-list" value="ordered"></button>
+                      <button class="ql-list" value="bullet"></button>
+                  </span>
+                  """";
+
+        _bodyFr = "";
+        _bodyEn = "";
+
         if (Id.HasValue)
         {
             var ev = await DbContext.Events.FirstOrDefaultAsync(e => e.Id == Id.Value);
@@ -90,19 +158,19 @@
                 {
                     EventId = ev.Id.ToString(),
                     Title = ev.Title,
-                    Description = ev.Description,
                     StartDate = ev.StartDate,
                     EndDate = ev.EndDate,
                     TitleEn = ev.TitleEn,
-                    DescriptionEn = ev.DescriptionEn
                 };
+
+                _bodyFr = ev.Description;
+                _bodyEn = ev.DescriptionEn;
             }
         }
         else
             Input ??= new InputModel()
             {
                 Title = "",
-                Description = "",
                 StartDate = DateTime.Now.AddDays(5),
                 EndDate = DateTime.Now.AddDays(10)
             };
@@ -112,14 +180,17 @@
     {
         if (Input is not null)
         {
+            var contentFr = await _richEditorDescFr.GetHTML();
+            var contentEn = await _richEditorDescEn.GetHTML();
+
             if (Input.EventGuid.HasValue)
             {
                 await DbContext.Events.Where(e => e.Id == Input.EventGuid)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(b => b.Title, Input.Title)
                         .SetProperty(b => b.TitleEn, Input.TitleEn)
-                        .SetProperty(b => b.Description, Input.Description)
-                        .SetProperty(b => b.DescriptionEn, Input.DescriptionEn)
+                        .SetProperty(b => b.Description, contentFr!)
+                        .SetProperty(b => b.DescriptionEn, contentEn!)
                         .SetProperty(b => b.StartDate, Input.StartDate)
                         .SetProperty(b => b.EndDate, Input.EndDate));
             }
@@ -128,11 +199,11 @@
                 var newEvent = new Event()
                 {
                     Title = Input.Title,
-                    Description = Input.Description,
+                    Description = contentFr,
                     StartDate = Input.StartDate,
                     EndDate = Input.EndDate,
                     TitleEn = Input.TitleEn,
-                    DescriptionEn = Input.DescriptionEn
+                    DescriptionEn = contentEn
                 };
 
                 if (Input.Image is not null)
@@ -158,18 +229,10 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string Title { get; set; } = "";
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
-        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
-        public string Description { get; set; } = "";
-
+        
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string TitleEn { get; set; } = "";
-
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
-        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
-        public string DescriptionEn { get; set; } = "";
 
         public DateTimeOffset StartDate { get; set; }
 

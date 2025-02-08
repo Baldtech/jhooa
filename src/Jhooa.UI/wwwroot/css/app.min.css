@@ -1219,10 +1219,6 @@ input:checked + .toggle-bg {
   float: right;
 }
 
-.clear-both {
-  clear: both;
-}
-
 .m-auto {
   margin: auto;
 }
@@ -1245,11 +1241,6 @@ input:checked + .toggle-bg {
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
-}
-
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
 }
 
 .my-8 {
@@ -1359,6 +1350,10 @@ input:checked + .toggle-bg {
 
 .mt-96 {
   margin-top: 24rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 
 .block {
@@ -1630,6 +1625,14 @@ input:checked + .toggle-bg {
   scroll-snap-align: start;
 }
 
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
+}
+
 .list-none {
   list-style-type: none;
 }
@@ -1716,6 +1719,10 @@ input:checked + .toggle-bg {
   gap: 0.5rem;
 }
 
+.gap-3 {
+  gap: 0.75rem;
+}
+
 .gap-4 {
   gap: 1rem;
 }
@@ -1726,10 +1733,6 @@ input:checked + .toggle-bg {
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-3 {
-  gap: 0.75rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1784,6 +1787,18 @@ input:checked + .toggle-bg {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0px * var(--tw-space-y-reverse));
+}
+
+.space-x-0 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0px * var(--tw-space-x-reverse));
+  margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-hidden {
@@ -1859,10 +1874,6 @@ input:checked + .toggle-bg {
 
 .border-2 {
   border-width: 2px;
-}
-
-.border-4 {
-  border-width: 4px;
 }
 
 .border-b {
@@ -1973,6 +1984,10 @@ input:checked + .toggle-bg {
   background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
 }
 
+.bg-gray-400\/50 {
+  background-color: rgb(156 163 175 / 0.5);
+}
+
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
@@ -2038,10 +2053,6 @@ input:checked + .toggle-bg {
 
 .bg-white\/50 {
   background-color: rgb(255 255 255 / 0.5);
-}
-
-.bg-gray-400\/50 {
-  background-color: rgb(156 163 175 / 0.5);
 }
 
 .bg-opacity-50 {
@@ -2189,6 +2200,21 @@ input:checked + .toggle-bg {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 
 .pb-10 {
@@ -2408,11 +2434,6 @@ input:checked + .toggle-bg {
 .text-red-400 {
   --tw-text-opacity: 1;
   color: rgb(249 128 128 / var(--tw-text-opacity, 1));
-}
-
-.text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(224 36 36 / var(--tw-text-opacity, 1));
 }
 
 .text-teal-900 {
@@ -2641,10 +2662,6 @@ label > a {
   border-width: 0px;
 }
 
-.focus\:underline:focus {
-  text-decoration-line: underline;
-}
-
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -2676,11 +2693,6 @@ label > a {
 .focus\:ring-gray-200:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity, 1));
-}
-
-.focus\:ring-red-500:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(240 82 82 / var(--tw-ring-opacity, 1));
 }
 
 .active\:border-0:active {
@@ -2863,12 +2875,8 @@ label > a {
     margin-top: 2rem;
   }
 
-  .md\:mr-3 {
-    margin-right: 0.75rem;
-  }
-
-  .md\:ml-3 {
-    margin-left: 0.75rem;
+  .md\:mb-10 {
+    margin-bottom: 2.5rem;
   }
 
   .md\:block {
@@ -2977,9 +2985,23 @@ label > a {
     padding: 1.5rem;
   }
 
+  .md\:p-10 {
+    padding: 2.5rem;
+  }
+
   .md\:py-0 {
     padding-top: 0px;
     padding-bottom: 0px;
+  }
+
+  .md\:py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .md\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .md\:text-left {
@@ -2989,11 +3011,6 @@ label > a {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
-  }
-
-  .md\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
   }
 
   .md\:text-base {

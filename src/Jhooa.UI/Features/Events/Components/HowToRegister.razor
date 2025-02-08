@@ -1,12 +1,15 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resources.Events> Loc
 
-<section class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 bg-jhooa-peach-100">
+<section class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 px-8">
     <div>
-        <img src="images/home-experience.jpg" alt="" class="m-auto object-cover" />
+        <img src="images/events-register.png" alt="" class="m-auto object-cover" />
     </div>
-    <div class="col-span-3  p-8 md:p-20">
-        <h2 class="text-jhooa-brick-100 text-3xl mb-4">@Loc["HowToRegisterTitle"]</h2>
-        <p class="text-white">@Loc["HowToRegisterDesc"]</p>
+    <div class="md:py-12 col-span-3">
+        <div class=" px-20 py-8 bg-jhooa-beige-100">
+            <h2 class="text-jhooa-brick-500 text-3xl mb-8 font-monetaBold">@Loc["HowToRegisterTitle"]</h2>
+            <p class="text-white font-amsiProLight">@Loc["HowToRegisterDesc"]</p>
+        </div>
     </div>
+    
 </section>

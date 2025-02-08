@@ -176,5 +176,35 @@ namespace Jhooa.UI.Features.Videos.Resources {
                 return ResourceManager.GetString("Required", resourceCulture);
             }
         }
+        
+        internal static string VideosOnlyForConnectedUsersTitle {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersTitle", resourceCulture);
+            }
+        }
+        
+        internal static string VideosOnlyForConnectedUsersDesc {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersDesc", resourceCulture);
+            }
+        }
+        
+        internal static string VideosOnlyForConnectedUsersThanks {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersThanks", resourceCulture);
+            }
+        }
+        
+        internal static string VideosOnlyForConnectedUsersAlreadyUsers {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersAlreadyUsers", resourceCulture);
+            }
+        }
+        
+        internal static string VideosOnlyForConnectedUsersRegister {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersRegister", resourceCulture);
+            }
+        }
     }
 }
