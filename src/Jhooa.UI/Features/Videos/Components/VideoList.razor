@@ -17,51 +17,55 @@
             <div class="relative group">
                 <div class="aspect-video">
                     <iframe
-                        src="https://player.vimeo.com/video/@video.VideoUrl"
+                        src="https://player.vimeo.com/video/@video.VideoUrl?h=a3bd616605&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                         class="w-full h-full rounded-md"
                         frameborder="0"
                         allow="autoplay; fullscreen; picture-in-picture"
                         allowfullscreen
                     ></iframe>
+
+
                 </div>
             </div>
         }
+        <script src="https://player.vimeo.com/api/player.js"></script>
     }
-    
+
 </div>
 
 @code {
-    
+
     [Parameter] public Guid? SelectedTheme { get; set; }
     [Parameter] public int? SelectedYear { get; set; }
     [Parameter] public int? SelectedMonth { get; set; }
-    
+
     private List<Video> _videos = [];
-    
+
     protected override async Task OnInitializedAsync()
     {
         _videos = await DbContext.Videos.ToListAsync();
     }
-    
+
     protected override async Task OnParametersSetAsync()
     {
         var query = DbContext.Videos.AsQueryable();
-        
+
         if (SelectedTheme is not null)
         {
             query = query.Include(i => i.Themes).Where(v => v.Themes.Any(t => t.Id == SelectedTheme));
         }
-        
+
         if (SelectedYear is not null)
         {
             query = query.Where(v => v.Date.Year == SelectedYear);
         }
-        
+
         if (SelectedMonth is not null)
         {
             query = query.Where(v => v.Date.Month == SelectedMonth);
         }
-        
+
         _videos = await query.ToListAsync();
     }
+
 }
