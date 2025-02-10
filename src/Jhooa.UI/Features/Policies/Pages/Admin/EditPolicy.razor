@@ -1,0 +1,179 @@
+@page "/Admin/Policies/{id:guid?}"
+@using System.ComponentModel.DataAnnotations
+@using Blazored.TextEditor
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@inject ApplicationDbContext DbContext
+@rendermode InteractiveServer
+@inject IStringLocalizer<Resources.Policy> Loc
+@inject IStringLocalizer<Resources.Shared> LocShared
+@inject NavigationManager NavigationManager
+
+<HeadContent>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet">
+</HeadContent>
+
+@if (_policy is not null)
+{
+    <section class="max-w-screen-xl mx-auto w-full">
+    <div>
+
+        <h1 class="mb-8 text-4xl tracking-wider">@(CultureInfo.CurrentCulture.Name == "en-GB" ? _policy.TitleEn : _policy.TitleFr)</h1>
+        @if (Input != null)
+        {
+            <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formEvent" class=""
+                      enctype="multipart/form-data" Enhance>
+                <DataAnnotationsValidator/>
+
+
+                <InputText @bind-Value="Input.PolicyId" hidden></InputText>
+
+
+                <div class="bg-[#FFFFFF1A] rounded-md px-4 space-y-4 py-6 mb-6">
+                    <div>
+                        <label for="" class="block mb-1 text-sm">@Loc["ContentFr"]</label>
+
+                        <BlazoredTextEditor
+                            @ref="@_richEditorDescFr"
+                            ToolbarCSSClass=""
+                            ToolbarCssStyle="background: lightgrey">
+                            <ToolbarContent>
+                                @((MarkupString)_toolbar)
+                            </ToolbarContent>
+                            <EditorContent>
+                                @((MarkupString)_bodyFr)
+                            </EditorContent>
+                        </BlazoredTextEditor>
+
+                    </div>
+
+                    <div>
+                        <label for="" class="block mb-1 text-sm">@Loc["ContentEn"]</label>
+
+                        <BlazoredTextEditor
+                            @ref="@_richEditorDescEn"
+                            ToolbarCSSClass=""
+                            ToolbarCssStyle="background: lightgrey">
+                            <ToolbarContent>
+                                @((MarkupString)_toolbar)
+                            </ToolbarContent>
+                            <EditorContent>
+                                @((MarkupString)_bodyEn)
+                            </EditorContent>
+                        </BlazoredTextEditor>
+
+                    </div>
+
+                    
+                </div>
+                <button type="submit"
+                        class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@LocShared["Save"]</button>
+                <JhooaAdminActionButton
+                    Url="/Admin/Policies"
+                    Text="@LocShared["Cancel"]"
+                />
+
+            </EditForm>
+        }
+    </div>
+</section>
+
+}
+
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
+<script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
+
+@code {
+    BlazoredTextEditor _richEditorDescFr = null!;
+    BlazoredTextEditor _richEditorDescEn = null!;
+    string _toolbar = """...markup here...""";
+    string _bodyFr = """...markup here...""";
+    string _bodyEn = """...markup here...""";
+
+    [Parameter] public Guid Id { get; set; }
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    private Models.Policy? _policy;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _toolbar = """"
+                   <select class="ql-header">
+                       <option selected=""></option>
+                       <option value="1"></option>
+                       <option value="2"></option>
+                       <option value="3"></option>
+                       <option value="4"></option>
+                       <option value="5"></option>
+                   </select>
+                   <span class="ql-formats">
+                       <button class="ql-bold"></button>
+                       <button class="ql-italic"></button>
+                       <button class="ql-underline"></button>
+                       <button class="ql-strike"></button>
+                   </span>
+                   <span class="ql-formats">
+                       <button class="ql-list" value="ordered"></button>
+                       <button class="ql-list" value="bullet"></button>
+                   </span>
+                   """";
+
+        _bodyFr = "";
+        _bodyEn = "";
+
+
+        _policy = await DbContext.Policies.FirstAsync(e => e.Id == Id);
+
+        Input ??= new InputModel()
+        {
+            PolicyId = _policy.Id.ToString(),
+            ContentEn = _policy.ContentEn,
+            ContentFr = _policy.ContentFr
+        };
+
+        _bodyFr = Input.ContentFr;
+        _bodyEn = Input.ContentEn;
+    }
+    
+    private async Task OnValidSubmitAsync()
+    {
+        if (Input is not null)
+        {
+            var contentFr = await _richEditorDescFr.GetHTML();
+            var contentEn = await _richEditorDescEn.GetHTML();
+
+            if (Input.PolicyGuid.HasValue)
+            {
+                await DbContext.Policies.Where(e => e.Id == Input.PolicyGuid)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.ContentEn, contentEn)
+                        .SetProperty(b => b.ContentFr, contentFr)
+                        .SetProperty(b => b.LastUpdate, DateTimeOffset.Now!));
+            }
+            
+
+            await DbContext.SaveChangesAsync();
+        }
+
+        NavigationManager.NavigateTo($"/Admin/Policies");
+    }
+
+    private sealed class InputModel
+    {
+        public string? PolicyId { get; set; }
+        public Guid? PolicyGuid => PolicyId is not null ? Guid.Parse(PolicyId) : null;
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Shared))]
+        public string ContentFr { get; set; } = "";
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Shared))]
+        public string ContentEn { get; set; } = "";
+    }
+
+}

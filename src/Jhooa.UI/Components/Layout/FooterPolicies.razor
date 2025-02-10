@@ -1,6 +1,6 @@
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Shared> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Policy> Loc
 
 <footer class="bg-jhooa-teal-900 text-white py-4 text-xs">
     <div class="max-w-6xl mx-auto px-4">
@@ -10,6 +10,11 @@
                 <img src="images/logo_no_tagline.svg" alt="" class="w-20" />
             </p>
             <p class="underline content-center">
+                <a href="/general-terms">
+                    <span>@Loc["GeneralTerms"]</span>
+                </a>
+            </p>
+            <p class="underline content-center">
                 <a href="/legal-notices">
                     <span>@Loc["LegalNotices"]</span>
                 </a>
@@ -17,11 +22,6 @@
             <p class="underline content-center">
                 <a href="/privacy-policy">
                     <span>@Loc["PrivacyPolicy"]</span>
-                </a>
-            </p>
-            <p class="underline content-center">
-                <a href="/terms-conditions">
-                    <span>@Loc["GeneralTerms"]</span>
                 </a>
             </p>
             <p class="underline content-center">

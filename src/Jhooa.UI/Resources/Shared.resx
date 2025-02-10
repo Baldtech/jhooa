@@ -150,4 +150,19 @@
     <data name="MessageSent" xml:space="preserve">
         <value />
     </data>
+    <data name="Policies" xml:space="preserve">
+        <value>Policies</value>
+    </data>
+    <data name="Actions" xml:space="preserve">
+        <value>Actions</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
 </root>

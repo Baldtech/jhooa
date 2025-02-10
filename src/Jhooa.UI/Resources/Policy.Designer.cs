@@ -28,7 +28,7 @@ namespace Jhooa.UI.Resources {
         internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Resources.Policy", typeof(Policy).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("Jhooa.UI.Features.Policies.Pages.Resources.Policy", typeof(Policy).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,42 @@ namespace Jhooa.UI.Resources {
         internal static string LegalNotices {
             get {
                 return ResourceManager.GetString("LegalNotices", resourceCulture);
+            }
+        }
+        
+        internal static string GeneralTerms {
+            get {
+                return ResourceManager.GetString("GeneralTerms", resourceCulture);
+            }
+        }
+        
+        internal static string Policies {
+            get {
+                return ResourceManager.GetString("Policies", resourceCulture);
+            }
+        }
+        
+        internal static string LastUpdateDate {
+            get {
+                return ResourceManager.GetString("LastUpdateDate", resourceCulture);
+            }
+        }
+        
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        internal static string ContentFr {
+            get {
+                return ResourceManager.GetString("ContentFr", resourceCulture);
+            }
+        }
+        
+        internal static string ContentEn {
+            get {
+                return ResourceManager.GetString("ContentEn", resourceCulture);
             }
         }
     }

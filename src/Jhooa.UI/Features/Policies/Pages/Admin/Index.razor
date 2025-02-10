@@ -1,0 +1,23 @@
+@page "/Admin/Policies"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@using Jhooa.UI.Components.Layout
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Authorization
+@using Jhooa.UI.Features.Policies.Components
+
+@inject IStringLocalizer<Resources.Policy> Loc
+<PageTitle>@Loc["Policies"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto w-full">
+    <h1 class="mb-8 text-4xl tracking-wider">@Loc["Policies"]</h1>
+
+    <div class="mb-8"></div>
+    <PoliciesList />
+
+</section>
+
+
+@code
+{
+}

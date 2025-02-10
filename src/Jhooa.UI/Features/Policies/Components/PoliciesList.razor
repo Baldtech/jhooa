@@ -1,0 +1,39 @@
+@using Jhooa.UI.Features.ContactForm.Models
+@using Jhooa.UI.Resources
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Policy> Loc
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Resources.Shared> LocShared
+
+@rendermode InteractiveServer
+
+<PaginationComponent TItem="Models.Policy" Items="_policies" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@Loc["LastUpdateDate"]</th>
+            <th>@Loc["Title"]</th>
+            <th>@LocShared["Actions"]</th>
+
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="policy">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
+            <td>@policy.LastUpdate.ToString("d")</td>
+            <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? policy.TitleEn : policy.TitleFr)</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Policies/@policy.Id">@LocShared["Edit"]</a>
+            </td>
+        </tr>
+    </ChildContentRow>
+</PaginationComponent>
+
+@code {
+    private List<Models.Policy> _policies = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _policies = await DbContext.Policies.ToListAsync();
+    }
+}

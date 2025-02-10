@@ -1,0 +1,39 @@
+
+.policy-content h1 {
+    color: rgb(0 83 89 / var(--tw-text-opacity, 1));
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: AmsiSemiBold, serif;
+    margin-bottom: 0.5rem;
+    margin-top:  0.5rem;
+}
+
+.policy-content h2 {
+    color: rgb(227 128 100 / var(--tw-text-opacity, 1));
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: AmsiSemiBold, serif;
+    margin-bottom: 0.5rem;
+    margin-top:  0.5rem;
+}
+
+.policy-content h3 {
+    color: rgb(38 150 159 / var(--tw-text-opacity, 1));
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: AmsiSemiBold, serif;
+    margin-bottom: 0.5rem;
+    margin-top:  0.5rem;
+}
+
+.policy-content h4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-family: AmsiSemiBold, serif;
+    margin-bottom: 0.5rem;
+    margin-top:  0.5rem;
+}
+
+/* mb-2 text-lg tracking-wider font-amsiSemiBold text-jhooa-teal-200 */
+/*                 <h3 class="mb-2 tracking-wider text-jhooa-peach-100  font-amsiSemiBold">TITLE 3</h3>
+ */

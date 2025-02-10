@@ -308,5 +308,35 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("MessageSent", resourceCulture);
             }
         }
+        
+        internal static string Policies {
+            get {
+                return ResourceManager.GetString("Policies", resourceCulture);
+            }
+        }
+        
+        internal static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
     }
 }

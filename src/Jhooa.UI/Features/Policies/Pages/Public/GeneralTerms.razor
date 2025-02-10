@@ -1,0 +1,40 @@
+@page "/general-terms"
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Policy> Loc
+@layout PolicyLayout
+@inject ApplicationDbContext DbContext
+
+<HeadContent>
+    <link href="css/policy.css" rel="stylesheet">
+</HeadContent>
+
+<section class="">
+    <div class="w-full ">
+        <div class="max-w-screen-xl mx-auto px-8 grid grid-cols-1 mt-8 font-amsiProLight">
+
+            <h1 class="mb-8 text-4xl tracking-wider font-butler text-jhooa-teal-200">@Loc["GeneralTerms"]</h1>
+            
+            @if (_policy is not null)
+            {
+                <div class="policy-content tracking-wider">
+                    @(CultureInfo.CurrentCulture.Name == "en-GB" ? (MarkupString)_policy.ContentEn : (MarkupString)_policy.ContentFr)
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code
+{
+    private Models.Policy? _policy;
+
+    protected override void OnInitialized()
+    {
+        _policy = DbContext.Policies.FirstOrDefault(p => p.Type == Models.PolicyType.GeneralTerms);
+
+        base.OnInitialized();
+    }
+    
+}
