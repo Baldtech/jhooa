@@ -278,7 +278,7 @@
         <value>City</value>
     </data>
     <data name="BirthDate" xml:space="preserve">
-        <value>Birthdate</value>
+        <value>Birth date</value>
     </data>
     <data name="SubType" xml:space="preserve">
         <value>Subscription type</value>

@@ -1,64 +1,48 @@
-@using Jhooa.UI.Components.Layout
 @inject NavigationManager NavigationManager
 
 
 <!-- Banner Panel -->
-
-@if (string.IsNullOrWhiteSpace(_currentRoot))
-{
-    <section class="w-full  absolute">
-        <div class="absolute inset-0">
-            <img src="https://placehold.co/3000x574/FF0000/fff?text=." alt="Header with boat" class="m-auto h-banner object-cover " />
-        </div>
-    </section>
-
-    <!-- Logo Panel -->
-    <div class="absolute inset-0 mt-96 ml-20 md:hidden">
-        <img src="./images/logo_no_tagline.svg" alt="Logo" class="m-auto object-cover" />
+<section class="w-full  absolute">
+    <div class="absolute inset-0">
+        <img src="@_imageUrl" alt="Header"
+             class="m-auto h-banner object-cover "/>
     </div>
-    <section class="w-full absolute">
-        <div class="mt-6 max-w-screen-xl mx-auto ">
-            <div class="absolute mt-72 ml-24 hidden md:block">
-                <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover" />
-            </div></div>
-    </section>
-}
-else 
-{
-    <section class="w-full  absolute">
-        <div class="absolute inset-0">
-            <img src="https://placehold.co/3000x574/FF0000/fff?text=." alt="Header with boat" class="m-auto h-banner object-cover " />
+</section>
+<!-- Logo Panel -->
+<div class="absolute inset-0 mt-96 ml-20 md:hidden">
+    <img src="./images/logo_no_tagline.svg" alt="Logo" class="m-auto object-cover"/>
+</div>
+<section class="w-full absolute">
+    <div class="mt-6 max-w-screen-xl mx-auto ">
+        <div class="absolute mt-72 ml-24 hidden md:block">
+            <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover"/>
         </div>
-    </section>
-
-    <!-- Logo Panel -->
-    <div class="absolute inset-0 mt-96 ml-20 md:hidden">
-        <img src="./images/logo_no_tagline.svg" alt="Logo" class="m-auto object-cover" />
     </div>
-    <section class="w-full absolute">
-        <div class="mt-6 max-w-screen-xl mx-auto ">
-            <div class="absolute mt-72 ml-24 hidden md:block">
-                <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover" />
-            </div></div>
-    </section>
-}
+</section>
 
 <SocialMediaPanel/>
-
-
 
 @code {
     private string? _currentUrl;
     private string _currentRoot = string.Empty;
+    private string _imageUrl = string.Empty;
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
     protected override void OnInitialized()
     {
         _currentRoot = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
+
+        if (string.IsNullOrWhiteSpace(_currentRoot))
+            _imageUrl = "https://placehold.co/3000x574/008000/fff?text=.";
+        else if (_currentRoot.StartsWith("Events", StringComparison.OrdinalIgnoreCase))
+            _imageUrl = "https://placehold.co/3000x574/FF0000/fff?text=.";
+        else if (_currentRoot.StartsWith("Videos", StringComparison.OrdinalIgnoreCase))
+            _imageUrl = "https://placehold.co/3000x574/0000ff/fff?text=.";
+        else
+            _imageUrl = "https://placehold.co/3000x574/808080/fff?text=.";
     }
     
-
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);

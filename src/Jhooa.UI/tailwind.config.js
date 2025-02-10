@@ -11,6 +11,7 @@ module.exports = {
             },
             fontFamily: {
                 sans: ["AmsiPro", ...defaultTheme.fontFamily.sans],
+                amsiProRegular: ["AmsiPro", "serif"],
                 amsiProLight: ["AmsiProLight", "serif"],
                 amsiProBlack: ["AmsiProBlack", "serif"],
                 amsiSemiBold: ["AmsiSemiBold", "serif"],
