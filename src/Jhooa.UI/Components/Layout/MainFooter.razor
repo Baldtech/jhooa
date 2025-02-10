@@ -6,6 +6,7 @@
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 
 <div class="h-8 md:h-24"></div>
 
@@ -19,7 +20,7 @@
                 <h2 class="text-2xl font-monetaBold mb-4 md:mb-0">@Loc["FooterContactUs"]</h2>
             </div>
             <div class="col-span-2"></div>
-            
+
             <div class="mb-8 md:mb-0 font-amsiProLight">
                 <!-- Social Icons (stacked on mobile; row on desktop) -->
                 <div class="flex flex-col space-y-2 mb-6 md:space-y-2">
@@ -28,18 +29,21 @@
                         <img src="images/mail.svg" alt="Facebook icon" class="w-4 h-4"/>
                         <span class="hover:underline">hello@jhooa</span>
                     </a>
-                    <a href="https://www.facebook.com/profile.php?id=61570329875950" target="_blank" class="flex items-center space-x-8">
+                    <a href="https://www.facebook.com/profile.php?id=61570329875950" target="_blank"
+                       class="flex items-center space-x-8">
                         <!-- Facebook icon placeholder -->
                         <img src="images/fb.svg" alt="Facebook icon" class="w-4 h-4"/>
                         <span class="hover:underline">Jhooa.experience</span>
                     </a>
-                    
-                    <a href="https://www.tiktok.com/@@jhooa.experience#" target="_blank" class="flex items-center space-x-8">
+
+                    <a href="https://www.tiktok.com/@@jhooa.experience#" target="_blank"
+                       class="flex items-center space-x-8">
                         <!-- TikTok icon placeholder -->
                         <img src="images/tiktok.svg" alt="TikTok icon" class="w-4 h-4"/>
                         <span class="hover:underline">Jhooa.experience</span>
                     </a>
-                    <a href="https://www.instagram.com/jhooa.experience/" target="_blank" class="flex items-center space-x-8 ">
+                    <a href="https://www.instagram.com/jhooa.experience/" target="_blank"
+                       class="flex items-center space-x-8 ">
                         <!-- Instagram icon placeholder -->
                         <img src="images/instagram.svg" alt="Instagram icon" class="w-4 h-4"/>
                         <span class="hover:underline">Jhooa.experience</span>
@@ -51,20 +55,19 @@
                 <!-- RIGHT COLUMN: Form -->
                 <EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync" FormName="ContactForm"
                           class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <DataAnnotationsValidator/>
                     <!-- First row: Name/Email input -->
                     <div class="">
                         <InputText @bind-Value="Model!.Email" placeholder="@Loc["ContactFormEmail"]"
                                    type="email"
-                                   class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"
-                        />
+                                   class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"/>
                         <ValidationMessage For="() => Model!.Email" class="text-danger"/>
 
                         <div class="h-4"></div>
 
                         <InputText @bind-Value="Model!.Subject" placeholder="@Loc["ContactFormSubject"]"
                                    type="text"
-                                   class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"
-                        />
+                                   class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"/>
                         <ValidationMessage For="() => Model!.Subject" class="text-danger"/>
                     </div>
 
@@ -72,31 +75,35 @@
                     <div class="">
                         <InputTextArea @bind-Value="Model!.Content" placeholder="@Loc["ContactFormContent"]"
                                        rows="4"
-                                       class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"
-                        />
-
+                                       class="w-full border border-white bg-transparent p-2 placeholder-white focus:outline-none"/>
+                        <ValidationMessage For="() => Model!.Subject" class="text-danger"/>
                         <div class="h-4"></div>
                         <!-- Fourth row: Send button (aligned to the right by default on desktop) -->
                         <div class="flex justify-end">
-                            <button
-                                type="submit"
-                                class="border border-white px-4 py-2 hover:bg-white hover:text-jhooa-teal-200 transition-colors"
-                            >
-                                @Loc["ContactFormSubmit"]
-                            </button>
+                            @if (!IsMessageSubmitted)
+                            {
+                                <button
+                                    type="submit"
+                                    class="border border-white px-4 py-2 hover:bg-white hover:text-jhooa-teal-200 transition-colors">
+                                    @Loc["ContactFormSubmit"]
+                                </button>
+                            }
+                            else
+                            {
+                                <p class="text-green-500">@Loc["ContactFormConfirmationDesc"]</p>
+                            }
                         </div>
                     </div>
                 </EditForm>
             </div>
-
-
         </div>
     </div>
 </footer>
-<FooterPolicies />
+<FooterPolicies/>
 
 @code {
     [SupplyParameterFromForm] private ContactForm? Model { get; set; }
+    private bool IsMessageSubmitted { get; set; } = false;
 
     protected override void OnInitialized() => Model ??= new ContactForm();
 
@@ -116,23 +123,23 @@
 
             Model = new ContactForm();
 
-            NavigationManager.NavigateTo($"/ContactForm/Confirmation");
+            IsMessageSubmitted = true;
         }
     }
 
     public class ContactForm
     {
-        [Required] [EmailAddress] public string? Email { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Shared))]
+        [EmailAddress]
+        public string Email { get; set; } = "";
 
-        [Required]
-        [MinLength(ContactFormSubmission.SubjectMinLength)]
-        [MaxLength(ContactFormSubmission.SubjectMaxLength)]
-        public string? Subject { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Shared))]
+        [StringLength(maximumLength: ContactFormSubmission.SubjectMaxLength, MinimumLength = ContactFormSubmission.SubjectMinLength, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Shared))]
+        public string Subject { get; set; } = "";
 
-        [Required]
-        [MinLength(ContactFormSubmission.ContentMinLength)]
-        [MaxLength(ContactFormSubmission.ContentMaxLength)]
-        public string? Content { get; set; }
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Shared))]
+        [StringLength(maximumLength: ContactFormSubmission.ContentMaxLength, MinimumLength = ContactFormSubmission.ContentMinLength, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Shared))]
+        public string Content { get; set; } = "";
     }
 
 }

@@ -141,4 +141,13 @@
     <data name="No" xml:space="preserve">
         <value>No</value>
     </data>
+    <data name="Required" xml:space="preserve">
+        <value>Required</value>
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value>This field must be at least {2} and at max {1} characters long.</value>
+    </data>
+    <data name="MessageSent" xml:space="preserve">
+        <value />
+    </data>
 </root>

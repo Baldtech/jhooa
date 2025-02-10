@@ -27,17 +27,17 @@
         <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
         <div class="container mx-auto py-8 px-4">
-            <p class="mb-6 max-w-screen-md mx-auto text-center">@Loc["RegisterIntro"]</p>
+            <p class="mb-20 max-w-screen-md mx-auto text-center text-sm tracking-wide font-amsiProRegular">@Loc["RegisterIntro"]</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                 <!-- COL 1: CRÉER UN COMPTE -->
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
 
                     <div class="flex items-center mb-6">
-                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>1</span>
                         </div>
-                        <h2 class="text-xl font-semibold">@Loc["CreateAccount"]</h2>
+                        <h2 class="text-3xl font-monetaRegular">@Loc["CreateAccount"]</h2>
                     </div>
 
                     <div class="space-y-3">
@@ -48,8 +48,8 @@
                                         ValidationFor="@(() => Input.Firstname)" Autocomplete="firstname"/>
                         <JhooaInputText @bind-Value="Input.Email" DisplayName="@Loc["EmailAddress"]"
                                         ValidationFor="@(() => Input.Email)" Autocomplete="username"/>
-                        <JhooaInputDate @bind-Value="Input.BirtDate" DisplayName="@Loc["BirtDate"]"
-                                        ValidationFor="@(() => Input.BirtDate)"/>
+                        <JhooaInputDate @bind-Value="Input.BirthDate" DisplayName="@Loc["BirthDate"]"
+                                        ValidationFor="@(() => Input.BirthDate)"/>
 
                         <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                         ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
@@ -80,13 +80,13 @@
                 </section>
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
                     <div class="flex items-center mb-6 mt-8 lg:mt-0">
-                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>2</span>
                         </div>
-                        <h2 class="text-xl font-semibold">@Loc["RegisterMyWishes"]</h2>
+                        <h2 class="text-3xl font-monetaRegular">@Loc["RegisterMyWishes"]</h2>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">@Loc["RegisterDreamSubTitle"]</h3>
-                    <p class="text-sm mb-6">@Loc["RegisterDreamDescription"]</p>
+                    <h3 class="text-lg font-amsiSemiBold mb-2 tracking-wide">@Loc["RegisterDreamSubTitle"]</h3>
+                    <p class="text-sm font-amsiProRegular mb-6 tracking-wide">@Loc["RegisterDreamDescription"]</p>
                     <div class="space-y-3">
 
                         <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
@@ -105,14 +105,14 @@
                 </section>
                 <section class="pb-8 lg:pb-0">
                     <div class="flex items-center mb-6 mt-8 lg:mt-0">
-                        <div class="flex items-center justify-center w-8 h-8 border border-white rounded-full mr-3">
+                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>3</span>
                         </div>
-                        <h2 class="text-xl font-semibold">@Loc["RegisterMySub"]</h2>
+                        <h2 class="text-3xl font-monetaRegular">@Loc["RegisterMySub"]</h2>
                     </div>
 
-                    <h3 class="text-lg font-semibold mb-2">@Loc["RegisterMySubSubTitle"]</h3>
-                    <p class="text-sm mb-6">@Loc["RegisterMySubDescription"]</p>
+                    <h3 class="text-lg font-amsiSemiBold mb-2 tracking-wide">@Loc["RegisterMySubSubTitle"]</h3>
+                    <p class="text-sm font-amsiProRegular mb-6 tracking-wide">@Loc["RegisterMySubDescription"]</p>
 
                     <InputRadioGroup @bind-Value="Input.SubscriptionType" class="mb-8">
                         <div
@@ -139,7 +139,7 @@
                         </div>
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option3" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
+                            <InputRadio id="option3" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyOnce"/>
 
                             <div class="flex flex-col space-y-1 w-full">
@@ -150,7 +150,7 @@
                         </div>
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option4" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
+                            <InputRadio id="option4" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyRecurring"/>
 
                             <div class="flex flex-col space-y-1 w-full">
@@ -314,7 +314,7 @@
                 AcceptTos = Input.AcceptToc,
                 NewsletterActive = Input.SubscribeToNewsletter,
                 CreatedAt = DateTimeOffset.Now,
-                BirthDate = Input.BirtDate,
+                BirthDate = Input.BirthDate,
                 AcceptDistribution = Input.AcceptDistribution,
                 City = Input.City
             };
@@ -351,7 +351,7 @@
         public string Lastname { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        public DateTimeOffset BirtDate { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset BirthDate { get; set; } = DateTimeOffset.Now;
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]

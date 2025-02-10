@@ -134,4 +134,10 @@
     <data name="No" xml:space="preserve">
         <value>Non</value>
     </data>
+    <data name="Required" xml:space="preserve">
+        <value>Requis</value>
+    </data>
+    <data name="FieldLength" xml:space="preserve">
+        <value>Ce champs doit contenir au moins {2} caractères et au maximum {1} caractères.</value>
+    </data>
 </root>

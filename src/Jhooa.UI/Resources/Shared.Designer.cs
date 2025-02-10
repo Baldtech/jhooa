@@ -290,5 +290,23 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
+        
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        internal static string FieldLength {
+            get {
+                return ResourceManager.GetString("FieldLength", resourceCulture);
+            }
+        }
+        
+        internal static string MessageSent {
+            get {
+                return ResourceManager.GetString("MessageSent", resourceCulture);
+            }
+        }
     }
 }
