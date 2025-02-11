@@ -87,9 +87,9 @@ namespace Jhooa.UI.Features.Videos.Resources {
             }
         }
         
-        internal static string Months {
+        internal static string MonthMonths {
             get {
-                return ResourceManager.GetString("Months", resourceCulture);
+                return ResourceManager.GetString("MonthMonths", resourceCulture);
             }
         }
         
@@ -204,6 +204,36 @@ namespace Jhooa.UI.Features.Videos.Resources {
         internal static string VideosOnlyForConnectedUsersRegister {
             get {
                 return ResourceManager.GetString("VideosOnlyForConnectedUsersRegister", resourceCulture);
+            }
+        }
+        
+        internal static string Months {
+            get {
+                return ResourceManager.GetString("Months", resourceCulture);
+            }
+        }
+        
+        internal static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        internal static string ChooseTheme {
+            get {
+                return ResourceManager.GetString("ChooseTheme", resourceCulture);
+            }
+        }
+        
+        internal static string ChooseMonth {
+            get {
+                return ResourceManager.GetString("ChooseMonth", resourceCulture);
+            }
+        }
+        
+        internal static string ChooseYear {
+            get {
+                return ResourceManager.GetString("ChooseYear", resourceCulture);
             }
         }
     }

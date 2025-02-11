@@ -12,13 +12,13 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="MyDreams" xml:space="preserve">
-        <value>Mes voeux</value>
+        <value>Mes vœux</value>
     </data>
     <data name="AttemptToTitle" xml:space="preserve">
         <value>Tentez de réaliser vos rêves</value>
     </data>
     <data name="AttemptToDesc" xml:space="preserve">
-        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité.</value>
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois vœux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à cœur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité.</value>
     </data>
     <data name="SaveChanges" xml:space="preserve">
         <value>Sauvegarder les changements</value>

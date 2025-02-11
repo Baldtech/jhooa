@@ -50,13 +50,13 @@ Votre force pour vivre des moments WAW c’est le collectif, votre chance c’es
         <value>Tentez de réaliser vos rêves </value>
     </data>
     <data name="ExpPart1Desc" xml:space="preserve">
-        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité. </value>
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois vœux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à cœur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité. </value>
     </data>
     <data name="ExpPart2Title" xml:space="preserve">
         <value>Accédez à nos contenus vidéos illimités</value>
     </data>
     <data name="ExpPart2Desc" xml:space="preserve">
-        <value>En tant que membres vous bénéficiez d’un accès illimité à un contenu vidéo qui vous plonge au coeur des rêves et des évènements, ainsi que dans la vie de Jhooa ! Suivez-nous pour annoncer aux abonnés sélectionnés qu’ils vont voir leur rêve se réaliser, assistez à la concrétisation de ces rêves et revivez la magie de nos évènements. </value>
+        <value>En tant que membres vous bénéficiez d’un accès illimité à un contenu vidéo qui vous plonge au cœur des rêves et des évènements, ainsi que dans la vie de Jhooa ! Suivez-nous pour annoncer aux abonnés sélectionnés qu’ils vont voir leur rêve se réaliser, assistez à la concrétisation de ces rêves et revivez la magie de nos évènements. </value>
     </data>
     <data name="ExpPart3Title" xml:space="preserve">
         <value>Saisissez l’opportunité de participer à nos évènements </value>
@@ -77,6 +77,6 @@ Votre force pour vivre des moments WAW c’est le collectif, votre chance c’es
         <value>€/mois</value>
     </data>
     <data name="ExpContact" xml:space="preserve">
-        <value>JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois qui suit les mois pour lesquels elles ont participé en nous partageant leurs voeux.</value>
+        <value>JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois qui suit les mois pour lesquels elles ont participé en nous partageant leurs vœux.</value>
     </data>
 </root>

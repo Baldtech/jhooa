@@ -27,7 +27,7 @@
         <value>Se connecter</value>
     </data>
     <data name="ForgotPassword" xml:space="preserve">
-        <value>Oublié ton mot de passe ?</value>
+        <value>Mot de passe oublié ?</value>
     </data>
     <data name="AlreadyHaveAccount" xml:space="preserve">
         <value>J'ai déjà un compte</value>
@@ -39,7 +39,7 @@
         <value>Pour créer votre compte, nous avons besoin de vos informations personnelles et de votre choix d’abonnement. Une fois le paiement effectué, votre compte sera activé et vous pourrez profiter pleinement des services Jhooa!</value>
     </data>
     <data name="RegisterMyWishes" xml:space="preserve">
-        <value>Mes voeux</value>
+        <value>Mes vœux</value>
     </data>
     <data name="RegisterMySub" xml:space="preserve">
         <value>Mon abonnement</value>
@@ -72,7 +72,7 @@
         <value>Tentez de réaliser vos rêves</value>
     </data>
     <data name="RegisterDreamDescription" xml:space="preserve">
-        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité.</value>
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois vœux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à cœur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité.</value>
     </data>
     <data name="RegisterMySubSubTitle" xml:space="preserve">
         <value>Vivez l’expérience ! </value>
@@ -216,7 +216,7 @@
         <value>Mon compte</value>
     </data>
     <data name="MyDreams" xml:space="preserve">
-        <value>Mes voeux</value>
+        <value>Mes vœux</value>
     </data>
     <data name="MySubscription" xml:space="preserve">
         <value>Mon abonnement</value>

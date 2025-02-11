@@ -78,7 +78,7 @@
         <value>Votre message a bien été envoyé. Jhooa vous recontactera très prochainement !</value>
     </data>
     <data name="BackToHome" xml:space="preserve">
-        <value>Retourner au site</value>
+        <value>Retourner sur le site</value>
     </data>
     <data name="Administration" xml:space="preserve">
         <value>Administration</value>

@@ -6,10 +6,11 @@
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <div>
-        <label for="theme" class="block text-gray-700 font-semibold mb-2">@Loc["Theme"]</label>
-        <InputSelect id="theme" @bind-Value="_selectedTheme" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
+        <label for="theme" class="block text-jhooa-teal-200 font-semibold mb-2">@Loc["Theme"]</label>
+        <InputSelect id="theme" @bind-Value="_selectedTheme"
+                     class="w-full border-[3px] border-jhooa-beige-100  px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
             <option
-                @onclick="() => ApplySelectedThemeAsync(null)"> </option>
+                @onclick="() => ApplySelectedThemeAsync(null)">@Loc["ChooseTheme"]</option>
             @foreach (var theme in _themes)
             {
                 <option
@@ -19,10 +20,11 @@
 
     </div>
     <div>
-        <label for="month" class="block text-gray-700 font-semibold mb-2">@Loc["Month"]</label>
-        <InputSelect id="month" @bind-Value="_selectedMonth" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
+        <label for="month" class="block text-jhooa-teal-200 font-semibold mb-2">@Loc["Month"]</label>
+        <InputSelect id="month" @bind-Value="_selectedMonth"
+                     class="w-full border-[3px] border-jhooa-beige-100   px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
             <option
-                @onclick="() => ApplySelectedMonthAsync(null)"> </option>
+                @onclick="() => ApplySelectedMonthAsync(null)">@Loc["ChooseMonth"]</option>
             @foreach (var month in _months)
             {
                 <option
@@ -32,10 +34,11 @@
 
     </div>
     <div>
-        <label for="year" class="block text-gray-700 font-semibold mb-2">@Loc["Years"]</label>
-        <InputSelect id="year" @bind-Value="_selectedYear" class="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none">
+        <label for="year" class="block text-jhooa-teal-200 font-semibold mb-2">@Loc["Years"]</label>
+        <InputSelect id="year" @bind-Value="_selectedYear"
+                     class="w-full border-[3px] border-jhooa-beige-100   px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
             <option
-                @onclick="() => ApplySelectedYearAsync(null)"> </option>
+                @onclick="() => ApplySelectedYearAsync(null)">@Loc["ChooseYear"]</option>
             @foreach (var year in _years)
             {
                 <option
@@ -52,10 +55,10 @@
 {
     [Parameter] public EventCallback<Guid?> SelectThemeCallback { get; set; }
     private Guid? _selectedTheme;
-    
+
     [Parameter] public EventCallback<int?> SelectMonthCallback { get; set; }
     private string? _selectedMonth;
-    
+
     [Parameter] public EventCallback<int?> SelectYearCallback { get; set; }
     private int? _selectedYear;
 
@@ -65,7 +68,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _themes = await DbContext.VideoThemes.ToListAsync();
+        _themes = await DbContext.VideoThemes.Take(21).ToListAsync();
         _years = Enumerable.Range(2024, 3).ToList();
         _months = Enumerable.Range(1, 12).Select(x => new MonthModel()
         {
@@ -78,10 +81,12 @@
     {
         SelectThemeCallback.InvokeAsync(themeId);
     }
+
     private void ApplySelectedMonthAsync(MonthModel? month)
     {
         SelectMonthCallback.InvokeAsync(month?.Number);
     }
+
     private void ApplySelectedYearAsync(int? year)
     {
         SelectYearCallback.InvokeAsync(year);

@@ -61,7 +61,7 @@
 </value>
     </data>
     <data name="VideosPageText2" xml:space="preserve">
-        <value>Découvrez ici les rêves devenus réalité pour les abonnés sélectionnés par JHOOA ! Plongez au coeur de ces expériences uniques qui viennent bousculer leur quotidien et partagez leurs émotions les plus intenses. 
+        <value>Découvrez ici les rêves devenus réalité pour les abonnés sélectionnés par JHOOA ! Plongez au cœur de ces expériences uniques qui viennent bousculer leur quotidien et partagez leurs émotions les plus intenses. 
 </value>
     </data>
     <data name="VideosPageText3" xml:space="preserve">
@@ -75,23 +75,34 @@
         <value>Revivez les moments forts de l’expérience JHOOA !</value>
     </data>
     <data name="Years" xml:space="preserve">
-        <value>Années</value>
+        <value>Année</value>
     </data>
     <data name="VideosOnlyForConnectedUsersTitle" xml:space="preserve">
-        <value>Contenu Exclusif pour les Membres Premium
-</value>
+        <value>Contenu réservé aux membres</value>
     </data>
     <data name="VideosOnlyForConnectedUsersDesc" xml:space="preserve">
-        <value>Cette page est réservée à nos membres payants. Pour accéder à ces vidéos exclusives, veuillez vous connecter à votre compte ou en créer un dès maintenant.
+        <value>Cette page est exclusivement réservée aux membres Jhooa ! Pour accéder à nos vidéos, connectez-vous à votre compte ou en créez-en un en quelques clics !
 </value>
     </data>
     <data name="VideosOnlyForConnectedUsersThanks" xml:space="preserve">
         <value>Merci pour votre soutien !</value>
     </data>
     <data name="VideosOnlyForConnectedUsersAlreadyUsers" xml:space="preserve">
-        <value>Déjà un membre? &lt;a href="Account/Login" class="text-jhooa-brick-500 underline"&gt;Connectez-vous&lt;/a&gt;</value>
+        <value>Déjà membre ? &lt;a href="Account/Login" class="text-jhooa-brick-500 underline"&gt;Connectez-vous&lt;/a&gt;!</value>
     </data>
     <data name="VideosOnlyForConnectedUsersRegister" xml:space="preserve">
-        <value>Nouveau ici ? &lt;a href="Account/Register" class="text-jhooa-brick-500 underline"&gt;Inscrivez-vous&lt;/a&gt; et débloquez du contenu premium dès maintenant !</value>
+        <value>Envie d'en voir plus ? &lt;a href="Account/Register" class="text-jhooa-brick-500 underline"&gt;Inscrivez-vous&lt;/a&gt; et profitez de tous nos contenus</value>
+    </data>
+    <data name="Month" xml:space="preserve">
+        <value>Mois</value>
+    </data>
+    <data name="ChooseTheme" xml:space="preserve">
+        <value>Choisissez un thème</value>
+    </data>
+    <data name="ChooseMonth" xml:space="preserve">
+        <value>Choisissez un mois</value>
+    </data>
+    <data name="ChooseYear" xml:space="preserve">
+        <value>Choisissez une année</value>
     </data>
 </root>

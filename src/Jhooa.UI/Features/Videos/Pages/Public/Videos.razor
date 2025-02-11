@@ -14,14 +14,14 @@
 
     <AuthorizeView>
         <Authorized>
-            <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosPageTitle"]</h1>
+            <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosPageTitle"]</h1>
 
-            <p class="mb-4">@Loc["VideosPageText1"]</p>
-            <p class="mb-4">@Loc["VideosPageText2"]</p>
-            <p class="mb-4">@Loc["VideosPageText3"]</p>
-            <p class="mb-4">@Loc["VideosPageText4"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText1"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText2"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText3"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText4"]</p>
 
-            <h2 class="text-jhooa-teal-200 text-3xl my-10">@Loc["TheVideos"]</h2>
+            <h2 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["TheVideos"]</h2>
 
             <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
                           SelectYearCallback="HandleYearSelection"/>
@@ -29,18 +29,14 @@
             <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"/>
         </Authorized>
         <NotAuthorized>
-            <h1 class="text-jhooa-teal-200 text-3xl my-10">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
+            <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
 
-            <p class="mb-4">@Loc["VideosOnlyForConnectedUsersDesc"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosOnlyForConnectedUsersDesc"]</p>
 
-            <ul class="space-y-1  list-disc list-inside mb-4">
+            <ul class="space-y-1  list-disc list-inside mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersAlreadyUsers"].ToString())</li>
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersRegister"].ToString())</li>
             </ul>
-
-            <p>
-                @Loc["VideosOnlyForConnectedUsersThanks"]
-            </p>
         </NotAuthorized>
     </AuthorizeView>
 </section>
