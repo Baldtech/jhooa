@@ -28,7 +28,7 @@
         <value>&lt;span class="font-amsiProBlack text-jhooa-peach-100"&gt;Jhooa!&lt;/span&gt;, c’est bien plus qu’une expérience ; c’est la clé qui ouvre la porte de l’extra dans l’ordinaire, une invitation à bousculer votre quotidien, à toucher l’inaccessible et à vivre en ayant le sentiment que tout devient possible.</value>
     </data>
     <data name="TitleCourage" xml:space="preserve">
-        <value>L’audace de rêver ; nous permettre de réaliser.</value>
+        <value>L’audace de rêver, nous permettre de réaliser.</value>
     </data>
     <data name="EventsPart1" xml:space="preserve">
         <value>Nos événements sont aussi fous que surprenants. Ils n’ont comme limite que celle de notre esprit et comme énergie celle de vous faire vous sentir vivants ;</value>
@@ -50,7 +50,7 @@ Votre force pour vivre des moments WAW c’est le collectif, votre chance c’es
         <value>Tentez de réaliser vos rêves </value>
     </data>
     <data name="ExpPart1Desc" xml:space="preserve">
-        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’ils s’agissent d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité. </value>
+        <value>En tant qu’abonnés, vous avez l’opportunité unique de partager trois voeux : petit, moyen et grand. Qu’il s’agisse d’un moment magique, quelque chose qui manque à votre quotidien ou toute autre chose qui vous tient à coeur. Chaque mois, un ou plusieurs d’entre vous verront un de leurs rêves devenir réalité. </value>
     </data>
     <data name="ExpPart2Title" xml:space="preserve">
         <value>Accédez à nos contenus vidéos illimités</value>
@@ -62,7 +62,7 @@ Votre force pour vivre des moments WAW c’est le collectif, votre chance c’es
         <value>Saisissez l’opportunité de participer à nos évènements </value>
     </data>
     <data name="ExpPart3Desc" xml:space="preserve">
-        <value>Nos abonnés sont invités à participer à des évènements exclusifs et surprenants conçus pour vous émerveiller et marquer vos esprits. Chaque moment passé avec nous constitue une parenthèse enchantée, où l’ordinaire cède place à l’extraordinaire.</value>
+        <value>Nos abonnés sont invités à participer à des évènements exclusifs et surprenants conçus pour vous émerveiller et marquer vos esprits. Chaque moment passé avec nous constitue une parenthèse enchantée où l’ordinaire cède place à l’extraordinaire.</value>
     </data>
     <data name="Monthly" xml:space="preserve">
         <value>Mensuel</value>
@@ -77,6 +77,6 @@ Votre force pour vivre des moments WAW c’est le collectif, votre chance c’es
         <value>€/mois</value>
     </data>
     <data name="ExpContact" xml:space="preserve">
-        <value>JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois qui suivent les mois pour lesquels elles ont participé en nous partageant leurs voeux.</value>
+        <value>JHOOA ! contactera la liste des personnes sélectionnées chaque 15 du mois qui suit les mois pour lesquels elles ont participé en nous partageant leurs voeux.</value>
     </data>
 </root>

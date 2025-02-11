@@ -3,36 +3,49 @@
 @inject IStringLocalizer<CultureSelector> Loc
 @rendermode InteractiveServer
 
-<select id="language" @onchange="OnCultureChange" value="@_selectedCulture.Name"
-        class="text-white bg-transparent border-0 md:inline-block md:float-end md:mx-5 focus:border-0 active:border-0">
-    <option value="fr-FR" >FR</option>
-    <option value="en-GB" >EN</option>
-</select>
+<button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="md:float-end text-white focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
+    @_selectedCulture.Name.ToUpper()[..2]
+    <img src="images/chevron-down.svg" class="w-2.5 h-2.5 ms-3" alt="chevron-down" />
+</button>
+
+<!-- Dropdown menu -->
+<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-20 ">
+    <ul class="py-2 text-gray-700 " aria-labelledby="dropdownDefaultButton">
+        <li>
+            <a href="" @onclick="@ApplyEnSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 ">EN</a>
+
+        </li>
+        <li>
+            <a href="" @onclick="@ApplyFrSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 ">FR</a>
+        </li>
+    </ul>
+</div>
+
 
 
 @code
 {
     private CultureInfo _selectedCulture = CultureInfo.CurrentCulture.Name.StartsWith("fr") ? new CultureInfo("fr-FR") : new CultureInfo("en-GB");
-
-    private async Task OnCultureChange(ChangeEventArgs e)
-    {
-        var selectedValue = e.Value?.ToString();
-        if (!string.IsNullOrEmpty(selectedValue))
-        {
-            var culture = new CultureInfo(selectedValue);
-            await ApplySelectedCultureAsync(culture);
-        }
-    }
     
-    
-    private Task ApplySelectedCultureAsync(CultureInfo culture)
+    private Task ApplyFrSelectedCultureAsync()
     {
-        if (Equals(CultureInfo.CurrentCulture, culture))
-            return Task.CompletedTask;
-
         var uri = new Uri(Navigation.Uri)
             .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-        var cultureEscaped = Uri.EscapeDataString(culture.Name);
+        var cultureEscaped = Uri.EscapeDataString("fr-FR");
+        var uriEscaped = Uri.EscapeDataString(uri);
+
+        Navigation.NavigateTo(
+            $"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}",
+            forceLoad: true);
+
+        return Task.CompletedTask;
+    }
+    
+    private Task ApplyEnSelectedCultureAsync()
+    {
+        var uri = new Uri(Navigation.Uri)
+            .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+        var cultureEscaped = Uri.EscapeDataString("en-GB");
         var uriEscaped = Uri.EscapeDataString(uri);
 
         Navigation.NavigateTo(

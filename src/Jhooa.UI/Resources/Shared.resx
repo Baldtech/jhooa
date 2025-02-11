@@ -28,7 +28,7 @@
         <value>Home</value>
     </data>
     <data name="Events" xml:space="preserve">
-        <value>Events</value>
+        <value>events</value>
     </data>
     <data name="DreamsList" xml:space="preserve">
         <value>List of dreams</value>

@@ -6,7 +6,7 @@
   <div class="max-w-screen-xl mx-auto px-4 py-8">
 
     <!-- 2-column layout on desktop, single column on mobile -->
-    <div class="md:grid md:grid-cols-4 md:gap-6 items-center">
+    <div class="md:grid md:grid-cols-3 md:gap-6 items-center">
       
       <!-- LEFT COLUMN: Image #1 on desktop; 
            On mobile, it’s centered and only 75% wide -->
@@ -14,18 +14,18 @@
         <img
           src="images/home-experience.jpg"
           alt="Parasailing example 1"
-          class="w-3/4 mx-auto md:w-full h-auto object-cover relative md:-bottom-52" 
+          class="w-3/4 mx-auto md:w-full h-auto object-cover relative md:-bottom-48" 
         />
       </div>
 
       <!-- RIGHT COLUMN: Text content (and possibly Image #2) -->
-      <div class="col-span-3">
+      <div class="col-span-2 pl-6">
         <h2 class="text-2xl md:text-3xl font-bold mb-4 font-monetaRegular text-jhooa-brick-500">
           @Loc["ExpTitle"]
         </h2>
 
         <!-- Intro paragraph -->
-        <p class="mb-6 leading-relaxed font-amsiSemiBold">
+        <p class="mb-6 leading-relaxed font-amsiProRegular">
           @Loc["ExpDescription"]
         </p>
         
@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-span-9">
-            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
+            <h3 class="flex items-center mb-1 text-lg text-jhooa-teal-200 font-butler">
               <!-- Icon could go here if desired -->
               @Loc["ExpPart1Title"]
             </h3>
@@ -50,7 +50,7 @@
           </div>
 
           <div class="col-span-9">
-            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
+            <h3 class="flex items-center mb-1 text-lg text-jhooa-teal-200 font-butler">
               <!-- Icon could go here if desired -->
               @Loc["ExpPart2Title"]
             </h3>
@@ -65,7 +65,7 @@
           </div>
 
           <div class="col-span-9">
-            <h3 class="flex items-center mb-2 text-lg text-jhooa-teal-200 font-butler">
+            <h3 class="flex items-center mb-1 text-lg text-jhooa-teal-200 font-butler">
               <!-- Icon could go here if desired -->
               @Loc["ExpPart3Title"]
             </h3>
@@ -76,7 +76,7 @@
           </div>
 
           <div class="">
-            <img src="images/ticket.svg" alt="" />
+            <img src="images/medal.svg" alt="" />
           </div>
 
           <div class="col-span-9">
@@ -89,11 +89,11 @@
         <!-- Pricing CTA buttons -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8 mt-10 justify-center">
           <div
-            class="bg-jhooa-peach-100 text-white border-2 border-white px-8 py-3 font-monetaRegular font-bold text-center">
+            class="bg-jhooa-peach-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold text-center">
             @Loc["Monthly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 @Loc["PriceMonthlyDesc"]
           </div>
           <div
-            class="bg-jhooa-teal-100 text-white border-2 border-white px-8 py-3 font-monetaRegular font-bold text-center">
+            class="bg-jhooa-teal-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold text-center">
             @Loc["Yearly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 70 @Loc["PriceYearlyDesc"]
           </div>
         </div>

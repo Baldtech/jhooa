@@ -21,7 +21,7 @@
         <value>Accueil</value>
     </data>
     <data name="Events" xml:space="preserve">
-        <value>Evènements</value>
+        <value>évènements</value>
     </data>
     <data name="DreamsList" xml:space="preserve">
         <value>Liste des rêves</value>
@@ -54,7 +54,7 @@
         <value>Adresse email</value>
     </data>
     <data name="Login" xml:space="preserve">
-        <value>Connection</value>
+        <value>Connexion</value>
     </data>
     <data name="FooterContactUs" xml:space="preserve">
         <value>Contactez-nous</value>

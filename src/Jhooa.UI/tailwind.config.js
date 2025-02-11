@@ -17,6 +17,7 @@ module.exports = {
                 amsiSemiBold: ["AmsiSemiBold", "serif"],
                 amsiBold: ["AmsiBold", "serif"],
                 butler: ["Butler", "serif"],
+                butlerMedium: ["ButlerMedium", "serif"],
                 monetaBold: ["MonetaBold", "serif"],
                 monetaRegular: ["MonetaRegular", "serif"],
             },

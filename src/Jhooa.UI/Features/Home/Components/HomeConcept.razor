@@ -5,11 +5,11 @@
 <section class="mb-8 md:mb-20 ">
     <div class="w-full bg-jhooa-teal-200">
 
-        <div class="max-w-screen-xl mx-auto px-8 text-white grid grid-cols-1 md:grid-cols-2 font-winter">
+        <div class="max-w-screen-xl mx-auto px-8 text-white grid grid-cols-1 md:grid-cols-2">
             <div class="px-4 pt-8 tracking-wide">
 
-                <h2 class="mb-8 text-4xl tracking-wider font-monetaBold">@Loc["OurConcept"]</h2>
-                <p class="md:mb-14 font-text">
+                <h2 class="mb-8 text-4xl tracking-wider font-monetaRegular">@Loc["OurConcept"]</h2>
+                <p class="md:mb-14 font-amsiProLight">
                     @((MarkupString)Loc["OurConceptPart1"].ToString())
                     <br/><br/>
                     @((MarkupString)Loc["OurConceptPart2"].ToString())
@@ -19,7 +19,7 @@
                     @((MarkupString)Loc["OurConceptPart4"].ToString())
                 </p>
             </div>
-            <div class="relative -bottom-10 w-64 m-auto md:w-96 md:-bottom-48 lg:w-96 lg:-bottom-32">
+            <div class="relative w-64 m-auto md:w-[328px] md:h-[328px] md:-bottom-48 lg:w-[528px] lg:h-[528px] lg:-bottom-24">  @* -bottom-10 lg:-bottom-32 *@
                 <ConceptCaroussel />
             </div>
         </div>
