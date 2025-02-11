@@ -12,7 +12,7 @@
 
         <h1 class="text-butler text-3xl text-white mb-6 pt-8">@Loc["NextEvents"]</h1>
 
-        <div class="flex space-x-4 pb-10">
+        <div class="flex space-x-10 pb-10">
             @if (_events is not null && _events.Count > 0)
             {
                 @foreach (var ev in _events.OrderBy(ev => ev.StartDate))

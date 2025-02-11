@@ -22,14 +22,14 @@
     {
         <p class="text-jhooa-teal-200">@Loc["AlreadyRegistered"]</p>
         <button
-            class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
+            class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
             @Loc["RemoveRegistration"]
         </button>
     }
     else
     {
         <button
-            class="bg-jhooa-teal-100 text-white py-2 px-4 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
+            class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
             @Loc["Register"]
         </button>
     }
