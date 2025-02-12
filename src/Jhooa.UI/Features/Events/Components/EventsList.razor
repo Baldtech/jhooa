@@ -24,7 +24,7 @@
             <td>@(CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title)</td>
             <td>@ev.StartDate.ToString("d")</td>
             <td>@ev.EndDate.ToString("d")</td>
-            <td>@ev.Registrations.Count</td>
+            <td><a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id/participants">@ev.Registrations.Count</a></td>
             <td>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id">@Loc["Edit"]</a>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id/pictures">@Loc["UpdatePictures"]</a>

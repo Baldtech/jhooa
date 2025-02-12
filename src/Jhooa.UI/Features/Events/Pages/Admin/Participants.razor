@@ -1,0 +1,45 @@
+@page "/Admin/Event/{id:guid}/participants"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Events.Components
+@using Jhooa.UI.Features.Events.Models
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext DbContext
+
+@inject IStringLocalizer<Resources.Events> Loc
+
+
+@if (_event is not null)
+{
+    <PageTitle>@(CultureInfo.CurrentCulture.Name == "en-GB" ? _event.TitleEn : _event.Title) - @Loc["Participants"] (@_nbParticipants)</PageTitle>
+
+    <section class="max-w-screen-xl mx-auto w-full">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="mb-8 text-4xl tracking-wider">@(CultureInfo.CurrentCulture.Name == "en-GB" ? _event.TitleEn : _event.Title) - @Loc["Participants"] (@_nbParticipants)</h1>
+        </div>
+
+        <ListParticipants NbParticipantsCallback="HandleNbParticipants" Id="_event.Id"/>
+    </section>
+}
+
+
+@code
+{
+    private int? _nbParticipants;
+    [Parameter] public Guid Id { get; set; }
+    private Event? _event;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _event = await DbContext.Events.FirstAsync(e => e.Id == Id);
+    }
+
+    private void HandleNbParticipants(int? nbParticipants)
+    {
+        _nbParticipants = nbParticipants;
+    }
+}

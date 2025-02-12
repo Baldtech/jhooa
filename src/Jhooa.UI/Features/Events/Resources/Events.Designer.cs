@@ -254,5 +254,11 @@ namespace Jhooa.UI.Features.Events.Resources {
                 return ResourceManager.GetString("UpdatePictures", resourceCulture);
             }
         }
+        
+        internal static string EventParticipants {
+            get {
+                return ResourceManager.GetString("EventParticipants", resourceCulture);
+            }
+        }
     }
 }

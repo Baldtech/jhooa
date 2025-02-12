@@ -88,11 +88,8 @@
                                     ValidationFor="@(() => Input.EndDate)"/>
 
 
-
-                    @if (!Id.HasValue)
-                    {
-                        <InputFile name="Input.Image" accept=".jpg,.png,jpeg"/>
-                    }
+                    <InputFile OnChange="HandleFileSelected" accept=".jpg,.png,jpeg"/>
+                    <InputText @bind-Value="Input.ImageName" hidden></InputText>
                 </div>
                 <button type="submit"
                         class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@Loc["Save"]</button>
@@ -119,6 +116,17 @@
     string _bodyFr = """...markup here...""";
     string _bodyEn = """...markup here...""";
 
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        if (Input is null) return;
+        
+        foreach (var file in e.GetMultipleFiles())
+        {
+            var ext = Path.GetExtension(file.Name);
+            var blobService = BlobService.GetBlobService("events");
+            Input.ImageName = await blobService.UploadAsync($"thumbnails/{Guid.NewGuid()}{ext}", file.OpenReadStream());
+        }
+    }
 
     [Parameter] public Guid? Id { get; set; }
     [SupplyParameterFromForm] private InputModel? Input { get; set; }
@@ -185,6 +193,13 @@
 
             if (Input.EventGuid.HasValue)
             {
+                if (Input.ImageName is not null)
+                {
+                    await DbContext.Events.Where(e => e.Id == Input.EventGuid)
+                        .ExecuteUpdateAsync(setters => setters
+                            .SetProperty(b => b.ImageUrl, Input.ImageName));
+                }
+
                 await DbContext.Events.Where(e => e.Id == Input.EventGuid)
                     .ExecuteUpdateAsync(setters => setters
                         .SetProperty(b => b.Title, Input.Title)
@@ -203,14 +218,9 @@
                     StartDate = Input.StartDate,
                     EndDate = Input.EndDate,
                     TitleEn = Input.TitleEn,
-                    DescriptionEn = contentEn
+                    DescriptionEn = contentEn,
+                    ImageUrl = Input.ImageName
                 };
-
-                if (Input.Image is not null)
-                {
-                    var blobService = BlobService.GetBlobService("events");
-                    newEvent.ImageUrl = await blobService.UploadAsync($"{newEvent.Id}/{Input.Image.FileName}", Input.Image.OpenReadStream());
-                }
 
                 await DbContext.Events.AddAsync(newEvent);
             }
@@ -229,7 +239,7 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string Title { get; set; } = "";
-        
+
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Events))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Events))]
         public string TitleEn { get; set; } = "";
@@ -238,7 +248,7 @@
 
         public DateTimeOffset EndDate { get; set; }
 
-        public IFormFile? Image { get; set; }
+        public string? ImageName { get; set; }
     }
 
 }
