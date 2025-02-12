@@ -1,6 +1,8 @@
 @using Microsoft.Extensions.Localization
 @inject NavigationManager Navigation
 @inject IStringLocalizer<CultureSelector> Loc
+@inject IJSRuntime JS
+
 @rendermode InteractiveServer
 
 <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="md:float-end text-white focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
@@ -9,24 +11,22 @@
 </button>
 
 <!-- Dropdown menu -->
-<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-20 ">
+<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-16 ">
     <ul class="py-2 text-gray-700 " aria-labelledby="dropdownDefaultButton">
         <li>
-            <a href="" @onclick="@ApplyEnSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 ">EN</a>
-
+            <a href="" @onclick="@ApplyEnSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 capitalize text-center text-sm">EN</a>
         </li>
         <li>
-            <a href="" @onclick="@ApplyFrSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 ">FR</a>
+            <a href="" @onclick="@ApplyFrSelectedCultureAsync" @onclick:preventDefault class="block px-4 py-2 hover:bg-gray-100 capitalize  text-center text-sm">FR</a>
         </li>
     </ul>
 </div>
 
-
-
 @code
 {
     private CultureInfo _selectedCulture = CultureInfo.CurrentCulture.Name.StartsWith("fr") ? new CultureInfo("fr-FR") : new CultureInfo("en-GB");
-    
+    private IJSObjectReference? module;
+
     private Task ApplyFrSelectedCultureAsync()
     {
         var uri = new Uri(Navigation.Uri)
@@ -53,5 +53,16 @@
             forceLoad: true);
 
         return Task.CompletedTask;
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JS.InvokeAsync<IJSObjectReference>("import",
+                "./js/FlowbiteLoad.js");
+
+            await module.InvokeVoidAsync("loadFlowbite");
+        }
     }
 }
