@@ -9,22 +9,20 @@
 
 <header class="w-full bg-gradient-to-b from-jhooa-teal-900 to-jhooa-teal-200">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white pt-6">
-        <div class="flex items-center space-x-2">
-            <a href="/" class="focus:outline-none mr-2 flex items-center">
-                <img src="images/chevron-left.svg" alt="back" class="h-5 w-5"/>
-            </a>
-            <a href="/" class="text-sm hover:underline hidden md:inline-block">
-                @Loc["BackToHome"]
-            </a>
+        <div class="basis-3xl flex-none items-center space-x-2">
+            <NavLink href="/" class="text-sm hover:underline hidden md:inline-block">
+                <img src="images/chevron-left.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToHome"]
+            </NavLink>
         </div>
 
-        <div class="flex-1 flex justify-center">
-            <h1 class="text-2xl font-semibold tracking-wide">
-                <img src="images/logo_no_tagline.svg" alt="Jhooa" class="h-16"/>
-            </h1>
+        <div class="basis-3xl grow justify-center">
+            <img src="images/logo_no_tagline.svg" alt="Jhooa" class="h-16 m-auto"/>
         </div>
 
-        <div class="flex items-center space-x-4">
+        <div class="basis-3xl flex-none items-center space-x-4">
+            <div class="relative inline-block md:float-end">
+                <CultureSelector/>
+            </div>
             <AuthorizeView>
                 <Authorized>
                     <form action="Account/Logout" method="post"
@@ -32,7 +30,7 @@
                         <AntiforgeryToken/>
                         <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
                         <button type="submit"
-                                class="lowercase border border-white rounded-md px-4 py-2 text-sm hidden md:inline-block md:float-end">
+                                class="rounded-md px-6 py-3 text-sm hidden md:inline-block md:float-end bg-[#BE755F]">
                             <img src="images/login.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
                             @Loc["Logout"]
                         </button>
@@ -42,9 +40,7 @@
 
             </AuthorizeView>
 
-            <div class="relative">
-                @* <CultureSelector /> *@
-            </div>
+
         </div>
     </div>
 </header>

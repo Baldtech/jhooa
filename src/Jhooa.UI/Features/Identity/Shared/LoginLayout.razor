@@ -1,13 +1,17 @@
 @inherits LayoutComponentBase
 
-<div class="bg-cover bg-center min-h-screen flex flex-col" style="background-image: url('./images/connection-background.jpg')">
-    <LoginNavMenu />
+<div class="bg-cover bg-center min-h-screen "
+     style="background-image: url('./images/connection-background.jpg')">
+    <div
+        class="absolute inset-0 bg-black/50 flex flex-col">
+        <LoginNavMenu/>
 
-    <main class="flex-grow  grid place-items-center" >
-        @Body
-    </main>
+        <main class="flex-grow  grid place-items-center">
+            @Body
+        </main>
 
-    <AccountFooter />
+        <AccountFooter/>
+    </div>
 </div>
 
 

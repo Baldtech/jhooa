@@ -3,13 +3,13 @@
 @inherits InputBase<string>
 
 <div>
-    <label for="@_fieldId" class="block mb-1 text-sm">@DisplayName</label>
+    <label for="@_fieldId" class="block mb-2 text-sm">@DisplayName</label>
 
     <input
         id="@_fieldId"
         type="@Type"
         name="@NameAttributeValue"
-        class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none @CssClass"
+        class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none @CssClass"
         @bind="@CurrentValue"/>
     <ValidationMessage For="@ValidationFor" class="text-danger"/>
 </div>

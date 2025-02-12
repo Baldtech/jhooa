@@ -111,7 +111,7 @@
         <value>Message</value>
     </data>
     <data name="Logout" xml:space="preserve">
-        <value>Déconnection</value>
+        <value>Se déconnecter</value>
     </data>
     <data name="TermsConditions" xml:space="preserve">
         <value>Termes et conditions</value>

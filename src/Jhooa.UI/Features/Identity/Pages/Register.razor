@@ -11,6 +11,7 @@
 @using Jhooa.UI.Features.Identity.Components
 
 @inject IStringLocalizer<Resources.Identity> Loc
+@inject IStringLocalizer<Jhooa.UI.Features.Home.Resources.Home> LocHome
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
 @inject ILogger<Register> Logger
@@ -58,7 +59,7 @@
                         <JhooaInputText @bind-Value="Input.City" DisplayName="@Loc["City"]"
                                         ValidationFor="@(() => Input.City)" Autocomplete="city"/>
                         <div>
-                            <label for="@Input.Country" class="block mb-1 text-sm">@Loc["Country"]</label>
+                            <label for="@Input.Country" class="block mb-2 text-sm">@Loc["Country"]</label>
 
                             <InputSelect @bind-Value="Input.Country"
                                          class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
@@ -120,9 +121,12 @@
                             <InputRadio id="option1" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.MonthlyOnce"/>
 
-                            <div class="flex flex-col space-y-1 w-full">
-                                <label class="text-white font-medium text-lg font-monetaRegular">
+                            <div class="flex flex-row w-full">
+                                <label class="basis-1/2 text-white font-medium text-lg font-monetaRegular">
                                     @Loc["RegisterMonthly"]
+                                </label>
+                                <label class="basis-1/2 text-white font-medium text-lg font-monetaRegular text-end">
+                                     7 @LocHome["PriceMonthlyDesc"]
                                 </label>
                             </div>
                         </div>
@@ -131,9 +135,12 @@
                             <InputRadio id="option2" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.MonthlyRecurring"/>
 
-                            <div class="flex flex-col space-y-1 w-full">
-                                <label  for="option2" class="text-white font-medium text-lg font-monetaRegular">
+                            <div class="flex flex-row w-full">
+                                <label class="basis-3/4 text-white font-medium text-lg font-monetaRegular">
                                     @Loc["RegisterMonthlyRecurring"]
+                                </label>
+                                <label class="basis-1/4 text-white font-medium text-lg font-monetaRegular text-end">
+                                    7 @LocHome["PriceMonthlyDesc"]
                                 </label>
                             </div>
                         </div>
@@ -142,9 +149,12 @@
                             <InputRadio id="option3" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyOnce"/>
 
-                            <div class="flex flex-col space-y-1 w-full">
-                                <label for="option3" class="text-white font-medium text-lg font-monetaRegular">
+                            <div class="flex flex-row w-full">
+                                <label class="basis-3/4 text-white font-medium text-lg font-monetaRegular">
                                     @Loc["RegisterYearly"]
+                                </label>
+                                <label class="basis-1/4 text-white font-medium text-lg font-monetaRegular text-end">
+                                    70 @LocHome["PriceYearlyDesc"]
                                 </label>
                             </div>
                         </div>
@@ -153,9 +163,12 @@
                             <InputRadio id="option4" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-4"
                                         Value="SubscriptionType.YearlyRecurring"/>
 
-                            <div class="flex flex-col space-y-1 w-full">
-                                <label  for="option4" class="text-white font-medium text-lg font-monetaRegular">
+                            <div class="flex flex-row w-full">
+                                <label class="basis-3/4 text-white font-medium text-lg font-monetaRegular">
                                     @Loc["RegisterYearlyRecurring"]
+                                </label>
+                                <label class="basis-1/4 text-white font-medium text-lg font-monetaRegular text-end">
+                                    70 @LocHome["PriceYearlyDesc"]
                                 </label>
                             </div>
                         </div>

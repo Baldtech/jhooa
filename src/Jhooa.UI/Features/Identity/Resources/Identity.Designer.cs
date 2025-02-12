@@ -596,5 +596,11 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("NewsletterAccepted", resourceCulture);
             }
         }
+        
+        internal static string AlreadyHaveAccountQuestion {
+            get {
+                return ResourceManager.GetString("AlreadyHaveAccountQuestion", resourceCulture);
+            }
+        }
     }
 }

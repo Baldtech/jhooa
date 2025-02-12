@@ -20,7 +20,7 @@
 
 <section class="max-w-screen-xl mx-auto  text-white">
 
-    <h2 class="text-xl font-semibold mb-4">@Loc["MyAccount"]</h2>
+    <h2 class="text-2xl font-semibold mb-4 font-monetaRegular">@Loc["MyAccount"]</h2>
 
     @if (Input is not null)
     {
@@ -37,6 +37,8 @@
 
                     <JhooaInputText @bind-Value="Input.PhoneNumber" DisplayName="@Loc["PhoneNumber"]"
                                     ValidationFor="@(() => Input.PhoneNumber)" Autocomplete="phone"/>
+                    <JhooaInputDate @bind-Value="Input.BirthDate" DisplayName="@Loc["BirthDate"]"
+                                    ValidationFor="@(() => Input.BirthDate)"/>
                 </div>
 
                 <div class="space-y-3">
@@ -50,10 +52,10 @@
                     @* <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]" *@
                     @*                 ValidationFor="@(() => Input.Country)" Autocomplete="country" class="mb-3"/> *@
                     <div>
-                        <label for="@Input.Country" class="block mb-1 text-sm">@Loc["Country"]</label>
+                        <label for="@Input.Country" class="block mb-2 text-sm">@Loc["Country"]</label>
 
                         <InputSelect @bind-Value="Input.Country"
-                                     class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none">
+                                     class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none">
                             <option value="france">@Loc["France"]</option>
                             <option value="luxembourg">@Loc["Luxembourg"]</option>
                             <option value="belgium">@Loc["Belgium"]</option>
@@ -109,6 +111,7 @@
             City = _user.City,
             PhoneNumber = _phoneNumber!,
             SubscribeToNewsletter = _user.NewsletterActive,
+            BirthDate = _user.BirthDate,
             AcceptDistribution = _user.AcceptDistribution
         };
     }
@@ -135,6 +138,7 @@
                         .SetProperty(s => s.Country, Input.Country)
                         .SetProperty(s => s.City, Input.City)
                         .SetProperty(s => s.AcceptDistribution, Input.AcceptDistribution)
+                        .SetProperty(s => s.BirthDate, Input.BirthDate)
                         .SetProperty(s => s.NewsletterActive, Input.SubscribeToNewsletter));
 
             await DbContext.SaveChangesAsync();
@@ -175,6 +179,9 @@
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public required string PhoneNumber { get; set; }
 
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public DateTimeOffset BirthDate { get; set; } = DateTimeOffset.Now;
+        
         public bool SubscribeToNewsletter { get; set; }
         public bool AcceptDistribution { get; set; }
 

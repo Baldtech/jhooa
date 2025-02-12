@@ -8,13 +8,9 @@
 <main class="flex-grow">
     <div class="max-w-screen-xl mx-auto">
         <div class="flex items-center space-x-2 px-8 mt-4">
-            <a href="/" class="focus:outline-none mr-2 flex items-center">
-                <img src="images/chevron-left.svg" alt="back" class="h-5 w-5"/>
-
-            </a>
-            <a href="/" class="hover:underline text-lg text-jhooa-gray-100">
-                @Loc["BackToHome"]
-            </a>
+            <NavLink href="/" class="text-md hover:underline hidden md:inline-block">
+                <img src="images/chevron-left-black.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToHome"]
+            </NavLink>
         </div>
     </div>
     
