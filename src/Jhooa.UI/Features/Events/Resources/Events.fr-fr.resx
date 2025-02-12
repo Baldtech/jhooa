@@ -12,13 +12,13 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="EventsList" xml:space="preserve">
-        <value>Evènements</value>
+        <value>Evénements</value>
     </data>
     <data name="AddEvent" xml:space="preserve">
-        <value>Ajouter un évènement</value>
+        <value>Ajouter un événement</value>
     </data>
     <data name="EditEvent" xml:space="preserve">
-        <value>Modifie l'évènement</value>
+        <value>Modifie l'événement</value>
     </data>
     <data name="Title" xml:space="preserve">
         <value>Titre</value>
@@ -36,7 +36,7 @@
         <value>Comment s'inscrire ?</value>
     </data>
     <data name="HowToRegisterDesc" xml:space="preserve">
-        <value>Je peux visualiser les évènements et m’inscrire à ceux qui sont sur ma période d’abonnement (ex : mars et avril si j’ai souscrit un abonnement d’un mois à cheval sur ces deux mois). La sélection des personnes qui participeront aux événements se fera les 15 du mois qui suivront l’évènement proposé pour le mois.</value>
+        <value>Je peux visualiser les événements et m’inscrire à ceux qui sont sur ma période d’abonnement (ex : mars et avril si j’ai souscrit un abonnement d’un mois à cheval sur ces deux mois). La sélection des personnes qui participeront aux événements se fera les 15 du mois qui suivront l’événement proposé pour le mois.</value>
     </data>
     <data name="StartDate" xml:space="preserve">
         <value>Date de début</value>
@@ -51,22 +51,22 @@
         <value>Actions</value>
     </data>
     <data name="NextEvents" xml:space="preserve">
-        <value>Evènements à venir</value>
+        <value>Evénements à venir</value>
     </data>
     <data name="NoPastEvents" xml:space="preserve">
-        <value>Pas d'évènements passés</value>
+        <value>Pas d'événements passés</value>
     </data>
     <data name="Loading" xml:space="preserve">
         <value>Chargement ...</value>
     </data>
     <data name="PastEvents" xml:space="preserve">
-        <value>Evènements passés</value>
+        <value>Evénements passés</value>
     </data>
     <data name="NoNextEvents" xml:space="preserve">
-        <value>Pas de prochains évènements</value>
+        <value>Pas de prochains événements</value>
     </data>
     <data name="BackToEvents" xml:space="preserve">
-        <value>Retour aux évènements</value>
+        <value>Retour aux événements</value>
     </data>
     <data name="Pictures" xml:space="preserve">
         <value>En image</value>
@@ -84,10 +84,10 @@
         <value>S'inscrire</value>
     </data>
     <data name="Registered" xml:space="preserve">
-        <value>Vous êtes inscrit à cette évènement</value>
+        <value>Vous êtes inscrit à cette événement</value>
     </data>
     <data name="Unregistered" xml:space="preserve">
-        <value>Vous avez été désinscrit de cette évènement</value>
+        <value>Vous avez été désinscrit de cette événement</value>
     </data>
     <data name="Edit" xml:space="preserve">
         <value>Modfication</value>
