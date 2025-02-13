@@ -11,36 +11,50 @@
     <base href="/"/>
     @* <link rel="stylesheet" href="app.css"/> *@
     @* <link rel="stylesheet" href="Jhooa.UI.styles.css"/> *@
-    <link rel="stylesheet" href="_content/BytexDigital.Blazor.Components.CookieConsent/styles.min.css" />
-    <link href="css/app.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="_content/BytexDigital.Blazor.Components.CookieConsent/styles.min.css"/>
+    <link href="css/app.min.css" rel="stylesheet"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <HeadOutlet/>
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <Routes/>
-    <script src="_framework/blazor.web.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    
-    <script>
-        Blazor.addEventListener('enhancedload', function () {
-            initFlowbite();
+<div id="top"></div>
+
+<Routes/>
+<script src="_framework/blazor.web.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+<script>
+    Blazor.addEventListener('enhancedload', function () {
+        initFlowbite();
+    });
+
+    // Will execute myCallback every 0.5 seconds 
+    var intervalID = window.setInterval(myCallback, 500);
+
+    function myCallback() {
+        const mobileMenuButton = document.querySelector(".mobile-menu-button");
+        const mobileMenu = document.querySelector(".navigation-menu");
+
+        if (mobileMenuButton === null || mobileMenu === null) {
+            return;
+        }
+        mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
         });
-        
-        document.addEventListener("DOMContentLoaded", () => {
-            // Mobile menu toggle
+            
 
-            const mobileMenuButton = document.querySelector(".mobile-menu-button");
-            const mobileMenu = document.querySelector(".navigation-menu");
+    }
 
-            mobileMenuButton.addEventListener("click", () => {
-                mobileMenu.classList.toggle("hidden");
-            });
-        });
+    document.addEventListener("DOMContentLoaded", () => {
+        // Mobile menu toggle
 
-    </script>
-    </body>
+
+    });
+
+</script>
+</body>
 
 </html>
 
@@ -70,4 +84,5 @@
                     currentCulture,
                     currentCulture)));
     }
+
 }
