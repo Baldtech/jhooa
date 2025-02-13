@@ -69,7 +69,7 @@
     protected override async Task OnInitializedAsync()
     {
         _themes = await DbContext.VideoThemes.Take(21).ToListAsync();
-        _years = Enumerable.Range(2024, 3).ToList();
+        _years = Enumerable.Range(2025, 3).ToList();
         _months = Enumerable.Range(1, 12).Select(x => new MonthModel()
         {
             Number = x,

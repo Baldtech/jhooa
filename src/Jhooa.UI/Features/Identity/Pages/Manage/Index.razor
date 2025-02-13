@@ -12,15 +12,14 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
-@inject NavigationManager NavigationManager
 @inject ApplicationDbContext DbContext
 
 <PageTitle>@Loc["MyAccount"]</PageTitle>
 
 
-<section class="max-w-screen-xl mx-auto  text-white">
+<section class="max-w-screen-xl mx-auto  text-white px-4 ">
 
-    <h2 class="text-2xl font-semibold mb-4 font-monetaRegular">@Loc["MyAccount"]</h2>
+    <h2 class="text-2xl font-semibold mb-4 font-monetaRegular ">@Loc["MyAccount"]</h2>
 
     @if (Input is not null)
     {
@@ -28,8 +27,8 @@
             <StatusMessage/>
             <DataAnnotationsValidator/>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-3">                   
+            <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="space-y-3 w-full md:w-1/2 pt-4">
                     <JhooaInputText @bind-Value="Input.Lastname" DisplayName="@Loc["LastName"]"
                                     ValidationFor="@(() => Input.Lastname)" Autocomplete="lastname"/>
                     <JhooaInputText @bind-Value="Input.Firstname" DisplayName="@Loc["FirstName"]"
@@ -41,16 +40,14 @@
                                     ValidationFor="@(() => Input.BirthDate)"/>
                 </div>
 
-                <div class="space-y-3">
-                    
+                <div class="space-y-3 w-full md:w-1/2 pt-4">
+
                     <JhooaInputText @bind-Value="Input.Address" DisplayName="@Loc["Address"]"
                                     ValidationFor="@(() => Input.Address)" Autocomplete="address"/>
                     <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@Loc["ZipCode"]"
                                     ValidationFor="@(() => Input.ZipCode)" Autocomplete="zipcode"/>
                     <JhooaInputText @bind-Value="Input.City" DisplayName="@Loc["City"]"
                                     ValidationFor="@(() => Input.City)" Autocomplete="city"/>
-                    @* <JhooaInputText @bind-Value="Input.Country" DisplayName="@Loc["Country"]" *@
-                    @*                 ValidationFor="@(() => Input.Country)" Autocomplete="country" class="mb-3"/> *@
                     <div>
                         <label for="@Input.Country" class="block mb-2 text-sm">@Loc["Country"]</label>
 
@@ -76,13 +73,10 @@
                                class="">@Loc["AcceptDiffusion"] <br/>@Loc["AcceptDiffusionDesc"]</label>
                     </div>
                 </div>
-
-                <div class="col-span-2 flex justify-center gap-3 mt-4">
-                    <button type="submit" class="border-2 border-white px-10 py-3">@Loc["SaveChanges"]</button>
-                </div>
-                <div class="col-span-2 flex justify-center hover:underline mb-10">
-                    <a href="/Account/Manage/ChangePassword">@Loc["ChangePassword"]</a>
-                </div>
+            </div>
+            <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
+                <button type="submit" class="border-2 border-white px-10 py-3">@Loc["SaveChanges"]</button>
+                <a href="/Account/Manage/ChangePassword">@Loc["ChangePassword"]</a>
             </div>
         </EditForm>
     }
@@ -166,7 +160,7 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public required string ZipCode { get; set; }
-        
+
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string City { get; set; } = "";
@@ -181,10 +175,9 @@
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public DateTimeOffset BirthDate { get; set; } = DateTimeOffset.Now;
-        
+
         public bool SubscribeToNewsletter { get; set; }
         public bool AcceptDistribution { get; set; }
-
     }
 
 }

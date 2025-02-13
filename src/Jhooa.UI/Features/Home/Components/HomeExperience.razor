@@ -7,14 +7,14 @@
 
     <!-- 2-column layout on desktop, single column on mobile -->
     <div class="md:grid md:grid-cols-3 md:gap-6 items-center">
-      
+
       <!-- LEFT COLUMN: Image #1 on desktop; 
            On mobile, it’s centered and only 75% wide -->
       <div class="mb-8 md:mb-0">
         <img
           src="images/home-experience.jpg"
           alt="Parasailing example 1"
-          class="w-3/4 mx-auto md:w-full h-auto object-cover relative md:-bottom-48" 
+          class="w-3/4 mx-auto md:w-full h-auto object-cover relative md:-bottom-48"
         />
       </div>
 
@@ -28,10 +28,10 @@
         <p class="mb-6 leading-relaxed font-amsiProRegular">
           @Loc["ExpDescription"]
         </p>
-        
+
         <div class="grid grid-cols-10 gap-4">
           <div class="">
-            <img src="images/Meteor_Rain.svg" alt="" />
+            <img src="images/Meteor_Rain.svg" alt=""/>
           </div>
 
           <div class="col-span-9">
@@ -46,7 +46,7 @@
           </div>
 
           <div class="">
-            <img src="images/footage.svg" alt="" />
+            <img src="images/footage.svg" alt=""/>
           </div>
 
           <div class="col-span-9">
@@ -61,7 +61,7 @@
           </div>
 
           <div class="">
-            <img src="images/ticket.svg" alt="" />
+            <img src="images/ticket.svg" alt=""/>
           </div>
 
           <div class="col-span-9">
@@ -76,7 +76,7 @@
           </div>
 
           <div class="">
-            <img src="images/medal.svg" alt="" />
+            <img src="images/medal.svg" alt=""/>
           </div>
 
           <div class="col-span-9">
@@ -85,20 +85,30 @@
             </p>
           </div>
         </div>
-        
+
         <!-- Pricing CTA buttons -->
         <div class="flex flex-col sm:flex-row gap-4 mb-8 mt-10 justify-center">
           <div
-            class="bg-jhooa-peach-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold text-center">
-            @Loc["Monthly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7 @Loc["PriceMonthlyDesc"]
+            class="bg-jhooa-peach-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold flex flex-row w-full">
+            <label class="basis-3/4 ">
+              @Loc["Monthly"]
+            </label>
+            <label class="basis-1/4  text-end">
+              7 @Loc["PriceMonthlyDesc"]
+            </label>
           </div>
           <div
-            class="bg-jhooa-teal-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold text-center">
-            @Loc["Yearly"] &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 70 @Loc["PriceYearlyDesc"]
+            class="bg-jhooa-teal-100 text-white border-[3px] border-white px-10 py-4 font-monetaRegular font-bold flex flex-row w-full">
+            <label class="basis-3/4 ">
+            @Loc["Yearly"]
+            </label>
+            <label class="basis-1/4  text-end">
+              70 @Loc["PriceYearlyDesc"]
+            </label>
           </div>
         </div>
       </div><!-- end RIGHT COLUMN -->
     </div><!-- end .md:grid -->
-    
+
   </div><!-- end container -->
 </section>

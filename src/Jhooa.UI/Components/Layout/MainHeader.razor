@@ -13,12 +13,17 @@
     </div>
 </section>
 <!-- Logo Panel -->
-<div class="absolute inset-0 mt-52 m-auto md:hidden">
-    <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover w-64"/>
-</div>
-<section class="w-full absolute">
+@* <div class="absolute inset-0 mt-52 m-auto md:hidden"> *@
+@*     <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover w-64"/> *@
+@* </div> *@
+<section class="w-full md:hidden">
+    <div class="absolute mt-52 mx-auto ">
+        <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover w-5/6 ml-10"/>
+    </div>
+</section>
+<section class="w-full absolute hidden md:block">
     <div class="mt-6 max-w-screen-xl mx-auto ">
-        <div class="absolute mt-52 ml-32 hidden md:block">
+        <div class="absolute mt-52 ml-32 ">
             <img src="./images/logo.svg" alt="Logo" class="m-auto object-cover w-96"/>
         </div>
     </div>
@@ -52,10 +57,11 @@
         else
             _imageLargeUrl = "https://placehold.co/3000x574/808080/fff?text=.";
     }
-    
+
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
         StateHasChanged();
     }
+
 }

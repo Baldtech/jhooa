@@ -14,31 +14,33 @@
     <div class="mt-6 max-w-screen-xl mx-auto lowercase">
 
         <!-- mobile menu icon -->
-        <div class="grid grid-cols-12 ">
-            <div class="col-start-5 col-span-5">
+        <div class="flex flex-row place-items-center">
+            <div class="w-64 grow flex place-items-center">
                 <AuthorizeView>
                     <Authorized>
 
                     </Authorized>
                     <NotAuthorized>
                         <NavLink href="Account/Login" type="button"
-                           class="border border-white rounded-md px-4 py-2 md:hidden">
+                                 class="border border-white rounded-md px-4 py-2 md:hidden m-auto">
                             <img src="images/user.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
                             @Loc["Login"]
                         </NavLink>
                     </NotAuthorized>
                 </AuthorizeView>
             </div>
-            <div class="col-end-12 md:hidden">
-                <button type="button" class="mobile-menu-button">
-                    <img src="./images/burger-menu.svg" class="w-8 h-8 -mt-1" alt="menu">
-                </button>
+            
+            <div class="inline md:hidden w-20 flex-none">
+                <CultureSelector/>
             </div>
+            <button type="button" class="mobile-menu-button w-20 flex-none md:hidden">
+                <img src="./images/burger-menu.svg" class="w-8 h-8 -mt-1" alt="menu">
+            </button>
         </div>
 
         <!-- desktop menu -->
         <div class="mt-5 md:mt-1 md:ml-10">
-            <div class="hidden md:block navigation-menu font-butlerMedium text-[20px] tracking-[0.3px]">
+            <div class="hidden md:block navigation-menu font-butlerMedium text-[20px] tracking-[0.3px] bg-black/50 md:bg-transparent">
                 <a href="/"
                    class="py-2 px-3 block text-right mx-10 md:mx-5 md:inline-block @(string.IsNullOrWhiteSpace(_currentRoot) ? "bg-jhooa-peach-100 bg-opacity-80" : "") rounded-md"> 
                     <img src="images/menu-star.svg"
