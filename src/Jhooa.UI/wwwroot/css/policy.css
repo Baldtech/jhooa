@@ -48,6 +48,6 @@
     border: 1px solid black;
 }
 
-/* mb-2 text-lg tracking-wider font-amsiSemiBold text-jhooa-teal-200 */
-/*                 <h3 class="mb-2 tracking-wider text-jhooa-peach-100  font-amsiSemiBold">TITLE 3</h3>
- */
+li[data-list="bullet"] {
+    list-style-type: disc; 
+}
