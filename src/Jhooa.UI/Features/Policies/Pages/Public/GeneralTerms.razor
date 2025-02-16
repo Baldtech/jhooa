@@ -18,7 +18,7 @@
             
             @if (_policy is not null)
             {
-                <div class="policy-content tracking-wider">
+                <div id="policy" class="policy-content tracking-wider list-outside list-disc">
                     @(CultureInfo.CurrentCulture.Name == "en-GB" ? (MarkupString)_policy.ContentEn : (MarkupString)_policy.ContentFr)
                 </div>
             }

@@ -13,7 +13,7 @@
 
         <h1 class="text-butler text-3xl text-jhooa-peach-100 mb-6 pt-8">@Loc["PastEvents"]</h1>
 
-        <div class="">
+        <div class="flex flex-wrap gap-8">
             @if (_events is not null && _events.Count > 0)
             {
                 @foreach (var ev in _events.OrderByDescending(ev => ev.StartDate))
@@ -37,11 +37,20 @@
 
 @code {
 
-    private List<Event>? _events;
+    private List<EventListViewModel>? _events;
 
     protected override async Task OnInitializedAsync()
     {
-        _events ??= await DbContext.Events.Where(ev => ev.StartDate < DateTimeOffset.Now).ToListAsync();
+        _events ??= await DbContext.Events
+            .Where(ev => ev.StartDate < DateTimeOffset.Now)
+            .Select(ev => new EventListViewModel()
+            {
+                Id = ev.Id,
+                Title = CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title,
+                StartDate = ev.StartDate,
+                ImageUrl = ev.ImageUrl,
+                IsVisible = false
+            }).ToListAsync();
     }
 
 }
