@@ -4,7 +4,7 @@
 @inject IStringLocalizer<Resources.Events> Loc
 @attribute [StreamRendering]
 
-@if (_pictures is not null && _pictures.Count > 1)
+@if (_pictures is not null && _pictures.Count >= 1)
 {
     <h2 class="text-xl font-semibold text-teal-900 mt-8 mb-4">@Loc["Pictures"]</h2>
 
