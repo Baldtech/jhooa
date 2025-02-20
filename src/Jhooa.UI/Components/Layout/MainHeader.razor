@@ -45,9 +45,17 @@
             _imageSmallUrl = "./images/headers/home-small.jpg";
         }
         else if (_currentRoot.StartsWith("Events", StringComparison.OrdinalIgnoreCase))
-            _imageLargeUrl = "https://placehold.co/3000x574/FF0000/fff?text=.";
+        {
+            _imageLargeUrl = "./images/headers/events-big.jpg";
+            _imageMediumUrl = "./images/headers/events-medium.jpg";
+            _imageSmallUrl = "./images/headers/events-small.jpg";
+        }
         else if (_currentRoot.StartsWith("Videos", StringComparison.OrdinalIgnoreCase))
-            _imageLargeUrl = "https://placehold.co/3000x574/0000ff/fff?text=.";
+        {
+            _imageLargeUrl = "./images/headers/videos-big.jpg";
+            _imageMediumUrl = "./images/headers/videos-medium.jpg";
+            _imageSmallUrl = "./images/headers/videos-small.jpg";
+        }
         else
             _imageLargeUrl = "https://placehold.co/3000x574/808080/fff?text=.";
     }
