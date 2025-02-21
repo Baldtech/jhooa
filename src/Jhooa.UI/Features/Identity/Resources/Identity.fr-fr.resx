@@ -102,7 +102,7 @@
         <value>Je souhaite recevoir des e-mails concernant des actualités, des offres spéciales et des promotions</value>
     </data>
     <data name="AcceptToc" xml:space="preserve">
-        <value>J’ai lu et j’accepte les &lt;a href="/general-terms" target="_blank"&gt;Conditions Générales de Vente et d’Utilisation&lt;/a&gt;.</value>
+        <value>J’ai lu et j’accepte les &lt;a href="/general-terms#top" target="_blank"&gt;Conditions Générales de Vente et d’Utilisation&lt;/a&gt;.</value>
     </data>
     <data name="RegisterYearlyRecurring" xml:space="preserve">
         <value>Annuel renouvelable</value>

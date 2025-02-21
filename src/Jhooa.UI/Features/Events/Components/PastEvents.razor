@@ -18,7 +18,9 @@
             {
                 @foreach (var ev in _events.OrderByDescending(ev => ev.StartDate))
                 {
-                    <EventCard Event="ev"/>
+                    <div class="w-[95%] md:w-1/3 px-4">
+                        <EventCard Event="ev"/>
+                    </div>
                 }
             }
             else if (_events is not null && _events.Count == 0)

@@ -5,29 +5,31 @@
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Resources.Videos> Loc
 
-<div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-    @if (_videos.Count == 0)
-    {
-        <p>@Loc["NoVideosFound"]</p>
-    }
-    else
-    {
+@if (_videos.Count == 0)
+{
+    <p class="mt-6 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["NoVideosFound"]</p>
+}
+else
+{
+    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
         @foreach (var video in _videos)
         {
             <div class="relative group">
                 <div class="aspect-video">
                     <iframe
                         src="https://player.vimeo.com/video/@video.VideoUrl?h=6968329485&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-                        frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                        frameborder="0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                         class="w-full h-full rounded-md"
                         title=""></iframe>
 
                 </div>
             </div>
         }
-    }
+    </div>
+}
 
-</div>
 
 @code {
 

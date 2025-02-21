@@ -3,13 +3,13 @@
 @inject IStringLocalizer<Resources.Events> Loc
 
 
-<div class="w-[376px] bg-white rounded-lg shadow-md">
+<div class="w-full bg-white rounded-lg shadow-md">
     <a href="/Events/@Event.Id" class="">
-        <img class="rounded-t-lg w-[376px] h-[237px] object-none"
+        <img class="rounded-t-lg w-full h-[237px] object-none"
              src="@(string.IsNullOrWhiteSpace(Event.ImageUrl) ? "https://placehold.co/500x500/B79E98/fff?text=event" : Event.ImageUrl)"
              alt=""/>
     </a>
-    <div class="p-5 w-[376px]">
+    <div class="p-5 w-full">
         <p class="text-sm text-jhooa-brick-500 mb-1">@Event.StartDate.ToString("MMMM yyyy")</p>
         <a href="/Events/@Event.Id">
             <h5 class="text-lg font-bold mb-3 text-jhooa-teal-200 block hover:underline font-amsiProLight">@Event.Title</h5>

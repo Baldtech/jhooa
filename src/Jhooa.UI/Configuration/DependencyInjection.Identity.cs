@@ -1,6 +1,7 @@
 using Jhooa.UI.Data;
 using Jhooa.UI.Features.Identity;
 using Jhooa.UI.Features.Identity.Models;
+using Jhooa.UI.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
@@ -37,7 +38,8 @@ public static partial class DependencyInjection
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
-            .AddDefaultTokenProviders();
+            .AddDefaultTokenProviders()
+            .AddErrorDescriber<LocalizedIdentityErrorDescriber>();
         
         services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 

@@ -109,7 +109,7 @@
         <value>I would like to receive emails about news, special offers, and promotions.</value>
     </data>
     <data name="AcceptToc" xml:space="preserve">
-        <value>I have read and accept the &lt;a href="/general-terms" target="_blank"&gt;General Terms and Conditions of Sale and Use&lt;/a&gt;.</value>
+        <value>I have read and accept the &lt;a href="/general-terms#top" target="_blank"&gt;General Terms and Conditions of Sale and Use&lt;/a&gt;.</value>
     </data>
     <data name="RegisterYearlyRecurring" xml:space="preserve">
         <value>Yearly (recurring)</value>

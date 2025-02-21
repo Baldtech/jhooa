@@ -9,6 +9,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <base href="/"/>
+    <link rel="icon" type="image/x-icon" href="/images/favicon_48x48.png">
     @* <link rel="stylesheet" href="app.css"/> *@
     @* <link rel="stylesheet" href="Jhooa.UI.styles.css"/> *@
     <link rel="stylesheet" href="_content/BytexDigital.Blazor.Components.CookieConsent/styles.min.css"/>
@@ -29,30 +30,6 @@
     Blazor.addEventListener('enhancedload', function () {
         initFlowbite();
     });
-
-    // Will execute myCallback every 0.5 seconds 
-    var intervalID = window.setInterval(myCallback, 500);
-
-    function myCallback() {
-        const mobileMenuButton = document.querySelector(".mobile-menu-button");
-        const mobileMenu = document.querySelector(".navigation-menu");
-
-        if (mobileMenuButton === null || mobileMenu === null) {
-            return;
-        }
-        mobileMenuButton.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-        });
-            
-
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        // Mobile menu toggle
-
-
-    });
-
 </script>
 </body>
 

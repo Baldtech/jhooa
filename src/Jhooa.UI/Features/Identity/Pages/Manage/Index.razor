@@ -53,9 +53,9 @@
 
                         <InputSelect @bind-Value="Input.Country"
                                      class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none">
-                            <option value="france">@Loc["France"]</option>
-                            <option value="luxembourg">@Loc["Luxembourg"]</option>
-                            <option value="belgium">@Loc["Belgium"]</option>
+                            <option class="text-jhooa-teal-600" value="france">@Loc["France"]</option>
+                            <option class="text-jhooa-teal-600" value="luxembourg">@Loc["Luxembourg"]</option>
+                            <option class="text-jhooa-teal-600" value="belgium">@Loc["Belgium"]</option>
                         </InputSelect>
                         <ValidationMessage For="@(() => Input.Country)" class="text-danger"/>
 
@@ -81,6 +81,9 @@
         </EditForm>
     }
 </section>
+
+<script src="js/mobileMenu.js"></script>
+
 
 @code {
     private ApplicationUser _user = default!;

@@ -15,23 +15,22 @@
                 <!-- Item 1 -->
                 @foreach (var ev in _events.Where(ev => ev.IsVisible).OrderBy(ev => ev.StartDate))
                 {
-                    <div class="carousel-item flex-none w-[376px] sm:w-1/2 lg:w-1/3 ">
-                        <div class="w-[376px] mx-auto">
+                    <div class="carousel-item flex-none w-[95%] md:w-1/3 px-4">
+                        <div class="w-full md:w-[376px] md:mx-auto">
                             <EventCard Event="ev"/>
-
                         </div>
                     </div>
                 }
 
                 <!-- Controls -->
                 <button
-                    class="absolute top-1/2 -left-[3rem] z-10 transform -translate-y-1/2  p-2 "
+                    class="absolute top-1/2 -left-[2.3rem] md:-left-[3rem] z-10 transform -translate-y-1/2  p-2 "
                     onclick="prevSlide()"
                 >
                     <img src="images/chevron-left.svg" class="h-[30px]" alt="prev" />
                 </button>
                 <button
-                    class="absolute top-1/2 -right-[3rem] z-10 transform -translate-y-1/2 p-2"
+                    class="absolute top-1/2 -right-[2.3rem] md:-right-[3rem] z-10 transform -translate-y-1/2 p-2"
                     onclick="nextSlide()"
                 >
                     <img src="images/chevron-right.svg" class="h-[30px]" alt="prev" />
