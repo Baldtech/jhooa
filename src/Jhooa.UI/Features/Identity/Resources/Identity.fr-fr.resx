@@ -225,10 +225,10 @@
         <value>Sauvegarder les changements</value>
     </data>
     <data name="ChangePassword" xml:space="preserve">
-        <value>Modifie ton mot de passe</value>
+        <value>Change ton mot de passe</value>
     </data>
     <data name="UpdatePassword" xml:space="preserve">
-        <value>Modifie mot de passe</value>
+        <value>Enregistrer</value>
     </data>
     <data name="OldPassword" xml:space="preserve">
         <value>Ancien mot de passe</value>

@@ -2,7 +2,7 @@
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<Resources.Identity> Loc
 
-<nav class=" flex items-center justify-center bg-jhooa-teal-200 py-8 text-sm md:text-base">
+<nav class=" flex items-center justify-center bg-jhooa-teal-200 py-8 text-sm md:text-base mx-4 md:mx-0">
     <!-- Menu -->
     <div class="inline-flex">
         <!-- Active / highlighted button -->
@@ -14,6 +14,7 @@
         @(_currentRoot.EndsWith("Account/Manage") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
         border border-white
         rounded-l-full
+text-center
       "
         >
             @Loc["MyAccount"]
@@ -27,6 +28,8 @@
         text-white 
         @(_currentRoot.Contains("Dreams") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
         border-t border-b border-white
+text-center
+
       "
         >
             @Loc["MyDreams"]
@@ -41,6 +44,8 @@
         @(_currentRoot.Contains("Subscription") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
         border border-white
         rounded-r-full
+text-center
+
       "
         >
             @Loc["MySubscription"]

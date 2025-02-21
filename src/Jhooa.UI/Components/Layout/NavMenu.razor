@@ -18,7 +18,16 @@
             <div class="w-64 grow flex place-items-center">
                 <AuthorizeView>
                     <Authorized>
-
+                        <form action="Account/Logout" method="post"
+                              class="md:hidden">
+                            <AntiforgeryToken/>
+                            <input type="hidden" name="ReturnUrl" value="@_currentUrl"/>
+                            <button type="submit"
+                                    class="lowercase border border-white rounded-md px-4 py-2 text-sm  md:hidden ml-4">
+                                <img src="images/login.svg" class="h-4 w-4 rounded-full inline-block mr-2" alt="user"/>
+                                @Loc["Logout"]
+                            </button>
+                        </form>
                     </Authorized>
                     <NotAuthorized>
                         <NavLink href="Account/Login" type="button"
@@ -30,10 +39,10 @@
                 </AuthorizeView>
             </div>
             
-            <div class="inline md:hidden w-20 flex-none">
+            <div class="inline md:hidden w-20 flex-none pl-4">
                 <CultureSelector/>
             </div>
-            <button type="button" class="mobile-menu-button w-20 flex-none md:hidden">
+            <button type="button" class="mobile-menu-button w-20 flex-none md:hidden pl-4">
                 <img src="./images/burger-menu.svg" class="w-8 h-8 -mt-1" alt="menu">
             </button>
         </div>

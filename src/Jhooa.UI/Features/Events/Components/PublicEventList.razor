@@ -11,7 +11,10 @@
     {
         <div class="relative w-full">
             <!-- Carousel wrapper -->
-            <div class="carousel flex overflow-hidden w-full">
+            <div class="carousel flex overflow-hidden w-full"
+                 ontouchstart="startTouch(event)"
+                 ontouchmove="moveTouch(event)"
+                 ontouchend="endTouch(event)">
                 <!-- Item 1 -->
                 @foreach (var ev in _events.Where(ev => ev.IsVisible).OrderBy(ev => ev.StartDate))
                 {
@@ -50,6 +53,31 @@
 
 
 <script>
+
+    var startX = 0;
+    var endX = 0;
+
+    function startTouch(event) {
+        startX = event.touches[0].clientX;
+    }
+
+    function moveTouch(event) {
+        // Prevent scrolling the page while swiping
+        event.preventDefault();
+    }
+
+    function endTouch(event) {
+        endX = event.changedTouches[0].clientX;
+
+        if (startX - endX > 50) {
+            // Swiped left, go to next slide
+            nextSlide();
+        } else if (endX - startX > 50) {
+            // Swiped right, go to previous slide
+            prevSlide();
+        }
+    }
+    
     function nextSlide() {
         var carousel = document.querySelector('.carousel');
         let slideWidth = carousel.querySelector('.carousel-item').offsetWidth;
@@ -69,6 +97,7 @@
             behavior: 'smooth',
         });
     }
+
 </script>
 
 @code {

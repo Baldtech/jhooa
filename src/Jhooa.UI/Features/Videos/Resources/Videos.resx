@@ -98,10 +98,10 @@
         <value>Thank you for your support!</value>
     </data>
     <data name="VideosOnlyForConnectedUsersAlreadyUsers" xml:space="preserve">
-        <value>Already a member? &lt;a href="Account/Login" class="text-jhooa-brick-500 underline"&gt;Log in&lt;/a&gt;</value>
+        <value>Already a member? &lt;a href="Account/Login#top" class="text-jhooa-brick-500 underline"&gt;Log in&lt;/a&gt;</value>
     </data>
     <data name="VideosOnlyForConnectedUsersRegister" xml:space="preserve">
-        <value>New here? &lt;a href="Account/Register" class="text-jhooa-brick-500 underline"&gt;Register&lt;/a&gt; and unlock premium content now!</value>
+        <value>New here? &lt;a href="Account/Register#top" class="text-jhooa-brick-500 underline"&gt;Register&lt;/a&gt; and unlock premium content now!</value>
     </data>
     <data name="Months" xml:space="preserve">
         <value />

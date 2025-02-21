@@ -57,6 +57,16 @@ public static partial class DependencyInjection
                 CookieName = "CookieConsent",
             };
             
+            o.ConsentDescriptionText = new()
+            {
+                ["en"] = "This site uses essential cookies to ensure its proper functioning and optimize your experience. These cookies cannot be disabled. By continuing to browse, you accept their use. To learn more, please refer to our Cookie Policy.",
+                ["fr"] = "Ce site utilise des cookies essentiels pour assurer son bon fonctionnement et optimiser votre expérience. Ces cookies ne peuvent pas être désactivés. En poursuivant votre navigation, vous acceptez leur utilisation. Pour en savoir plus, consultez notre Politique Cookies."
+            };
+            o.ConsentAcknowledgeText = new()
+            {
+                ["en"] = "I understand",
+                ["fr"] = "J’ai compris"
+            };
             // Call optional
             o.UseDefaultConsentPrompt(prompt =>
             {
