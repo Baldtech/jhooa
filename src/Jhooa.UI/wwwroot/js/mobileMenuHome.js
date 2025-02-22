@@ -5,8 +5,13 @@ export function loadMobileMenu() {
         return;
     }
 
+    try {
+        mobileMenuButton.removeEventListener("click", makeBackgroundYellow, true);
+        mobileMenuButton.removeEventListener("click", makeBackgroundYellow, false);
+    } catch (error) {
+        console.error(error);
+    }
     mobileMenuButton.addEventListener("click", makeBackgroundYellow);
-
     function makeBackgroundYellow() {
         mobileMenu.classList.toggle("hidden");
     }

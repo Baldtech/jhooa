@@ -6,13 +6,14 @@
 
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
+@rendermode InteractiveServer
 
 <header class="w-full bg-gradient-to-b from-jhooa-teal-900 to-jhooa-teal-200">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white pt-6">
         <div class="basis-64 md:basis-80 flex-none items-center space-x-2">
-            <NavLink href="/" class="text-sm hover:underline inline-block">
+            <p href="@NavigationManager.BaseUri" class="text-sm hover:underline inline-block cursor-pointer" @onclick="GoToHome">
                 <img src="images/chevron-left.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToHome"]
-            </NavLink>
+            </p>
         </div>
 
         <div class="basis-64 md:basis-80 grow flex justify-center hidden md:block">
@@ -59,5 +60,13 @@
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+    
+    private void GoToHome()
+    {
+        NavigationManager.NavigateTo("/", new NavigationOptions
+        {
+            ForceLoad = true
+        });
     }
 }

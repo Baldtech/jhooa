@@ -6,7 +6,7 @@
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Features.Home.Resources.Home> Loc
 @inject IJSRuntime Js
-@rendermode InteractiveServer
+@* @rendermode InteractiveServer *@
 
 <PageTitle>Home</PageTitle>
 
@@ -32,7 +32,7 @@
 
 <HomeExperience />
 
-@* <script src="js/mobileMenu.js"></script> *@
+<script src="js/mobileMenu.js"></script>
 
 
 @code {
