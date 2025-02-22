@@ -17,4 +17,11 @@ public abstract class Constants
         public const string MediumDreamId = "medium-dream-id";
 
     }
+    
+    public abstract class Claims
+    {
+        public const string IsSubActive = "IsSubActive";
+        public const string SubStartDate = "SubStartDate";
+        public const string SubEndDate = "SubEndDate";
+    }
 }

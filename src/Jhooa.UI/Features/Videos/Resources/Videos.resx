@@ -118,4 +118,8 @@
     <data name="ChooseYear" xml:space="preserve">
         <value>Choose a year</value>
     </data>
+    <data name="VideosOnlyForConnectedUsersDescNoSub" xml:space="preserve">
+        <value>This page is reserved for our premium members. To access these exclusive videos, please re-activate your subscription.
+</value>
+    </data>
 </root>

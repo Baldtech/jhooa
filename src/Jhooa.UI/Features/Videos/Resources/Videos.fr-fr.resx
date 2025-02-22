@@ -105,4 +105,8 @@
     <data name="ChooseYear" xml:space="preserve">
         <value>Choisissez une année</value>
     </data>
+    <data name="VideosOnlyForConnectedUsersDescNoSub" xml:space="preserve">
+        <value>Cette page est exclusivement réservée aux membres Jhooa ! Pour accéder à nos vidéos, renouvelez votre subscription !
+</value>
+    </data>
 </root>

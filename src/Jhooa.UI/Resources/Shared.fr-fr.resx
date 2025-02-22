@@ -155,4 +155,7 @@
     <data name="Cancel" xml:space="preserve">
         <value>Annuler</value>
     </data>
+    <data name="Filters" xml:space="preserve">
+        <value>Filters</value>
+    </data>
 </root>

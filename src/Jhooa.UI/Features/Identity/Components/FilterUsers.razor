@@ -1,0 +1,42 @@
+@using Jhooa.UI.Features.Identity.Models
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Identity> Loc
+
+<div class="flex items-center space-x-2">
+    <label for="filter" class="font-medium">@Loc["Filters"]</label>
+    <select id="filter" @onchange="OnFilterTypeChange" value="@_selectedFilter"
+            class="bg-teal-800 border border-teal-700 text-white rounded px-2 py-1 focus:outline-none">
+        <option value="@FilterTypes.All" >@Loc["All"]</option>
+        <option value="@FilterTypes.Admin" >@Loc["Admin"]</option>
+        <option value="@FilterTypes.Active" >@Loc["Active"]</option>
+        <option value="@FilterTypes.Inactive" >@Loc["Inactive"]</option>
+    </select>
+</div>
+
+
+@code
+{
+    [Parameter] public EventCallback<FilterTypes?> SelectFilterTypeCallback { get; set; }
+    private FilterTypes? _selectedFilter = null;
+    
+    private async Task OnFilterTypeChange(ChangeEventArgs e)
+    {
+        var selectedValue = e.Value?.ToString();
+        if (string.IsNullOrWhiteSpace(selectedValue))
+        {
+            await ApplyFilterTypeAsync(null);
+            return;
+        }
+        
+        Enum.TryParse(selectedValue, out FilterTypes filter) ;
+        await ApplyFilterTypeAsync(filter);
+       
+    }
+    
+    
+    private Task ApplyFilterTypeAsync(FilterTypes? filter)
+    {
+        SelectFilterTypeCallback.InvokeAsync(filter);
+        return Task.CompletedTask;
+    }
+}

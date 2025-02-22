@@ -6,7 +6,6 @@
 
 @inject IStringLocalizer<Shared> Loc
 @inject NavigationManager NavigationManager
-@rendermode InteractiveServer
 
 <header class="w-full bg-jhooa-admin-100">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
@@ -70,7 +69,7 @@
             class="
         px-6 py-2
         text-white 
-        @(_currentRoot.StartsWith("Admin/User") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        @(_currentRoot.StartsWith("Admin/Users") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
         border-t border-b border-r border-white
       "
         >
@@ -82,7 +81,7 @@
             class="
         px-6 py-2 
         text-white 
-        @(_currentRoot.StartsWith("Admin/Dream") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        @(_currentRoot.StartsWith("Admin/Dreams") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
         border-t border-b border-r border-white
       "
         >

@@ -1,32 +1,40 @@
 @page "/Videos"
 @rendermode InteractiveServer
 
+@using Jhooa.UI.Configuration
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Videos.Components
-@using Jhooa.UI.Features.Videos.Models
 
 @inject IStringLocalizer<Resources.Videos> Loc
+@inject AuthenticationStateProvider AuthStateProvider
 
 <PageTitle>@Loc["Videos"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto text-jhooa-gray px-4">
-
-
     <AuthorizeView>
         <Authorized>
-            <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosPageTitle"]</h1>
+            @if (CanSeeVideos)
+            {
+                <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosPageTitle"]</h1>
 
-            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText1"]</p>
-            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText2"]</p>
-            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText3"]</p>
-            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText4"]</p>
+                <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText1"]</p>
+                <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText2"]</p>
+                <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText3"]</p>
+                <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosPageText4"]</p>
 
-            <h2 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["TheVideos"]</h2>
+                <h2 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["TheVideos"]</h2>
 
-            <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
-                          SelectYearCallback="HandleYearSelection"/>
+                <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
+                              SelectYearCallback="HandleYearSelection"/>
 
-            <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"/>
+                <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"/>
+            }
+            else
+            {
+                <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
+                
+                <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosOnlyForConnectedUsersDescNoSub"]</p>
+            }
         </Authorized>
         <NotAuthorized>
             <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
@@ -47,6 +55,10 @@
     private Guid? _selectedTheme;
     private int? _selectedMonth;
     private int? _selectedYear;
+    [Parameter] public bool CanSeeVideos { get; set; }
+
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+
 
     private void HandleThemeSelection(Guid? theme)
     {
@@ -61,6 +73,25 @@
     private void HandleMonthSelection(int? month)
     {
         _selectedMonth = month;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+
+        if (authState.User.Identity?.IsAuthenticated == true)
+        {
+            var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
+            if (subActiveClaim is null)
+            {
+                CanSeeVideos = false;
+            }
+
+            if (subActiveClaim?.Value == "true")
+            {
+                CanSeeVideos = true;
+            }
+        }
     }
 
 }

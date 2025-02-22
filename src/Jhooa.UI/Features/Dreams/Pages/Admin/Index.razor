@@ -14,7 +14,7 @@
 
 <section class="max-w-screen-xl mx-auto w-full">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="mb-8 text-4xl tracking-wider">@Loc["DreamsList"]  @(_nbDreams is not null ? $"({_nbDreams})" : "")</h1>
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["DreamsList"]</h1>
 
         <FilterDreams
             SelectDreamTypeCallback="HandleDreamTypeSelection">
@@ -32,12 +32,7 @@
 @code
 {
     private DreamTypes? _selectedDreamType;
-    private int? _nbDreams;
-
-    private void HandleNbDreams(int? nbDreams)
-    {
-        _nbDreams = nbDreams;
-    }
+    
     private void HandleDreamTypeSelection(DreamTypes? type)
     {
         _selectedDreamType = type;

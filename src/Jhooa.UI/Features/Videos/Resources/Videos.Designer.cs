@@ -236,5 +236,11 @@ namespace Jhooa.UI.Features.Videos.Resources {
                 return ResourceManager.GetString("ChooseYear", resourceCulture);
             }
         }
+        
+        internal static string VideosOnlyForConnectedUsersDescNoSub {
+            get {
+                return ResourceManager.GetString("VideosOnlyForConnectedUsersDescNoSub", resourceCulture);
+            }
+        }
     }
 }

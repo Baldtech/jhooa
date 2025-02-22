@@ -25,6 +25,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<VideoTheme> VideoThemes { get; set; }
     public DbSet<Policy> Policies { get; set; }
 
+    public DbSet<UserView> UsersView { get; set; }
+
+    
 #pragma warning disable MA0051
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #pragma warning restore MA0051
@@ -102,5 +105,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(builder);
 
         builder.ApplyConfigurationsFromAssembly(typeof(IdentityConfiguration).Assembly);
+        
+        builder.Entity<UserView>().ToView("UserWithAdminCheck").HasNoKey();
+
     }
 }

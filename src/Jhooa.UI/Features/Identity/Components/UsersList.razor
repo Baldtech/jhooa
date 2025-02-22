@@ -4,15 +4,15 @@
 
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
-@rendermode InteractiveServer
 
-<PaginationComponent TItem="ApplicationUser" Items="_users" DefaultPageSize="15">
+<PaginationComponent TItem="UserView" Items="_users" DefaultPageSize="15">
     <ChildContentHeader>
         <tr>
             <th>@Loc["EmailAddress"]</th>
             <th>@Loc["FirstName"]</th>
             <th>@Loc["LastName"]</th>
             <th>@Loc["Type"]</th>
+            <th>@Loc["Admin"]</th>
             <th>@Loc["Actions"]</th>
         </tr>
     </ChildContentHeader>
@@ -22,6 +22,7 @@
             <td>@user.FirstName</td>
             <td>@user.LastName</td>
             <td>@user.SubType</td>
+            <td>@(user.IsAdmin ? Loc["Yes"] : Loc["No"])</td>
             <td>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Users/@user.Id">@Loc["Details"]</a>
             </td>
@@ -30,13 +31,40 @@
 </PaginationComponent>
 
 @code {
-    private List<ApplicationUser> _users = [];
+    private List<UserView> _users = [];
     [Parameter] public EventCallback<int?> NbUsersCallback { get; set; }
+    [Parameter] public FilterTypes? SelectedFilter { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _users = await DbContext.Users.Where(u => u.ActivatedAt != null).Include(i => i.Subscriptions).ToListAsync();
-        await NbUsersCallback.InvokeAsync(_users.Count);
+        _users = await DbContext.UsersView.ToListAsync();
+        //await NbUsersCallback.InvokeAsync(_users.Count);
+    }
+    
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        switch (SelectedFilter)
+        {
+            case FilterTypes.All:
+                _users = await DbContext.UsersView.ToListAsync();
+                break;
+            case FilterTypes.Admin:
+                _users = await DbContext.UsersView.Where(u => u.IsAdmin).ToListAsync();
+                break;
+            case FilterTypes.Active:
+                _users = await DbContext.UsersView.Where(u => u.IsSubscriptionActive).ToListAsync();
+                break;
+            case FilterTypes.Inactive:
+                _users = await DbContext.UsersView.Where(u => !u.IsSubscriptionActive).ToListAsync();
+                break;
+            default:
+                _users = await DbContext.UsersView.ToListAsync();
+                break;
+        }
+        
+        // _users = await DbContext.Users.Where(u => u.ActivatedAt != null).Include(i => i.Subscriptions).ToListAsync();
+        //await NbUsersCallback.InvokeAsync(_users.Count);
     }
 
 }

@@ -1,4 +1,5 @@
 @using System.Security.Claims
+@using Jhooa.UI.Configuration
 @using Jhooa.UI.Features.Identity
 @using Jhooa.UI.Managers
 @using Microsoft.EntityFrameworkCore
@@ -14,24 +15,24 @@
 
 @if (!IsPast)
 {
-    @if (_userId is null)
+    @switch (CanRegister)
     {
-        <p class="text-sm text-jhooa-brick-500">@Loc["RequiresAuthentication"]</p>
-    }
-    else if (_isRegistered)
-    {
-        <p class="text-jhooa-teal-200">@Loc["AlreadyRegistered"]</p>
-        <button
-            class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
-            @Loc["RemoveRegistration"]
-        </button>
-    }
-    else
-    {
-        <button
-            class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
-            @Loc["Register"]
-        </button>
+        case false:
+            <p class="text-sm text-jhooa-brick-500">@Loc["RequiresAuthentication"]</p>
+            break;
+        case true when _isRegistered:
+            <p class="text-jhooa-teal-200">@Loc["AlreadyRegistered"]</p>
+            <button
+                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
+                @Loc["RemoveRegistration"]
+            </button>
+            break;
+        default:
+            <button
+                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
+                @Loc["Register"]
+            </button>
+            break;
     }
 }
 
@@ -39,7 +40,9 @@
 
 
     [Parameter] public Guid EventId { get; set; }
+    [Parameter] public DateTimeOffset Date { get; set; }
     [Parameter] public bool IsPast { get; set; }
+    [Parameter] public bool CanRegister { get; set; }
 
     [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
 
@@ -80,13 +83,29 @@
 
         if (authState.User.Identity?.IsAuthenticated == true)
         {
+            var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
+            if (subActiveClaim is null)
+            {
+                CanRegister = false;
+            }
+            
+            var subEndDateClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.SubEndDate);
+            if (subEndDateClaim is not null)
+            {
+                var subEndDate = DateTimeOffset.Parse(subEndDateClaim.Value);
+            
+                if (subActiveClaim?.Value == "true" && (Date.Month <= subEndDate.Month))
+                {
+                    CanRegister = true;
+                }
+            }
+            
+            
             if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {
                 _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
             }
-
-            _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
-                
         }
     }
 }

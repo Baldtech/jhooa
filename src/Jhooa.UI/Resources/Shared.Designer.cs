@@ -338,5 +338,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
+        
+        internal static string Filters {
+            get {
+                return ResourceManager.GetString("Filters", resourceCulture);
+            }
+        }
     }
 }

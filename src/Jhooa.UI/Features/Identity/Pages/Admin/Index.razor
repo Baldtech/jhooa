@@ -6,23 +6,42 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Identity.Components
+@using Jhooa.UI.Features.Identity.Models
 
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <PageTitle>@Loc["UsersList"]</PageTitle>
 
 <section class="max-w-screen-xl mx-auto w-full">
-    <h1 class="mb-8 text-4xl tracking-wider">@Loc["UsersList"] @(_nbUsers is not null ? $"({_nbUsers})" : "")</h1>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["UsersList"] </h1>
 
-    <UsersList NbUsersCallback="HandleNbUsers" /> 
+        <FilterUsers
+            SelectFilterTypeCallback="HandleFilterSelection">
+        </FilterUsers>
+    </div>
+
+    <div class="mb-4"></div>
+
+    <UsersList
+        SelectedFilter="_selectedFilter"
+        NbUsersCallback="HandleNbUsers">
+    </UsersList>
 </section>
 
 @code
 {
     private int? _nbUsers;
+    private FilterTypes? _selectedFilter;
 
     private void HandleNbUsers(int? nbUsers)
     {
         _nbUsers = nbUsers;
+    }
+    
+    private void HandleFilterSelection(FilterTypes? type)
+    {
+        _selectedFilter = type;
     }
 }

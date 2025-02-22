@@ -46,7 +46,7 @@
             <p>@((MarkupString)(CultureInfo.CurrentCulture.Name == "en-GB" ? _ev.DescriptionEn : _ev.Description))</p>
         </div>
 
-        <Registration EventId="@_ev.Id" IsPast="@_ev.IsPast"/>
+        <Registration EventId="@_ev.Id" IsPast="@_ev.IsPast" Date="_ev.StartDate"/>
 
         <EventPhotos Id="@_ev.Id" />
     </section>

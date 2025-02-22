@@ -1,9 +1,12 @@
 ﻿@page "/Account/Login"
 
 @using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
+@using Jhooa.UI.Configuration
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 @layout LoginLayout
 @inject IStringLocalizer<Resources.Identity> Loc
@@ -11,10 +14,9 @@
 @inject ILogger<Login> Logger
 @inject IdentityRedirectManager RedirectManager
 @inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext DbContext
 
 <PageTitle>@Loc["Login"]</PageTitle>
-
-
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full mx-4 md:mx-auto my-10">
 
@@ -93,10 +95,57 @@
 
     public async Task LoginUser()
     {
-        var result = await SignInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        var user = await UserManager.FindByEmailAsync(Input.Email);
+        if (user is null)
+        {
+            _errorMessage = Loc["LoginInvalidAttempt"];
+            return;
+        }
+
+        var userView = await DbContext.UsersView.FirstAsync(u => u.Email.ToLower() == Input.Email.ToLower());
+
+        var result = await SignInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
         if (result.Succeeded)
         {
             Logger.LogInformation("User logged in.");
+            
+            var roles = await SignInManager.UserManager.GetRolesAsync(user);
+            
+            // Admin
+            if (roles.Contains("Admin"))
+            {
+                await SignInManager.SignInAsync(user, Input.RememberMe);
+                RedirectManager.RedirectTo("/Admin");
+            }
+            else
+            {
+                if (userView.IsSubscriptionActive)
+                {
+                    var customClaims = new List<Claim>()
+                    {
+                        new(Constants.Claims.IsSubActive, "true")
+                    };
+                    if (userView.SubscriptionStartDate.HasValue)
+                    {
+                        customClaims.Add(new Claim(Constants.Claims.SubStartDate, userView.SubscriptionStartDate.Value.ToString("yyyy-MM-dd")));
+                    }
+                    if (userView.SubscriptionEndDate.HasValue)
+                    {
+                        customClaims.Add(new Claim(Constants.Claims.SubEndDate, userView.SubscriptionEndDate.Value.ToString("yyyy-MM-dd")));
+                    }
+                    await SignInManager.SignInWithClaimsAsync(user, Input.RememberMe, customClaims);
+
+                    RedirectManager.RedirectTo(ReturnUrl);
+                }
+                else
+                {
+                    var customClaims = new[] { new Claim(Constants.Claims.IsSubActive, "false") };
+                    await SignInManager.SignInWithClaimsAsync(user, Input.RememberMe, customClaims);
+                    
+                    RedirectManager.RedirectTo("/Account/Manage/Subscription");
+                }
+            }
+            
             RedirectManager.RedirectTo(ReturnUrl);
         }
         else if (result.RequiresTwoFactor)
@@ -112,8 +161,7 @@
         }
         else if (result.IsNotAllowed)
         {
-            var user = await UserManager.FindByEmailAsync(Input.Email);
-            if (user is not null && !(await UserManager.IsEmailConfirmedAsync(user)))
+            if (!await UserManager.IsEmailConfirmedAsync(user))
             {
                 _errorMessage = Loc["LoginEmailNotConfirmed"];
             }
