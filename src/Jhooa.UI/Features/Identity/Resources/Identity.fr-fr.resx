@@ -284,4 +284,7 @@
     <data name="AlreadyHaveAccountQuestion" xml:space="preserve">
         <value>Déjà un compte ?</value>
     </data>
+    <data name="InsertDreams" xml:space="preserve">
+        <value>Renseigner mes rêves</value>
+    </data>
 </root>

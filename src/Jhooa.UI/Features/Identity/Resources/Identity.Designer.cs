@@ -602,5 +602,11 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("AlreadyHaveAccountQuestion", resourceCulture);
             }
         }
+        
+        internal static string InsertDreams {
+            get {
+                return ResourceManager.GetString("InsertDreams", resourceCulture);
+            }
+        }
     }
 }

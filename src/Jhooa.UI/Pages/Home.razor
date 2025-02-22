@@ -5,7 +5,8 @@
 
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Features.Home.Resources.Home> Loc
-
+@inject IJSRuntime Js
+@rendermode InteractiveServer
 <PageTitle>Home</PageTitle>
 
 <HomeConcept />
@@ -60,6 +61,17 @@
 
                 await DbContext.SaveChangesAsync();
             }
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var module = await Js.InvokeAsync<IJSObjectReference>("import",
+                "./js/mobileMenuHome.js");
+
+            await module.InvokeVoidAsync("loadMobileMenu");
         }
     }
 }

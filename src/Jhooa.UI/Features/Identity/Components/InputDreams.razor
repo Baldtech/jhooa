@@ -1,0 +1,90 @@
+@using Microsoft.Extensions.Localization
+@rendermode InteractiveServer
+@inject IStringLocalizer<Resources.Identity> Loc
+@inject IStringLocalizer<Jhooa.UI.Features.Dreams.Resources.Dreams> LocDreams
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+
+<!-- Modal toggle -->
+<button data-modal-target="@_fieldId" data-modal-toggle="@_fieldId" class="border-2 border-white p-3 px-10"
+        type="button">
+    @Loc["InsertDreams"]
+</button>
+
+<!-- Main modal -->
+<div id="@_fieldId" tabindex="-1" aria-hidden="true"
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-jhooa-teal-100 rounded-lg shadow-sm ">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 rounded-t ">
+                <h3 class="text-lg font-amsiSemiBold mb-2 tracking-wide">
+                    @Loc["InsertDreams"]
+                </h3>
+            </div>
+            <!-- Modal body -->
+            <div class="px-4 md:px-5 space-y-2 text-left">
+                <label for="input-small" class="text-white font-medium text-sm">
+                    @LocDreams["SmallDream"]
+                </label>
+                <textarea id="input-small"
+                        class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"
+                    >@SmallDream</textarea>
+            </div>
+            <div class="px-4 md:px-5 space-y-2 text-left">
+                <label for="input-medium" class="text-white font-medium text-sm">
+                    @LocDreams["MediumDream"]
+                </label>
+                    <textarea id="input-medium"
+                              class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"
+                    >@MediumDream</textarea>
+            </div>
+            <div class="px-4 md:px-5 space-y-2 text-left">
+                <label for="input-big" class="text-white font-medium text-sm">
+                    @LocDreams["BigDream"]
+                </label>
+                    <textarea id="input-big"
+                              class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"
+                    >@BigDream</textarea>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5">
+                <button data-modal-hide="@_fieldId" type="button" class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight mr-4">@LocShared["Save"]</button>
+                @* <button data-modal-hide="@_fieldId" type="button" *@
+                @*         class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight">@LocShared["Cancel"]</button> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var small = document.getElementById("input-small");
+    var medium = document.getElementById("input-medium");
+    var big = document.getElementById("input-big");
+    
+    small.addEventListener("change", () => {
+        document.getElementById('small-dreams-hidden').value = small.value;
+        document.getElementById('small-dream-id').innerHTML = small.value;
+
+    });
+    medium.addEventListener("change", () => {
+        document.getElementById('medium-dreams-hidden').value = medium.value;
+        document.getElementById('medium-dream-id').innerHTML = medium.value;
+
+    });
+    big.addEventListener("change", () => {
+        document.getElementById('big-dreams-hidden').value = big.value;
+        document.getElementById('big-dream-id').innerHTML = big.value;
+
+    });
+</script>
+
+
+@code {
+    [Parameter] public string? SmallDream { get; set; }
+    [Parameter] public string? MediumDream { get; set; }
+    [Parameter] public string? BigDream { get; set; }
+    
+    private readonly Guid _fieldId = Guid.NewGuid();
+
+}

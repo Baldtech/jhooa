@@ -3,6 +3,7 @@
 @layout ManageLayout
 
 @using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Configuration
 @using Jhooa.UI.Features.Dreams.Models
 @using Jhooa.UI.Features.Identity
 @using Jhooa.UI.Features.Identity.Models
@@ -16,6 +17,7 @@
 @inject IdentityUserAccessor UserAccessor
 @inject ApplicationDbContext DbContext
 @inject IdentityRedirectManager RedirectManager
+@inject IStringLocalizer<Jhooa.UI.Features.Identity.Resources.Identity> LocIdentity
 
 <PageTitle>@Loc["MyDreams"]</PageTitle>
 
@@ -32,15 +34,30 @@
 
         <div class="grid grid-cols-1 gap-4">
             <div class="space-y-3">
-                <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
-                                 Placeholder="@Loc["SmallDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.SmallDream)" Autocomplete="" DreamType="DreamTypes.Small"/>
-                <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
-                                 Placeholder="@Loc["MediumDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.MediumDream)" Autocomplete="" DreamType="DreamTypes.Medium"/>
-                <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
-                                 Placeholder="@Loc["BigDreamPlaceholder"]"
-                                 ValidationFor="@(() => Input.BigDream)" Autocomplete="" DreamType="DreamTypes.Big"/>
+                <JhooaDreamInput DisplayName="@LocIdentity["FormSmallDream"]"
+                                 Id="@(Constants.DreamIds.SmallDreamId)"
+                                 Content="@Input.SmallDream"
+                                 DreamType="DreamTypes.Small"/>
+                <JhooaDreamInput DisplayName="@LocIdentity["FormMediumDream"]"
+                                 Id="@(Constants.DreamIds.MediumDreamId)"
+                                 Content="@Input.MediumDream"
+                                 DreamType="DreamTypes.Medium"/>
+                <JhooaDreamInput DisplayName="@LocIdentity["FormBigDream"]"
+                                 Id="@(Constants.DreamIds.BigDreamId)"
+                                 Content="@Input.BigDream"
+                                 DreamType="DreamTypes.Big"/>
+
+                <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
+                       id="small-dreams-hidden"/>
+                <input type="hidden" name="Input.MediumDream" @bind-value="Input.MediumDream"
+                       id="medium-dreams-hidden"/>
+                <input type="hidden" name="Input.BigDream" @bind-value="Input.BigDream" id="big-dreams-hidden"/>
+
+                
+            </div>
+            <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">
+
+                <InputDreams SmallDream="@Input.SmallDream" MediumDream="@Input.MediumDream" BigDream="@Input.BigDream"/>
             </div>
             
             <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">

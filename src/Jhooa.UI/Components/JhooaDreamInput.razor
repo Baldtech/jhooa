@@ -1,7 +1,4 @@
-@using System.Diagnostics.CodeAnalysis
-@using System.Linq.Expressions
 @using Jhooa.UI.Features.Dreams.Models
-@inherits InputBase<string>
 
 <div
     class="inline-flex items-center space-x-3 w-full
@@ -11,44 +8,32 @@
     <img src="images/@_svg" alt="Dream Icon" class="w-10 h-10 mr-4"/>
     
     <!-- Label and Input stacked vertically -->
-    <div class="flex flex-col space-y-1 w-full">
+    <div class="flex flex-col space-y-1 w-full text-left">
         <!-- Label in teal -->
-        <label for="@_fieldId" class="text-jhooa-teal-600 font-medium italic text-sm">
+        <label for="@Id" class="text-jhooa-teal-600 font-medium italic text-sm">
             @DisplayName
         </label>
 
-        <input
-            id="@_fieldId"
-            type="@Type"
-            name="@NameAttributeValue"
-            placeholder="@Placeholder"
+        <p
+            id="@Id"
             class="bg-transparent text-white placeholder-white
-             border-none focus:outline-none focus:ring-0 p-0 w-full text-sm @CssClass"
-            @bind="@CurrentValue"/>
+             border-none focus:outline-none focus:ring-0 p-0 w-[85%] text-sm truncate overflow-hidden text-ellipsis whitespace-nowrap">@Content</p>
     </div>
 </div>
 
-<ValidationMessage For="@ValidationFor" class="text-danger"/>
-
 
 @code {
-    [Parameter, EditorRequired] public Expression<Func<string>> ValidationFor { get; set; } = default!;
+    [Parameter] public string? Id { get; set; } = "";
+    [Parameter] public string? DisplayName { get; set; } = "";
     [Parameter] public string? Type { get; set; } = "text";
-    [Parameter] public string? Placeholder { get; set; } = "";
-    [Parameter] public string? Autocomplete { get; set; }
+    [Parameter] public string? Content { get; set; } = "";
     [Parameter] public DreamTypes DreamType { get; set; } = DreamTypes.Small;
     
-    private readonly Guid _fieldId = Guid.NewGuid();
     private string _color = "bg-jhooa-beige-100";
     private string _svg = "constellation_1.svg";
     
     protected override void OnInitialized()
     {
-        if (ValidationFor == null)
-        {
-            throw new InvalidOperationException($"{nameof(JhooaInputText)} requires a {nameof(ValidationFor)} parameter.");
-        }
-
         switch (DreamType)
         {
             case DreamTypes.Medium:
@@ -65,11 +50,6 @@
         base.OnInitialized();
     }
 
-    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out string result, [NotNullWhen(false)] out string? validationErrorMessage)
-    {
-        result = value!;
-        validationErrorMessage = null;
-        return true;
-    }
+
 
 }

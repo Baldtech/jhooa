@@ -1,6 +1,7 @@
 ﻿@page "/Account/Register"
 
 @using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Configuration
 @using Jhooa.UI.Features.Dreams.Models
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
@@ -22,8 +23,6 @@
 <PageTitle>@Loc["Register"]</PageTitle>
 
 <div class="max-w-screen-xl mx-auto  text-white py-4">
-
-
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
         <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
@@ -35,7 +34,8 @@
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
 
                     <div class="flex items-center mb-6">
-                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>1</span>
                         </div>
                         <h2 class="text-3xl font-monetaRegular">@Loc["CreateAccount"]</h2>
@@ -81,32 +81,42 @@
                 </section>
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
                     <div class="flex items-center mb-6 mt-8 lg:mt-0">
-                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>2</span>
                         </div>
                         <h2 class="text-3xl font-monetaRegular">@Loc["RegisterMyWishes"]</h2>
                     </div>
                     <h3 class="text-lg font-amsiSemiBold mb-2 tracking-wide">@Loc["RegisterDreamSubTitle"]</h3>
                     <p class="text-sm font-amsiProRegular mb-6 tracking-wide">@Loc["RegisterDreamDescription"]</p>
-                    <div class="space-y-3">
+                    <div class="space-y-3 text-center">
 
-                        <JhooaDreamInput @bind-Value="Input.SmallDream" DisplayName="@Loc["FormSmallDream"]"
-                                         Placeholder="@Loc["SmallDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.SmallDream)" Autocomplete=""
+                        <JhooaDreamInput DisplayName="@Loc["FormSmallDream"]"
+                                         Id="@(Constants.DreamIds.SmallDreamId)"
+                                         Content="@Loc["SmallDreamPlaceholder"]"
                                          DreamType="DreamTypes.Small"/>
-                        <JhooaDreamInput @bind-Value="Input.MediumDream" DisplayName="@Loc["FormMediumDream"]"
-                                         Placeholder="@Loc["MediumDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.MediumDream)" Autocomplete=""
+                        <JhooaDreamInput DisplayName="@Loc["FormMediumDream"]"
+                                         Id="@(Constants.DreamIds.MediumDreamId)"
+                                         Content="@Loc["MediumDreamPlaceholder"]"
                                          DreamType="DreamTypes.Medium"/>
-                        <JhooaDreamInput @bind-Value="Input.BigDream" DisplayName="@Loc["FormBigDream"]"
-                                         Placeholder="@Loc["BigDreamPlaceholder"]"
-                                         ValidationFor="@(() => Input.BigDream)" Autocomplete=""
+                        <JhooaDreamInput DisplayName="@Loc["FormBigDream"]"
+                                         Id="@(Constants.DreamIds.BigDreamId)"
+                                         Content="@Loc["BigDreamPlaceholder"]"
                                          DreamType="DreamTypes.Big"/>
+
+                        <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
+                               id="small-dreams-hidden"/>
+                        <input type="hidden" name="Input.MediumDream" @bind-value="Input.MediumDream"
+                               id="medium-dreams-hidden"/>
+                        <input type="hidden" name="Input.BigDream" @bind-value="Input.BigDream" id="big-dreams-hidden"/>
+
+                        <InputDreams SmallDream="@Input.SmallDream" MediumDream="@Input.MediumDream" BigDream="@Input.BigDream"/>
                     </div>
                 </section>
                 <section class="pb-8 lg:pb-0">
                     <div class="flex items-center mb-6 mt-8 lg:mt-0">
-                        <div class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
+                        <div
+                            class="flex items-center justify-center w-8 h-8 border bg-white border-white rounded-full mr-3 text-jhooa-teal-200 text-xl font-monetaBold">
                             <span>3</span>
                         </div>
                         <h2 class="text-3xl font-monetaRegular">@Loc["RegisterMySub"]</h2>
@@ -118,7 +128,8 @@
                     <InputRadioGroup @bind-Value="Input.SubscriptionType" class="mb-8">
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option1" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            <InputRadio id="option1"
+                                        class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
                                         Value="SubscriptionType.MonthlyOnce"/>
 
                             <div class="flex flex-row w-full">
@@ -126,13 +137,14 @@
                                     @Loc["RegisterMonthly"]
                                 </label>
                                 <label class="basis-1/2 text-white md:text-lg font-monetaRegular text-end">
-                                     7 @LocHome["PriceMonthlyDesc"]
+                                    7 @LocHome["PriceMonthlyDesc"]
                                 </label>
                             </div>
                         </div>
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option2" class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            <InputRadio id="option2"
+                                        class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
                                         Value="SubscriptionType.MonthlyRecurring"/>
 
                             <div class="flex flex-row w-full">
@@ -146,7 +158,8 @@
                         </div>
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option3" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            <InputRadio id="option3"
+                                        class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
                                         Value="SubscriptionType.YearlyOnce"/>
 
                             <div class="flex flex-row w-full">
@@ -160,7 +173,8 @@
                         </div>
                         <div
                             class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option4" class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            <InputRadio id="option4"
+                                        class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
                                         Value="SubscriptionType.YearlyRecurring"/>
 
                             <div class="flex flex-row w-full">
@@ -233,9 +247,9 @@
 //             Input.Country = Guid.NewGuid().ToString();
 //             Input.PhoneNumber = Guid.NewGuid().ToString();
 //             Input.Password = Input.ConfirmPassword = "Abc123!";
-//             Input.SmallDream = Guid.NewGuid().ToString();
-//             Input.MediumDream = Guid.NewGuid().ToString();
-//             Input.BigDream = Guid.NewGuid().ToString();
+//             // Input.SmallDream = Guid.NewGuid().ToString();
+//             // Input.MediumDream = Guid.NewGuid().ToString();
+//             // Input.BigDream = Guid.NewGuid().ToString();
 //             Input.AcceptToc = true;
 //             Input.SubscribeToNewsletter = true;
 //         }
@@ -268,26 +282,35 @@
 
         Logger.LogInformation("User created a new account with password.");
 
-        var smallDream = new Dream
+        if (!string.IsNullOrWhiteSpace(Input.SmallDream))
         {
-            Title = Input.SmallDream,
-            Type = DreamTypes.Small,
-            UserId = user.Id
-        };
-        var mediumDream = new Dream
-        {
-            Title = Input.MediumDream,
-            Type = DreamTypes.Medium,
-            UserId = user.Id
-        };
-        var bigDream = new Dream
-        {
-            Title = Input.BigDream,
-            Type = DreamTypes.Big,
-            UserId = user.Id
-        };
+            DbContext.Dreams.Add(new Dream
+            {
+                Title = Input.SmallDream,
+                Type = DreamTypes.Small,
+                UserId = user.Id
+            });
+        }
 
-        DbContext.Dreams.AddRange(smallDream, mediumDream, bigDream);
+        if (!string.IsNullOrWhiteSpace(Input.MediumDream))
+        {
+            DbContext.Dreams.Add(new Dream
+            {
+                Title = Input.MediumDream,
+                Type = DreamTypes.Medium,
+                UserId = user.Id
+            });
+        }
+
+        if (!string.IsNullOrWhiteSpace(Input.BigDream))
+        {
+            DbContext.Dreams.Add(new Dream
+            {
+                Title = Input.BigDream,
+                Type = DreamTypes.Big,
+                UserId = user.Id
+            });
+        }
 
         var stripeCustomerId = await StripeService.EnsureCustomer(user);
         await DbContext.Users.Where(u => u.Id == user.Id)
@@ -383,7 +406,7 @@
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string ZipCode { get; set; } = "";
-        
+
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string City { get; set; } = "";
@@ -407,17 +430,17 @@
         public string ConfirmPassword { get; set; } = "";
 
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
-        public string SmallDream { get; set; } = "";
+        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string? SmallDream { get; set; } = "";
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
-        public string MediumDream { get; set; } = "";
+        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string? MediumDream { get; set; } = "";
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
-        public string BigDream { get; set; } = "";
+        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
+        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string? BigDream { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public SubscriptionType SubscriptionType { get; set; }
