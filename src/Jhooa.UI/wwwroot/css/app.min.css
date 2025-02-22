@@ -1596,6 +1596,10 @@ input:checked + .toggle-bg {
   width: 85%;
 }
 
+.w-\[100vh\] {
+  width: 100vh;
+}
+
 .max-w-4xl {
   max-width: 56rem;
 }
