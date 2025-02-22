@@ -52,52 +52,121 @@
 </div>
 
 
-<script>
+@* <script> *@
+@* *@
+@*     var startX = 0; *@
+@*     var endX = 0; *@
+@* *@
+@*     function startTouch(event) { *@
+@*         startX = event.touches[0].clientX; *@
+@*     } *@
+@* *@
+@*     function moveTouch(event) { *@
+@*         // Prevent scrolling the page while swiping *@
+@*         event.preventDefault(); *@
+@*     } *@
+@* *@
+@*     function endTouch(event) { *@
+@*         endX = event.changedTouches[0].clientX; *@
+@* *@
+@*         if (startX - endX > 50) { *@
+@*             // Swiped left, go to next slide *@
+@*             nextSlide(); *@
+@*         } else if (endX - startX > 50) { *@
+@*             // Swiped right, go to previous slide *@
+@*             prevSlide(); *@
+@*         } *@
+@*     } *@
+@*      *@
+@*     function nextSlide() { *@
+@*         var carousel = document.querySelector('.carousel'); *@
+@*         let slideWidth = carousel.querySelector('.carousel-item').offsetWidth; *@
+@* *@
+@*         carousel.scrollBy({ *@
+@*             left: slideWidth, *@
+@*             behavior: 'smooth', *@
+@*         }); *@
+@*     } *@
+@* *@
+@*     function prevSlide() { *@
+@*         var carousel = document.querySelector('.carousel'); *@
+@*         let slideWidth = carousel.querySelector('.carousel-item').offsetWidth; *@
+@* *@
+@*         carousel.scrollBy({ *@
+@*             left: -slideWidth, *@
+@*             behavior: 'smooth', *@
+@*         }); *@
+@*     } *@
+@* *@
+@* </script> *@
 
+<script>
     var startX = 0;
     var endX = 0;
+    var isDragging = false;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var carousel = document.querySelector(".carousel");
+
+        if (carousel) {
+            carousel.addEventListener("touchstart", startTouch, { passive: true });
+            carousel.addEventListener("touchmove", moveTouch, { passive: false });
+            carousel.addEventListener("touchend", endTouch);
+        }
+
+        // Ensure buttons work on mobile
+        document.querySelector(".prev-btn")?.addEventListener("touchstart", function () {
+            prevSlide();
+        });
+
+        document.querySelector(".next-btn")?.addEventListener("touchstart", function () {
+            nextSlide();
+        });
+    });
 
     function startTouch(event) {
         startX = event.touches[0].clientX;
+        isDragging = true;
     }
 
     function moveTouch(event) {
-        // Prevent scrolling the page while swiping
-        event.preventDefault();
+        if (!isDragging) return;
+        event.preventDefault(); // Prevent page scrolling
     }
 
     function endTouch(event) {
-        endX = event.changedTouches[0].clientX;
+        if (!isDragging) return;
+        isDragging = false;
 
-        if (startX - endX > 50) {
-            // Swiped left, go to next slide
-            nextSlide();
-        } else if (endX - startX > 50) {
-            // Swiped right, go to previous slide
-            prevSlide();
+        endX = event.changedTouches[0].clientX;
+        let diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            diff > 0 ? nextSlide() : prevSlide();
         }
     }
-    
+
     function nextSlide() {
-        var carousel = document.querySelector('.carousel');
-        let slideWidth = carousel.querySelector('.carousel-item').offsetWidth;
+        var carousel = document.querySelector(".carousel");
+        if (!carousel) return;
+        let slideWidth = carousel.querySelector(".carousel-item").offsetWidth;
 
         carousel.scrollBy({
             left: slideWidth,
-            behavior: 'smooth',
+            behavior: "smooth",
         });
     }
 
     function prevSlide() {
-        var carousel = document.querySelector('.carousel');
-        let slideWidth = carousel.querySelector('.carousel-item').offsetWidth;
+        var carousel = document.querySelector(".carousel");
+        if (!carousel) return;
+        let slideWidth = carousel.querySelector(".carousel-item").offsetWidth;
 
         carousel.scrollBy({
             left: -slideWidth,
-            behavior: 'smooth',
+            behavior: "smooth",
         });
     }
-
 </script>
 
 @code {

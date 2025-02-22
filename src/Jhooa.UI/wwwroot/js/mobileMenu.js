@@ -1,16 +1,21 @@
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    // Mobile menu toggle
     const mobileMenuButton = document.querySelector(".mobile-menu-button");
     const mobileMenu = document.querySelector(".navigation-menu");
 
     if (mobileMenuButton === null || mobileMenu === null) {
         return;
     }
-    mobileMenuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-    });
 
+    try {
+        mobileMenuButton.removeEventListener("click", makeBackgroundYellow, true);
+        mobileMenuButton.removeEventListener("click", makeBackgroundYellow, false);
+    } catch (error) {
+        console.error(error);
+    }
+    mobileMenuButton.addEventListener("click", makeBackgroundYellow);
+
+    function makeBackgroundYellow() {
+        mobileMenu.classList.toggle("hidden");
+    }
 });
