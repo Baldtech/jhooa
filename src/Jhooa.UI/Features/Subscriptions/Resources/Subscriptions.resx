@@ -42,4 +42,7 @@
     <data name="Cancelled" xml:space="preserve">
         <value>Cancelled</value>
     </data>
+    <data name="SubscriptionRenewed" xml:space="preserve">
+        <value>Subscription renewed</value>
+    </data>
 </root>

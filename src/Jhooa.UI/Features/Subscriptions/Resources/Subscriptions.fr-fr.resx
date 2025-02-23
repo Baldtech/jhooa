@@ -35,4 +35,7 @@
     <data name="Cancelled" xml:space="preserve">
         <value>Annulée</value>
     </data>
+    <data name="SubscriptionRenewed" xml:space="preserve">
+        <value>Votre souscription a été renouvellée</value>
+    </data>
 </root>

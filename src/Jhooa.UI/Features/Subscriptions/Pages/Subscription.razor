@@ -3,6 +3,7 @@
 @layout ManageLayout
 
 @using System.Security.Claims
+@using Jhooa.UI.Features.Identity.Models
 @using Jhooa.UI.Features.Identity.Shared
 @using Jhooa.UI.Features.Subscriptions.Models
 @using Jhooa.UI.Services
@@ -11,10 +12,13 @@
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Resources.Subscriptions> Loc
-@inject IStripeService StriveService
+@inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
 @inject AuthenticationStateProvider AuthStateProvider
-@inject IDreamService DreamService
+@inject IStringLocalizer<Jhooa.UI.Features.Home.Resources.Home> LocHome
+@inject IStringLocalizer<Jhooa.UI.Features.Identity.Resources.Identity> LocIdentity
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject NavigationManager NavigationManager
 
 <PageTitle>@Loc["MySubscription"]</PageTitle>
 
@@ -23,80 +27,114 @@
 
     <p class="text-center mb-4 px-4">@Loc["MySubscriptionDesc"]</p>
 
-    @if (_activeSub is null)
+    <StatusMessage Message="@_message"/>
+
+
+    @if (_userView is not null && _userView.IsSubscriptionActive)
     {
-        <p class="text-center mb-4 text-red-400">@Loc["NoActiveSubscription"]</p>
+        <p class="text-center mb-4 text-green-400 font-bold">
+            @* @Loc["ActiveSubscription"] @_userView.SubscriptionStartDate @(_userView.SubscriptionEndDate.HasValue ? $"- {_userView.SubscriptionEndDate}" : _activeSub.Status is SubscriptionStatus.Cancelled ? $" ({Loc["Cancelled"]})" : $" ({Loc["AutoRenew"]})") *@
+
+            @if (_userView.SubscriptionType is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
+            {
+                @($"{Loc["ActiveSubscription"]} {_userView.SubscriptionStartDate} - {_userView.SubscriptionEndDate}")
+            }
+        </p>
     }
     else
     {
-        <p class="text-center mb-4 text-green-400 font-bold">
-            @Loc["ActiveSubscription"] @_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : _activeSub.Status is SubscriptionStatus.Cancelled ? $" ({Loc["Cancelled"]})" : $" ({Loc["AutoRenew"]})")
-        </p>
+        <p class="text-center mb-4 text-red-400">@Loc["NoActiveSubscription"]</p>
+        <div class="w-[50%] mx-auto">
+            <EditForm Model="SubscribeModelInput" method="post" OnValidSubmit="Subscribe" FormName="login"
+                      class="space-y-6">
+                <DataAnnotationsValidator/>
+                <InputRadioGroup @bind-Value="SubscribeModelInput.SubscriptionType" class="mb-8">
+                    <div
+                        class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                        <InputRadio id="option1"
+                                    class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                    Value="SubscriptionType.MonthlyOnce"/>
 
-        if (_activeSub.Type is SubscriptionType.MonthlyRecurring or SubscriptionType.YearlyRecurring && _activeSub.Status is not SubscriptionStatus.Cancelled)
-        {
-            <EditForm Model="CancelSubscriptionInputModel" method="post" OnValidSubmit="CancelSubscriptionAsync"
-                      FormName="cancelSubscription" class="space-y-6">
-                <button type="submit" class="border-2 border-white p-3 bg-gray-400">@Loc["Cancel"]</button>
+                        <div class="flex flex-row w-full">
+                            <label class="basis-1/2 text-white md:text-lg font-monetaRegular">
+                                @LocIdentity["RegisterMonthly"]
+                            </label>
+                            <label class="basis-1/2 text-white md:text-lg font-monetaRegular text-end">
+                                7 @LocHome["PriceMonthlyDesc"]
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                        <InputRadio id="option2"
+                                    class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                    Value="SubscriptionType.MonthlyRecurring"/>
+
+                        <div class="flex flex-row w-full">
+                            <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                                @LocIdentity["RegisterMonthlyRecurring"]
+                            </label>
+                            <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                                7 @LocHome["PriceMonthlyDesc"]
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                        <InputRadio id="option3"
+                                    class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                    Value="SubscriptionType.YearlyOnce"/>
+
+                        <div class="flex flex-row w-full">
+                            <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                                @LocIdentity["RegisterYearly"]
+                            </label>
+                            <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                                70 @LocHome["PriceYearlyDesc"]
+                            </label>
+                        </div>
+                    </div>
+                    <div
+                        class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                        <InputRadio id="option4"
+                                    class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                    Value="SubscriptionType.YearlyRecurring"/>
+
+                        <div class="flex flex-row w-full">
+                            <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                                @LocIdentity["RegisterYearlyRecurring"]
+                            </label>
+                            <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                                70 @LocHome["PriceYearlyDesc"]
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
+                        <button type="submit" class="border-2 border-white p-3">@LocShared["SaveChanges"]</button>
+                    </div>
+
+                </InputRadioGroup>
             </EditForm>
-        }
+        </div>
     }
 </section>
-<script src="js/mobileMenu.js"></script>
 
-@* <h3>Subscriptions</h3> *@
-@* *@
-@* @if (!string.IsNullOrWhiteSpace(Message)) *@
-@* { *@
-@*     <h4 style="color: #26b050">@Message</h4> *@
-@* } *@
-@* *@
-@* @if (_activeSub is null) *@
-@* { *@
-@*     <p>No active subscription</p> *@
-@* } *@
-@* else *@
-@* { *@
-@*     <p>Active subscription (access to events & videos): @_activeSub.Start @(_activeSub.End.HasValue ? $"- {_activeSub.End}" : $" ({_activeSub.Type} - auto-renew)")</p> *@
-@*     <p>Next dreams eligibility</p> *@
-@*     <ul> *@
-@*         @foreach(var month in _eligibleMonths) *@
-@*         { *@
-@*             <li>@month.ToString("Y") (winners announced early @month.AddMonths(1).ToString("Y"))</li> *@
-@*         } *@
-@*     </ul> *@
-@*     @if (_activeSub.End is null) *@
-@*     { *@
-@*         <p><strong>As long as the subscription is active, you will be eligible.</strong></p> *@
-@*         <EditForm Model="Input" FormName="cancel-subscription" OnValidSubmit="OnValidSubmitAsync" method="post"> *@
-@*             <DataAnnotationsValidator /> *@
-@*             <ValidationSummary class="text-danger" role="alert" /> *@
-@*             <button type="submit" class="w-100 btn btn-lg btn-primary">Cancel subscription</button> *@
-@*         </EditForm> *@
-@*     } *@
-@* } *@
+<script src="js/mobileMenu.js"></script>
 
 
 @code {
 
     private Guid _userId;
-    private List<Jhooa.UI.Features.Subscriptions.Models.Subscription>? _subscriptions = new();
-    private Jhooa.UI.Features.Subscriptions.Models.Subscription? _activeSub;
+    private UserView? _userView;
+    private string? _message;
 
-    // [SupplyParameterFromQuery(Name = "session-id")]
-    // public string? CheckoutSessionId { get; set; }
+    [SupplyParameterFromForm] private SubscribeModel SubscribeModelInput { get; set; } = new();
 
-    // private string? Message { get; set; }
-    // 
-    [SupplyParameterFromForm] private CancelSubscriptionModel? CancelSubscriptionInputModel { get; set; } = new();
-    //
-    // private List<Jhooa.UI.Features.Subscriptions.Models.Subscription>? _subscriptions = new();
-    // private Jhooa.UI.Features.Subscriptions.Models.Subscription? _activeSub;
-    // private List<DateOnly> _eligibleMonths = new();
+    [SupplyParameterFromQuery(Name = "session-id")] public string? CheckoutSessionId { get; set; }
 
     protected override void OnParametersSet()
     {
-        CancelSubscriptionInputModel ??= new CancelSubscriptionModel();
     }
 
     protected override async Task OnInitializedAsync()
@@ -108,99 +146,66 @@
 
         _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-        _subscriptions = await DbContext.Subscriptions.Where(s => s.UserId == _userId).ToListAsync();
-        _activeSub = _subscriptions.FirstOrDefault(s =>
-            s.IsPaid &&
-            s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
-            (s.End is null || s.End > DateOnly.FromDateTime(DateTime.Now)));
+        _userView = await DbContext.UsersView.FirstAsync(uv => uv.Id == _userId);
+        
+        if (CheckoutSessionId is not null)
+        {
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
 
+            if (sub is not null)
+            {
+                if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
+                {
+                    var result = await StripeService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
+                    if (result.IsSuccess)
+                    {
+                        sub.MarkPaymentAsPaid(result.Value);
+                    }
+                }
 
-        // if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
-        // {
-        //     _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        //
-        //     Input ??= new InputModel();
-        //
-        //     if (CheckoutSessionId is not null)
-        //     {
-        //         var sub = await DbContext.Subscriptions
-        //             .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId && s.UserId == _userId);
-        //
-        //         if (sub is not null)
-        //         {
-        //             if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
-        //             {
-        //                 var result = await StriveService.RetrievePaymentIntentIdIfPaid(CheckoutSessionId);
-        //                 if (result.IsSuccess)
-        //                 {
-        //                     sub.MarkPaymentAsPaid(result.Value);
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 var result = await StriveService.RetrieveSubscriptionId(CheckoutSessionId);
-        //                 if (result.IsSuccess)
-        //                 {
-        //                     sub.MarkSubscriptionAsPaid(result.Value);
-        //                 }
-        //             }
-        //
-        //             await DbContext.SaveChangesAsync();
-        //         }
-        //     }
-        //
-        //     await ResetSubscriptions(_userId);
-        // }
+                await DbContext.SaveChangesAsync();
+                
+                _message = Loc["SubscriptionRenewed"];
+            }
+        }
     }
 
-    // private async Task ResetSubscriptions(Guid userId)
-    // {
-    //     _subscriptions = await DbContext.Subscriptions
-    //         .Where(s => s.UserId == userId)
-    //         .ToListAsync();
-    //
-    //     _activeSub = _subscriptions.FirstOrDefault(s =>
-    //         s.IsPaid &&
-    //         s.Start <= DateOnly.FromDateTime(DateTime.Now) &&
-    //         (s.End is null || s.End > DateOnly.FromDateTime(DateTime.Now)));
-    //
-    //     if (_activeSub is not null)
-    //     {
-    //         _eligibleMonths = DreamService.GetEligibleDates(_activeSub);
-    //     }
-    // }
-    //
-    private async Task CancelSubscriptionAsync()
+    public async Task Subscribe(EditContext editContext)
     {
-        if (CancelSubscriptionInputModel is not null && _activeSub is not null && !string.IsNullOrWhiteSpace(_activeSub.StripeSubscriptionId))
+        var user = await DbContext.Users.FirstAsync(u => u.Id == _userId);
+        
+        var session = await StripeService.GeneratePaymentIntent(user.StripeCustomerId!, SubscribeModelInput.SubscriptionType);
+        var sub = new Jhooa.UI.Features.Subscriptions.Models.Subscription
         {
-            await StriveService.CancelSubscription(_activeSub.StripeSubscriptionId);
+            Start = DateOnly.FromDateTime(DateTime.Now),
+            End = GetEndDate(SubscribeModelInput.SubscriptionType),
+            UserId = user.Id,
+            StripeSessionCheckoutId = session.SessionId,
+            Type = SubscribeModelInput.SubscriptionType
+        };
 
-            var currentDate = DateOnly.FromDateTime(DateTime.Today);
+        await DbContext.Subscriptions.AddAsync(sub);
+        await DbContext.SaveChangesAsync();
 
-            if (_activeSub.Type is SubscriptionType.MonthlyRecurring)
-            {
-                _activeSub.End = new DateOnly(currentDate.Month == 12 ? currentDate.Year + 1 : currentDate.Year,
-                    currentDate.Month == 12 ? 1 : currentDate.Month + 1,
-                    day: _activeSub.Start.Day);
-            }
-            else if (_activeSub.Type is SubscriptionType.YearlyRecurring)
-            {
-                _activeSub.End = new DateOnly(currentDate.Year + 1,
-                    _activeSub.Start.Month,
-                    day: _activeSub.Start.Day);
-            }
+        NavigationManager.NavigateTo(session.SessionUrl);
+    }
+    
+    private static DateOnly? GetEndDate(SubscriptionType type)
+        => type switch
+        {
+            SubscriptionType.MonthlyOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
+            SubscriptionType.YearlyOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
+            SubscriptionType.MonthlyRecurring => null,
+            SubscriptionType.YearlyRecurring => null,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
 
-            await DbContext.Subscriptions.Where(e => e.Id == _activeSub.Id)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(b => b.End, _activeSub.End)
-                        .SetProperty(b => b.Status, SubscriptionStatus.Cancelled))
-                ;
-            
-            await DbContext.SaveChangesAsync();
-        }
-
-        ;
+    private sealed class SubscribeModel
+    {
+        public SubscriptionType SubscriptionType { get; set; }
     }
 
     private sealed class CancelSubscriptionModel

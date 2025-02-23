@@ -94,7 +94,7 @@
             {
                 var subEndDate = DateTimeOffset.Parse(subEndDateClaim.Value);
             
-                if (subActiveClaim?.Value == "true" && (Date.Month <= subEndDate.Month))
+                if (subActiveClaim?.Value == "true" && (Date <= subEndDate))
                 {
                     CanRegister = true;
                 }

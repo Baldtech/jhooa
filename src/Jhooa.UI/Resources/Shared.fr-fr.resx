@@ -158,4 +158,7 @@
     <data name="Filters" xml:space="preserve">
         <value>Filters</value>
     </data>
+    <data name="SaveChanges" xml:space="preserve">
+        <value>Sauvegarder les changements</value>
+    </data>
 </root>

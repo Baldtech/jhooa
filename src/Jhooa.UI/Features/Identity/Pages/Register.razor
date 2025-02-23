@@ -234,27 +234,28 @@
 
     private string? Message => _identityErrors is null ? null : $"{Loc["Error"]}: {string.Join(", ", _identityErrors.Select(error => error.Description))}";
 
-// #if DEBUG
-//     protected override void OnInitialized()
-//     {
-//         if (string.IsNullOrWhiteSpace(Input.Lastname))
-//         {
-//             Input.Firstname = Guid.NewGuid().ToString();
-//             Input.Lastname = Guid.NewGuid().ToString();
-//             Input.Email = $"{Guid.NewGuid().ToString()}@example.com";
-//             Input.Address = Guid.NewGuid().ToString();
-//             Input.ZipCode = Guid.NewGuid().ToString();
-//             Input.Country = Guid.NewGuid().ToString();
-//             Input.PhoneNumber = Guid.NewGuid().ToString();
-//             Input.Password = Input.ConfirmPassword = "Abc123!";
-//             // Input.SmallDream = Guid.NewGuid().ToString();
-//             // Input.MediumDream = Guid.NewGuid().ToString();
-//             // Input.BigDream = Guid.NewGuid().ToString();
-//             Input.AcceptToc = true;
-//             Input.SubscribeToNewsletter = true;
-//         }
-//     }
-// #endif
+#if DEBUG
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrWhiteSpace(Input.Lastname))
+        {
+            Input.Firstname = Guid.NewGuid().ToString();
+            Input.Lastname = Guid.NewGuid().ToString();
+            Input.Email = $"{Guid.NewGuid().ToString()}@example.com";
+            Input.Address = Guid.NewGuid().ToString();
+            Input.ZipCode = Guid.NewGuid().ToString();
+            Input.City = Guid.NewGuid().ToString();
+            Input.Country = Guid.NewGuid().ToString();
+            Input.PhoneNumber = Guid.NewGuid().ToString();
+            Input.Password = Input.ConfirmPassword = "Abc123!";
+            Input.SmallDream = Guid.NewGuid().ToString();
+            Input.MediumDream = Guid.NewGuid().ToString();
+            Input.BigDream = Guid.NewGuid().ToString();
+            Input.AcceptToc = true;
+            Input.SubscribeToNewsletter = true;
+        }
+    }
+#endif
 
     public async Task RegisterUser(EditContext editContext)
     {

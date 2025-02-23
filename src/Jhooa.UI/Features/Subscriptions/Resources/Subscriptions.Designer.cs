@@ -92,5 +92,11 @@ namespace Jhooa.UI.Features.Subscriptions.Resources {
                 return ResourceManager.GetString("Cancelled", resourceCulture);
             }
         }
+        
+        internal static string SubscriptionRenewed {
+            get {
+                return ResourceManager.GetString("SubscriptionRenewed", resourceCulture);
+            }
+        }
     }
 }
