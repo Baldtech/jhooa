@@ -1,6 +1,7 @@
 @using System.Security.Claims
 @using Jhooa.UI.Configuration
 @using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Subscriptions.Models
 @using Jhooa.UI.Managers
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
@@ -83,27 +84,63 @@
 
         if (authState.User.Identity?.IsAuthenticated == true)
         {
+            _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
             var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
             if (subActiveClaim is null)
             {
                 CanRegister = false;
+                return;
+            }
+
+            var isSubActive = bool.Parse(subActiveClaim.Value);
+            if (!isSubActive)
+            {
+                CanRegister = false;
+                return;
             }
             
+            var subStartDateClaim = authState.User.Claims.First(c => c.Type == Constants.Claims.SubStartDate);
+            var subStartDate = DateTimeOffset.Parse(subStartDateClaim.Value);
+
             var subEndDateClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.SubEndDate);
             if (subEndDateClaim is not null)
             {
                 var subEndDate = DateTimeOffset.Parse(subEndDateClaim.Value);
             
-                if (subActiveClaim?.Value == "true" && (Date <= subEndDate))
+                if (Date <= subEndDate)
                 {
                     CanRegister = true;
+                }
+            }
+            else
+            {
+                var userView = await DbContext.UsersView.FirstAsync(u => u.Id == _userId);
+                if (userView.SubscriptionType == SubscriptionType.MonthlyRecurring)
+                {
+                    var nextMonth = DateTime.Now.AddMonths(1);
+                    var endDate = new DateTime(nextMonth.Year, nextMonth.Month, subStartDate.Day);
+                    
+                    if (Date <= endDate)
+                    {
+                        CanRegister = true;
+                    }
+                }
+                else if (userView.SubscriptionType == SubscriptionType.YearlyRecurring)
+                {
+                    var nextYear = DateTime.Now.AddYears(1);
+                    var endDate = new DateTime(nextYear.Year, nextYear.Month, subStartDate.Day);
+                    
+                    if (Date <= endDate)
+                    {
+                        CanRegister = true;
+                    }
                 }
             }
             
             
             if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {
-                _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
             }
         }

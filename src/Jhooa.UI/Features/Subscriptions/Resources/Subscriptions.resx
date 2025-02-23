@@ -45,4 +45,16 @@
     <data name="SubscriptionRenewed" xml:space="preserve">
         <value>Subscription renewed</value>
     </data>
+    <data name="AutoRenewMonthly" xml:space="preserve">
+        <value>Automatical renewal every month</value>
+    </data>
+    <data name="AutoRenewYearly" xml:space="preserve">
+        <value>Automatical renewal every year</value>
+    </data>
+    <data name="CancelRenewal" xml:space="preserve">
+        <value>Cancel auto renewal</value>
+    </data>
+    <data name="SubscriptionCancelled" xml:space="preserve">
+        <value>The auto renewal has been canceled</value>
+    </data>
 </root>

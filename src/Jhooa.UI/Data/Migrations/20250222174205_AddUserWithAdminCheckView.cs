@@ -22,7 +22,9 @@ namespace Jhooa.UI.Data.Migrations
                     s.[Type] AS SubscriptionType,
                     s.[Status] AS SubscriptionStatus,
                     s.[Start] AS SubscriptionStartDate,
-                    s.[End] AS SubscriptionEndDate
+                    s.[End] AS SubscriptionEndDate,
+                    s.[Id] AS SubscriptionId,
+                    s.[StripeSubscriptionId] AS StripeSubscriptionId
                 FROM [dbo].[IdentityUsers] u
                 LEFT JOIN [dbo].[IdentityUserRoles] ur ON u.Id = ur.UserId
                 LEFT JOIN [dbo].[IdentityRoles] r ON ur.RoleId = r.Id

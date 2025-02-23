@@ -38,4 +38,16 @@
     <data name="SubscriptionRenewed" xml:space="preserve">
         <value>Votre souscription a été renouvellée</value>
     </data>
+    <data name="AutoRenewMonthly" xml:space="preserve">
+        <value>Renouvellement automatique tous les mois</value>
+    </data>
+    <data name="AutoRenewYearly" xml:space="preserve">
+        <value>Renouvellement automatique tous les ans</value>
+    </data>
+    <data name="CancelRenewal" xml:space="preserve">
+        <value>Annulation du renouvelement automatique</value>
+    </data>
+    <data name="SubscriptionCancelled" xml:space="preserve">
+        <value>Le renouvelement automatique a été annulé</value>
+    </data>
 </root>

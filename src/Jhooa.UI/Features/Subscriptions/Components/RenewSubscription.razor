@@ -1,0 +1,134 @@
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Subscriptions> Loc
+@inject IStripeService StripeService
+@inject ApplicationDbContext DbContext
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IStringLocalizer<Jhooa.UI.Features.Home.Resources.Home> LocHome
+@inject IStringLocalizer<Jhooa.UI.Features.Identity.Resources.Identity> LocIdentity
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject NavigationManager NavigationManager
+
+<p class="text-center mb-4 text-red-400">@Loc["NoActiveSubscription"]</p>
+<div class="w-[50%] mx-auto">
+    <EditForm Model="SubscribeModelInput" method="post" OnValidSubmit="Subscribe" FormName="renew"
+              class="space-y-6">
+        <DataAnnotationsValidator/>
+        <InputRadioGroup @bind-Value="SubscribeModelInput.SubscriptionType" class="mb-8">
+            <div
+                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                <InputRadio id="option1"
+                            class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            Value="SubscriptionType.MonthlyOnce"/>
+
+                <div class="flex flex-row w-full">
+                    <label class="basis-1/2 text-white md:text-lg font-monetaRegular">
+                        @LocIdentity["RegisterMonthly"]
+                    </label>
+                    <label class="basis-1/2 text-white md:text-lg font-monetaRegular text-end">
+                        7 @LocHome["PriceMonthlyDesc"]
+                    </label>
+                </div>
+            </div>
+            <div
+                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
+                <InputRadio id="option2"
+                            class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            Value="SubscriptionType.MonthlyRecurring"/>
+
+                <div class="flex flex-row w-full">
+                    <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                        @LocIdentity["RegisterMonthlyRecurring"]
+                    </label>
+                    <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                        7 @LocHome["PriceMonthlyDesc"]
+                    </label>
+                </div>
+            </div>
+            <div
+                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                <InputRadio id="option3"
+                            class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            Value="SubscriptionType.YearlyOnce"/>
+
+                <div class="flex flex-row w-full">
+                    <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                        @LocIdentity["RegisterYearly"]
+                    </label>
+                    <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                        70 @LocHome["PriceYearlyDesc"]
+                    </label>
+                </div>
+            </div>
+            <div
+                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-brick-500 border-2 border-white px-6 py-3 mb-3">
+                <InputRadio id="option4"
+                            class="h-5 w-5 rounded-full text-jhooa-peach-100 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            Value="SubscriptionType.YearlyRecurring"/>
+
+                <div class="flex flex-row w-full">
+                    <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                        @LocIdentity["RegisterYearlyRecurring"]
+                    </label>
+                    <label class="basis-[30%] text-white md:text-lg font-monetaRegular text-end">
+                        70 @LocHome["PriceYearlyDesc"]
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
+                <button type="submit"
+                        class="border-2 border-white p-3">@LocShared["SaveChanges"]</button>
+            </div>
+
+        </InputRadioGroup>
+    </EditForm>
+</div>
+
+@code {
+    [SupplyParameterFromForm(FormName = "renew")]
+    private SubscribeModel SubscribeModelInput { get; set; } = new();
+    
+    [Parameter] public Guid UserId { get; set; }
+
+    
+    public async Task Subscribe(EditContext editContext)
+    {
+        var user = await DbContext.Users.FirstAsync(u => u.Id == UserId);
+
+        var session = await StripeService.GeneratePaymentIntent(user.StripeCustomerId!, SubscribeModelInput.SubscriptionType);
+        var sub = new Jhooa.UI.Features.Subscriptions.Models.Subscription
+        {
+            Start = DateOnly.FromDateTime(DateTime.Now),
+            End = GetEndDate(SubscribeModelInput.SubscriptionType),
+            UserId = user.Id,
+            StripeSessionCheckoutId = session.SessionId,
+            Type = SubscribeModelInput.SubscriptionType
+        };
+
+        await DbContext.Subscriptions.AddAsync(sub);
+        await DbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo(session.SessionUrl);
+    }
+    
+    private static DateOnly? GetEndDate(SubscriptionType type)
+        => type switch
+        {
+            SubscriptionType.MonthlyOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),
+            SubscriptionType.YearlyOnce
+                => DateOnly.FromDateTime(DateTime.Now.AddYears(1)),
+            SubscriptionType.MonthlyRecurring => null,
+            SubscriptionType.YearlyRecurring => null,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+    
+    private sealed class SubscribeModel
+    {
+        public SubscriptionType SubscriptionType { get; set; }
+    }
+}

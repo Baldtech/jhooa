@@ -10,4 +10,5 @@ public class StripeConfiguration
     public string AnnualOncePriceId { get; init; } = "";
     public string MonthlyRecurringPriceId { get; init; } = "";
     public string AnnualRecurringPriceId { get; init; } = "";
+    public string WebhookSecret { get; init; } = "";
 }

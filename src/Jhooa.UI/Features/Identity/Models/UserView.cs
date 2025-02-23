@@ -14,6 +14,8 @@ public class UserView
     public SubscriptionStatus? SubscriptionStatus { get; set; }
     public DateOnly? SubscriptionStartDate { get; init; }
     public DateOnly? SubscriptionEndDate { get; set; }
+    public Guid? SubscriptionId { get; set; }
+    public string? StripeSubscriptionId { get; set; }
     
     public char SubType => IsSubscriptionActive 
         ? SubscriptionType is Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.MonthlyOnce or Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.MonthlyRecurring ? 'M' : 'A'
