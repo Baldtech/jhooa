@@ -36,7 +36,7 @@
 
         foreach (var file in e.GetMultipleFiles())
         {
-            await blobService.UploadAsync($"{Id}/{file.Name}", file.OpenReadStream());
+            await blobService.UploadAsync($"{Id}/{Guid.NewGuid()}{Path.GetExtension(file.Name)}", file.OpenReadStream());
         }
         
         NavigationManager.NavigateTo(NavigationManager.Uri, true);
