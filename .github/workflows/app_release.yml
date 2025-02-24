@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  AZURE_WEBAPP_NAME: 'wapp-jhooa-weu-001'   
+  AZURE_WEBAPP_NAME: 'app-jhooa-website-weu'   
 
 jobs:
   deploy:
