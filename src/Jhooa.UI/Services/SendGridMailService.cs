@@ -29,5 +29,8 @@ public class SendGridMailService(ILogger<SendGridMailService> logger, IFluentEma
         }
     }
 
-    
+    public Task<SendResponse> SendWithTemplateAsync(string to, CultureInfo cultureInfo, object templateData, string? subject = default)
+    {
+        throw new NotImplementedException();
+    }
 }

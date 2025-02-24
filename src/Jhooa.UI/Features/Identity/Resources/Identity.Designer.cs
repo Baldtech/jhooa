@@ -608,5 +608,41 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("InsertDreams", resourceCulture);
             }
         }
+        
+        internal static string EmailResetPasswordSubject {
+            get {
+                return ResourceManager.GetString("EmailResetPasswordSubject", resourceCulture);
+            }
+        }
+        
+        internal static string EmailResetPasswordTitle {
+            get {
+                return ResourceManager.GetString("EmailResetPasswordTitle", resourceCulture);
+            }
+        }
+        
+        internal static string EmailResetPasswordContent {
+            get {
+                return ResourceManager.GetString("EmailResetPasswordContent", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAccountConfirmationSubject {
+            get {
+                return ResourceManager.GetString("EmailAccountConfirmationSubject", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAccountConfirmationTitle {
+            get {
+                return ResourceManager.GetString("EmailAccountConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        internal static string EmailAccountConfirmationContent {
+            get {
+                return ResourceManager.GetString("EmailAccountConfirmationContent", resourceCulture);
+            }
+        }
     }
 }

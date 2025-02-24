@@ -287,4 +287,22 @@
     <data name="InsertDreams" xml:space="preserve">
         <value>Renseigner mes rêves</value>
     </data>
+    <data name="EmailResetPasswordSubject" xml:space="preserve">
+        <value>Jhooa - Réinitialisez votre mot de passe</value>
+    </data>
+    <data name="EmailResetPasswordTitle" xml:space="preserve">
+        <value>Réinitialisez votre mot de passe</value>
+    </data>
+    <data name="EmailResetPasswordContent" xml:space="preserve">
+        <value>Voici le lien pour réinitialiser votre mot de passe : &lt;a href="{0}"&gt;clique ici&lt;/a&gt;.</value>
+    </data>
+    <data name="EmailAccountConfirmationSubject" xml:space="preserve">
+        <value>Jhooa - Confirmez votre compte</value>
+    </data>
+    <data name="EmailAccountConfirmationTitle" xml:space="preserve">
+        <value>Confimez votre compte</value>
+    </data>
+    <data name="EmailAccountConfirmationContent" xml:space="preserve">
+        <value>Voici le lien pour confirmer botre compte : &lt;a href="{0}"&gt;clique ici&lt;/a&gt;.</value>
+    </data>
 </root>

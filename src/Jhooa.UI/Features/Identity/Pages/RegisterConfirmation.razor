@@ -12,7 +12,7 @@
 @using Jhooa.UI.Features.Identity.Components
 
 @inject UserManager<ApplicationUser> UserManager
-@inject IEmailSender<ApplicationUser> EmailSender
+@inject IMailService MailService
 @inject NavigationManager NavigationManager
 @inject ApplicationDbContext DbContext
 @inject IStripeService StripeService
@@ -80,9 +80,14 @@
                 var callbackUrl = NavigationManager.GetUriWithQueryParameters(
                     NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
                     new Dictionary<string, object?> { ["userId"] = user.Id, ["code"] = code });
-
-                await EmailSender.SendConfirmationLinkAsync(user, user.Email!, HtmlEncoder.Default.Encode(callbackUrl));
-
+                
+                await MailService.SendWithTemplateAsync(user.Email!, cultureInfo: CultureInfo.CurrentCulture, 
+                    templateData: new
+                    {
+                        Title = Loc["EmailAccountConfirmationTitle"],
+                        Content = string.Format(Loc["EmailAccountConfirmationContent"], HtmlEncoder.Default.Encode(callbackUrl)),
+                    }, subject: Loc["EmailAccountConfirmationSubject"]);
+                
                 await DbContext.SaveChangesAsync();
             }
         }

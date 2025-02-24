@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <!-- Ensures mobile devices render email at device width, rather than desktop width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Jhooa Responsive Email</title>
+    <!--
+        Some email clients do support embedded CSS in <style> tags.
+        Others might ignore it and only use inline styles, but this
+        media query will help mobile-friendly clients.
+      -->
+    <style type="text/css">
+        /* Remove default spacing around tables in Outlook */
+        table, td {
+            border-collapse: collapse;
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        /* Responsive: Force main container to be 100% wide on small screens */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+            }
+
+            .hero img {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .padding-mobile {
+                padding: 10px !important;
+            }
+        }
+    </style>
+</head>
+<body
+        style="
+      margin:0; 
+      padding:0; 
+      background-color:#E9EAEC; 
+      font-family:Arial, sans-serif; 
+      -webkit-text-size-adjust:100%; 
+      -ms-text-size-adjust:100%;
+    ">
+
+
+<!-- Main container table -->
+<table
+        class="container"
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        width="100%"
+        style="max-width:600px; margin:0 auto;background-color:#ffffff;">
+    <!-- Hero row -->
+    <tr class="hero">
+        <td style="padding:0; margin:0;">
+            <!-- Replace the src with your actual image URL -->
+            <img
+                    src="https://stjhooawebsiteeuw.blob.core.windows.net/emails/email-banner.jpeg"
+                    alt=""
+                    width="600"
+                    style="
+              display:block; 
+              width:100%; 
+              max-width:600px; 
+              height:auto; 
+              border:0;
+            "/>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 20px 20px 20px; font-size:14px; color:#333333;">
+        </td>
+    </tr>
+    <!-- Title row -->
+    <tr>
+        <td
+                class="padding-mobile"
+                style="
+            padding: 20px 20px 10px 20px; 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #008080;
+          ">
+            {{Title}}
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 20px 20px 20px; font-size:14px; color:#333333;">
+        </td>
+    </tr>
+    <!-- Body text row -->
+    <tr>
+        <td
+                class="padding-mobile"
+                style="
+            padding: 0 20px 10px 20px; 
+            font-size:14px; 
+            line-height:1.6; 
+            color:#333333;
+          ">
+            {{Content}}
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 20px 20px 20px; font-size:14px; color:#333333;">
+        </td>
+    </tr>
+    <!-- Signature row -->
+    <tr>
+        <td
+                class="padding-mobile"
+                style="
+            padding: 0 20px 20px 20px; 
+            font-size:14px; 
+            color:#333333;
+          ">
+            L’équipe Jhooa.
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 20px 20px 20px; font-size:14px; color:#333333;">
+        </td>
+    </tr>
+    <!-- Footer row -->
+    <tr>
+        <td
+                style="
+           background-color: #E3A285; 
+           text-align:center; 
+           padding-top: 20px;
+           padding-left: 10px;
+           padding-right: 10px;
+           padding-bottom: 5px;
+           color: #ffffff;
+           font-size:14px;
+         ">
+            <a
+                    href="mailto:hello@jhooa.com"
+                    style="color:#ffffff; text-decoration:none; margin-right: 10px;">
+                <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAATCAYAAAB7u5a2AAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAHPSURBVDhPrZRNKAZBHIctUpSPIgeJlzgpKUpuSpSDyMXBwWcuirvcXZQcOBEpcVJOlAOiKKUUchCKlEQovD7X89Ou1nq9dsrU087Mzjz/mdnZvxXjKbZtD9OsBxtC3nd/1E95fwfjlmUNuWMtVZDG87iFJANhpKFPdK4RoFovXfm9I77gOQoHhoHeGF8KzZABqwSotJyj6KHjEd5hw41ssgs8OpZkCIN20C75CZVcmIY6iDMN4BFrBytQBTOSH1MJQRO8woRJAI9Yc7XyQeiGBcl1M1TaOI5Jmo1BA/jFzA/Tp8W1wu4PuaIECeATpyDWN9Pc6HJfADUvoQsOoRhGIAdeIA3xg7P7YHInQBHPdQngGvTBEiAVziEXsc76qwRauWcl+dRnnRUrQCYsIa31So1X7ltROu1C2Eb8HEns7PbbmWursdDCpKnfJgXt51jGGNsBO7ot7p/Vh3wgqCTKyrd4VwYrki9TqYR55A3/ID/CkQf9kldQWQTlhG1tiSC6CUYFj4RzUALvOOLcrNhJh3K5ipKO7nW2gf2KscpJWXADNci3PuUqRFY+6HWkiQZid6jS9hk0It5X55fcCaDEUw4FoB8naNFO95Bueid8AFki6ppe1tLbAAAAAElFTkSuQmCC"
+                        alt="Mail" style=" height: 16px;"/>
+                &nbsp;
+                hello@jhooa.com
+            </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- Facebook -->
+            <a
+                    href="https://www.facebook.com/profile.php?id=61570329875950"
+                    target="_blank"
+                    style="color:#ffffff; text-decoration:none; margin-right: 10px;">
+                <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAClSURBVDhPY2TAAf7//98AlPIHYgM0JYmM6HqAigWAYvuxKIYpbcSm6QBQ1h6XC4DiqJqAtigABe/j0QCSwtAE8kc9mqaLQP4GJLEJKM6Deh5dUyAjIyOyJgZiNDkCNYH8CQfkaQI6CWQ1P9QYUECAMDK4AOR8QBJIZARq+k8gtNClHemrCeRemJ+IcakheaGHbDSOyKVSPI3aBAmBAYonYtIQSA0ADaVv+3QTtMkAAAAASUVORK5CYII="
+                        alt="Facebook" style=" height: 17px;"/>
+                &nbsp;&nbsp;Jhooa.experience
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td
+                style="
+           background-color: #E3A285; 
+           text-align:center; 
+           padding-top: 5px;
+           padding-left: 10px;
+           padding-right: 10px;
+           padding-bottom: 20px;
+           color: #ffffff;
+           font-size:14px;
+         ">
+            <!-- TikTok -->
+            <a
+                    href="https://www.tiktok.com/@jhooa.experience#"
+                    target="_blank"
+                    style="color:#ffffff; text-decoration:none; margin-right: 10px;">
+                <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAXCAYAAAALHW+jAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAFYSURBVDhPtZWNUcJAEIVzFSgVIBUIFQgVABWAFUAHpgOwA61ArMDQAVRA6AAriO9l9sLmsmTCJO7MTYa7vW9/b3FRQ8myLIbqm1IfOecO4XXXkBcZwAmASZfAdwDXXQIvgDHsVEPbhEwOczjX0LZA79xO4OeugB68/18gWuMRphZYM6whFn/n7WG1Dc5Y5akqytVDXBjj4EsgunAmEEby6MQJ3qUDqd/kxs+NJq8FVvpQLJwMz/aivOYTC0P2HlpA5mGjDo7MYdiw9wDZnM8KOAhhkqsY32I41HmYlarkHPNZEaPKPUD5/ErioNg5MIGJF2XGtAy7KXT6Xq8u5C2UVgrId/mqwwHsA3tseC/fOGfzV4QhP2GXbaOFuSGYX16kjhZzuFLBN3bYOpZxv/cJ75a3FIrhYFTRumNOaa1YmjYSfixhPojiL74J1tb6DwmtNh5fdTnQZ38nl6oJ1GMd5AAAAABJRU5ErkJggg=="
+                        alt="TikTok" style=" height: 17px;"/>
+                &nbsp;Jhooa.experience
+            </a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- Instagram -->
+            <a
+                    href="https://www.instagram.com/jhooa.experience/"
+                    target="_blank"
+                    style="color:#ffffff; text-decoration:none; ">
+                <img
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAAAHuSURBVEhLnZWNUcMwDIXJBMAEhAloJyCdADYgTABMQJkAOgFhAmAC0gmgE9ARygThfTmpZ+enNehO5z/p6VmW7ewgkKZpCg2vpLmUfop8yQitsyx7CR0yBgI9UvMoLVPQdtgQZKYgG2wcvDLGP2qfYAEbN9oV0HY7kc2t9MT8pi24LX6oD3AhQKIni+3a7fElwLVwKsCd9YMm5smoMpRvrubTfGBbSJ+dPeCk4FxKruhHYswuNAkQspa+kzKtkY4tOLvWXIOR+hng28EAcKk5DpoDD4UDm8t9IXdsAKtok8DNiS0iS2lt/UItO0XuBEoBbEV+aw3I+/Egc0vFtwxg3DuLTuBTBQCwlSjNQ2kJnJdyhGlPgkJYyIYyTAafy/J+iHUAUqpP2iICKcxTwC8F/PofcLZJlfBezEbSwkHeSP+cFg6SQzqUtrctDDBU38k5x1AAzp4h4LWU+i6kfoARa/OD1HgpBizCAN3s9IANPLqhPDZn0rHrnxtTrjqCfTX2wHVv6JuMeTt6t61Ldd9YwF5BKwWfcENLOVGv5Gqa8oaPBRGWZ6El6p+FTxKAByn6rhIZc+lI3UrKv7AJv7nach9iEQwdklyTaCgAl34eLbiLpajU2F+9faR9HdAKDdMagXeR7HX0Kuku7/1jfwEFljOv16x+XgAAAABJRU5ErkJggg=="
+                        alt="Instagram" style=" width: 17px;"/>
+                &nbsp;
+                Jhooa.experience
+            </a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
