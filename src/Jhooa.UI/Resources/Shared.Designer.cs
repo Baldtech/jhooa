@@ -350,5 +350,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("SaveChanges", resourceCulture);
             }
         }
+        
+        internal static string MyAccount {
+            get {
+                return ResourceManager.GetString("MyAccount", resourceCulture);
+            }
+        }
     }
 }

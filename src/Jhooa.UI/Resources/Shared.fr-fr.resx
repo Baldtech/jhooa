@@ -161,4 +161,7 @@
     <data name="SaveChanges" xml:space="preserve">
         <value>Sauvegarder les changements</value>
     </data>
+    <data name="MyAccount" xml:space="preserve">
+        <value>Mon compte</value>
+    </data>
 </root>

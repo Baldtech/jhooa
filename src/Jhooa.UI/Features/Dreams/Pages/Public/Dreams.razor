@@ -72,11 +72,11 @@
 
 
 @code {
-    private ApplicationUser _user = default!;
+    private ApplicationUser _user = null!;
 
     [SupplyParameterFromForm] private InputModel? Input { get; set; }
 
-    [CascadingParameter] private HttpContext HttpContext { get; set; } = default!;
+    [CascadingParameter] private HttpContext HttpContext { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -88,9 +88,9 @@
 
             Input = new InputModel
             {
-                SmallDream = dreams.First(d => d.Type == DreamTypes.Small).Title,
-                MediumDream = dreams.First(d => d.Type == DreamTypes.Medium).Title,
-                BigDream = dreams.First(d => d.Type == DreamTypes.Big).Title
+                SmallDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Small)?.Title,
+                MediumDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Medium)?.Title,
+                BigDream = dreams.FirstOrDefault(d => d.Type == DreamTypes.Big)?.Title
             };
         }
     }
@@ -108,11 +108,10 @@
     }
 
 
-    private async Task UpdateDream(DreamTypes type, string newDream)
+    private async Task UpdateDream(DreamTypes type, string? newDream)
     {
         await DbContext.Dreams.Where(d => d.UserId == _user.Id && d.Type == type).ExecuteDeleteAsync();
-
-
+        
         if (!string.IsNullOrWhiteSpace(newDream))
         {
             DbContext.Dreams.Add(new Dream
@@ -128,15 +127,15 @@
     {
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        public string SmallDream { get; set; } = "";
+        public string? SmallDream { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        public string MediumDream { get; set; } = "";
+        public string? MediumDream { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
         [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        public string BigDream { get; set; } = "";
+        public string? BigDream { get; set; } = "";
     }
 
 }

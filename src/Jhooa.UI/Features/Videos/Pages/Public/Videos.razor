@@ -1,6 +1,7 @@
 @page "/Videos"
 @rendermode InteractiveServer
 
+@using System.Security.Claims
 @using Jhooa.UI.Configuration
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Videos.Components
@@ -81,6 +82,13 @@
 
         if (authState.User.Identity?.IsAuthenticated == true)
         {
+            var roleClaim = authState.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            if (roleClaim?.Value == "Admin")
+            {
+                CanSeeVideos = true;
+                return;
+            }
+            
             var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
             if (subActiveClaim is null)
             {

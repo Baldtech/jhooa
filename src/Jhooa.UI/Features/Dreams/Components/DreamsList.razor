@@ -32,23 +32,26 @@
     [Parameter] public EventCallback<int?> NbDreamsCallback { get; set; }
 
     private List<Dream> _dreams = [];
+    private List<Guid> _activeUsers = [];
     
     protected override async Task OnInitializedAsync()
     {
-        _dreams = await DbContext.Dreams.ToListAsync();
-        //await NbDreamsCallback.InvokeAsync(_dreams.Count);
+        _activeUsers = await DbContext.UsersView.Where(u => u.IsSubscriptionActive).Select(s => s.Id).ToListAsync();
+        
+        _dreams = await DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId)).ToListAsync();
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        if (SelectedDreamType is null)
+        var query = DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId));
+
+        
+        if (SelectedDreamType is not null)
         {
-            _dreams = await DbContext.Dreams.ToListAsync();
+            query = query.Where(d => d.Type == SelectedDreamType);
         }
-        else
-        {
-            _dreams = await DbContext.Dreams.Where(d => d.Type == SelectedDreamType).ToListAsync();
-        }
+        _dreams = await query.ToListAsync();
+        
         await NbDreamsCallback.InvokeAsync(_dreams.Count);
     }
 }
