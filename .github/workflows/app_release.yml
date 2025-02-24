@@ -6,9 +6,6 @@ on:
     types: [completed]
     branches: [main]
 
-env:
-  AZURE_WEBAPP_NAME: 'app-jhooa-website-weu'   
-
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -43,7 +40,7 @@ jobs:
        id: deploy-to-webapp
        uses: azure/webapps-deploy@v3
        with:
-         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+         app-name: 'wapp-jhooa-weu-001'
          slot-name: 'Production'
          package: .
 
@@ -78,6 +75,6 @@ jobs:
        id: deploy-to-webapp
        uses: azure/webapps-deploy@v3
        with:
-         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+         app-name: 'app-jhooa-website-weu'
          slot-name: 'Production'
          package: .
