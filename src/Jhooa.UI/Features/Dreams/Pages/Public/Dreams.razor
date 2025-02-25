@@ -6,12 +6,12 @@
 @using Jhooa.UI.Configuration
 @using Jhooa.UI.Features.Dreams.Models
 @using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Identity.Components
 @using Jhooa.UI.Features.Identity.Models
 @using Jhooa.UI.Features.Identity.Shared
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
-@using Jhooa.UI.Features.Identity.Components
 
 @inject IStringLocalizer<Resources.Dreams> Loc
 @inject IdentityUserAccessor UserAccessor
@@ -26,49 +26,49 @@
 
     <p class="text-center mb-4">@Loc["AttemptToDesc"]</p>
 
-@if (Input is not null)
-{
-    <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="login" class="space-y-6">
-        <StatusMessage/>
-        <DataAnnotationsValidator/>
+    @if (Input is not null)
+    {
+        <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="login" class="space-y-6">
+            <StatusMessage/>
+            <DataAnnotationsValidator/>
 
-        <div class="grid grid-cols-1 gap-4">
-            <div class="space-y-3">
-                <JhooaDreamInput DisplayName="@LocIdentity["FormSmallDream"]"
-                                 Id="@(Constants.DreamIds.SmallDreamId)"
-                                 Content="@Input.SmallDream"
-                                 DreamType="DreamTypes.Small"/>
-                <JhooaDreamInput DisplayName="@LocIdentity["FormMediumDream"]"
-                                 Id="@(Constants.DreamIds.MediumDreamId)"
-                                 Content="@Input.MediumDream"
-                                 DreamType="DreamTypes.Medium"/>
-                <JhooaDreamInput DisplayName="@LocIdentity["FormBigDream"]"
-                                 Id="@(Constants.DreamIds.BigDreamId)"
-                                 Content="@Input.BigDream"
-                                 DreamType="DreamTypes.Big"/>
+            <div class="grid grid-cols-1 gap-4">
+                <div class="space-y-3">
+                    <JhooaDreamInput DisplayName="@LocIdentity["FormSmallDream"]"
+                                     Id="@(Constants.DreamIds.SmallDreamId)"
+                                     Content="@Input.SmallDream"
+                                     DreamType="DreamTypes.Small"/>
+                    <JhooaDreamInput DisplayName="@LocIdentity["FormMediumDream"]"
+                                     Id="@(Constants.DreamIds.MediumDreamId)"
+                                     Content="@Input.MediumDream"
+                                     DreamType="DreamTypes.Medium"/>
+                    <JhooaDreamInput DisplayName="@LocIdentity["FormBigDream"]"
+                                     Id="@(Constants.DreamIds.BigDreamId)"
+                                     Content="@Input.BigDream"
+                                     DreamType="DreamTypes.Big"/>
 
-                <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
-                       id="small-dreams-hidden"/>
-                <input type="hidden" name="Input.MediumDream" @bind-value="Input.MediumDream"
-                       id="medium-dreams-hidden"/>
-                <input type="hidden" name="Input.BigDream" @bind-value="Input.BigDream" id="big-dreams-hidden"/>
+                    <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
+                           id="small-dreams-hidden"/>
+                    <input type="hidden" name="Input.MediumDream" @bind-value="Input.MediumDream"
+                           id="medium-dreams-hidden"/>
+                    <input type="hidden" name="Input.BigDream" @bind-value="Input.BigDream" id="big-dreams-hidden"/>
 
-                
+
+                </div>
+                <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">
+                    <InputDreams SmallDream="@Input.SmallDream" MediumDream="@Input.MediumDream"
+                                 BigDream="@Input.BigDream"/>
+                </div>
+
+                <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">
+                    <button type="submit" class="border-2 border-white px-10 py-3">@Loc["SaveChanges"]</button>
+                </div>
             </div>
-            <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">
-
-                <InputDreams SmallDream="@Input.SmallDream" MediumDream="@Input.MediumDream" BigDream="@Input.BigDream"/>
-            </div>
-            
-            <div class="col-span-2 flex justify-center gap-3 mt-4  mb-10">
-                <button type="submit" class="border-2 border-white px-10 py-3">@Loc["SaveChanges"]</button>
-            </div>
-        </div>
-    </EditForm>
-}
+        </EditForm>
+    }
 </section>
 
-<script src="js/mobileMenu.js"></script>
+@* <script src="js/mobileMenu.js"></script> *@
 
 
 @code {
@@ -102,16 +102,15 @@
         await UpdateDream(DreamTypes.Big, Input!.BigDream);
 
         await DbContext.SaveChangesAsync();
-        
-        RedirectManager.RedirectToCurrentPageWithStatus(Loc["DreamsUpdated"], HttpContext);
 
+        RedirectManager.RedirectToCurrentPageWithStatus(Loc["DreamsUpdated"], HttpContext);
     }
 
 
     private async Task UpdateDream(DreamTypes type, string? newDream)
     {
         await DbContext.Dreams.Where(d => d.UserId == _user.Id && d.Type == type).ExecuteDeleteAsync();
-        
+
         if (!string.IsNullOrWhiteSpace(newDream))
         {
             DbContext.Dreams.Add(new Dream

@@ -3,15 +3,16 @@
 @inject IStringLocalizer<Resources.Identity> Loc
 @inject IStringLocalizer<Jhooa.UI.Features.Dreams.Resources.Dreams> LocDreams
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject IJSRuntime Js
 
 <!-- Modal toggle -->
-<button data-modal-target="@_fieldId" data-modal-toggle="@_fieldId" class="border-2 border-white p-3 px-10"
+<button data-modal-target="@(_fieldId)" data-modal-toggle="@(_fieldId)" class="border-2 border-white p-3 px-10"
         type="button">
     @Loc["InsertDreams"]
 </button>
 
 <!-- Main modal -->
-<div id="@_fieldId" tabindex="-1" aria-hidden="true"
+<div id="@(_fieldId)" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
@@ -50,8 +51,6 @@
             <!-- Modal footer -->
             <div class="flex items-center p-4 md:p-5">
                 <button data-modal-hide="@_fieldId" type="button" class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight mr-4">@LocShared["Save"]</button>
-                @* <button data-modal-hide="@_fieldId" type="button" *@
-                @*         class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight">@LocShared["Cancel"]</button> *@
             </div>
         </div>
     </div>
@@ -87,4 +86,14 @@
     
     private readonly Guid _fieldId = Guid.NewGuid();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var module = await Js.InvokeAsync<IJSObjectReference>("import",
+                "./js/FlowbiteLoad.js");
+
+            await module.InvokeVoidAsync("loadFlowbite");
+        }
+    }
 }
