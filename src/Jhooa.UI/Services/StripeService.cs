@@ -31,6 +31,7 @@ public class StripeService(
                     Quantity = 1,
                 },
             ],
+            AllowPromotionCodes = true,
             Mode = GetMode(subscriptionType),
             SuccessUrl = domain + "/Account/RegisterConfirmation?session-id={CHECKOUT_SESSION_ID}",
             CancelUrl = domain + "?session-id={CHECKOUT_SESSION_ID}&cancel=true"
@@ -63,6 +64,7 @@ public class StripeService(
                     Quantity = 1,
                 },
             ],
+            AllowPromotionCodes = true,
             Mode = GetMode(subscriptionType),
             SuccessUrl = domain + "/Account/Manage/Subscription?session-id={CHECKOUT_SESSION_ID}",
             CancelUrl = domain,

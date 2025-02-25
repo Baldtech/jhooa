@@ -103,14 +103,17 @@
                                          Id="@(Constants.DreamIds.SmallDreamId)"
                                          Content="@Loc["SmallDreamPlaceholder"]"
                                          DreamType="DreamTypes.Small"/>
+                        <ValidationMessage For="@(() => Input.SmallDream)" class="text-danger"/>
                         <JhooaDreamInput DisplayName="@Loc["FormMediumDream"]"
                                          Id="@(Constants.DreamIds.MediumDreamId)"
                                          Content="@Loc["MediumDreamPlaceholder"]"
                                          DreamType="DreamTypes.Medium"/>
+                        <ValidationMessage For="@(() => Input.MediumDream)" class="text-danger"/>
                         <JhooaDreamInput DisplayName="@Loc["FormBigDream"]"
                                          Id="@(Constants.DreamIds.BigDreamId)"
                                          Content="@Loc["BigDreamPlaceholder"]"
                                          DreamType="DreamTypes.Big"/>
+                        <ValidationMessage For="@(() => Input.BigDream)" class="text-danger"/>
 
                         <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
                                id="small-dreams-hidden"/>
@@ -446,10 +449,10 @@
         [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? SmallDream { get; set; } = "";
 
-        [StringLength(maximumLength: 300, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? MediumDream { get; set; } = "";
 
-        [StringLength(maximumLength: 300, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? BigDream { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
