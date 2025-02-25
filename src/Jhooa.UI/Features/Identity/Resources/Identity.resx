@@ -322,4 +322,10 @@
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>You must accept the terms.</value>
     </data>
+    <data name="ExportNewsletter" xml:space="preserve">
+        <value>Export users for newsletter</value>
+    </data>
+    <data name="ExportFull" xml:space="preserve">
+        <value>Export all users</value>
+    </data>
 </root>

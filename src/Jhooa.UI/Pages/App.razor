@@ -1,5 +1,8 @@
 ﻿@using Jhooa.UI.Configuration
 @using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Hosting;
+@using Microsoft.Extensions.Hosting;
+@inject IWebHostEnvironment Env
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,12 +21,19 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
+@if (!Env.IsEnvironment("Production"))
+{
+    <div class="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-center py-2 font-bold z-50">
+        TEST ENVIRONMENT
+    </div>
+}
+
 <div id="top"></div>
 
 <Routes/>
 <script src="_framework/blazor.web.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-
+<script src="js/downloadFile.js"></script>
 <script>
     Blazor.addEventListener('enhancedload', function () {
         initFlowbite();

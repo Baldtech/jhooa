@@ -9,6 +9,8 @@
 @using Jhooa.UI.Features.Identity.Models
 
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
+
+
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <PageTitle>@Loc["UsersList"]</PageTitle>
@@ -44,4 +46,6 @@
     {
         _selectedFilter = type;
     }
+    
+    
 }

@@ -1,15 +1,22 @@
 @using Jhooa.UI.Features.Identity.Models
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
+
 @inject IStringLocalizer<Resources.Identity> Loc
+@inject ApplicationDbContext DbContext
+@inject IJSRuntime Js
 
 <div class="flex items-center space-x-2">
+    <button @onclick="GenerateAndDownloadCsvFull" class="px-10 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight mr-4">@Loc["ExportFull"]</button>
+    <button @onclick="GenerateAndDownloadCsvForNewsletter" class="px-10 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight mr-4">@Loc["ExportNewsletter"]</button>
+
     <label for="filter" class="font-medium">@Loc["Filters"]</label>
     <select id="filter" @onchange="OnFilterTypeChange" value="@_selectedFilter"
             class="bg-teal-800 border border-teal-700 text-white rounded px-2 py-1 focus:outline-none">
-        <option value="@FilterTypes.All" >@Loc["All"]</option>
-        <option value="@FilterTypes.Admin" >@Loc["Admin"]</option>
-        <option value="@FilterTypes.Active" >@Loc["Active"]</option>
-        <option value="@FilterTypes.Inactive" >@Loc["Inactive"]</option>
+        <option value="@FilterTypes.All">@Loc["All"]</option>
+        <option value="@FilterTypes.Admin">@Loc["Admin"]</option>
+        <option value="@FilterTypes.Active">@Loc["Active"]</option>
+        <option value="@FilterTypes.Inactive">@Loc["Inactive"]</option>
     </select>
 </div>
 
@@ -38,5 +45,27 @@
     {
         SelectFilterTypeCallback.InvokeAsync(filter);
         return Task.CompletedTask;
+    }
+    
+    private async Task GenerateAndDownloadCsvForNewsletter()
+    {
+        var emails = await DbContext.Users.Where(u => u.NewsletterActive).Select(s => s.Email).ToListAsync();
+
+        var csvContent = string.Join("\n", emails);
+        var csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
+        var base64Csv = Convert.ToBase64String(csvBytes);
+
+        await Js.InvokeVoidAsync("downloadFile", "emails.csv", base64Csv);
+    }
+    
+    private async Task GenerateAndDownloadCsvFull()
+    {
+        var emails = await DbContext.Users.Select(s => s.Email).ToListAsync();
+
+        var csvContent = string.Join("\n", emails);
+        var csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
+        var base64Csv = Convert.ToBase64String(csvBytes);
+
+        await Js.InvokeVoidAsync("downloadFile", "emails.csv", base64Csv);
     }
 }

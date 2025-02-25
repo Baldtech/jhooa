@@ -650,5 +650,17 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("TermsMustBeAccepted", resourceCulture);
             }
         }
+        
+        internal static string ExportNewsletter {
+            get {
+                return ResourceManager.GetString("ExportNewsletter", resourceCulture);
+            }
+        }
+        
+        internal static string ExportFull {
+            get {
+                return ResourceManager.GetString("ExportFull", resourceCulture);
+            }
+        }
     }
 }

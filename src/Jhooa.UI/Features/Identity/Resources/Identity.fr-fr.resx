@@ -308,4 +308,10 @@
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>Les conditions générales doivent être acceptées.</value>
     </data>
+    <data name="ExportNewsletter" xml:space="preserve">
+        <value>Exporter utilisateur pour newsletter</value>
+    </data>
+    <data name="ExportFull" xml:space="preserve">
+        <value>Exporter tous les utilisateurs</value>
+    </data>
 </root>

@@ -17,7 +17,13 @@ public class UserView
     public Guid? SubscriptionId { get; set; }
     public string? StripeSubscriptionId { get; set; }
     
-    public char SubType => IsSubscriptionActive 
-        ? SubscriptionType is Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.MonthlyOnce or Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.MonthlyRecurring ? 'M' : 'A'
-        : '-';
+    public string SubType => SubscriptionType switch
+    {
+        Subscriptions.Models.SubscriptionType.MonthlyOnce => "M",
+        Subscriptions.Models.SubscriptionType.YearlyOnce => "A",
+        Subscriptions.Models.SubscriptionType.MonthlyRecurring => "M/R",
+        Subscriptions.Models.SubscriptionType.YearlyRecurring => "A/R",
+        null => "-",
+        _ => "-"
+    };
 }
