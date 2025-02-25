@@ -24,11 +24,19 @@
 
 <div class="max-w-screen-xl mx-auto  text-white py-4">
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">
-        <StatusMessage Message="@Message"/>
         <DataAnnotationsValidator/>
         <div class="container mx-auto py-8 px-4">
-            <p class="mb-20 max-w-screen-md mx-auto text-center text-sm tracking-wide font-amsiProRegular">@Loc["RegisterIntro"]</p>
 
+            @if(Message is not null)
+            {            
+                <p class="mb-10 max-w-screen-md mx-auto text-center text-sm tracking-wide font-amsiProRegular">@Loc["RegisterIntro"]</p>
+                <div class="mb-10 max-w-screen-sm mx-auto text-center text-sm tracking-wide font-amsiProRegular"> <StatusMessage Message="@Message"/></div>
+            }
+            else
+            {
+                <p class="mb-20 max-w-screen-md mx-auto text-center text-sm tracking-wide font-amsiProRegular">@Loc["RegisterIntro"]</p>
+            }
+            
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
                 <!-- COL 1: CRÉER UN COMPTE -->
                 <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
@@ -188,23 +196,28 @@
                         </div>
                     </InputRadioGroup>
 
-                    <div class="flex space-x-2 my-8 text-sm">
+                    <div class="flex flex-wrap space-x-2 my-8 text-sm">
                         <InputCheckbox @bind-Value="Input.AcceptToc"
                                        class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
-                        <label for="accepttoc" class="">@((MarkupString)Loc["AcceptToc"].ToString())</label>
+                        <label for="accepttoc" class="basis-10/12">@((MarkupString)Loc["AcceptToc"].ToString())</label>
+                        <ValidationMessage For="@(() => Input.AcceptToc)" class="text-danger mt-2"/>
                     </div>
 
-                    <div class="flex  space-x-2 mb-8  text-sm">
+                    <div class="flex flex-wrap space-x-2 my-8 text-sm">
                         <InputCheckbox @bind-Value="Input.SubscribeToNewsletter"
                                        class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
-                        <label for="subscribetonewsletter" class="">@Loc["SubscribeToNewsletter"]</label>
+                        <label for="subscribetonewsletter" class="basis-10/12">@Loc["SubscribeToNewsletter"]</label>
+                        <ValidationMessage For="@(() => Input.SubscribeToNewsletter)" class="text-danger mt-2"/>
+
                     </div>
 
-                    <div class="flex space-x-2 mb-8  text-sm">
+                    <div class="flex flex-wrap space-x-2 my-8 text-sm">
                         <InputCheckbox @bind-Value="Input.AcceptDistribution"
                                        class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
                         <label for="acceptdistribution"
-                               class="">@Loc["AcceptDiffusion"] <br/>@Loc["AcceptDiffusionDesc"]</label>
+                               class="basis-10/12">@Loc["AcceptDiffusion"] <br/>@((MarkupString)Loc["AcceptDiffusionDesc"].ToString())</label>
+                        <ValidationMessage For="@(() => Input.AcceptDistribution)" class="text-danger mt-2"/>
+
                     </div>
 
                     <button type="submit" class="border-2 border-white p-3 ml-10">@Loc["RegisterButton"]</button>
@@ -430,23 +443,20 @@
         [Compare("Password", ErrorMessageResourceName = "PasswordNotMatching", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string ConfirmPassword { get; set; } = "";
 
-
-        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? SmallDream { get; set; } = "";
 
-        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 300, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? MediumDream { get; set; } = "";
 
-        // [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
-        // [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [StringLength(maximumLength: 300, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? BigDream { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public SubscriptionType SubscriptionType { get; set; }
 
-
+        [Required(ErrorMessageResourceName = "TermsMustBeAccepted", ErrorMessageResourceType = typeof(Resources.Identity))]
+        [Range(typeof(bool), "true", "true", ErrorMessageResourceName = "TermsMustBeAccepted", ErrorMessageResourceType = typeof(Resources.Identity))]
         public bool AcceptToc { get; set; }
         public bool SubscribeToNewsletter { get; set; }
         public bool AcceptDistribution { get; set; }

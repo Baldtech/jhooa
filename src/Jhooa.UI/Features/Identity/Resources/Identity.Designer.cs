@@ -644,5 +644,11 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("EmailAccountConfirmationContent", resourceCulture);
             }
         }
+        
+        internal static string TermsMustBeAccepted {
+            get {
+                return ResourceManager.GetString("TermsMustBeAccepted", resourceCulture);
+            }
+        }
     }
 }

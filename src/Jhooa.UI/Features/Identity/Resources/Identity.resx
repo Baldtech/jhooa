@@ -272,7 +272,7 @@
         <value>I have read and accept the capture and/or distribution of my image in case of selection.</value>
     </data>
     <data name="AcceptDiffusionDesc" xml:space="preserve">
-        <value>(Attention: Only subscribers who have accepted the capture and/or distribution of their image can be selected for the fulfillment of their wishes and/or participation in our events. In case of refusal, you will still retain access to the video content included in your subscription).</value>
+        <value>(&lt;strong&gt;Attention: Only subscribers who have accepted the capture and/or distribution of their image can be selected for the fulfillment of their wishes and/or participation in our events&lt;/strong&gt;. In case of refusal, you will still retain access to the video content included in your subscription).</value>
     </data>
     <data name="City" xml:space="preserve">
         <value>City</value>
@@ -318,5 +318,8 @@
     </data>
     <data name="EmailAccountConfirmationContent" xml:space="preserve">
         <value>Here is the link to confirm your account: &lt;a href="{0}"&gt;click here&lt;/a&gt;.</value>
+    </data>
+    <data name="TermsMustBeAccepted" xml:space="preserve">
+        <value>You must accept the terms.</value>
     </data>
 </root>
