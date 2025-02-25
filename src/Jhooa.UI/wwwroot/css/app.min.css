@@ -2757,10 +2757,11 @@ input:checked + .toggle-bg {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
-* {
-  outline: 1px solid rgba(255, 0, 0, 0.5);
-  /* Makes layout visible */
-}
+/** {*/
+
+/*    outline: 1px solid rgba(255, 0, 0, 0.5); !* Makes layout visible *!*/
+
+/*}*/
 
 td, th {
   padding: 0.5rem 2rem;
