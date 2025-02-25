@@ -1,0 +1,29 @@
+@using System.Diagnostics.CodeAnalysis
+@using System.Linq.Expressions
+@inherits InputBase<DateTimeOffset>
+
+<div>
+    <label for="@_fieldId" class="block mb-1 text-sm">@DisplayName</label>
+
+    <input
+        id="@_fieldId"
+        type="@Type"
+        name="@NameAttributeValue"
+        readonly
+        class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none @CssClass"
+        @bind="@CurrentValue"/>
+</div>
+
+@code {
+    [Parameter] public string? Type { get; set; } = "text";
+    
+    private readonly Guid _fieldId = Guid.NewGuid();
+
+    protected override bool TryParseValueFromString(string? value,  out DateTimeOffset result, [NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = !string.IsNullOrWhiteSpace(value) ? DateTimeOffset.TryParse(value, out var date) ? date : DateTimeOffset.MinValue : DateTimeOffset.MinValue;
+        validationErrorMessage = null;
+        return true;
+    }
+
+}

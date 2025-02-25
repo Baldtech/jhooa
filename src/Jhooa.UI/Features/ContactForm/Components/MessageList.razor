@@ -4,6 +4,7 @@
 
 @inject IStringLocalizer<Resources.Shared> Loc
 @inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
 
 @rendermode InteractiveServer
 
@@ -13,7 +14,7 @@
             <th>@Loc["Date"]</th>
             <th>@Loc["Sender"]</th>
             <th>@Loc["Subject"]</th>
-            <th>@Loc["Message"]</th>
+            <th>@Loc["Actions"]</th>
         </tr>
     </ChildContentHeader>
     <ChildContentRow Context="sub">
@@ -21,7 +22,14 @@
             <td>@sub.SubmissionDate.ToString("d")</td>
             <td>@sub.Sender</td>
             <td>@sub.Subject</td>
-            <td>@sub.Content</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/ContactForms/@sub.Id">@Loc["Details"]</a>
+                <EditForm Model="sub" class="inline"
+                          FormName="@($"form-event-{sub.Id}")"
+                          OnValidSubmit="@(async () => { await DeleteMessageAsync(sub.Id); })">
+                    <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@Loc["Delete"]</button>
+                </EditForm>
+            </td>
         </tr>
     </ChildContentRow>
 </PaginationComponent>
@@ -32,5 +40,14 @@
     protected override async Task OnInitializedAsync()
     {
         _submissions = await DbContext.ContactFormSubmissions.ToListAsync();
+    }
+    
+    private async Task DeleteMessageAsync(Guid? eventId)
+    {
+        if (eventId.HasValue)
+        {
+            await DbContext.Events.Where(e => e.Id == eventId).ExecuteDeleteAsync();
+            NavigationManager.NavigateTo("/Admin/Events", true);
+        }
     }
 }

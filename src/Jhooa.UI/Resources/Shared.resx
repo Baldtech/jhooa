@@ -174,4 +174,13 @@
     <data name="MyAccount" xml:space="preserve">
         <value>My account</value>
     </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="Details" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="BackToList" xml:space="preserve">
+        <value>Back to list</value>
+    </data>
 </root>

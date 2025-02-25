@@ -1,0 +1,55 @@
+@page "/Admin/ContactForms/{id:guid}"
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.ContactForm.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Resources.Shared> Loc
+@layout AdminLayout
+
+<PageTitle>@Loc["ContactForms"]</PageTitle>
+
+@if (_model is not null)
+{
+    <section class="max-w-screen-xl mx-auto w-full">
+        <div class="flex items-center space-x-2 mb-4">
+            <a href="/Admin/ContactForms" class="text-sm hover:underline inline-block cursor-pointer" >
+                <img src="images/chevron-left.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToList"]
+            </a>
+        </div>
+        
+        <h1 class="mb-8 text-4xl tracking-wider">@_model.Subject</h1>
+
+
+        <div class="grid grid-cols-2 gap-8 mt-4">
+            <section class="border-b lg:border-b-0 lg:border-r border-white pb-8 lg:pb-0 pr-0 lg:pr-8">
+                <div class="space-y-3">
+
+                    <JhooaReadOnlyText @bind-Value="_model.Sender" DisplayName="@Loc["Sender"]"/>
+                    <JhooaReadOnlyDate @bind-Value="_model.SubmissionDate" DisplayName="@Loc["FirstName"]"/>
+                    <JhooaReadOnlyText @bind-Value="_model.Subject" DisplayName="@Loc["Subject"]"/>
+                </div>
+            </section>
+
+            <section class="pb-8 lg:pb-0 pr-0 lg:pr-8">
+                <div class="space-y-3">
+
+                    <JhooaReadOnlyTextarea @bind-Value="_model.Content" DisplayName="@Loc["Message"]"/>
+                </div>
+            </section>
+
+
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private ContactFormSubmission? _model;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _model = await DbContext.ContactFormSubmissions.FirstAsync(cf => cf.Id == Id);
+    }
+}

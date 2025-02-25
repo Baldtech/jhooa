@@ -2,9 +2,9 @@
 @attribute [Authorize(Roles = "Admin")]
 @layout AdminLayout
 @using Jhooa.UI.Components.Layout
-@using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.ContactForm.Components
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Resources.Shared> Loc
 <PageTitle>@Loc["ContactForms"]</PageTitle>

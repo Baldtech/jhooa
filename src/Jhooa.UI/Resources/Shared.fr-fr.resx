@@ -164,4 +164,13 @@
     <data name="MyAccount" xml:space="preserve">
         <value>Mon compte</value>
     </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Suppression</value>
+    </data>
+    <data name="Details" xml:space="preserve">
+        <value>Détails</value>
+    </data>
+    <data name="BackToList" xml:space="preserve">
+        <value>Retourner à la liste</value>
+    </data>
 </root>

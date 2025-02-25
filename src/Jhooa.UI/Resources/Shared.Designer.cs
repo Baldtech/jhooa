@@ -356,5 +356,23 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("MyAccount", resourceCulture);
             }
         }
+        
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        internal static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        internal static string BackToList {
+            get {
+                return ResourceManager.GetString("BackToList", resourceCulture);
+            }
+        }
     }
 }
