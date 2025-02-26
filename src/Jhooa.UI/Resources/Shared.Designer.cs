@@ -428,5 +428,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("TitleEvents", resourceCulture);
             }
         }
+        
+        internal static string SeoDescription {
+            get {
+                return ResourceManager.GetString("SeoDescription", resourceCulture);
+            }
+        }
     }
 }
