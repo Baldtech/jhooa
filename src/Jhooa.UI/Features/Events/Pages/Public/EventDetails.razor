@@ -3,7 +3,8 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Events.Components
-@using Jhooa.UI.Services
+@using Jhooa.UI.Helpers
+@using Registration = Stripe.Tax.Registration
 
 @inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
@@ -12,6 +13,10 @@
 @if (_ev is not null)
 {
     <PageTitle>@_ev.Title - @LocShared["TitleEvents"]</PageTitle>
+    
+    <HeadContent>
+        <meta name="description" content="@_ev.Description.StripHtmlTags()">
+    </HeadContent>
 }
 
 <JhooaStatusMessage/>
