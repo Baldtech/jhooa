@@ -47,7 +47,7 @@
         if (eventId.HasValue)
         {
             await DbContext.Events.Where(e => e.Id == eventId).ExecuteDeleteAsync();
-            NavigationManager.NavigateTo("/Admin/Events", true);
+            NavigationManager.NavigateTo("/Admin/ContactForms", true);
         }
     }
 }
