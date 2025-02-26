@@ -18,6 +18,12 @@
     <link href="css/app.min.css" rel="stylesheet"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <HeadOutlet/>
+    
+    @if (!Env.IsEnvironment("Production"))
+    {
+        <meta name="robots" content="noindex, nofollow">
+    }
+    
 </head>
 
 <body class="min-h-screen flex flex-col overflow-x-hidden">

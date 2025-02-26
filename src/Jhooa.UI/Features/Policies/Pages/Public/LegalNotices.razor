@@ -3,13 +3,14 @@
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Policy> Loc
+@inject IStringLocalizer<Shared> LocShared
 @layout PolicyLayout
 @inject ApplicationDbContext DbContext
 
 <HeadContent>
     <link href="css/policy.css" rel="stylesheet">
 </HeadContent>
-<PageTitle>@Loc["LegalNotices"]</PageTitle>
+<PageTitle>@LocShared["TitleLegalNotices"]</PageTitle>
 
 <section class="">
     <div class="w-full ">

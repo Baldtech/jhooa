@@ -183,4 +183,31 @@
     <data name="BackToList" xml:space="preserve">
         <value>Back to list</value>
     </data>
+    <data name="TitleHome" xml:space="preserve">
+        <value>Home - Jhooa</value>
+    </data>
+    <data name="TitleVideos" xml:space="preserve">
+        <value>Videos - Jhooa</value>
+    </data>
+    <data name="TitleCookiePolicy" xml:space="preserve">
+        <value>Cookie policy - Jhooa</value>
+    </data>
+    <data name="TitleGeneralTerms" xml:space="preserve">
+        <value>General terms - Jhooa</value>
+    </data>
+    <data name="TitleLegalNotices" xml:space="preserve">
+        <value>Legal notices - Jhooa</value>
+    </data>
+    <data name="TitlePrivacyPolicy" xml:space="preserve">
+        <value>Privacy policy - Jhooa</value>
+    </data>
+    <data name="TitleLogin" xml:space="preserve">
+        <value>Login - Jhooa</value>
+    </data>
+    <data name="TitleRegister" xml:space="preserve">
+        <value>Register - Jhooa</value>
+    </data>
+    <data name="TitleEvents" xml:space="preserve">
+        <value>Events - Jhooa</value>
+    </data>
 </root>

@@ -173,4 +173,31 @@
     <data name="BackToList" xml:space="preserve">
         <value>Retourner à la liste</value>
     </data>
+    <data name="TitleHome" xml:space="preserve">
+        <value>Accueil - Jhooa</value>
+    </data>
+    <data name="TitleVideos" xml:space="preserve">
+        <value>Vidéos - Jhooa</value>
+    </data>
+    <data name="TitleCookiePolicy" xml:space="preserve">
+        <value>Politique cookies - Jhooa</value>
+    </data>
+    <data name="TitleGeneralTerms" xml:space="preserve">
+        <value>Conditions générales - Jhooa</value>
+    </data>
+    <data name="TitleLegalNotices" xml:space="preserve">
+        <value>Mentions légales - Jhooa</value>
+    </data>
+    <data name="TitlePrivacyPolicy" xml:space="preserve">
+        <value>Politique de confidentialité - Jhooa</value>
+    </data>
+    <data name="TitleLogin" xml:space="preserve">
+        <value>Connexion - Jhooa</value>
+    </data>
+    <data name="TitleRegister" xml:space="preserve">
+        <value>Inscription - Jhooa</value>
+    </data>
+    <data name="TitleEvents" xml:space="preserve">
+        <value>Evénements - Jhooa</value>
+    </data>
 </root>

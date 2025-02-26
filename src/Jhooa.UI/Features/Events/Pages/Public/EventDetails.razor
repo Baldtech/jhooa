@@ -7,10 +7,11 @@
 
 @inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 
 @if (_ev is not null)
 {
-    <PageTitle>@_ev.Title</PageTitle>
+    <PageTitle>@_ev.Title - @LocShared["TitleEvents"]</PageTitle>
 }
 
 <JhooaStatusMessage/>

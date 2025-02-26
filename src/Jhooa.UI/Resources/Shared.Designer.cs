@@ -374,5 +374,59 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("BackToList", resourceCulture);
             }
         }
+        
+        internal static string TitleHome {
+            get {
+                return ResourceManager.GetString("TitleHome", resourceCulture);
+            }
+        }
+        
+        internal static string TitleVideos {
+            get {
+                return ResourceManager.GetString("TitleVideos", resourceCulture);
+            }
+        }
+        
+        internal static string TitleCookiePolicy {
+            get {
+                return ResourceManager.GetString("TitleCookiePolicy", resourceCulture);
+            }
+        }
+        
+        internal static string TitleGeneralTerms {
+            get {
+                return ResourceManager.GetString("TitleGeneralTerms", resourceCulture);
+            }
+        }
+        
+        internal static string TitleLegalNotices {
+            get {
+                return ResourceManager.GetString("TitleLegalNotices", resourceCulture);
+            }
+        }
+        
+        internal static string TitlePrivacyPolicy {
+            get {
+                return ResourceManager.GetString("TitlePrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        internal static string TitleLogin {
+            get {
+                return ResourceManager.GetString("TitleLogin", resourceCulture);
+            }
+        }
+        
+        internal static string TitleRegister {
+            get {
+                return ResourceManager.GetString("TitleRegister", resourceCulture);
+            }
+        }
+        
+        internal static string TitleEvents {
+            get {
+                return ResourceManager.GetString("TitleEvents", resourceCulture);
+            }
+        }
     }
 }

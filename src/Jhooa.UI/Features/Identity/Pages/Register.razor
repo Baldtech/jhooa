@@ -11,6 +11,7 @@
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Identity.Components
 
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 @inject IStringLocalizer<Resources.Identity> Loc
 @inject IStringLocalizer<Jhooa.UI.Features.Home.Resources.Home> LocHome
 @inject UserManager<ApplicationUser> UserManager
@@ -20,7 +21,7 @@
 @inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
 
-<PageTitle>@Loc["Register"]</PageTitle>
+<PageTitle>@LocShared["TitleRegister"]</PageTitle>
 
 <div class="max-w-screen-xl mx-auto  text-white py-4">
     <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="login" class="space-y-6">

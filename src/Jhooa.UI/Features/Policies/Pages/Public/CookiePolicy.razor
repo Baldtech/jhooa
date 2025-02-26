@@ -3,6 +3,7 @@
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Policy> Loc
+@inject IStringLocalizer<Shared> LocShared
 @layout PolicyLayout
 @inject ApplicationDbContext DbContext
 
@@ -10,7 +11,7 @@
     <link href="css/policy.css" rel="stylesheet">
 </HeadContent>
 
-<PageTitle>@Loc["CookiePolicy"]</PageTitle>
+<PageTitle>@LocShared["TitleCookiePolicy"]</PageTitle>
 
 
 <section class="">

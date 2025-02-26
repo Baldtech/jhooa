@@ -5,9 +5,10 @@
 
 @inject ApplicationDbContext DbContext
 @inject IStringLocalizer<Features.Home.Resources.Home> Loc
+@inject IStringLocalizer<Resources.Shared> LocShared
 @inject IJSRuntime Js
 
-<PageTitle>Jhooa</PageTitle>
+<PageTitle>@LocShared["TitleHome"]</PageTitle>
 
 <HomeConcept />
 
