@@ -288,22 +288,22 @@
         <value>Renseigner mes rêves</value>
     </data>
     <data name="EmailResetPasswordSubject" xml:space="preserve">
-        <value>Jhooa - Réinitialisez votre mot de passe</value>
+        <value>Jhooa - Réinitialiser votre mot de passe</value>
     </data>
     <data name="EmailResetPasswordTitle" xml:space="preserve">
-        <value>Réinitialisez votre mot de passe</value>
+        <value>Réinitialis votre mot de passe</value>
     </data>
     <data name="EmailResetPasswordContent" xml:space="preserve">
-        <value>Voici le lien pour réinitialiser votre mot de passe : &lt;a href="{0}"&gt;clique ici&lt;/a&gt;.</value>
+        <value>Voici le lien pour réinitialiser votre mot de passe : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
     </data>
     <data name="EmailAccountConfirmationSubject" xml:space="preserve">
-        <value>Jhooa - Confirmez votre compte</value>
+        <value>Jhooa - Confirmer votre compte</value>
     </data>
     <data name="EmailAccountConfirmationTitle" xml:space="preserve">
         <value>Confimez votre compte</value>
     </data>
     <data name="EmailAccountConfirmationContent" xml:space="preserve">
-        <value>Voici le lien pour confirmer botre compte : &lt;a href="{0}"&gt;clique ici&lt;/a&gt;.</value>
+        <value>Voici le lien pour confirmer botre compte : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
     </data>
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>Les conditions générales doivent être acceptées.</value>

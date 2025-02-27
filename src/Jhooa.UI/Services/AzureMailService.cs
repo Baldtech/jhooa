@@ -24,7 +24,7 @@ public class AzureMailService(ILogger<AzureMailService> logger, IFluentEmail flu
 #pragma warning restore MA0009
             
             var result = await fluentEmail
-                .To(to, "Jhooa")
+                .To(to)
                 .Subject(subject)
                 .Body(htmlContent, isHtml: true)
                 .SendAsync();
@@ -62,7 +62,7 @@ public class AzureMailService(ILogger<AzureMailService> logger, IFluentEmail flu
 #pragma warning restore MA0009
             
             var result = await fluentEmail
-                .To(to, "Jhooa")
+                .To(to)
                 .Subject(subject)
                 .Body(htmlContent, isHtml: true)
                 .SendAsync();
