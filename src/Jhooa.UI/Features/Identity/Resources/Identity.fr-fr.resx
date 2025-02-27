@@ -291,7 +291,7 @@
         <value>Jhooa - Réinitialiser votre mot de passe</value>
     </data>
     <data name="EmailResetPasswordTitle" xml:space="preserve">
-        <value>Réinitialis votre mot de passe</value>
+        <value>Réinitialiser votre mot de passe</value>
     </data>
     <data name="EmailResetPasswordContent" xml:space="preserve">
         <value>Voici le lien pour réinitialiser votre mot de passe : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
