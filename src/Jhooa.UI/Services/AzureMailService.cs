@@ -29,6 +29,8 @@ public class AzureMailService(ILogger<AzureMailService> logger, IFluentEmail flu
                 .Body(htmlContent, isHtml: true)
                 .SendAsync();
 
+            logger.LogInformation("Sending email to {EmailTo} with template {TemplateId}", to, templateId);
+            
             if (!result.Successful)
             {
                 throw new MailException(to, templateId, result.ErrorMessages.ToList());
@@ -60,6 +62,8 @@ public class AzureMailService(ILogger<AzureMailService> logger, IFluentEmail flu
                 return property != null ? property.GetValue(templateData)?.ToString() ?? match.Value : match.Value;
             });
 #pragma warning restore MA0009
+            
+            logger.LogInformation("Sending email to {EmailTo} with template {TemplateId}", to, templateId);
             
             var result = await fluentEmail
                 .To(to)
