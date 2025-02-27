@@ -70,7 +70,7 @@
                         <InputCheckbox @bind-Value="Input.AcceptDistribution"
                                        class="w-5 h-5 mt-1 text-jhooa-brick-500 bg-transparent border-gray-300 rounded-sm focus:ring-0 mr-4"/>
                         <label for="acceptdistribution"
-                               class="">@Loc["AcceptDiffusion"] <br/>@Loc["AcceptDiffusionDesc"]</label>
+                               class="">@Loc["AcceptDiffusion"] <br/>@((MarkupString)Loc["AcceptDiffusionDesc"].ToString())</label>
                     </div>
                 </div>
             </div>
