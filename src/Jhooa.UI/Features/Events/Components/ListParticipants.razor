@@ -6,7 +6,7 @@
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> Loc
 @rendermode InteractiveServer
 
-<PaginationComponent TItem="ApplicationUser" Items="_users" DefaultPageSize="15">
+<PaginationComponent TItem="UserView" Items="_users" DefaultPageSize="15">
     <ChildContentHeader>
         <tr>
             <th>@Loc["EmailAddress"]</th>
@@ -30,7 +30,7 @@
 </PaginationComponent>
 
 @code {
-    private List<ApplicationUser> _users = [];
+    private List<UserView> _users = [];
     [Parameter] public EventCallback<int?> NbParticipantsCallback { get; set; }
     [Parameter] public Guid Id { get; set; }
     
@@ -38,7 +38,7 @@
     {
         var participants = await DbContext.Registrations.Where(r => r.EventId == Id).Select(r => r.UserId).ToListAsync();
         
-        _users = await DbContext.Users.Where(u => u.ActivatedAt != null && participants.Contains(u.Id)).ToListAsync();
+        _users = await DbContext.UsersView.Where(u => participants.Contains(u.Id)).ToListAsync();
         await NbParticipantsCallback.InvokeAsync(_users.Count);
     }
 
