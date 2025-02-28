@@ -33,7 +33,7 @@
         <value>J'ai déjà un compte</value>
     </data>
     <data name="ResetPassword" xml:space="preserve">
-        <value>Réinitialise mon mot de passe</value>
+        <value>Réinitialiser mon mot de passe</value>
     </data>
     <data name="RegisterIntro" xml:space="preserve">
         <value>Pour créer votre compte, nous avons besoin de vos informations personnelles et de votre choix d’abonnement. Une fois le paiement effectué, votre compte sera activé et vous pourrez profiter pleinement des services Jhooa!</value>
@@ -300,10 +300,10 @@
         <value>Jhooa - Confirmer votre compte</value>
     </data>
     <data name="EmailAccountConfirmationTitle" xml:space="preserve">
-        <value>Confimez votre compte</value>
+        <value>Confirmer votre compte</value>
     </data>
     <data name="EmailAccountConfirmationContent" xml:space="preserve">
-        <value>Voici le lien pour confirmer botre compte : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
+        <value>Voici le lien pour confirmer votre compte : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
     </data>
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>Les conditions générales doivent être acceptées.</value>
