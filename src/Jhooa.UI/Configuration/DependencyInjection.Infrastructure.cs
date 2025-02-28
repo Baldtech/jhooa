@@ -66,7 +66,7 @@ public static partial class DependencyInjection
 
         if (string.Equals(mode, "SendGrid", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(apiKey))
         {
-            services.AddSingleton<IMailService, SendGridMailService>();
+            services.AddTransient<IMailService, SendGridMailService>();
 
             services.AddFluentEmail(defaultFromEmail)
                 .AddSendGridSender(apiKey);
@@ -74,7 +74,7 @@ public static partial class DependencyInjection
         else if (string.Equals(mode, "Azure", StringComparison.OrdinalIgnoreCase) &&
                  !string.IsNullOrWhiteSpace(endpoint))
         {
-            services.AddSingleton<IMailService, AzureMailService>();
+            services.AddTransient<IMailService, AzureMailService>();
 
             services.AddFluentEmail(defaultFromEmail)
                 .AddAzureEmailSender(new Uri(endpoint), new DefaultAzureCredential());

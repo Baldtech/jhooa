@@ -41,7 +41,7 @@ public static partial class DependencyInjection
             .AddDefaultTokenProviders()
             .AddErrorDescriber<LocalizedIdentityErrorDescriber>();
         
-        services.AddSingleton<IEmailSender<ApplicationUser>, IdentityEmailSender>();
+        services.AddTransient<IEmailSender<ApplicationUser>, IdentityEmailSender>();
 
         return services;
     }
