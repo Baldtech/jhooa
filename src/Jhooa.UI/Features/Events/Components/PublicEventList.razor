@@ -62,6 +62,7 @@
                 Id = ev.Id,
                 Title = CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title,
                 StartDate = ev.StartDate,
+                EndDate = ev.EndDate,
                 ImageUrl = ev.ImageUrl,
                 IsVisible = false
             })
@@ -78,8 +79,6 @@
     private IJSObjectReference? module;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //if (firstRender)
-        //{
         if (_events is not null && _events.Count > 0)
         {
             module = await JS.InvokeAsync<IJSObjectReference>("import",
@@ -87,8 +86,6 @@
 
             await module.InvokeVoidAsync("addHandlers");
         }
-
-       // }
     }
 
 }

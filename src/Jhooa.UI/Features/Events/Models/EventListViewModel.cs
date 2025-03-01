@@ -6,7 +6,8 @@ public class EventListViewModel
     public required string Title { get; init; }
     public string? ImageUrl { get; set; }
     public DateTimeOffset StartDate { get; init; }
+    public DateTimeOffset EndDate { get; init; }
     public bool IsVisible { get; set; }
-    public bool IsPast => DateTimeOffset.UtcNow > StartDate;
+    public bool IsPast => DateTimeOffset.UtcNow > EndDate;
 
 }

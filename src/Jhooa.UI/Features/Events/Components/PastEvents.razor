@@ -53,6 +53,7 @@
                 Id = ev.Id,
                 Title = CultureInfo.CurrentCulture.Name == "en-GB" ? ev.TitleEn : ev.Title,
                 StartDate = ev.StartDate,
+                EndDate = ev.EndDate,
                 ImageUrl = ev.ImageUrl,
                 IsVisible = false
             }).ToListAsync();
