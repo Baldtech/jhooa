@@ -28,7 +28,8 @@ namespace Jhooa.UI.Data.Migrations
                 FROM [dbo].[IdentityUsers] u
                 LEFT JOIN [dbo].[IdentityUserRoles] ur ON u.Id = ur.UserId
                 LEFT JOIN [dbo].[IdentityRoles] r ON ur.RoleId = r.Id
-                LEFT JOIN [dbo].[Subscriptions] s ON u.Id = s.UserId AND s.[Start] <= GETDATE() AND (s.[End] IS NULL OR s.[End] >= GETDATE());
+                LEFT JOIN [dbo].[Subscriptions] s ON u.Id = s.UserId AND s.[Start] <= GETDATE() AND (s.[End] IS NULL OR s.[End] >= GETDATE())
+                WHERE u.ActivatedAt IS NOT NULL;
             ");
         }
 

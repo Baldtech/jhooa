@@ -1,4 +1,5 @@
 @using Jhooa.UI.Features.Dreams.Models
+@using Jhooa.UI.Features.Subscriptions.Models
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
@@ -36,7 +37,7 @@
     
     protected override async Task OnInitializedAsync()
     {
-        _activeUsers = await DbContext.UsersView.Where(u => u.IsSubscriptionActive).Select(s => s.Id).ToListAsync();
+        _activeUsers = await DbContext.UsersView.Where(u => u.IsSubscriptionActive && u.SubscriptionStatus == SubscriptionStatus.Paid).Select(s => s.Id).ToListAsync();
         
         _dreams = await DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId)).ToListAsync();
     }
