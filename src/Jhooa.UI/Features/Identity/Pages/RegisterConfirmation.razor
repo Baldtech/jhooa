@@ -79,7 +79,6 @@
                 // TODO: remove EmailConfirmed
                 await DbContext.Users.Where(u => u.Id == user.Id)
                     .ExecuteUpdateAsync(setters => setters
-                            .SetProperty(b => b.EmailConfirmed, true)
                             .SetProperty(s => s.ActivatedAt, DateTimeOffset.Now));
 
                 if (sub.Type is SubscriptionType.MonthlyOnce or SubscriptionType.YearlyOnce)
