@@ -11,9 +11,7 @@
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Identity.Components
 
-@inject UserManager<ApplicationUser> UserManager
 @inject IMailService MailService
-@inject NavigationManager NavigationManager
 @inject ApplicationDbContext DbContext
 @inject IStripeService StripeService
 @inject IStringLocalizer<Resources.Identity> Loc
@@ -44,7 +42,6 @@
             </h2>
 
             <p class="mb-4">@Loc["AccountCreatedAndPaymentDone"]</p>
-            <p class="mb-8">@Loc["CheckEmailForConfirmation"]</p>
 
             <p>
                 <a href="/Account/Login"
@@ -97,19 +94,17 @@
                         sub.MarkSubscriptionAsPaid(result.Value);
                     }
                 }
-
-                var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                var callbackUrl = NavigationManager.GetUriWithQueryParameters(
-                    NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-                    new Dictionary<string, object?> { ["userId"] = user.Id, ["code"] = code });
+                
+                await DbContext.Users.Where(e => e.Id == user.Id)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.ActivatedAt, DateTimeOffset.Now)
+                        .SetProperty(b => b.EmailConfirmed, true));
                 
                 await MailService.SendWithTemplateAsync(user.Email!, cultureInfo: CultureInfo.CurrentCulture, 
                     templateData: new
                     {
                         Title = Loc["EmailAccountConfirmationTitle"],
-                        Content = string.Format(Loc["EmailAccountConfirmationContent"], HtmlEncoder.Default.Encode(callbackUrl)),
+                        Content = Loc["EmailAccountConfirmationContent"],
                     }, subject: Loc["EmailAccountConfirmationSubject"]);
                 
                 await DbContext.SaveChangesAsync();

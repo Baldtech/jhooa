@@ -4,4 +4,5 @@ public class PaymentIntentResponse
 {
     public required string SessionUrl { get; init; }
     public required string SessionId { get; init; }
+    public required string PaymentIntentId { get; init; }
 }

@@ -57,4 +57,7 @@
     <data name="SubscriptionCancelled" xml:space="preserve">
         <value>The auto renewal has been canceled</value>
     </data>
+    <data name="CancelSubscriptionDesc" xml:space="preserve">
+        <value>Monthly and annual renewable subscriptions are automatically renewed. If you wish to stop this renewal, you can do so by clicking on the ”Cancel auto renewal” button before your subscription renewal date.</value>
+    </data>
 </root>

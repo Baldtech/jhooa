@@ -311,13 +311,19 @@
         <value>Here is the link to reset your password: &lt;a href="{0}"&gt;click here&lt;/a&gt;.</value>
     </data>
     <data name="EmailAccountConfirmationSubject" xml:space="preserve">
-        <value>Jhooa - Confirm your account</value>
+        <value>Welcome to JHOOA!</value>
     </data>
     <data name="EmailAccountConfirmationTitle" xml:space="preserve">
-        <value>Confirm your account</value>
+        <value>Welcome to JHOOA!</value>
     </data>
     <data name="EmailAccountConfirmationContent" xml:space="preserve">
-        <value>Here is the link to confirm your account: &lt;a href="{0}"&gt;click here&lt;/a&gt;.</value>
+        <value>You’re in! You are now officially part of our community of dreamers!
+&lt;br /&gt;&lt;br /&gt;
+Welcome to JHOOA! With your subscription, you’re joining a community where dreams come to life and exclusive events await you. The more of us dream together, the more we can bring great projects, wonderful surprises, and magical moments to reality.
+&lt;br /&gt;&lt;br /&gt;
+So don’t hesitate to spread the word—every dreamer counts, and who knows, maybe thanks to you, a big dream will come true!
+&lt;br /&gt;&lt;br /&gt;
+Thank you for being with us, and see you soon for the next chapter of this adventure!</value>
     </data>
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>You must accept the terms.</value>

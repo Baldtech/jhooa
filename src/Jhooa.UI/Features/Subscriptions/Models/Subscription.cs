@@ -13,7 +13,7 @@ public class Subscription
     public required Guid UserId { get; init; }
     public ApplicationUser User { get; set; } = null!;
 
-    public string? StripePaymentIntentId { get; private set; }
+    public string? StripePaymentIntentId { get; set; }
     public string? StripeSubscriptionId { get; private set; }
     public required string StripeSessionCheckoutId { get; init; }
     public bool IsPaid => PaidAt.HasValue;

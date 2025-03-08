@@ -297,13 +297,19 @@
         <value>Voici le lien pour réinitialiser votre mot de passe : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
     </data>
     <data name="EmailAccountConfirmationSubject" xml:space="preserve">
-        <value>Jhooa - Confirmer votre compte</value>
+        <value>Bienvenue chez JHOOA !</value>
     </data>
     <data name="EmailAccountConfirmationTitle" xml:space="preserve">
-        <value>Confirmer votre compte</value>
+        <value>Bienvenue chez JHOOA !</value>
     </data>
     <data name="EmailAccountConfirmationContent" xml:space="preserve">
-        <value>Voici le lien pour confirmer votre compte : &lt;a href="{0}"&gt;cliquez ici&lt;/a&gt;.</value>
+        <value>Ça y est, tu fais officiellement partie de notre communauté de rêveurs ! 
+&lt;br /&gt;&lt;br /&gt;
+Bienvenue chez JHOOA! Grâce à ton abonnement, tu rejoins une communauté où les rêves prennent vie et où des événements exclusifs t’attendent. Plus nous serons nombreux à rêver ensemble, plus nous pourrons réaliser de grands projets, de belles surprises et de moments magiques.
+&lt;br /&gt;&lt;br /&gt;
+Alors n’hésite pas à en parler autour de toi : chaque rêveur compte, et qui sait, c’est peut-être grâce à toi qu’un grand rêve verra le jour !
+&lt;br /&gt;&lt;br /&gt;
+Merci d’être des nôtres, et à très vite pour la suite de l’aventure !</value>
     </data>
     <data name="TermsMustBeAccepted" xml:space="preserve">
         <value>Les conditions générales doivent être acceptées.</value>

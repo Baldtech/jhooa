@@ -50,4 +50,7 @@
     <data name="SubscriptionCancelled" xml:space="preserve">
         <value>Le renouvelement automatique a été annulé</value>
     </data>
+    <data name="CancelSubscriptionDesc" xml:space="preserve">
+        <value>Les abonnements mensuels et annuels renouvelables sont  automatiquement reconduits. Si vous souhaitez arrêter ce renouvellement, vous pouvez le faire en cliquant sur le bouton « Annulation du renouvelement automatique » avant la date de renouvellement de votre abonnement.</value>
+    </data>
 </root>

@@ -37,6 +37,26 @@ public class StripeWebhook(
                         stripeEvent.Id, stripeEvent.Type, subscription?.Id);
                     break;
                 }
+                case EventTypes.ChargeSucceeded:
+                {
+                    var charge = stripeEvent.Data.Object as Charge;
+                    
+                    
+                    
+                    
+                    logger.LogInformation("[Stripe webhook ({StripeEventId} - {EventType})] Charge succeeded: {ChargeId}",
+                        stripeEvent.Id, stripeEvent.Type, charge?.Id);
+                    break;
+                }
+                case EventTypes.PaymentIntentSucceeded:
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    
+                    logger.LogInformation(
+                        "[Stripe webhook ({StripeEventId} - {EventType})] Payment intent succeeded: {PaymentIntentId}",
+                        stripeEvent.Id, stripeEvent.Type, paymentIntent?.Id);
+                    break;
+                }
                 default:
 
                     logger.LogInformation("[Stripe webhook ({StripeEventId} - {EventType})] Unhandled event type",

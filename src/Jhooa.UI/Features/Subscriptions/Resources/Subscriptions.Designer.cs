@@ -122,5 +122,11 @@ namespace Jhooa.UI.Features.Subscriptions.Resources {
                 return ResourceManager.GetString("SubscriptionCancelled", resourceCulture);
             }
         }
+        
+        internal static string CancelSubscriptionDesc {
+            get {
+                return ResourceManager.GetString("CancelSubscriptionDesc", resourceCulture);
+            }
+        }
     }
 }

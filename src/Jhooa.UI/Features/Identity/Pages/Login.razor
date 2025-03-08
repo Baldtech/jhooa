@@ -103,7 +103,13 @@
             return;
         }
 
-        var userView = await DbContext.UsersView.FirstAsync(u => u.Email.ToLower() == Input.Email.ToLower());
+        var userView = await DbContext.UsersView.FirstOrDefaultAsync(u => u.Email.ToLower() == Input.Email.ToLower());
+        
+        if (userView is null)
+        {
+            _errorMessage = Loc["LoginInvalidAttempt"];
+            return;
+        }
 
         var result = await SignInManager.CheckPasswordSignInAsync(user, Input.Password, lockoutOnFailure: false);
         if (result.Succeeded)

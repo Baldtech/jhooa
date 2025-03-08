@@ -43,7 +43,8 @@ public class StripeService(
         return new PaymentIntentResponse()
         {
             SessionId = session.Id,
-            SessionUrl = session.Url,
+            SessionUrl = session.Url,   
+            PaymentIntentId = session.PaymentIntentId
         };
     }
     
@@ -77,6 +78,7 @@ public class StripeService(
         {
             SessionId = session.Id,
             SessionUrl = session.Url,
+            PaymentIntentId = session.PaymentIntentId
         };
     }
 

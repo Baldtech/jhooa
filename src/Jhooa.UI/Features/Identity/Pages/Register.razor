@@ -342,7 +342,8 @@
             End = GetEndDate(Input.SubscriptionType),
             UserId = user.Id,
             StripeSessionCheckoutId = session.SessionId,
-            Type = Input.SubscriptionType
+            Type = Input.SubscriptionType,
+            StripePaymentIntentId = session.PaymentIntentId
         };
 
         await DbContext.Subscriptions.AddAsync(sub);
