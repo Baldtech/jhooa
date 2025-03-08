@@ -9,9 +9,9 @@
 <PaginationComponent TItem="UserView" Items="_users" DefaultPageSize="15">
     <ChildContentHeader>
         <tr>
-            <th>@Loc["EmailAddress"]</th>
-            <th>@Loc["FirstName"]</th>
             <th>@Loc["LastName"]</th>
+            <th>@Loc["FirstName"]</th>
+            <th>@Loc["EmailAddress"]</th>
             <th>@Loc["Type"]</th>
             <th>@Loc["Admin"]</th>
             <th>@Loc["Actions"]</th>
@@ -19,9 +19,9 @@
     </ChildContentHeader>
     <ChildContentRow Context="user">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
-            <td>@user.Email</td>
-            <td>@user.FirstName</td>
             <td>@user.LastName</td>
+            <td>@user.FirstName</td>
+            <td>@user.Email</td>
             <td>@user.SubType</td>
             <td>@(user.IsAdmin ? Loc["Yes"] : Loc["No"])</td>
             <td>
@@ -63,6 +63,8 @@
                 _users = await DbContext.UsersView.ToListAsync();
                 break;
         }
+        
+        _users = _users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
         
         // _users = await DbContext.Users.Where(u => u.ActivatedAt != null).Include(i => i.Subscriptions).ToListAsync();
         //await NbUsersCallback.InvokeAsync(_users.Count);
