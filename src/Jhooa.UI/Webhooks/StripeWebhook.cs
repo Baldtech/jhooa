@@ -116,6 +116,7 @@ public class StripeWebhook(
                                     .ExecuteUpdateAsync(setters => setters
                                         .SetProperty(b => b.ActivatedAt, DateTimeOffset.Now)
                                         .SetProperty(b => b.EmailConfirmed, true));
+                                
                             }
                         }
                     }
