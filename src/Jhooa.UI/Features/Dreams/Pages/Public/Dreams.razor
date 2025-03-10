@@ -38,14 +38,19 @@
                                      Id="@(Constants.DreamIds.SmallDreamId)"
                                      Content="@Input.SmallDream"
                                      DreamType="DreamTypes.Small"/>
+                    <ValidationMessage For="@(() => Input.SmallDream)" class="text-danger"/>
+
                     <JhooaDreamInput DisplayName="@LocIdentity["FormMediumDream"]"
                                      Id="@(Constants.DreamIds.MediumDreamId)"
                                      Content="@Input.MediumDream"
                                      DreamType="DreamTypes.Medium"/>
+                    <ValidationMessage For="@(() => Input.MediumDream)" class="text-danger"/>
                     <JhooaDreamInput DisplayName="@LocIdentity["FormBigDream"]"
                                      Id="@(Constants.DreamIds.BigDreamId)"
                                      Content="@Input.BigDream"
                                      DreamType="DreamTypes.Big"/>
+                    <ValidationMessage For="@(() => Input.BigDream)" class="text-danger"/>
+
 
                     <input type="hidden" name="Input.SmallDream" @bind-value="Input.SmallDream"
                            id="small-dreams-hidden"/>
@@ -97,9 +102,11 @@
 
     private async Task OnValidSubmitAsync()
     {
-        await UpdateDream(DreamTypes.Small, Input!.SmallDream);
-        await UpdateDream(DreamTypes.Medium, Input!.MediumDream);
-        await UpdateDream(DreamTypes.Big, Input!.BigDream);
+        await DbContext.Dreams.Where(d => d.UserId == _user.Id).ExecuteDeleteAsync();
+
+        UpdateDream(DreamTypes.Small, Input!.SmallDream);
+        UpdateDream(DreamTypes.Medium, Input!.MediumDream);
+        UpdateDream(DreamTypes.Big, Input!.BigDream);
 
         await DbContext.SaveChangesAsync();
 
@@ -107,10 +114,8 @@
     }
 
 
-    private async Task UpdateDream(DreamTypes type, string? newDream)
+    private void UpdateDream(DreamTypes type, string? newDream)
     {
-        await DbContext.Dreams.Where(d => d.UserId == _user.Id && d.Type == type).ExecuteDeleteAsync();
-
         if (!string.IsNullOrWhiteSpace(newDream))
         {
             DbContext.Dreams.Add(new Dream
@@ -124,16 +129,13 @@
 
     private sealed class InputModel
     {
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string? SmallDream { get; set; } = "";
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string? MediumDream { get; set; } = "";
 
-        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Dreams))]
-        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
+        [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Dreams))]
         public string? BigDream { get; set; } = "";
     }
 
