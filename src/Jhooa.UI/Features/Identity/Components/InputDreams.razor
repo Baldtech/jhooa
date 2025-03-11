@@ -50,7 +50,14 @@
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-4 md:p-5">
-                <button data-modal-hide="@_fieldId" type="button" class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight mr-4">@LocShared["Save"]</button>
+                @if (AutoSave)
+                {
+                    <button type="submit" class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight mr-4">@LocShared["Save"]</button>
+                }
+                else
+                {
+                    <button data-modal-hide="@_fieldId" type="button" class="px-6 py-2 text-sm bg-jhooa-teal-200 rounded-3xl font-amsiProLight mr-4">@LocShared["Save"]</button>
+                }
             </div>
         </div>
     </div>
@@ -64,17 +71,14 @@
     small.addEventListener("change", () => {
         document.getElementById('small-dreams-hidden').value = small.value;
         document.getElementById('small-dream-id').innerHTML = small.value;
-
     });
     medium.addEventListener("change", () => {
         document.getElementById('medium-dreams-hidden').value = medium.value;
         document.getElementById('medium-dream-id').innerHTML = medium.value;
-
     });
     big.addEventListener("change", () => {
         document.getElementById('big-dreams-hidden').value = big.value;
         document.getElementById('big-dream-id').innerHTML = big.value;
-
     });
 </script>
 
@@ -83,6 +87,7 @@
     [Parameter] public string? SmallDream { get; set; }
     [Parameter] public string? MediumDream { get; set; }
     [Parameter] public string? BigDream { get; set; }
+    [Parameter] public bool AutoSave { get; set; } = false;
     
     private readonly Guid _fieldId = Guid.NewGuid();
 

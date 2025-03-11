@@ -21,7 +21,8 @@
             <td>@Loc[dream.Type.ToString()]</td>
             <td>@dream.Title</td>
             <td>
-                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Users/@dream.UserId">@Loc["Details"]</a>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight"
+                   href="/Admin/Users/@dream.UserId">@Loc["Details"]</a>
             </td>
         </tr>
     </ChildContentRow>
@@ -34,25 +35,53 @@
 
     private List<Dream> _dreams = [];
     private List<Guid> _activeUsers = [];
-    
+    private DreamTypes? _previousFilter;
+
     protected override async Task OnInitializedAsync()
     {
         _activeUsers = await DbContext.UsersView.Where(u => u.IsSubscriptionActive && u.SubscriptionStatus == SubscriptionStatus.Paid).Select(s => s.Id).ToListAsync();
-        
         _dreams = await DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId)).ToListAsync();
+
+        await NbDreamsCallback.InvokeAsync(_dreams.Count);
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        var query = DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId));
-
-        
-        if (SelectedDreamType is not null)
+        if (_previousFilter != SelectedDreamType)
         {
-            query = query.Where(d => d.Type == SelectedDreamType);
+            _previousFilter = SelectedDreamType;
+            await FetchUsersAsync();
+            await NbDreamsCallback.InvokeAsync(_dreams.Count);
         }
-        _dreams = await query.ToListAsync();
-        
-        await NbDreamsCallback.InvokeAsync(_dreams.Count);
     }
+
+    private async Task FetchUsersAsync()
+    {
+        var query = DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId));
+        
+        _dreams = SelectedDreamType switch
+        {
+            DreamTypes.Big => await query.Where(d => d.Type == DreamTypes.Big).ToListAsync(),
+            DreamTypes.Medium => await query.Where(d => d.Type == DreamTypes.Medium).ToListAsync(),
+            DreamTypes.Small => await query.Where(d => d.Type == DreamTypes.Small).ToListAsync(),
+            null => await query.ToListAsync(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    // protected override async Task OnParametersSetAsync()
+    // {
+    //     var query = DbContext.Dreams.Where(d => _activeUsers.Contains(d.UserId));
+    //
+    //
+    //     if (SelectedDreamType is not null)
+    //     {
+    //         query = query.Where(d => d.Type == SelectedDreamType);
+    //     }
+    //
+    //     _dreams = await query.ToListAsync();
+    //
+    //     await NbDreamsCallback.InvokeAsync(_dreams.Count);
+    // }
+
 }

@@ -32,42 +32,40 @@
 </PaginationComponent>
 
 @code {
-    private List<UserView> _users = [];
     [Parameter] public EventCallback<int?> NbUsersCallback { get; set; }
     [Parameter] public FilterTypes? SelectedFilter { get; set; }
+
+    private FilterTypes? _previousFilter;
+    private List<UserView> _users = [];
 
     protected override async Task OnInitializedAsync()
     {
         _users = await DbContext.UsersView.ToListAsync();
-        //await NbUsersCallback.InvokeAsync(_users.Count);
+        _users = _users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+        await NbUsersCallback.InvokeAsync(_users.Count);
     }
-    
     
     protected override async Task OnParametersSetAsync()
     {
-        switch (SelectedFilter)
+        if (_previousFilter != SelectedFilter)
         {
-            case FilterTypes.All:
-                _users = await DbContext.UsersView.ToListAsync();
-                break;
-            case FilterTypes.Admin:
-                _users = await DbContext.UsersView.Where(u => u.IsAdmin).ToListAsync();
-                break;
-            case FilterTypes.Active:
-                _users = await DbContext.UsersView.Where(u => u.IsSubscriptionActive && u.SubscriptionStatus == SubscriptionStatus.Paid).ToListAsync();
-                break;
-            case FilterTypes.Inactive:
-                _users = await DbContext.UsersView.Where(u => !u.IsSubscriptionActive).ToListAsync();
-                break;
-            default:
-                _users = await DbContext.UsersView.ToListAsync();
-                break;
+            _previousFilter = SelectedFilter;
+            await FetchUsersAsync();
+            await NbUsersCallback.InvokeAsync(_users.Count);
         }
-        
-        _users = _users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
-        
-        // _users = await DbContext.Users.Where(u => u.ActivatedAt != null).Include(i => i.Subscriptions).ToListAsync();
-        //await NbUsersCallback.InvokeAsync(_users.Count);
     }
 
+    private async Task FetchUsersAsync()
+    {
+        _users = SelectedFilter switch
+        {
+            FilterTypes.All => await DbContext.UsersView.ToListAsync(),
+            FilterTypes.Admin => await DbContext.UsersView.Where(u => u.IsAdmin).ToListAsync(),
+            FilterTypes.Active => await DbContext.UsersView.Where(u => u.IsSubscriptionActive && u.SubscriptionStatus == SubscriptionStatus.Paid).ToListAsync(),
+            FilterTypes.Inactive => await DbContext.UsersView.Where(u => !u.IsSubscriptionActive).ToListAsync(),
+            _ => await DbContext.UsersView.ToListAsync()
+        };
+
+        _users = _users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+    }
 }
