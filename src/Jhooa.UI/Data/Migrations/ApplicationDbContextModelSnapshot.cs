@@ -22,6 +22,64 @@ namespace Jhooa.UI.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Jhooa.UI.Features.Companies.Models.Company", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("Jhooa.UI.Features.Companies.Models.CompanyCode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UsedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("CompanyCodes");
+                });
+
             modelBuilder.Entity("Jhooa.UI.Features.ContactForm.Models.ContactFormSubmission", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,6 +331,52 @@ namespace Jhooa.UI.Data.Migrations
                     b.ToTable("IdentityUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Jhooa.UI.Features.Identity.Models.UserView", b =>
+                {
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSubscriptionActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StripeSubscriptionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly?>("SubscriptionEndDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid?>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly?>("SubscriptionStartDate")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("SubscriptionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubscriptionType")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("UserWithAdminCheck", (string)null);
+                });
+
             modelBuilder.Entity("Jhooa.UI.Features.Policies.Models.Policy", b =>
                 {
                     b.Property<Guid>("Id")
@@ -505,6 +609,23 @@ namespace Jhooa.UI.Data.Migrations
                     b.ToTable("VideoVideoTheme");
                 });
 
+            modelBuilder.Entity("Jhooa.UI.Features.Companies.Models.CompanyCode", b =>
+                {
+                    b.HasOne("Jhooa.UI.Features.Companies.Models.Company", "Company")
+                        .WithMany("Codes")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Jhooa.UI.Features.Subscriptions.Models.Subscription", "Subscription")
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Subscription");
+                });
+
             modelBuilder.Entity("Jhooa.UI.Features.Dreams.Models.Dream", b =>
                 {
                     b.HasOne("Jhooa.UI.Features.Identity.Models.ApplicationUser", "User")
@@ -610,6 +731,11 @@ namespace Jhooa.UI.Data.Migrations
                         .HasForeignKey("VideosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Jhooa.UI.Features.Companies.Models.Company", b =>
+                {
+                    b.Navigation("Codes");
                 });
 
             modelBuilder.Entity("Jhooa.UI.Features.Events.Models.Event", b =>

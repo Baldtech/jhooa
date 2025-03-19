@@ -1,0 +1,162 @@
+@page "/Admin/Company/{id:guid?}"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Companies.Models
+@inject IStringLocalizer<Resources.Companies> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject IStringLocalizer<Jhooa.UI.Features.Identity.Resources.Identity> LocIdentity
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+<PageTitle>@Loc["CompaniesList"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto w-full">
+    <div>
+        @if (Id.HasValue)
+        {
+            <h1 class="mb-8 text-4xl tracking-wider">@Input?.Name</h1>
+        }
+        else
+        {
+            <h1 class="mb-8 text-4xl tracking-wider">@Loc["AddCompany"]</h1>
+        }
+        @if (Input != null)
+        {
+            <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formEvent" class=""
+                      enctype="multipart/form-data" Enhance>
+                <DataAnnotationsValidator/>
+
+                @if (Id.HasValue)
+                {
+                    <InputText @bind-Value="Input.CompanyId" hidden></InputText>
+                }
+
+                <div class="bg-[#FFFFFF1A] rounded-md px-4 space-y-4 py-6 mb-6">
+
+
+                    <JhooaInputText @bind-Value="Input.Name" DisplayName="@LocShared["Name"]"
+                                    ValidationFor="@(() => Input.Name)"/>
+                    <JhooaInputText @bind-Value="Input.Address" DisplayName="@LocIdentity["Address"]"
+                                    ValidationFor="@(() => Input.Address)"/>
+                    <JhooaInputText @bind-Value="Input.ZipCode" DisplayName="@LocIdentity["ZipCode"]"
+                                    ValidationFor="@(() => Input.ZipCode)"/>
+                    <JhooaInputText @bind-Value="Input.City" DisplayName="@LocIdentity["City"]"
+                                    ValidationFor="@(() => Input.City)"/>
+                    <div>
+                        <label for="@Input.Country" class="block mb-2 text-sm">@LocIdentity["Country"]</label>
+
+                        <InputSelect @bind-Value="Input.Country"
+                                     class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none">
+                            <option class="text-jhooa-teal-600" value="france">@LocIdentity["France"]</option>
+                            <option class="text-jhooa-teal-600" value="luxembourg">@LocIdentity["Luxembourg"]</option>
+                            <option class="text-jhooa-teal-600" value="belgium">@LocIdentity["Belgium"]</option>
+                        </InputSelect>
+                        <ValidationMessage For="@(() => Input.Country)" class="text-danger"/>
+
+                    </div>
+                    
+                </div>
+                <button type="submit"
+                        class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@LocShared["Save"]</button>
+                <JhooaAdminActionButton
+                    Url="/Admin/Companies"
+                    Text="@LocShared["Cancel"]"
+                />
+
+            </EditForm>
+        }
+    </div>
+</section>
+
+@code {
+    [Parameter] public Guid? Id { get; set; }
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id.HasValue)
+        {
+            var co = await DbContext.Companies.FirstOrDefaultAsync(e => e.Id == Id.Value);
+            if (co is not null)
+            {
+                Input ??= new InputModel()
+                {
+                    CompanyId = co.Id.ToString(),
+                    Name = co.Name,
+                    Address = co.Address,
+                    ZipCode = co.ZipCode,
+                    Country = co.Country,
+                    City = co.City
+                };
+            }
+        }
+        else
+            Input ??= new InputModel()
+            {
+                Name = "",
+            };
+    }
+    
+    private async Task OnValidSubmitAsync()
+    {
+        if (Input is not null)
+        {
+            if (Input.CompanyGuid.HasValue)
+            {
+                await DbContext.Companies.Where(e => e.Id == Input.CompanyGuid)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.Name, Input.Name)
+                        .SetProperty(b => b.Address, Input.Address)
+                        .SetProperty(b => b.ZipCode, Input.ZipCode)
+                        .SetProperty(b => b.City, Input.City)
+                        .SetProperty(b => b.Country, Input.Country));
+            }
+            else
+            {
+                var newCompany = new Company()
+                {
+                    Name = Input.Name,
+                    Address = Input.Address,
+                    ZipCode = Input.ZipCode,
+                    City = Input.City,
+                    Country = Input.Country
+                };
+
+                await DbContext.Companies.AddAsync(newCompany);
+            }
+
+            await DbContext.SaveChangesAsync();
+        }
+
+        NavigationManager.NavigateTo($"/Admin/Companies");
+    }
+
+    private sealed class InputModel
+    {
+        public string? CompanyId { get; set; }
+        public Guid? CompanyGuid => CompanyId is not null ? Guid.Parse(CompanyId) : null;
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public string Name { get; set; } = "";
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public string? Address { get; set; } = "";
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public string? ZipCode { get; set; } = "";
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public string? City { get; set; } = "";
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public string? Country { get; set; } = "";
+    }
+
+}

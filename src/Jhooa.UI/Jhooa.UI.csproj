@@ -81,6 +81,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedIdentityErrorDescriber.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Features\Companies\Resources\Companies.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Companies.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -133,6 +137,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>LocalizedIdentityErrorDescriber.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Companies\Resources\Companies.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Companies.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 

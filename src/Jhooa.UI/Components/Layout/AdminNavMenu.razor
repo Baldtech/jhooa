@@ -76,6 +76,17 @@
         >
             @Loc["Users"]
         </a>
+        <a
+            href="/Admin/Companies"
+            class="
+        px-6 py-2
+        text-white 
+        @(_currentRoot.StartsWith("Admin/Companies") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+        border-t border-b border-r border-white
+      "
+        >
+            @Loc["Companies"]
+        </a>
 
         <a
             href="/Admin/Dreams"

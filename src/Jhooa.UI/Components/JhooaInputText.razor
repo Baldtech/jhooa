@@ -15,7 +15,7 @@
 </div>
 
 @code {
-    [Parameter, EditorRequired] public Expression<Func<string>> ValidationFor { get; set; } = default!;
+    [Parameter, EditorRequired] public Expression<Func<string?>> ValidationFor { get; set; } = default!;
     [Parameter] public string? Type { get; set; } = "text";
     [Parameter] public string? Autocomplete { get; set; }
     

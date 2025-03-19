@@ -1,4 +1,6 @@
 using Jhooa.UI.Data.Configuration;
+using Jhooa.UI.Features.Companies.Models;
+using Jhooa.UI.Features.Companies.Resources;
 using Jhooa.UI.Features.ContactForm.Models;
 using Jhooa.UI.Features.Dreams.Models;
 using Jhooa.UI.Features.Events.Models;
@@ -26,6 +28,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Policy> Policies { get; set; }
 
     public DbSet<UserView> UsersView { get; set; }
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<CompanyCode> CompanyCodes { get; set; }
 
     
 #pragma warning disable MA0051
