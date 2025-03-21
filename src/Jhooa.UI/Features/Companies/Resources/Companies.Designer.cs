@@ -110,5 +110,11 @@ namespace Jhooa.UI.Features.Companies.Resources {
                 return ResourceManager.GetString("CodesToAdd", resourceCulture);
             }
         }
+        
+        internal static string Duration {
+            get {
+                return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ public class CompanyCode
     public Guid Id { get; init; } = Guid.NewGuid();
     public required string Code { get; init; }
     public required Guid CompanyId { get; init; }
+    public required int Duration { get; init; }
     
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.Now;
     public DateTimeOffset? UsedAt { get; init; }

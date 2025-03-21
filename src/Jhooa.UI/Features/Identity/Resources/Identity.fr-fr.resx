@@ -335,4 +335,13 @@ Merci d’être des nôtres, et à très vite pour la suite de l’aventure !</v
     <data name="Filters" xml:space="preserve">
         <value>Filtres</value>
     </data>
+    <data name="Code" xml:space="preserve">
+        <value>Code</value>
+    </data>
+    <data name="CodeRequired" xml:space="preserve">
+        <value>Le code est requis</value>
+    </data>
+    <data name="CodeNotValid" xml:space="preserve">
+        <value>Le code n'est pas valide ou déjà utilisé</value>
+    </data>
 </root>

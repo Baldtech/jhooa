@@ -44,4 +44,7 @@
     <data name="CodesToAdd" xml:space="preserve">
         <value>Codes à ajouter</value>
     </data>
+    <data name="Duration" xml:space="preserve">
+        <value>Durée (en mois)</value>
+    </data>
 </root>

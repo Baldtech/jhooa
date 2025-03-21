@@ -14,6 +14,7 @@
     <ChildContentHeader>
         <tr>
             <th>@Loc["Code"]</th>
+            <th>@Loc["Duration"]</th>
             <th>@Loc["IsUsed"]</th>
             <th>@LocShared["Actions"]</th>
         </tr>
@@ -21,6 +22,7 @@
     <ChildContentRow Context="co">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
             <td>@co.Code</td>
+            <td>@co.Duration</td>
             <td>@(co.SubscriptionId.HasValue ? LocShared["Yes"] : LocShared["No"])</td>
             <td>
                 @if (!co.SubscriptionId.HasValue)

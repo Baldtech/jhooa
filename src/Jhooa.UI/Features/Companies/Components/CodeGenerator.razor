@@ -17,9 +17,9 @@
     {
         <InputText @bind-Value="Input.CompanyId" hidden></InputText>
 
-        <div class="bg-[#FFFFFF1A] rounded-md px-4 space-y-4 py-6 mb-6 grid grid-cols-1 lg:grid-cols-3 gap-8 ">
+        <div class="bg-[#FFFFFF1A] rounded-md px-4 py-6 mb-6 grid grid-cols-1 lg:grid-cols-3 gap-8 ">
 
-            <div class="grid-cols-1 lg:grid-cols-3 gap-2">
+            <div>
                 <label for="@Input.NbCodes" class="block mb-2 text-sm">@Loc["CodesToAdd"]</label>
                 <InputNumber @bind-Value="Input.NbCodes"
                              class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"/>
@@ -27,10 +27,17 @@
                 <ValidationMessage For="@(() => Input.NbCodes)" class="text-danger"/>
             </div>
             <div>
-                
+                <label for="@Input.Duration" class="block mb-2 text-sm">@Loc["Duration"]</label>
+                <InputNumber @bind-Value="Input.Duration"
+                             class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"/>
+                <ValidationMessage For="@(() => Input.Duration)" class="text-danger"/>
+
             </div>
-            <button type="submit"
-                    class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@LocShared["Add"]</button>
+            <div class="py-6">
+                <button type="submit"
+                        class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@LocShared["Add"]</button>
+
+            </div>
 
         </div>
     }
@@ -62,7 +69,8 @@
                     var code = new CompanyCode()
                     {
                         CompanyId = Input.CompanyGuid.Value,
-                        Code = await CodeGeneratorService.GenerateUniqueCodeAsync()
+                        Code = await CodeGeneratorService.GenerateUniqueCodeAsync(),
+                        Duration = Input.Duration,
                     };
 
                     await DbContext.CompanyCodes.AddAsync(code);
@@ -85,6 +93,9 @@
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
         public int NbCodes { get; set; }
+        
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public int Duration { get; set; }
     }
 
 }

@@ -692,5 +692,23 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("Filters", resourceCulture);
             }
         }
+        
+        internal static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        internal static string CodeRequired {
+            get {
+                return ResourceManager.GetString("CodeRequired", resourceCulture);
+            }
+        }
+        
+        internal static string CodeNotValid {
+            get {
+                return ResourceManager.GetString("CodeNotValid", resourceCulture);
+            }
+        }
     }
 }
