@@ -1,0 +1,43 @@
+@using System.Diagnostics.CodeAnalysis
+@using System.Linq.Expressions
+@inherits InputBase<int>
+
+<div>
+    <label for="@_fieldId" class="block mb-2 text-sm">@DisplayName</label>
+
+    <input
+        id="@_fieldId"
+        type="@Type"
+        name="@NameAttributeValue"
+        class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none @CssClass"
+        @bind="@CurrentValue"/>
+    <ValidationMessage For="@ValidationFor" class="text-danger"/>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Expression<Func<int?>> ValidationFor { get; set; } = default!;
+    [Parameter] public string? Type { get; set; } = "number";
+    [Parameter] public string? Autocomplete { get; set; }
+    
+    private readonly Guid _fieldId = Guid.NewGuid();
+    
+    protected override void OnInitialized()
+    {
+        if (ValidationFor == null)
+        {
+            throw new InvalidOperationException($"{nameof(JhooaInputText)} requires a {nameof(ValidationFor)} parameter.");
+        }
+
+        base.OnInitialized();
+    }
+
+
+
+    protected override bool TryParseValueFromString(string? value, out int result, [NotNullWhen(false)] out string? validationErrorMessage)
+    {
+        result = int.Parse(value!);
+        validationErrorMessage = null;
+        return true;    
+    }
+
+}

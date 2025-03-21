@@ -1,0 +1,87 @@
+@using Jhooa.UI.Features.Companies.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Companies> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+
+@rendermode InteractiveServer
+
+<PaginationComponent TItem="CompanyCode" Items="_codes" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@Loc["Code"]</th>
+            <th>@Loc["IsUsed"]</th>
+            <th>@LocShared["Actions"]</th>
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="co">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
+            <td>@co.Code</td>
+            <td>@(co.SubscriptionId.HasValue ? LocShared["Yes"] : LocShared["No"])</td>
+            <td>
+                @if (!co.SubscriptionId.HasValue)
+                {
+                    <EditForm Model="co" class="inline"
+                              FormName="@($"form-event-{co.Id}")"
+                              OnValidSubmit="@(async () => { await DeleteCodeAsync(co.Id); })">
+                        <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@LocShared["Delete"]</button>
+                    </EditForm>
+                }
+               
+            </td>
+        </tr>
+    </ChildContentRow>
+</PaginationComponent>
+
+@code {
+    [Parameter] public EventCallback<int?> NbCodesCallback { get; set; }
+    [Parameter] public Guid CompanyId { get; set; }
+    [Parameter] public FilterTypes? SelectedFilter { get; set; }
+
+    private List<CompanyCode> _codes = [];
+    
+    private FilterTypes? _previousFilter;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        _codes = await DbContext.CompanyCodes.Where(c => c.CompanyId == CompanyId).ToListAsync();
+        await NbCodesCallback.InvokeAsync(_codes.Count);
+    }
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_previousFilter != SelectedFilter)
+        {
+            _previousFilter = SelectedFilter;
+            await FetchCodesAsync();
+            await NbCodesCallback.InvokeAsync(_codes.Count);
+        }
+    }
+
+    private async Task FetchCodesAsync()
+    {
+        var query = DbContext.CompanyCodes.Where(c => c.CompanyId == CompanyId);
+        
+        _codes = SelectedFilter switch
+        {
+            FilterTypes.All => await query.ToListAsync(),
+            FilterTypes.Used => await query.Where(u => u.SubscriptionId.HasValue).ToListAsync(),
+            FilterTypes.NotUsed => await query.Where(u => !u.SubscriptionId.HasValue).ToListAsync(),
+            _ => await query.ToListAsync()
+        };
+    }
+    
+    private async Task DeleteCodeAsync(Guid? codeId)
+    {
+        if (codeId.HasValue)
+        {
+            await DbContext.CompanyCodes.Where(c => c.Id == codeId).ExecuteDeleteAsync();
+            NavigationManager.NavigateTo($"/Admin/Company/{CompanyId}/Codes", true);
+        }
+    }
+}

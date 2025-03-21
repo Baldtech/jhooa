@@ -74,5 +74,41 @@ namespace Jhooa.UI.Features.Companies.Resources {
                 return ResourceManager.GetString("AddCompany", resourceCulture);
             }
         }
+        
+        internal static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        internal static string IsUsed {
+            get {
+                return ResourceManager.GetString("IsUsed", resourceCulture);
+            }
+        }
+        
+        internal static string Filters {
+            get {
+                return ResourceManager.GetString("Filters", resourceCulture);
+            }
+        }
+        
+        internal static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        internal static string NotUsed {
+            get {
+                return ResourceManager.GetString("NotUsed", resourceCulture);
+            }
+        }
+        
+        internal static string CodesToAdd {
+            get {
+                return ResourceManager.GetString("CodesToAdd", resourceCulture);
+            }
+        }
     }
 }

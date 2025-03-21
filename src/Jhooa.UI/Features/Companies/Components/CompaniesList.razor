@@ -27,6 +27,7 @@
             <td>@co.Codes.Count(c => c.UsedAt.HasValue)</td>
             <td>@co.Codes.Count(c => !c.UsedAt.HasValue)</td>
             <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Company/@co.Id/Codes">@LocShared["Codes"]</a>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Company/@co.Id">@LocShared["Edit"]</a>
                 <EditForm Model="co" class="inline"
                           FormName="@($"form-event-{co.Id}")"

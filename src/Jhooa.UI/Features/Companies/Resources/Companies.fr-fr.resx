@@ -26,4 +26,22 @@
     <data name="AddCompany" xml:space="preserve">
         <value>Ajouter une société</value>
     </data>
+    <data name="Code" xml:space="preserve">
+        <value>Code</value>
+    </data>
+    <data name="IsUsed" xml:space="preserve">
+        <value>Utilisé</value>
+    </data>
+    <data name="Filters" xml:space="preserve">
+        <value>Filtres</value>
+    </data>
+    <data name="All" xml:space="preserve">
+        <value>Tous</value>
+    </data>
+    <data name="NotUsed" xml:space="preserve">
+        <value>Non utilisé</value>
+    </data>
+    <data name="CodesToAdd" xml:space="preserve">
+        <value>Codes à ajouter</value>
+    </data>
 </root>

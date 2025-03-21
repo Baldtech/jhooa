@@ -1,0 +1,90 @@
+@using System.ComponentModel.DataAnnotations
+@using Jhooa.UI.Features.Companies.Models
+@using Jhooa.UI.Services
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject IStringLocalizer<Resources.Companies> Loc
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+@inject ICodeGeneratorService CodeGeneratorService
+
+
+<EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formEvent" class="">
+    <DataAnnotationsValidator/>
+
+    @if (Input != null)
+    {
+        <InputText @bind-Value="Input.CompanyId" hidden></InputText>
+
+        <div class="bg-[#FFFFFF1A] rounded-md px-4 space-y-4 py-6 mb-6 grid grid-cols-1 lg:grid-cols-3 gap-8 ">
+
+            <div class="grid-cols-1 lg:grid-cols-3 gap-2">
+                <label for="@Input.NbCodes" class="block mb-2 text-sm">@Loc["CodesToAdd"]</label>
+                <InputNumber @bind-Value="Input.NbCodes"
+                             class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 py-3 focus:outline-none active:outline-none"/>
+
+                <ValidationMessage For="@(() => Input.NbCodes)" class="text-danger"/>
+            </div>
+            <div>
+                
+            </div>
+            <button type="submit"
+                    class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@LocShared["Add"]</button>
+
+        </div>
+    }
+
+
+</EditForm>
+
+@code {
+
+    [Parameter] public Guid CompanyId { get; set; }
+    [SupplyParameterFromForm] private InputModel? Input { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Input ??= new InputModel()
+        {
+            CompanyId = CompanyId.ToString(),
+        };
+    }
+
+    private async Task OnValidSubmitAsync()
+    {
+        if (Input is not null)
+        {
+            if (Input.CompanyGuid.HasValue)
+            {
+                for (var i = 0; i < Input.NbCodes; i++)
+                {
+                    var code = new CompanyCode()
+                    {
+                        CompanyId = Input.CompanyGuid.Value,
+                        Code = await CodeGeneratorService.GenerateUniqueCodeAsync()
+                    };
+
+                    await DbContext.CompanyCodes.AddAsync(code);
+                }
+
+                await DbContext.SaveChangesAsync();
+            }
+
+
+            NavigationManager.NavigateTo($"/Admin/Company/{Input.CompanyId}/Codes", forceLoad: true);
+        }
+    }
+    
+    
+
+    private sealed class InputModel
+    {
+        public string? CompanyId { get; set; }
+        public Guid? CompanyGuid => CompanyId is not null ? Guid.Parse(CompanyId) : null;
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public int NbCodes { get; set; }
+    }
+
+}
