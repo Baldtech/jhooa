@@ -1,6 +1,6 @@
 @using System.Diagnostics.CodeAnalysis
 @using System.Linq.Expressions
-@inherits InputBase<string>
+@inherits InputBase<int>
 
 <div>
     <label for="@_fieldId" class="block mb-2 text-sm">@DisplayName</label>
@@ -15,8 +15,8 @@
 </div>
 
 @code {
-    [Parameter, EditorRequired] public Expression<Func<string?>> ValidationFor { get; set; } = default!;
-    [Parameter] public string? Type { get; set; } = "text";
+    [Parameter, EditorRequired] public Expression<Func<int?>> ValidationFor { get; set; } = default!;
+    [Parameter] public string? Type { get; set; } = "number";
     [Parameter] public string? Autocomplete { get; set; }
     
     private readonly Guid _fieldId = Guid.NewGuid();
@@ -31,11 +31,13 @@
         base.OnInitialized();
     }
 
-    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out string result, [NotNullWhen(false)] out string? validationErrorMessage)
+
+
+    protected override bool TryParseValueFromString(string? value, out int result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
-        result = value!;
+        result = int.Parse(value!);
         validationErrorMessage = null;
-        return true;
+        return true;    
     }
 
 }

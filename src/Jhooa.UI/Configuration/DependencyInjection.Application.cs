@@ -16,6 +16,7 @@ public static partial class DependencyInjection
         services.AddSingleton(services);
         
         services.AddScoped<IDreamService, DreamService>();
+        services.AddScoped<ICodeGeneratorService, CodeGeneratorService>();
         services.AddScoped<RedirectManager>();
 
         return services;

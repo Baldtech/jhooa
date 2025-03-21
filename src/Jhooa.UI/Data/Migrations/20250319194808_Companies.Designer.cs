@@ -4,6 +4,7 @@ using Jhooa.UI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jhooa.UI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319194808_Companies")]
+    partial class Companies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +49,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("Jhooa.UI.Features.Companies.Models.CompanyCode", b =>
@@ -65,9 +68,6 @@ namespace Jhooa.UI.Data.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("SubscriptionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -80,7 +80,7 @@ namespace Jhooa.UI.Data.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("CompanyCodes");
+                    b.ToTable("CompanyCode");
                 });
 
             modelBuilder.Entity("Jhooa.UI.Features.ContactForm.Models.ContactFormSubmission", b =>
@@ -436,6 +436,7 @@ namespace Jhooa.UI.Data.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StripeSessionCheckoutId")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

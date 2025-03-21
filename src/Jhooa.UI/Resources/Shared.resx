@@ -213,4 +213,13 @@
     <data name="SeoDescription" xml:space="preserve">
         <value>JHOOA is a video subscription platform that turns your dreams into reality. By sharing three wishes upon signing up, you have a chance to be selected to see one of them come true and broadcasted on video. You also get access to exclusive, fun, and unexpected events. Join a community of dreamers and experience the unpredictable!</value>
     </data>
+    <data name="Companies" xml:space="preserve">
+        <value>Companies</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>Add</value>
+    </data>
 </root>

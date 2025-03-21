@@ -203,4 +203,13 @@
     <data name="SeoDescription" xml:space="preserve">
         <value>JHOOA est une plateforme d'abonnement vidéo qui transforme vos rêves en réalité. En partageant trois souhaits à l'inscription, vous pouvez être sélectionné pour en voir un exaucé et diffusé en vidéo. Accédez aussi à des événements exclusifs, fun et inattendus. Rejoignez une communauté de rêveurs et vivez l'imprévisible !</value>
     </data>
+    <data name="Companies" xml:space="preserve">
+        <value>Sociétés</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Nom</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>Ajouter</value>
+    </data>
 </root>

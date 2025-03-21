@@ -2,6 +2,7 @@
 
 @using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Configuration
+@using Jhooa.UI.Features.Companies.Models
 @using Jhooa.UI.Features.Dreams.Models
 @using Microsoft.AspNetCore.Identity
 @using Jhooa.UI.Features.Identity.Models
@@ -198,6 +199,19 @@
                                 </label>
                             </div>
                         </div>
+                        <div
+                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-beige-100 border-2 border-white px-6 py-3 mb-3">
+                            <InputRadio id="option5"
+                                        class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                        Value="SubscriptionType.None"/>
+
+                            <div class="flex flex-row w-full">
+                                <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                                    @Loc["Code"]
+                                </label>
+                                <InputText @bind-value="Input.Code" class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 focus:outline-none active:outline-none" />
+                            </div>
+                        </div>
                     </InputRadioGroup>
 
                     <div class="flex flex-wrap space-x-2 my-8 text-sm">
@@ -243,7 +257,7 @@
 <script src="js/mobileMenu.js"></script>
 
 @code {
-    private IEnumerable<IdentityError>? _identityErrors;
+    private List<IdentityError>? _identityErrors;
 
     [SupplyParameterFromForm] private InputModel Input { get; set; } = new();
 
@@ -277,6 +291,34 @@
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
+        CompanyCode? cc = null;
+
+        _identityErrors = [];
+        
+        if (Input.SubscriptionType == SubscriptionType.None)
+        {
+            if (string.IsNullOrWhiteSpace(Input.Code))
+            {
+                _identityErrors.Add(new IdentityError()
+                {
+                    Code = "CodeRequired",
+                    Description = Loc["CodeRequired"]
+                });
+                return;
+            }
+            
+            cc = DbContext.CompanyCodes.FirstOrDefault(c => c.Code.ToLower() == Input.Code.ToLower());
+
+            if (cc is null || cc.SubscriptionId.HasValue)
+            {
+                _identityErrors.Add(new IdentityError()
+                {
+                    Code = "CodeNotValid",
+                    Description = Loc["CodeNotValid"]
+                });
+                return;
+            }
+        }
 
         // Delete not activated user if found based on email
         var existingUser = await UserManager.FindByEmailAsync(Input.Email);
@@ -294,7 +336,7 @@
 
         if (!result.Succeeded)
         {
-            _identityErrors = result.Errors;
+            _identityErrors = result.Errors.ToList();
             return;
         }
 
@@ -335,21 +377,48 @@
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(s => s.StripeCustomerId, stripeCustomerId));
 
-        var session = await StripeService.GenerateFirstPaymentIntent(stripeCustomerId, Input.SubscriptionType);
-        var sub = new Subscription
+        if (Input.SubscriptionType == SubscriptionType.None && cc is not null)
         {
-            Start = DateOnly.FromDateTime(DateTime.Now),
-            End = GetEndDate(Input.SubscriptionType),
-            UserId = user.Id,
-            StripeSessionCheckoutId = session.SessionId,
-            Type = Input.SubscriptionType,
-            StripePaymentIntentId = session.PaymentIntentId
-        };
+            var sub = new Subscription
+            {
+                Start = DateOnly.FromDateTime(DateTime.Now),
+                End = DateOnly.FromDateTime(DateTime.Now.AddMonths(cc.Duration)),
+                UserId = user.Id,
+                Type = Input.SubscriptionType
+            };
+            
+            sub.MarkSubscriptionAsPaid();
+            
+            await DbContext.Subscriptions.AddAsync(sub);
+            await DbContext.SaveChangesAsync();
+            
+            await DbContext.CompanyCodes.Where(c => c.Id == cc.Id)
+                .ExecuteUpdateAsync(setters =>
+                    setters.SetProperty(s => s.SubscriptionId, sub.Id)
+                        .SetProperty(b => b.UsedAt, DateTimeOffset.Now));
+            await DbContext.SaveChangesAsync();
 
-        await DbContext.Subscriptions.AddAsync(sub);
-        await DbContext.SaveChangesAsync();
+            NavigationManager.NavigateTo($"/Account/RegisterConfirmation?subId={sub.Id}", forceLoad: true);
 
-        NavigationManager.NavigateTo(session.SessionUrl);
+        }
+        else
+        {
+            var session = await StripeService.GenerateFirstPaymentIntent(stripeCustomerId, Input.SubscriptionType);
+            var sub = new Subscription
+            {
+                Start = DateOnly.FromDateTime(DateTime.Now),
+                End = GetEndDate(Input.SubscriptionType),
+                UserId = user.Id,
+                StripeSessionCheckoutId = session.SessionId,
+                Type = Input.SubscriptionType,
+                StripePaymentIntentId = session.PaymentIntentId
+            };
+
+            await DbContext.Subscriptions.AddAsync(sub);
+            await DbContext.SaveChangesAsync();
+
+            NavigationManager.NavigateTo(session.SessionUrl);
+        }
     }
 
     private static DateOnly? GetEndDate(SubscriptionType type)
@@ -456,6 +525,9 @@
 
         [StringLength(maximumLength: 300, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
         public string? BigDream { get; set; } = "";
+        
+        [StringLength(maximumLength: 9, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Identity))]
+        public string? Code { get; set; } = "";
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Identity))]
         public SubscriptionType SubscriptionType { get; set; }

@@ -15,7 +15,7 @@ public class Subscription
 
     public string? StripePaymentIntentId { get; set; }
     public string? StripeSubscriptionId { get; private set; }
-    public required string StripeSessionCheckoutId { get; init; }
+    public string? StripeSessionCheckoutId { get; init; }
     public bool IsPaid => PaidAt.HasValue;
 
     public void MarkPaymentAsPaid(string stripePaymentIntentId)
@@ -36,6 +36,14 @@ public class Subscription
         
 
         StripeSubscriptionId = stripeSubscriptionId;
+        PaidAt = DateTime.Now;
+        Status = SubscriptionStatus.Paid;
+    }
+    
+    public void MarkSubscriptionAsPaid()
+    {
+        if (Status == SubscriptionStatus.Paid) return;
+
         PaidAt = DateTime.Now;
         Status = SubscriptionStatus.Paid;
     }

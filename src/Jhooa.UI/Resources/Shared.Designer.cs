@@ -434,5 +434,23 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("SeoDescription", resourceCulture);
             }
         }
+        
+        internal static string Companies {
+            get {
+                return ResourceManager.GetString("Companies", resourceCulture);
+            }
+        }
+        
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
     }
 }

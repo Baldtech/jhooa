@@ -1,0 +1,43 @@
+@page "/Admin/Companies"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+@using Jhooa.UI.Components.Layout
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Companies.Components
+
+@inject IStringLocalizer<Resources.Companies> Loc
+<PageTitle>@Loc["CompaniesList"]</PageTitle>
+
+<section class="max-w-screen-xl mx-auto w-full">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="mb-8 text-4xl tracking-wider">@Loc["CompaniesList"] (@_nbCompanies)</h1>
+
+        <div class="flex items-center space-x-2">
+            <JhooaAdminActionButton
+                Url="/Admin/Company"
+                Text="@Loc["AddCompany"]"
+            />
+        </div>
+        
+    </div>
+
+    <div class="mb-4"></div>
+
+    <CompaniesList
+        NbCompaniesCallback="HandleNbCompanies">
+    </CompaniesList>
+</section>
+
+
+@code
+{
+    private int? _nbCompanies;
+    
+    private void HandleNbCompanies(int? nbCompanies)
+    {
+        _nbCompanies = nbCompanies;
+    }
+}

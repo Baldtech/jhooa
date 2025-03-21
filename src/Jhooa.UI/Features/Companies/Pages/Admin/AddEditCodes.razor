@@ -1,0 +1,59 @@
+@page "/Admin/Company/{id:guid}/Codes"
+@attribute [Authorize(Roles = "Admin")]
+@layout AdminLayout
+@using Jhooa.UI.Components.Layout
+@using Jhooa.UI.Features.Companies.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Jhooa.UI.Features.Companies.Components
+@inject ApplicationDbContext DbContext
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+
+<PageTitle>@_company?.Name</PageTitle>
+
+<section class="max-w-screen-xl mx-auto w-full">
+    @if (_company != null)
+    {
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="mb-8 text-4xl tracking-wider">@_company.Name (@_nbCodes)</h1>
+            <FilterCodes
+                SelectFilterTypeCallback="HandleFilterSelection">
+            </FilterCodes>
+        </div>
+
+        <div class="mb-4"></div>
+        <CodeGenerator CompanyId="Id" />
+        <div class="mb-4"></div>
+
+        <CodesList
+            CompanyId=@Id
+            SelectedFilter="_selectedFilter"
+            NbCodesCallback="HandleNbCodes">
+        </CodesList>
+    }
+
+</section>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private Company? _company;
+    private int? _nbCodes;
+    private FilterTypes? _selectedFilter;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _company = await DbContext.Companies
+            .FirstAsync(e => e.Id == Id);
+    }
+    
+
+    private void HandleNbCodes(int? nbCodes)
+    {
+        _nbCodes = nbCodes;
+    }
+    
+    private void HandleFilterSelection(FilterTypes? type)
+    {
+        _selectedFilter = type;
+    }
+}

@@ -1,9 +1,12 @@
+@using System.ComponentModel.DataAnnotations
 @using Jhooa.UI.Features.Subscriptions.Models
 @using Jhooa.UI.Services
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
+@using Jhooa.UI.Features.Identity.Shared
 
 @inject IStringLocalizer<Resources.Subscriptions> Loc
+@inject IStringLocalizer<Jhooa.UI.Features.Identity.Resources.Identity> LocComp
 @inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
 @inject AuthenticationStateProvider AuthStateProvider
@@ -17,6 +20,13 @@
     <EditForm Model="SubscribeModelInput" method="post" OnValidSubmit="Subscribe" FormName="renew"
               class="space-y-6">
         <DataAnnotationsValidator/>
+        @if (Message is not null)
+        {
+            <div class="mb-10 max-w-screen-sm mx-auto text-center text-sm tracking-wide font-amsiProRegular">
+                <StatusMessage Message="@Message"/>
+            </div>
+        }
+
         <InputRadioGroup @bind-Value="SubscribeModelInput.SubscriptionType" class="mb-8">
             <div
                 class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-peach-100 border-2 border-white px-6 py-3 mb-3">
@@ -78,6 +88,20 @@
                     </label>
                 </div>
             </div>
+            <div
+                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-beige-100 border-2 border-white px-6 py-3 mb-3">
+                <InputRadio id="option5"
+                            class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                            Value="SubscriptionType.None"/>
+
+                <div class="flex flex-row w-full">
+                    <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                        @Loc["Code"]
+                    </label>
+                    <InputText @bind-value="SubscribeModelInput.Code"
+                               class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 focus:outline-none active:outline-none"/>
+                </div>
+            </div>
 
             <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
                 <button type="submit"
@@ -89,32 +113,74 @@
 </div>
 
 @code {
+
     [SupplyParameterFromForm(FormName = "renew")]
     private SubscribeModel SubscribeModelInput { get; set; } = new();
-    
+
     [Parameter] public Guid UserId { get; set; }
 
-    
+    private string? Message { get; set; }
+
     public async Task Subscribe(EditContext editContext)
     {
         var user = await DbContext.Users.FirstAsync(u => u.Id == UserId);
 
-        var session = await StripeService.GeneratePaymentIntent(user.StripeCustomerId!, SubscribeModelInput.SubscriptionType);
-        var sub = new Jhooa.UI.Features.Subscriptions.Models.Subscription
+        if (SubscribeModelInput.SubscriptionType != SubscriptionType.None)
         {
-            Start = DateOnly.FromDateTime(DateTime.Now),
-            End = GetEndDate(SubscribeModelInput.SubscriptionType),
-            UserId = user.Id,
-            StripeSessionCheckoutId = session.SessionId,
-            Type = SubscribeModelInput.SubscriptionType
-        };
+            var session = await StripeService.GeneratePaymentIntent(user.StripeCustomerId!, SubscribeModelInput.SubscriptionType);
+            var sub = new Subscription
+            {
+                Start = DateOnly.FromDateTime(DateTime.Now),
+                End = GetEndDate(SubscribeModelInput.SubscriptionType),
+                UserId = user.Id,
+                StripeSessionCheckoutId = session.SessionId,
+                Type = SubscribeModelInput.SubscriptionType
+            };
 
-        await DbContext.Subscriptions.AddAsync(sub);
-        await DbContext.SaveChangesAsync();
+            await DbContext.Subscriptions.AddAsync(sub);
+            await DbContext.SaveChangesAsync();
 
-        NavigationManager.NavigateTo(session.SessionUrl);
+            NavigationManager.NavigateTo(session.SessionUrl);
+        }
+        else
+        {
+            if (string.IsNullOrWhiteSpace(SubscribeModelInput.Code))
+            {
+                Message = $"{LocShared["Error"]}: {LocComp["CodeRequired"]}";
+                return;
+            }
+
+            var cc = DbContext.CompanyCodes.FirstOrDefault(c => c.Code.ToLower() == SubscribeModelInput.Code.ToLower());
+
+            if (cc is null || cc.SubscriptionId.HasValue)
+            {
+                Message = $"{LocShared["Error"]}: {LocComp["CodeNotValid"]}";
+                return;
+            }
+
+            var sub = new Subscription
+            {
+                Start = DateOnly.FromDateTime(DateTime.Now),
+                End = DateOnly.FromDateTime(DateTime.Now.AddMonths(cc.Duration)),
+                UserId = user.Id,
+                Type = SubscribeModelInput.SubscriptionType
+            };
+
+            sub.MarkSubscriptionAsPaid();
+
+            await DbContext.Subscriptions.AddAsync(sub);
+            await DbContext.SaveChangesAsync();
+
+            await DbContext.CompanyCodes.Where(c => c.Id == cc.Id)
+                .ExecuteUpdateAsync(setters =>
+                    setters.SetProperty(s => s.SubscriptionId, sub.Id)
+                        .SetProperty(b => b.UsedAt, DateTimeOffset.Now));
+            await DbContext.SaveChangesAsync();
+
+            NavigationManager.NavigateTo("/Account/Manage/Subscription?renewCode=true", forceLoad: true);
+        }
     }
-    
+
     private static DateOnly? GetEndDate(SubscriptionType type)
         => type switch
         {
@@ -126,9 +192,13 @@
             SubscriptionType.YearlyRecurring => null,
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
-    
+
     private sealed class SubscribeModel
     {
         public SubscriptionType SubscriptionType { get; set; }
+
+        [StringLength(maximumLength: 9, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Identity.Resources.Identity))]
+        public string? Code { get; set; } = "";
     }
+
 }

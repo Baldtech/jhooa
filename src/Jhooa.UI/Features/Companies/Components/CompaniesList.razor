@@ -1,0 +1,60 @@
+@using Jhooa.UI.Features.Companies.Models
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<Resources.Companies> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
+@inject ApplicationDbContext DbContext
+@inject NavigationManager NavigationManager
+
+
+@rendermode InteractiveServer
+
+<PaginationComponent TItem="Company" Items="_companies" DefaultPageSize="15">
+    <ChildContentHeader>
+        <tr>
+            <th>@LocShared["Name"]</th>
+            <th>@Loc["TotalCodes"]</th>
+            <th>@Loc["UsedCodes"]</th>
+            <th>@Loc["RemainingCodes"]</th>
+            <th>@LocShared["Actions"]</th>
+        </tr>
+    </ChildContentHeader>
+    <ChildContentRow Context="co">
+        <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
+            <td>@co.Name</td>
+            <td>@co.Codes.Count</td>
+            <td>@co.Codes.Count(c => c.UsedAt.HasValue)</td>
+            <td>@co.Codes.Count(c => !c.UsedAt.HasValue)</td>
+            <td>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Company/@co.Id/Codes">@LocShared["Codes"]</a>
+                <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Company/@co.Id">@LocShared["Edit"]</a>
+                <EditForm Model="co" class="inline"
+                          FormName="@($"form-event-{co.Id}")"
+                          OnValidSubmit="@(async () => { await DeleteCompanyAsync(co.Id); })">
+                    <button type="submit" class=" px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight">@LocShared["Delete"]</button>
+                </EditForm>
+            </td>
+        </tr>
+    </ChildContentRow>
+</PaginationComponent>
+
+@code {
+    [Parameter] public EventCallback<int?> NbCompaniesCallback { get; set; }
+    private List<Company> _companies = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _companies = await DbContext.Companies.Include(i => i.Codes).ToListAsync();
+        await NbCompaniesCallback.InvokeAsync(_companies.Count);
+    }
+    
+    private async Task DeleteCompanyAsync(Guid? companyId)
+    {
+        if (companyId.HasValue)
+        {
+            await DbContext.Companies.Where(c => c.Id == companyId).ExecuteDeleteAsync();
+            NavigationManager.NavigateTo("/Admin/Companies", true);
+        }
+    }
+}

@@ -334,4 +334,28 @@ Thank you for being with us, and see you soon for the next chapter of this adven
     <data name="ExportFull" xml:space="preserve">
         <value>Export all users</value>
     </data>
+    <data name="All" xml:space="preserve">
+        <value>All</value>
+    </data>
+    <data name="Admin" xml:space="preserve">
+        <value>Administrators</value>
+    </data>
+    <data name="Active" xml:space="preserve">
+        <value>Active</value>
+    </data>
+    <data name="Inactive" xml:space="preserve">
+        <value>Inactive</value>
+    </data>
+    <data name="Filters" xml:space="preserve">
+        <value>Filters</value>
+    </data>
+    <data name="Code" xml:space="preserve">
+        <value>Code</value>
+    </data>
+    <data name="CodeRequired" xml:space="preserve">
+        <value>The code is required</value>
+    </data>
+    <data name="CodeNotValid" xml:space="preserve">
+        <value>The code is not valid or already used</value>
+    </data>
 </root>

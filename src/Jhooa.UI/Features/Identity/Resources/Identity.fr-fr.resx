@@ -320,4 +320,28 @@ Merci d’être des nôtres, et à très vite pour la suite de l’aventure !</v
     <data name="ExportFull" xml:space="preserve">
         <value>Exporter tous les utilisateurs</value>
     </data>
+    <data name="All" xml:space="preserve">
+        <value>Tous</value>
+    </data>
+    <data name="Admin" xml:space="preserve">
+        <value>Administrateurs</value>
+    </data>
+    <data name="Active" xml:space="preserve">
+        <value>Actif</value>
+    </data>
+    <data name="Inactive" xml:space="preserve">
+        <value>Inactif</value>
+    </data>
+    <data name="Filters" xml:space="preserve">
+        <value>Filtres</value>
+    </data>
+    <data name="Code" xml:space="preserve">
+        <value>Code</value>
+    </data>
+    <data name="CodeRequired" xml:space="preserve">
+        <value>Le code est requis</value>
+    </data>
+    <data name="CodeNotValid" xml:space="preserve">
+        <value>Le code n'est pas valide ou déjà utilisé</value>
+    </data>
 </root>

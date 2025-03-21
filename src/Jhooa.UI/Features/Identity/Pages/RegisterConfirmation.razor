@@ -26,7 +26,7 @@
         </a>
     </div>
 
-    @if (CheckoutSessionId is not null)
+    @if (CheckoutSessionId is not null || SubscriptionId is not null)
     {
         <div
             class="flex flex-col items-center justify-center text-white py-8 md:py-0">
@@ -55,6 +55,8 @@
     [SupplyParameterFromQuery(Name = "session-id")]
     public string? CheckoutSessionId { get; set; }
 
+    [SupplyParameterFromQuery(Name = "subId")]
+    public string? SubscriptionId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,6 +89,32 @@
                     }
                 }
                 
+                if (user.ActivatedAt is null)
+                {
+                    await DbContext.Users.Where(e => e.Id == user.Id)
+                        .ExecuteUpdateAsync(setters => setters
+                            .SetProperty(b => b.ActivatedAt, DateTimeOffset.Now)
+                            .SetProperty(b => b.EmailConfirmed, true));
+                
+                    await MailService.SendWithTemplateAsync(user.Email!, cultureInfo: CultureInfo.CurrentCulture, 
+                        templateData: new
+                        {
+                            Title = Loc["EmailAccountConfirmationTitle"],
+                            Content = Loc["EmailAccountConfirmationContent"],
+                        }, subject: Loc["EmailAccountConfirmationSubject"]);
+                }
+                
+                await DbContext.SaveChangesAsync();
+            }
+        }
+        else if (SubscriptionId is not null)
+        {
+            var sub = await DbContext.Subscriptions
+                .FirstOrDefaultAsync(s => s.Id == new Guid(SubscriptionId));
+    
+            if (sub is not null)
+            {
+                var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
                 if (user.ActivatedAt is null)
                 {
                     await DbContext.Users.Where(e => e.Id == user.Id)
