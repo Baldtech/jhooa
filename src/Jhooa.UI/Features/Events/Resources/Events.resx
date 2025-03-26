@@ -127,27 +127,28 @@
         <value />
     </data>
     <data name="AccessToEvents" xml:space="preserve">
-        <value />
+        <value>Access to events</value>
     </data>
     <data name="AccessToEventsDesc" xml:space="preserve">
-        <value />
+        <value>As a subscriber, you have access to the events on offer every month, at no extra cost. It's included in your subscription!</value>
     </data>
     <data name="HowToParticipate" xml:space="preserve">
-        <value />
+        <value>How to get involved?</value>
     </data>
     <data name="HowToParticipateLi1" xml:space="preserve">
-        <value />
+        <value>Each month, a new event is proposed. You can express your interest during the month of publication, whatever the date of the event.</value>
     </data>
     <data name="HowToParticipateLi2" xml:space="preserve">
-        <value />
+        <value>For example, if an event is announced in March, you can register via your account until March 31, even if it takes place later, as in April.</value>
     </data>
     <data name="HowToParticipateLi3" xml:space="preserve">
-        <value />
+        <value>You can register for events during the period of validity of your subscription. For example, if your subscription is active from April 3 to May 3, you can register for events published in April and May.
+</value>
     </data>
     <data name="ParticipantSelection" xml:space="preserve">
-        <value />
+        <value>Selection of participants</value>
     </data>
     <data name="ParticipantSelectionDesc" xml:space="preserve">
-        <value />
+        <value>Participants are selected on the 15th of the month following publication of the event.</value>
     </data>
 </root>
