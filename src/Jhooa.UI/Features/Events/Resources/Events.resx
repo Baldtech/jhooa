@@ -126,4 +126,28 @@
     <data name="EventParticipants" xml:space="preserve">
         <value />
     </data>
+    <data name="AccessToEvents" xml:space="preserve">
+        <value />
+    </data>
+    <data name="AccessToEventsDesc" xml:space="preserve">
+        <value />
+    </data>
+    <data name="HowToParticipate" xml:space="preserve">
+        <value />
+    </data>
+    <data name="HowToParticipateLi1" xml:space="preserve">
+        <value />
+    </data>
+    <data name="HowToParticipateLi2" xml:space="preserve">
+        <value />
+    </data>
+    <data name="HowToParticipateLi3" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ParticipantSelection" xml:space="preserve">
+        <value />
+    </data>
+    <data name="ParticipantSelectionDesc" xml:space="preserve">
+        <value />
+    </data>
 </root>

@@ -260,5 +260,53 @@ namespace Jhooa.UI.Features.Events.Resources {
                 return ResourceManager.GetString("EventParticipants", resourceCulture);
             }
         }
+        
+        internal static string AccessToEvents {
+            get {
+                return ResourceManager.GetString("AccessToEvents", resourceCulture);
+            }
+        }
+        
+        internal static string AccessToEventsDesc {
+            get {
+                return ResourceManager.GetString("AccessToEventsDesc", resourceCulture);
+            }
+        }
+        
+        internal static string HowToParticipate {
+            get {
+                return ResourceManager.GetString("HowToParticipate", resourceCulture);
+            }
+        }
+        
+        internal static string HowToParticipateLi1 {
+            get {
+                return ResourceManager.GetString("HowToParticipateLi1", resourceCulture);
+            }
+        }
+        
+        internal static string HowToParticipateLi2 {
+            get {
+                return ResourceManager.GetString("HowToParticipateLi2", resourceCulture);
+            }
+        }
+        
+        internal static string HowToParticipateLi3 {
+            get {
+                return ResourceManager.GetString("HowToParticipateLi3", resourceCulture);
+            }
+        }
+        
+        internal static string ParticipantSelection {
+            get {
+                return ResourceManager.GetString("ParticipantSelection", resourceCulture);
+            }
+        }
+        
+        internal static string ParticipantSelectionDesc {
+            get {
+                return ResourceManager.GetString("ParticipantSelectionDesc", resourceCulture);
+            }
+        }
     }
 }

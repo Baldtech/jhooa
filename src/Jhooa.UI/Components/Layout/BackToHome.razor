@@ -1,0 +1,20 @@
+@using Jhooa.UI.Resources
+@using Microsoft.Extensions.Localization
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Shared> Loc
+
+
+<p href="@NavigationManager.BaseUri" class="text-sm hover:underline inline-block cursor-pointer" @onclick="GoToHome">
+    <img src="images/chevron-left.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToHome"]
+</p>
+
+@code {
+    private void GoToHome()
+    {
+        NavigationManager.NavigateTo("/", new NavigationOptions
+        {
+            ForceLoad = true
+        });
+    }
+}

@@ -5,15 +5,14 @@
 @implements IDisposable
 
 @inject IStringLocalizer<Shared> Loc
+@inject IStringLocalizer<Jhooa.UI.Features.Events.Resources.Events> LocEvent
+
 @inject NavigationManager NavigationManager
-@rendermode InteractiveServer
 
 <header class="w-full bg-jhooa-admin-100">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
         <div class="flex items-center space-x-2">
-            <p href="@NavigationManager.BaseUri" class="text-sm hover:underline inline-block cursor-pointer" @onclick="GoToHome">
-                <img src="images/chevron-left.svg" alt="back" class="h-5 w-5 inline mr-2"/> @Loc["BackToHome"]
-            </p>
+            <BackToHome/>
         </div>
 
         <!-- Center Section: Logo -->
@@ -55,6 +54,7 @@
         <a
             href="/Admin"
             class="
+cursor-pointer
         px-6 py-2 
         text-white 
         @(_currentRoot.EndsWith("Admin") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
@@ -68,6 +68,7 @@
         <a
             href="/Admin/Users"
             class="
+cursor-pointer
         px-6 py-2
         text-white 
         @(_currentRoot.StartsWith("Admin/Users") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
@@ -79,6 +80,7 @@
         <a
             href="/Admin/Companies"
             class="
+cursor-pointer
         px-6 py-2
         text-white 
         @(_currentRoot.StartsWith("Admin/Companies") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
@@ -109,7 +111,7 @@
         border-t border-b border-r border-white
       "
         >
-            @Loc["Events"]
+            @LocEvent["EventsList"]
         </a>
 
         <a

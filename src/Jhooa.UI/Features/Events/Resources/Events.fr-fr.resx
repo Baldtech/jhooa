@@ -110,4 +110,34 @@
     <data name="UpdatePictures" xml:space="preserve">
         <value>M-à-j photos</value>
     </data>
+    <data name="AccessToEvents" xml:space="preserve">
+        <value>Accès aux événements</value>
+    </data>
+    <data name="AccessToEventsDesc" xml:space="preserve">
+        <value>En tant qu'abonné(e), vous avez accès aux événements proposés chaque mois, sans frais supplémentaires. Profitez-en, c'est inclus dans votre abonnement !
+</value>
+    </data>
+    <data name="HowToParticipate" xml:space="preserve">
+        <value>Comment participer ?
+</value>
+    </data>
+    <data name="HowToParticipateLi1" xml:space="preserve">
+        <value>Chaque mois, un événement est proposé. Vous pouvez manifester votre intérêt &lt;strong&gt;durant le mois de sa publication&lt;/strong&gt;, quelle que soit sa date de réalisation.
+</value>
+    </data>
+    <data name="HowToParticipateLi2" xml:space="preserve">
+        <value>Par exemple, si un événement est annoncé en &lt;strong&gt;mars&lt;/strong&gt;, vous pouvez vous inscrire, via votre compte, &lt;strong&gt;jusqu'au 31 mars&lt;/strong&gt;, même s'il a lieu plus tard, comme en avril.
+</value>
+    </data>
+    <data name="HowToParticipateLi3" xml:space="preserve">
+        <value>Vous pouvez vous inscrire aux événements proposés pendant la période de validité de votre abonnement. Par exemple, avec un abonnement actif du &lt;strong&gt;3 avril au 3 mai&lt;/strong&gt;, vous pourrez vous inscrire aux événements publiés en &lt;strong&gt;avril et mai&lt;/strong&gt;.
+</value>
+    </data>
+    <data name="ParticipantSelection" xml:space="preserve">
+        <value>Sélection des participants
+</value>
+    </data>
+    <data name="ParticipantSelectionDesc" xml:space="preserve">
+        <value>Les participants sont sélectionnés le 15 du mois suivant la publication de l’événement.</value>
+    </data>
 </root>

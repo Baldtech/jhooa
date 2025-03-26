@@ -2,13 +2,23 @@
 @inject IStringLocalizer<Resources.Events> Loc
 
 <section class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-4 px-8">
-    <div>
+    <div class="flex items-center">
         <img src="images/events-register.png" alt="" class="m-auto object-cover" />
     </div>
-    <div class="md:py-12 col-span-3">
+    <div class=" col-span-3">
         <div class="px-6 md:px-20 py-8 bg-jhooa-beige-100">
-            <h2 class="text-jhooa-brick-500 text-3xl mb-8 font-monetaBold">@Loc["HowToRegisterTitle"]</h2>
-            <p class="text-white font-amsiProLight">@Loc["HowToRegisterDesc"]</p>
+            <h2 class="text-jhooa-brick-500 text-3xl mb-4 font-monetaBold">@Loc["AccessToEvents"]</h2>
+            <p class="text-white font-amsiProLight mb-6">@Loc["AccessToEventsDesc"]</p>
+            <h2 class="text-jhooa-brick-500 text-3xl mb-4 font-monetaBold">@Loc["HowToParticipate"]</h2>
+            <ul class="text-white font-amsiProLight space-y-1  list-disc mb-6 list-outside ml-4">
+                <li>@((MarkupString)Loc["HowToParticipateLi1"].ToString())</li>
+                <li>@((MarkupString)Loc["HowToParticipateLi2"].ToString())</li>
+                <li>@((MarkupString)Loc["HowToParticipateLi3"].ToString())</li>
+            </ul>
+            <h2 class="text-jhooa-brick-500 text-3xl mb-4 font-monetaBold">@Loc["ParticipantSelection"]</h2>
+            <p class="text-white font-amsiProLight">@Loc["ParticipantSelectionDesc"]</p>
+
+            @* <p class="text-white font-amsiProLight">@Loc["HowToRegisterDesc"]</p> *@
         </div>
     </div>
     
