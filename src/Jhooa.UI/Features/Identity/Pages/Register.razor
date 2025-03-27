@@ -11,6 +11,7 @@
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Identity.Components
+@using Microsoft.Extensions.Options
 
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 @inject IStringLocalizer<Resources.Identity> Loc
@@ -21,6 +22,7 @@
 @inject NavigationManager NavigationManager
 @inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
+@inject IOptions<FeatureFlags> FeatureFlagsConfig
 
 <PageTitle>@LocShared["TitleRegister"]</PageTitle>
 
@@ -199,19 +201,23 @@
                                 </label>
                             </div>
                         </div>
-                        <div
-                            class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-beige-100 border-2 border-white px-6 py-3 mb-3">
-                            <InputRadio id="option5"
-                                        class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
-                                        Value="SubscriptionType.None"/>
+                        @if (FeatureFlagsConfig.Value.Companies)
+                        {
+                            <div
+                                class="inline-flex items-center space-x-3 w-full rounded-full bg-jhooa-beige-100 border-2 border-white px-6 py-3 mb-3">
+                                <InputRadio id="option5"
+                                            class="h-5 w-5 rounded-full text-jhooa-brick-500 bg-transparent border-white border-3 focus:ring-0  mr-2"
+                                            Value="SubscriptionType.None"/>
 
-                            <div class="flex flex-row w-full">
-                                <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
-                                    @Loc["Code"]
-                                </label>
-                                <InputText @bind-value="Input.Code" class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 focus:outline-none active:outline-none" />
+                                <div class="flex flex-row w-full">
+                                    <label class="basis-[70%] text-white md:text-lg font-monetaRegular">
+                                        @Loc["Code"]
+                                    </label>
+                                    <InputText @bind-value="Input.Code" class="w-full border-2 border-white bg-transparent text-white placeholder-gray-300 px-3 focus:outline-none active:outline-none" />
+                                </div>
                             </div>
-                        </div>
+                        }
+                        
                     </InputRadioGroup>
 
                     <div class="flex flex-wrap space-x-2 my-8 text-sm">

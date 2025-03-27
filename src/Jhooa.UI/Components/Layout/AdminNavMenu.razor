@@ -1,6 +1,8 @@
+@using Jhooa.UI.Configuration
 @using Jhooa.UI.Resources
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Localization.Components
+@using Microsoft.Extensions.Options
 
 @implements IDisposable
 
@@ -8,6 +10,7 @@
 @inject IStringLocalizer<Jhooa.UI.Features.Events.Resources.Events> LocEvent
 
 @inject NavigationManager NavigationManager
+@inject IOptions<FeatureFlags> FeatureFlagsConfig
 
 <header class="w-full bg-jhooa-admin-100">
     <div class="max-w-screen-xl mx-auto px-4 py-2 flex items-center text-white">
@@ -64,7 +67,21 @@ cursor-pointer
         >
             @Loc["Dashboard"]
         </a>
-
+        @if (FeatureFlagsConfig.Value.Companies)
+        {
+            <a
+                href="/Admin/Companies"
+                class="
+                    cursor-pointer
+                    px-6 py-2
+                    text-white 
+                    @(_currentRoot.StartsWith("Admin/Companies") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
+                    border-t border-b border-r border-white
+                  "
+            >
+                @Loc["Companies"]
+            </a>
+        }
         <a
             href="/Admin/Users"
             class="
@@ -77,18 +94,7 @@ cursor-pointer
         >
             @Loc["Users"]
         </a>
-        <a
-            href="/Admin/Companies"
-            class="
-cursor-pointer
-        px-6 py-2
-        text-white 
-        @(_currentRoot.StartsWith("Admin/Companies") ? "bg-[#3DA2AA]" : "bg-[#004F53]")
-        border-t border-b border-r border-white
-      "
-        >
-            @Loc["Companies"]
-        </a>
+
 
         <a
             href="/Admin/Dreams"
@@ -177,7 +183,7 @@ cursor-pointer
     {
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
-    
+
     private void GoToHome()
     {
         NavigationManager.NavigateTo("/", new NavigationOptions

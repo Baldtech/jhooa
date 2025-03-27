@@ -18,7 +18,14 @@ public static partial class DependencyInjection
         services.AddScoped<IDreamService, DreamService>();
         services.AddScoped<ICodeGeneratorService, CodeGeneratorService>();
         services.AddScoped<RedirectManager>();
+        services.AddFeatureFlags(config);
 
         return services;
+    }
+    
+    private static void AddFeatureFlags(this IServiceCollection services, IConfiguration config)
+    {
+        services.Configure<FeatureFlags>(
+            config.GetSection(FeatureFlags.SectionName));
     }
 }
