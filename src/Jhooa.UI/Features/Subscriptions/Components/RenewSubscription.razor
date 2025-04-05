@@ -19,7 +19,7 @@
 @inject IOptions<FeatureFlags> FeatureFlagsConfig
 
 <p class="text-center mb-4 text-red-400">@Loc["NoActiveSubscription"]</p>
-<div class="w-[50%] mx-auto">
+<div class="w-full md:w-[50%] px-4 md:mx-auto">
     <EditForm Model="SubscribeModelInput" method="post" OnValidSubmit="Subscribe" FormName="renew"
               class="space-y-6">
         <DataAnnotationsValidator/>
