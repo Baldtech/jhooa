@@ -45,6 +45,7 @@
                         {
                             @($"{Loc["ActiveSubscription"]} {_userView.SubscriptionStartDate} ({Loc["AutoRenewMonthly"]})")
                         }
+
                         break;
                     case SubscriptionType.YearlyRecurring:
                         @if (_userView.SubscriptionEndDate is not null)
@@ -55,33 +56,27 @@
                         {
                             @($"{Loc["ActiveSubscription"]} {_userView.SubscriptionStartDate} ({Loc["AutoRenewYearly"]})")
                         }
+
                         break;
                 }
             </p>
 
-            @if (_userView.SubscriptionType is SubscriptionType.MonthlyRecurring or SubscriptionType.YearlyRecurring && _userView.SubscriptionEndDate is null && !_hideCancelForm)
+            @if (_userView.SubscriptionType is SubscriptionType.MonthlyRecurring or SubscriptionType.YearlyRecurring && _userView.SubscriptionEndDate is null)
             {
-                <EditForm EditContext="_editContext" method="post" OnValidSubmit="Cancel" FormName="cancel"
-                          class="space-y-6">
-                    <DataAnnotationsValidator/>
-                    <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
-                        <button type="submit" class="border-2 border-white p-3">@Loc["CancelRenewal"]</button>
-                    </div>
-                </EditForm>
-                
-                <p class="mt-8 text-center mb-4 px-4">
-                    <strong>@Loc["CancelSubscriptionDesc"]</strong>
-                </p>
+                <CancelSubscription
+                    StripeSubscriptionId="@_userView.StripeSubscriptionId"
+                    SubscriptionId="@_userView.SubscriptionId!.Value" SubscriptionType="@_userView.SubscriptionType"
+                    SubscriptionStartDate="@_userView.SubscriptionStartDate"/>
             }
         }
         else
         {
-            <RenewSubscription UserId="_userId" />
+            <RenewSubscription UserId="_userId"/>
         }
     }
 
     <div class="mb-10"></div>
-    
+
 </section>
 
 <script src="js/mobileMenu.js"></script>
@@ -92,22 +87,18 @@
     private Guid _userId;
     private UserView? _userView;
     private string? _message;
-    private bool _hideCancelForm;
-    
-    [SupplyParameterFromForm(FormName = "cancel")]
-    private CancelSubscriptionModel CancelSubscriptionInput { get; set; } = new();
-    private EditContext? _editContext;
-    
+
     [SupplyParameterFromQuery(Name = "session-id")]
     public string? CheckoutSessionId { get; set; }
+
     [SupplyParameterFromQuery(Name = "renewCode")]
     public string? RenewCode { get; set; }
     
-
+    [SupplyParameterFromQuery(Name = "canceled")]
+    public string? Canceled { get; set; }
+    
     protected override async Task OnInitializedAsync()
     {
-        _editContext = new EditContext(CancelSubscriptionInput);
-        
         var authState = await AuthStateProvider.GetAuthenticationStateAsync();
 
         if (authState.User.Identity?.IsAuthenticated != true) return;
@@ -143,46 +134,10 @@
         {
             _message = Loc["SubscriptionRenewed"];
         }
-    }
-
-    public async Task Cancel()
-    {
-        if (_userView?.StripeSubscriptionId is null) return;
-
-        await StripeService.CancelSubscription(_userView.StripeSubscriptionId);
-
-        switch (_userView.SubscriptionType)
-        {
-            case SubscriptionType.MonthlyRecurring:
-            {
-                var nextMonth = DateTime.Now.AddMonths(1);
-                var endDate = new DateTime(nextMonth.Year, nextMonth.Month, _userView.SubscriptionStartDate!.Value.Day);
-
-                await DbContext.Subscriptions.Where(u => u.Id == _userView.SubscriptionId)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(b => b.End, DateOnly.FromDateTime(endDate)));
-                break;
-            }
-            case SubscriptionType.YearlyRecurring:
-            {
-                var nextYear = DateTime.Now.AddYears(1);
-                var endDate = new DateTime(nextYear.Year, nextYear.Month,  _userView.SubscriptionStartDate!.Value.Day);
-
-                await DbContext.Subscriptions.Where(u => u.Id == _userView.SubscriptionId)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(b => b.End, DateOnly.FromDateTime(endDate)));
-                break;
-            }
-        }
-        await DbContext.SaveChangesAsync();
         
-        _message = Loc["SubscriptionCancelled"];
-        _hideCancelForm = true;
-        _userView = await DbContext.UsersView.FirstAsync(uv => uv.Id == _userId);
+        if (Canceled is not null)
+        {
+            _message = Loc["SubscriptionCancelled"];
+        }
     }
-    
-    private sealed class CancelSubscriptionModel
-    {
-    }
-
 }

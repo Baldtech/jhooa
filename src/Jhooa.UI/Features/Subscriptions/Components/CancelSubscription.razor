@@ -1,0 +1,71 @@
+@using Jhooa.UI.Features.Identity
+@using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Services
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resources.Subscriptions> Loc
+@inject IStripeService StripeService
+@inject ApplicationDbContext DbContext
+@inject IdentityRedirectManager RedirectManager
+
+@rendermode InteractiveServer
+
+<EditForm Model="_model" method="post" OnValidSubmit="Cancel" FormName="cancel"
+          class="space-y-6">
+    <DataAnnotationsValidator/>
+    <div class="flex flex-col space-y-4 items-center mb-10 mt-4">
+        <button type="submit" class="border-2 border-white p-3">@Loc["CancelRenewal"]</button>
+    </div>
+</EditForm>
+
+<p class="mt-8 text-center mb-4 px-4">
+    <strong>@Loc["CancelSubscriptionDesc"]</strong>
+</p>
+
+@code {
+    
+    private CancelSubscriptionModel _model = new();
+    
+    [Parameter] public required string StripeSubscriptionId { get; set; }
+    [Parameter] public Guid SubscriptionId { get; set; }
+    [Parameter] public SubscriptionType? SubscriptionType { get; set; }
+    [Parameter] public DateOnly? SubscriptionStartDate { get; set; }
+    
+    public async Task Cancel()
+    {
+        await StripeService.CancelSubscription(StripeSubscriptionId);
+
+        if (SubscriptionType is null) return;
+        
+        switch (SubscriptionType)
+        {
+            case Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.MonthlyRecurring:
+            {
+                var nextMonth = DateTime.Now.AddMonths(1);
+                var endDate = new DateTime(nextMonth.Year, nextMonth.Month, SubscriptionStartDate!.Value.Day);
+        
+                await DbContext.Subscriptions.Where(u => u.Id == SubscriptionId)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.End, DateOnly.FromDateTime(endDate)));
+                break;
+            }
+            case Jhooa.UI.Features.Subscriptions.Models.SubscriptionType.YearlyRecurring:
+            {
+                var nextYear = DateTime.Now.AddYears(1);
+                var endDate = new DateTime(nextYear.Year, nextYear.Month,  SubscriptionStartDate!.Value.Day);
+        
+                await DbContext.Subscriptions.Where(u => u.Id == SubscriptionId)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(b => b.End, DateOnly.FromDateTime(endDate)));
+                break;
+            }
+        }
+        await DbContext.SaveChangesAsync();
+        
+        RedirectManager.RedirectTo("/Account/Manage/Subscription?canceled=true");
+    }
+    
+    class CancelSubscriptionModel
+    {
+    }
+}
