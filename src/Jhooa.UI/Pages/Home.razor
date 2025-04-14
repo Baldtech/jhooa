@@ -54,17 +54,20 @@
             var sub = await DbContext.Subscriptions
                 .FirstOrDefaultAsync(s => s.StripeSessionCheckoutId == CheckoutSessionId);
 
-            if (sub is not null)
+            if (sub is not null && !sub.IsPaid)
             {
                 var user = await DbContext.Users.FirstAsync(user => user.Id == sub.UserId);
-                await DbContext.Dreams.Where(d => d.UserId == user.Id)
-                    .ExecuteDeleteAsync();
-                await DbContext.Subscriptions.Where(s => s.UserId == user.Id)
-                    .ExecuteDeleteAsync();
-                await DbContext.Users.Where(u => u.Id == user.Id)
-                    .ExecuteDeleteAsync();
+                if (user.ActivatedAt is null)
+                {
+                    await DbContext.Dreams.Where(d => d.UserId == user.Id)
+                        .ExecuteDeleteAsync();
+                    await DbContext.Subscriptions.Where(s => s.UserId == user.Id)
+                        .ExecuteDeleteAsync();
+                    await DbContext.Users.Where(u => u.Id == user.Id)
+                        .ExecuteDeleteAsync();
 
-                await DbContext.SaveChangesAsync();
+                    await DbContext.SaveChangesAsync();
+                }
             }
         }
     }
