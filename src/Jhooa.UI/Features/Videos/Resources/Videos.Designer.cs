@@ -266,5 +266,35 @@ namespace Jhooa.UI.Features.Videos.Resources {
                 return ResourceManager.GetString("NotSubscribedVideoAvailable", resourceCulture);
             }
         }
+        
+        internal static string NotConnectedVideosPageText1 {
+            get {
+                return ResourceManager.GetString("NotConnectedVideosPageText1", resourceCulture);
+            }
+        }
+        
+        internal static string NotConnectedVideosPageText2 {
+            get {
+                return ResourceManager.GetString("NotConnectedVideosPageText2", resourceCulture);
+            }
+        }
+        
+        internal static string NotConnectedVideosPageText3 {
+            get {
+                return ResourceManager.GetString("NotConnectedVideosPageText3", resourceCulture);
+            }
+        }
+        
+        internal static string NotConnectedVideosPageText4 {
+            get {
+                return ResourceManager.GetString("NotConnectedVideosPageText4", resourceCulture);
+            }
+        }
+        
+        internal static string NotConnectedVideosPageText5 {
+            get {
+                return ResourceManager.GetString("NotConnectedVideosPageText5", resourceCulture);
+            }
+        }
     }
 }

@@ -124,4 +124,19 @@ Rejoignez-nous et vivez chaque instant pleinement.</value>
     <data name="NotSubscribedVideoAvailable" xml:space="preserve">
         <value>Video public disponible</value>
     </data>
+    <data name="NotConnectedVideosPageText1" xml:space="preserve">
+        <value>Sur Jhooa, chaque vidéo capture un moment de rêve, d’émotion ou de joie partagée.</value>
+    </data>
+    <data name="NotConnectedVideosPageText2" xml:space="preserve">
+        <value>Les extraits que vous voyez ne sont qu’un avant-goût…</value>
+    </data>
+    <data name="NotConnectedVideosPageText3" xml:space="preserve">
+        <value>Pour vivre l’expérience en entier, connectez-vous à votre compte ou créez-en un en quelques clics.</value>
+    </data>
+    <data name="NotConnectedVideosPageText4" xml:space="preserve">
+        <value>L’accès complet est réservé à nos abonnés — la communauté Jhooa.</value>
+    </data>
+    <data name="NotConnectedVideosPageText5" xml:space="preserve">
+        <value>Rejoignez-nous et vivez chaque instant pleinement.</value>
+    </data>
 </root>
