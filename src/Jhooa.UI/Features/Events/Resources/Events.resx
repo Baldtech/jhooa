@@ -151,4 +151,7 @@
     <data name="ParticipantSelectionDesc" xml:space="preserve">
         <value>Participants are selected on the 15th of the month following publication of the event.</value>
     </data>
+    <data name="IsPublished" xml:space="preserve">
+        <value>Published</value>
+    </data>
 </root>

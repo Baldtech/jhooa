@@ -90,6 +90,16 @@
 
                     <InputFile OnChange="HandleFileSelected" accept=".jpg,.png,jpeg"/>
                     <InputText @bind-Value="Input.ImageName" hidden></InputText>
+
+                    <label class="flex items-center space-x-2 cursor-pointer">
+
+                        <InputCheckbox @bind-Value="Input.IsPublished"
+                                       type="checkbox"
+                                       class="h-5 w-5 border border-white rounded-sm bg-transparent checked:bg-transparent focus:border-0 active:border-0
+                  "
+                        />
+                        <span>@Loc["IsPublished"]</span>
+                    </label>
                 </div>
                 <button type="submit"
                         class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@Loc["Save"]</button>
@@ -169,6 +179,7 @@
                     StartDate = ev.StartDate,
                     EndDate = ev.EndDate,
                     TitleEn = ev.TitleEn,
+                    IsPublished = ev.IsPublished
                 };
 
                 _bodyFr = ev.Description;
@@ -207,6 +218,7 @@
                         .SetProperty(b => b.Description, contentFr!)
                         .SetProperty(b => b.DescriptionEn, contentEn!)
                         .SetProperty(b => b.StartDate, Input.StartDate)
+                        .SetProperty(b => b.IsPublished, Input.IsPublished)
                         .SetProperty(b => b.EndDate, Input.EndDate));
             }
             else
@@ -219,7 +231,8 @@
                     EndDate = Input.EndDate,
                     TitleEn = Input.TitleEn,
                     DescriptionEn = contentEn,
-                    ImageUrl = Input.ImageName
+                    ImageUrl = Input.ImageName,
+                    IsPublished = Input.IsPublished
                 };
 
                 await DbContext.Events.AddAsync(newEvent);
@@ -249,6 +262,7 @@
         public DateTimeOffset EndDate { get; set; }
 
         public string? ImageName { get; set; }
+        public bool IsPublished { get; set; }
     }
 
 }

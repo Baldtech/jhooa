@@ -3,6 +3,7 @@
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Resources.Events> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
@@ -16,6 +17,7 @@
             <th>@Loc["StartDate"]</th>
             <th>@Loc["EndDate"]</th>
             <th>@Loc["Participants"]</th>
+            <th>@Loc["IsPublished"]</th>
             <th>@Loc["Actions"]</th>
         </tr>
     </ChildContentHeader>
@@ -25,6 +27,7 @@
             <td>@ev.StartDate.ToString("d")</td>
             <td>@ev.EndDate.ToString("d")</td>
             <td><a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id/participants">@ev.Registrations.Count</a></td>
+            <td>@(ev.IsPublished ? LocShared["Yes"] : LocShared["No"] )</td>
             <td>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id">@Loc["Edit"]</a>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Event/@ev.Id/pictures">@Loc["UpdatePictures"]</a>

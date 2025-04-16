@@ -308,5 +308,11 @@ namespace Jhooa.UI.Features.Events.Resources {
                 return ResourceManager.GetString("ParticipantSelectionDesc", resourceCulture);
             }
         }
+        
+        internal static string IsPublished {
+            get {
+                return ResourceManager.GetString("IsPublished", resourceCulture);
+            }
+        }
     }
 }

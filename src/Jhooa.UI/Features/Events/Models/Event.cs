@@ -15,6 +15,8 @@ public class Event
     public DateTimeOffset StartDate { get; init; }
     public DateTimeOffset EndDate { get; init; }
     
+    public bool IsPublished {get; init; }
+    
     public List<Registration> Registrations { get; init; } = [];
     
     public bool IsPast => DateTimeOffset.UtcNow > StartDate;
