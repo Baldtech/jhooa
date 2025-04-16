@@ -33,7 +33,7 @@
                 <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
                               SelectYearCallback="HandleYearSelection"/>
 
-                <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"/>
+                <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" Subscribed="true"/>
             }
             else
             {
@@ -45,12 +45,17 @@
         <NotAuthorized>
             <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
 
-            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosOnlyForConnectedUsersDesc"]</p>
+            <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@((MarkupString)Loc["VideosOnlyForConnectedUsersDesc"].ToString())</p>
 
-            <ul class="space-y-1  list-disc mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider list-outside ml-4">
+            <ul class="space-y-1 list-disc mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider list-outside ml-4">
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersAlreadyUsers"].ToString())</li>
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersRegister"].ToString())</li>
             </ul>
+
+            <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
+                          SelectYearCallback="HandleYearSelection"/>
+
+            <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" Subscribed="false" />
         </NotAuthorized>
     </AuthorizeView>
 </section>

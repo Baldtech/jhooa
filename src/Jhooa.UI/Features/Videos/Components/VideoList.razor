@@ -18,7 +18,7 @@ else
             <div  class="relative group">
                 <div class="aspect-video">
                     <iframe
-                        src="https://player.vimeo.com/video/@video.VideoUrl?h=83052c626c&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                        src="https://player.vimeo.com/video/@(video.Key)?h=@(video.Value)&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
                         frameborder="0"
                         allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                         class="w-full h-full rounded-md"
@@ -35,12 +35,13 @@ else
     [Parameter] public Guid? SelectedTheme { get; set; }
     [Parameter] public int? SelectedYear { get; set; }
     [Parameter] public int? SelectedMonth { get; set; }
+    [Parameter] public bool Subscribed { get; set; }
 
-    private List<Video> _videos = [];
+    private Dictionary<string, string> _videos = [];
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        _videos = await DbContext.Videos.ToListAsync();
+        _videos = [];
     }
 
     protected override async Task OnParametersSetAsync()
@@ -62,7 +63,10 @@ else
             query = query.Where(v => v.Date.Month == SelectedMonth);
         }
 
-        _videos = await query.ToListAsync();
+        _videos =
+            Subscribed
+                ? await query.ToDictionaryAsync(item => item.SubscribedVimeoId, item => item.SubscribedVimeoHash)
+                : await query.ToDictionaryAsync(item => item.NotSubscribedVimeoId, item => item.NotSubscribedVimeoHash);
     }
 
 }

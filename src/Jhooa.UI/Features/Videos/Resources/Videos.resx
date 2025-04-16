@@ -88,11 +88,14 @@
         <value>Required</value>
     </data>
     <data name="VideosOnlyForConnectedUsersTitle" xml:space="preserve">
-        <value>Exclusive Content for Paid Members</value>
+        <value>Welcome to the world of Jhooa</value>
     </data>
     <data name="VideosOnlyForConnectedUsersDesc" xml:space="preserve">
-        <value>This page is reserved for our premium members. To access these exclusive videos, please log in to your account or create one today.
-</value>
+        <value>On Jhooa, every video captures a moment of dreams, emotion, or shared joy.&lt;br /&gt;
+The clips you see are just a glimpse…&lt;br /&gt;
+To experience it fully, log in to your account or create one in just a few clicks.&lt;br /&gt;
+Full access is reserved for our subscribers — the Jhooa community.&lt;br /&gt;
+Join us and live every moment to the fullest.</value>
     </data>
     <data name="VideosOnlyForConnectedUsersThanks" xml:space="preserve">
         <value>Thank you for your support!</value>
@@ -121,5 +124,17 @@
     <data name="VideosOnlyForConnectedUsersDescNoSub" xml:space="preserve">
         <value>This page is reserved for our premium members. To access these exclusive videos, please re-activate your subscription.
 </value>
+    </data>
+    <data name="VideoForSubscribedUsers" xml:space="preserve">
+        <value>Video for subscribed users</value>
+    </data>
+    <data name="VideoForNotSubscribedUsers" xml:space="preserve">
+        <value>Video for unsubscred users</value>
+    </data>
+    <data name="VideoAlreadyExists" xml:space="preserve">
+        <value>This video already exists</value>
+    </data>
+    <data name="NotSubscribedVideoAvailable" xml:space="preserve">
+        <value>Public video available</value>
     </data>
 </root>

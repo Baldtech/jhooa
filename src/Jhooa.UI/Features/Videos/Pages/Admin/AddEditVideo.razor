@@ -4,6 +4,7 @@
 @rendermode InteractiveServer
 
 @using System.ComponentModel.DataAnnotations
+@using System.Text.RegularExpressions
 @using Jhooa.UI.Components.Layout
 @using Jhooa.UI.Features.Videos.Models
 @using Microsoft.AspNetCore.Authorization
@@ -11,6 +12,7 @@
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Resources.Videos> Loc
+@inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 @inject ApplicationDbContext DbContext
 @inject NavigationManager NavigationManager
 
@@ -18,6 +20,14 @@
 
 <section class="max-w-screen-xl mx-auto w-full">
     <div>
+        @if (Message is not null)
+        {
+            <div class="mb-10 max-w-screen-sm mx-auto text-center text-sm tracking-wide font-amsiProRegular">
+                <div class="alert alert-danger mb-4" role="alert">@((MarkupString)Message)
+                </div>
+            </div>
+        }
+
         @if (Id.HasValue)
         {
             <h1 class="mb-8 text-4xl tracking-wider">@Loc["EditVideo"]</h1>
@@ -31,36 +41,89 @@
             <EditForm Model="Input" method="post" OnValidSubmit="OnValidSubmitAsync" FormName="formVideo"
                       class="space-y-6">
                 <DataAnnotationsValidator/>
-                <ValidationSummary/>
                 @if (Id.HasValue)
                 {
                     <InputText @bind-Value="Input.VideoId" hidden></InputText>
                 }
                 <div class="bg-[#FFFFFF1A] rounded-md px-4 py-6 space-y-6 mb-6">
 
-                    <JhooaInputText @bind-Value="Input.VimeoId" DisplayName="@Loc["VideoId"]"
-                                    ValidationFor="@(() => Input.VimeoId)"/>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <h2 class="block mb-2 text-sm">@Loc["VideoForSubscribedUsers"]</h2>
+                            <div>
+                                <textarea @bind="_longVideoEmbed" @bind:event="onchange" @bind:after="PerformParsing"
+                                          class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none"></textarea>
+
+                            </div>
+                            <InputText @bind-Value="Input.SubscribedVimeoId" hidden></InputText>
+                            <InputText @bind-Value="Input.SubscribedVimeoHash" hidden></InputText>
+                            <ValidationMessage For="@(() => Input.SubscribedVimeoId)" class="text-danger"/>
+
+                            @if (!string.IsNullOrWhiteSpace(Input.SubscribedVimeoId))
+                            {
+                                <div class="relative group">
+                                    <div class="aspect-video">
+                                        <iframe
+                                            src="https://player.vimeo.com/video/@(Input.SubscribedVimeoId)?h=@(Input.SubscribedVimeoHash)&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                            frameborder="0"
+                                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                            class="w-full h-full rounded-md"
+                                            title=""></iframe>
+                                    </div>
+                                </div>
+                                
+                                <a @onclick="RemoveSubscribed" class="mr-1 text-jhooa-peach-100 cursor-pointer">
+                                    @LocShared["Delete"]
+                                </a>
+                            }
+                        </div>
+                        <div>
+                            <h2 class="block mb-2 text-sm">@Loc["VideoForSubscribedUsers"]</h2>
+                            <div>
+                                <textarea @bind="_shortVideoEmbed" @bind:event="onchange"
+                                          @bind:after="PerformNotSubscribedParsing"
+                                          class="w-full border border-white bg-transparent text-white placeholder-gray-300 px-3 py-2 focus:outline-none"></textarea>
+
+                            </div>
+                            <InputText @bind-Value="Input.NotSubscribedVimeoId" hidden></InputText>
+                            <InputText @bind-Value="Input.NotSubscribedVimeoHash" hidden></InputText>
+                            <ValidationMessage For="@(() => Input.NotSubscribedVimeoId)" class="text-danger"/>
+
+                            @if (!string.IsNullOrWhiteSpace(Input.NotSubscribedVimeoId))
+                            {
+                                <div class="relative group">
+                                    <div class="aspect-video">
+                                        <iframe
+                                            src="https://player.vimeo.com/video/@(Input.NotSubscribedVimeoId)?h=@(Input.NotSubscribedVimeoHash)&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                                            frameborder="0"
+                                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                                            class="w-full h-full rounded-md"
+                                            title=""></iframe>
+                                    </div>
+                                </div>
+
+                                <a @onclick="RemoveNotSubscribed" class="mr-1 text-jhooa-peach-100 cursor-pointer">
+                                    @LocShared["Delete"]
+                                </a>
+                            }
+                        </div>
+                    </div>
+
                     <JhooaInputDate @bind-Value="Input.Date" DisplayName="@Loc["Date"]"
                                     ValidationFor="@(() => Input.Date)"/>
 
                     <div class="flex space-x-8 text-white">
-                    @foreach (var theme in Input.Themes)
-                    {
-                        <label class="flex items-center space-x-2 cursor-pointer">
+                        @foreach (var theme in Input.Themes)
+                        {
+                            <label class="flex items-center space-x-2 cursor-pointer">
 
-                            <InputCheckbox @bind-Value="theme.IsSelected" 
-                                           type="checkbox" 
-                                           class="h-5 w-5 border border-white rounded-sm bg-transparent checked:bg-transparent focus:border-0 active:border-0
-                  "
-                            />
-                            <span>@theme.Name</span>
-                        </label>
-                        
-@*                         <InputCheckbox @bind-Value="theme.IsSelected" class="appearance-none h-5 w-5 border border-white rounded-sm  *@
-@*                    checked:bg-white checked:border-white focus:outline-none *@
-@*                    transition duration-150 ease-in-out"/> *@
-@*                         <label>@theme.Name</label> *@
-                    }
+                                <InputCheckbox @bind-Value="theme.IsSelected"
+                                               type="checkbox"
+                                               class="h-5 w-5 border border-white rounded-sm bg-transparent checked:bg-transparent focus:border-0 active:border-0
+                  "/>
+                                <span>@theme.Name</span>
+                            </label>
+                        }
                     </div>
 
                 </div>
@@ -69,8 +132,7 @@
                         class="px-8 py-3 text-sm bg-teal-500 rounded-3xl font-amsiProLight">@Loc["Save"]</button>
                 <JhooaAdminActionButton
                     Url="/Admin/Videos"
-                    Text="@Loc["Cancel"]"
-                />
+                    Text="@Loc["Cancel"]"/>
 
             </EditForm>
         }
@@ -86,6 +148,64 @@
 
     private List<VideoTheme> _themes = [];
     private Video? _video;
+
+    private string? _longVideoEmbed;
+    private string? _shortVideoEmbed;
+
+    private string? Message { get; set; }
+
+
+    private void PerformParsing()
+    {
+        if (string.IsNullOrWhiteSpace(_longVideoEmbed) || Input is null) return;
+
+        var match = Regex.Match(_longVideoEmbed, @"vimeo\.com/(?<id>\d+)/(?<hash>[a-zA-Z0-9]+)");
+
+        if (match.Success)
+        {
+            Input.SubscribedVimeoId = match.Groups["id"].Value;
+            Input.SubscribedVimeoHash = match.Groups["hash"].Value;
+        }
+        else
+        {
+            Input.SubscribedVimeoId = "";
+            Input.SubscribedVimeoHash = "";
+        }
+    }
+
+    private void PerformNotSubscribedParsing()
+    {
+        if (string.IsNullOrWhiteSpace(_shortVideoEmbed) || Input is null) return;
+
+        var match = Regex.Match(_shortVideoEmbed, @"vimeo\.com/(?<id>\d+)/(?<hash>[a-zA-Z0-9]+)");
+
+        if (match.Success)
+        {
+            Input.NotSubscribedVimeoId = match.Groups["id"].Value;
+            Input.NotSubscribedVimeoHash = match.Groups["hash"].Value;
+        }
+        else
+        {
+            Input.NotSubscribedVimeoId = "";
+            Input.NotSubscribedVimeoHash = "";
+        }
+    }
+
+    private void RemoveNotSubscribed()
+    {
+        if (Input is null) return;
+
+        Input.NotSubscribedVimeoId = "";
+        Input.NotSubscribedVimeoHash = "";
+    }
+    
+    private void RemoveSubscribed()
+    {
+        if (Input is null) return;
+
+        Input.SubscribedVimeoId = "";
+        Input.SubscribedVimeoHash = "";
+    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -106,7 +226,10 @@
                 {
                     Date = _video.Date,
                     VideoId = _video.Id.ToString(),
-                    VimeoId = _video.VideoUrl,
+                    SubscribedVimeoId = _video.SubscribedVimeoId,
+                    SubscribedVimeoHash = _video.SubscribedVimeoHash,
+                    NotSubscribedVimeoId = _video.NotSubscribedVimeoId,
+                    NotSubscribedVimeoHash = _video.NotSubscribedVimeoHash,
                     Themes = iMThemes
                 };
 
@@ -120,7 +243,10 @@
         {
             Input ??= new InputModel()
             {
-                VimeoId = "",
+                SubscribedVimeoId = "",
+                SubscribedVimeoHash = "",
+                NotSubscribedVimeoId = "",
+                NotSubscribedVimeoHash = "",
                 Date = DateTime.Now,
                 Themes = iMThemes
             };
@@ -131,12 +257,21 @@
     {
         if (Input is not null)
         {
+            if (await DbContext.Videos.AnyAsync(v => v.Id != Input.VideoGuid && (v.SubscribedVimeoId == Input.SubscribedVimeoId || v.NotSubscribedVimeoId == Input.NotSubscribedVimeoId)))
+            {
+                Message = $"{LocShared["Error"]}: {Loc["VideoAlreadyExists"]}";
+                return;
+            }
+
             var selectedThemes = Input.Themes.Where(t => t.IsSelected).Select(t => t.Id).ToList();
             if (Input.VideoGuid.HasValue && _video is not null)
             {
                 await DbContext.Videos.Where(e => e.Id == Input.VideoGuid)
                     .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(b => b.VideoUrl, Input.VimeoId)
+                        .SetProperty(b => b.SubscribedVimeoId, Input.SubscribedVimeoId)
+                        .SetProperty(b => b.SubscribedVimeoHash, Input.SubscribedVimeoHash)
+                        .SetProperty(b => b.NotSubscribedVimeoId, Input.NotSubscribedVimeoId)
+                        .SetProperty(b => b.NotSubscribedVimeoHash, Input.NotSubscribedVimeoHash)
                         .SetProperty(b => b.Date, Input.Date));
 
                 DbContext.Videos.Attach(_video);
@@ -148,7 +283,10 @@
                 var newVideo = new Video()
                 {
                     Id = Guid.NewGuid(),
-                    VideoUrl = Input.VimeoId,
+                    SubscribedVimeoId = Input.SubscribedVimeoId,
+                    SubscribedVimeoHash = Input.SubscribedVimeoHash,
+                    NotSubscribedVimeoId = Input.NotSubscribedVimeoId,
+                    NotSubscribedVimeoHash = Input.NotSubscribedVimeoHash,
                     Date = Input.Date,
                 };
 
@@ -169,8 +307,18 @@
         public Guid? VideoGuid => VideoId is not null ? Guid.Parse(VideoId) : null;
 
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Videos))]
-        [StringLength(maximumLength: 2000, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Resources.Videos))]
-        public required string VimeoId { get; set; }
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public required string SubscribedVimeoId { get; set; }
+
+        [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Resources.Videos))]
+        [StringLength(maximumLength: 100, MinimumLength = 3, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public required string SubscribedVimeoHash { get; set; }
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public required string NotSubscribedVimeoId { get; set; }
+
+        [StringLength(maximumLength: 100, MinimumLength = 0, ErrorMessageResourceName = "FieldLength", ErrorMessageResourceType = typeof(Jhooa.UI.Resources.Shared))]
+        public required string NotSubscribedVimeoHash { get; set; }
 
         public DateTimeOffset Date { get; set; }
 
@@ -183,5 +331,6 @@
         public string? Name { get; set; }
         public bool IsSelected { get; set; }
     }
+
 
 }

@@ -26,11 +26,6 @@ jobs:
       with:
         dotnet-version: ${{ env.NETCORE_VERSION }}
 
-    - name: Setup EF Tools 
-      run: | 
-        dotnet tool install --global dotnet-ef 
-        dotnet tool restore 
-
     - name: Restore packages
       working-directory: ./src/Jhooa.UI
       run: dotnet restore
@@ -52,15 +47,3 @@ jobs:
       with:
        name: release-webapp
        path: ${{env.DOTNET_ROOT}}/publish
-
-
-    - name: Upload SQL artifact for deployment
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-sql
-        path: ${{env.DOTNET_ROOT}}/sql
-
-
-        
-    
-     
