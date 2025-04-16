@@ -65,8 +65,8 @@ else
 
         _videos =
             Subscribed
-                ? await query.ToDictionaryAsync(item => item.SubscribedVimeoId, item => item.SubscribedVimeoHash)
-                : await query.ToDictionaryAsync(item => item.NotSubscribedVimeoId, item => item.NotSubscribedVimeoHash);
+                ? await query.Where(v => !string.IsNullOrWhiteSpace(v.SubscribedVimeoId)).ToDictionaryAsync(item => item.SubscribedVimeoId, item => item.SubscribedVimeoHash)
+                : await query.Where(v => !string.IsNullOrWhiteSpace(v.NotSubscribedVimeoId)).ToDictionaryAsync(item => item.NotSubscribedVimeoId, item => item.NotSubscribedVimeoHash);
     }
 
 }
