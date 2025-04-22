@@ -1,17 +1,11 @@
 @using System.Security.Claims
-@using Jhooa.UI.Configuration
-@using Jhooa.UI.Features.Identity
 @using Jhooa.UI.Features.Subscriptions.Models
-@using Jhooa.UI.Managers
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
 @inject IStringLocalizer<Resources.Events> Loc
-@inject NavigationManager NavigationManager
 @inject ApplicationDbContext DbContext
-@inject IdentityUserAccessor UserAccessor
 @inject AuthenticationStateProvider AuthStateProvider
-@inject RedirectManager RedirectManager
 @rendermode InteractiveServer
 
 @if (!IsPast)
@@ -24,13 +18,15 @@
         case true when _isRegistered:
             <p class="text-jhooa-teal-200">@Loc["AlreadyRegistered"]</p>
             <button
-                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => UnregisterToEventAsync(EventId)">
+                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100"
+                @onclick="() => UnregisterToEventAsync(EventId)">
                 @Loc["RemoveRegistration"]
             </button>
             break;
         default:
             <button
-                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100" @onclick="() => RegisterToEventAsync(EventId)">
+                class="bg-jhooa-teal-100 text-white py-2 px-8 rounded hover:bg-jhooa-teal-100"
+                @onclick="() => RegisterToEventAsync(EventId)">
                 @Loc["Register"]
             </button>
             break;
@@ -60,12 +56,11 @@
                 UserId = _userId.Value,
             });
             await DbContext.SaveChangesAsync();
-            //RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Registered"], HttpContext);
             _isRegistered = true;
             StateHasChanged();
         }
     }
-    
+
     private async Task UnregisterToEventAsync(Guid? eventId)
     {
         if (eventId.HasValue && _userId is not null)
@@ -74,7 +69,6 @@
             await DbContext.SaveChangesAsync();
             _isRegistered = false;
             StateHasChanged();
-            //RedirectManager.RedirectToWithStatus($"/Events/{EventId}", Loc["Unregistered"], HttpContext);
         }
     }
 
@@ -86,63 +80,61 @@
         {
             _userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
-            var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
-            if (subActiveClaim is null)
+            var user = await DbContext.UsersView.FirstOrDefaultAsync(u => u.Id == _userId);
+
+            if (user is null || !user.IsSubscriptionActive)
             {
                 CanRegister = false;
                 return;
             }
 
-            var isSubActive = bool.Parse(subActiveClaim.Value);
-            if (!isSubActive)
+            if (user.SubscriptionEndDate is not null)
             {
-                CanRegister = false;
-                return;
-            }
-            
-            var subStartDateClaim = authState.User.Claims.First(c => c.Type == Constants.Claims.SubStartDate);
-            var subStartDate = DateTimeOffset.Parse(subStartDateClaim.Value);
+                var endDate = new DateTime(user.SubscriptionEndDate.Value.Year, user.SubscriptionEndDate.Value.Month, user.SubscriptionEndDate.Value.Day);
 
-            var subEndDateClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.SubEndDate);
-            if (subEndDateClaim is not null)
-            {
-                var subEndDate = DateTimeOffset.Parse(subEndDateClaim.Value);
-            
-                if (Date <= subEndDate)
+                if (Date <= endDate)
                 {
                     CanRegister = true;
                 }
+
+                CanRegister = true;
+                return;
             }
-            else
+            
+            switch (user.SubscriptionType)
             {
-                var userView = await DbContext.UsersView.FirstAsync(u => u.Id == _userId);
-                if (userView.SubscriptionType == SubscriptionType.MonthlyRecurring)
+                case SubscriptionType.MonthlyRecurring:
                 {
                     var nextMonth = DateTime.Now.AddMonths(1);
-                    var endDate = new DateTime(nextMonth.Year, nextMonth.Month, subStartDate.Day);
-                    
+                    var endDate = new DateTime(nextMonth.Year, nextMonth.Month, user.SubscriptionStartDate!.Value.Day);
+
                     if (Date <= endDate)
                     {
                         CanRegister = true;
                     }
+
+                    break;
                 }
-                else if (userView.SubscriptionType == SubscriptionType.YearlyRecurring)
+                case SubscriptionType.YearlyRecurring:
                 {
                     var nextYear = DateTime.Now.AddYears(1);
-                    var endDate = new DateTime(nextYear.Year, nextYear.Month, subStartDate.Day);
-                    
+                    var endDate = new DateTime(nextYear.Year, nextYear.Month, user.SubscriptionStartDate!.Value.Day);
+
                     if (Date <= endDate)
                     {
                         CanRegister = true;
                     }
+
+                    break;
                 }
             }
             
-            
+
             if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {
                 _isRegistered = await DbContext.Registrations.AnyAsync(r => r.UserId == _userId && r.EventId == EventId);
             }
         }
     }
+
 }
