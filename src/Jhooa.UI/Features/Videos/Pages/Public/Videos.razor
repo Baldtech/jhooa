@@ -5,10 +5,12 @@
 @using Jhooa.UI.Configuration
 @using Microsoft.Extensions.Localization
 @using Jhooa.UI.Features.Videos.Components
+@using Microsoft.EntityFrameworkCore
 
 @inject IStringLocalizer<Jhooa.UI.Resources.Shared> LocShared
 @inject IStringLocalizer<Resources.Videos> Loc
 @inject AuthenticationStateProvider AuthStateProvider
+@inject ApplicationDbContext DbContext
 
 <PageTitle>@LocShared["TitleVideos"]</PageTitle>
 
@@ -33,23 +35,24 @@
                 <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
                               SelectYearCallback="HandleYearSelection"/>
 
-                <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" Subscribed="true"/>
+                <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"
+                           Subscribed="true"/>
             }
             else
             {
                 <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
-                
+
                 <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["VideosOnlyForConnectedUsersDescNoSub"]</p>
             }
         </Authorized>
         <NotAuthorized>
             <h1 class="text-jhooa-teal-200 text-3xl mt-10 mb-4 font-monetaBold tracking-wide">@Loc["VideosOnlyForConnectedUsersTitle"]</h1>
-            
+
             <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["NotConnectedVideosPageText1"]</p>
             <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["NotConnectedVideosPageText2"]</p>
             <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["NotConnectedVideosPageText3"]</p>
             <p class="mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider">@Loc["NotConnectedVideosPageText4"]</p>
-            
+
             <ul class="space-y-1 list-disc mb-4 font-amsiProLight text-jhooa-gray-100 text-sm tracking-wider list-outside ml-4">
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersAlreadyUsers"].ToString())</li>
                 <li>@((MarkupString)Loc["VideosOnlyForConnectedUsersRegister"].ToString())</li>
@@ -60,7 +63,8 @@
             <FilterVideos SelectThemeCallback="HandleThemeSelection" SelectMonthCallback="HandleMonthSelection"
                           SelectYearCallback="HandleYearSelection"/>
 
-            <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear" Subscribed="false" />
+            <VideoList SelectedMonth="_selectedMonth" SelectedTheme="_selectedTheme" SelectedYear="_selectedYear"
+                       Subscribed="false"/>
         </NotAuthorized>
     </AuthorizeView>
 </section>
@@ -103,17 +107,18 @@
                 CanSeeVideos = true;
                 return;
             }
-            
-            var subActiveClaim = authState.User.Claims.FirstOrDefault(c => c.Type == Constants.Claims.IsSubActive);
-            if (subActiveClaim is null)
+
+            var userId = new Guid(authState.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            var user = await DbContext.UsersView.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user is null || !user.IsSubscriptionActive)
             {
                 CanSeeVideos = false;
+                return;
             }
-
-            if (subActiveClaim?.Value == "true")
-            {
-                CanSeeVideos = true;
-            }
+            
+            CanSeeVideos = true;
         }
     }
 
