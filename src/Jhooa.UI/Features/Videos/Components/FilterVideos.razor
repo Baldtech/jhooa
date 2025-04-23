@@ -1,100 +1,121 @@
+@using System.Globalization
 @using Jhooa.UI.Features.Videos.Models
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resources.Videos> Loc
 @inject ApplicationDbContext DbContext
+@inject IStringLocalizer<Resources.Videos> Loc
+@rendermode InteractiveServer
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    <!-- Theme Selection -->
     <div>
         <label for="theme" class="block text-jhooa-teal-200 mb-2">@Loc["Theme"]</label>
-        <InputSelect id="theme" @bind-Value="_selectedTheme"
-                     class="w-full border-[3px] border-jhooa-beige-100  px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
-            <option
-                @onclick="() => ApplySelectedThemeAsync(null)">@Loc["ChooseTheme"]</option>
+        <InputSelect id="theme" class="w-full border-[3px] border-jhooa-beige-100  px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100"
+                     @bind-Value="_selectedTheme">
+            <option value="">@Loc["ChooseTheme"]</option>
             @foreach (var theme in _themes)
             {
-                <option
-                    @onclick='(() => ApplySelectedThemeAsync(theme.Id))'>@(CultureInfo.CurrentCulture.Name == "en-GB" ? theme.NameEn : theme.NameFr)</option>
+                <option value="@theme.Id">@((CultureInfo.CurrentCulture.Name == "en-GB") ? theme.NameEn : theme.NameFr)</option>
             }
         </InputSelect>
-
     </div>
+
+    <!-- Month Selection -->
     <div>
         <label for="month" class="block text-jhooa-teal-200 mb-2">@Loc["Month"]</label>
-        <InputSelect id="month" @bind-Value="_selectedMonth"
-                     class="w-full border-[3px] border-jhooa-beige-100   px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
-            <option
-                @onclick="() => ApplySelectedMonthAsync(null)">@Loc["ChooseMonth"]</option>
+        <InputSelect id="month" class="w-full border-[3px] border-jhooa-beige-100  px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100"
+                     @bind-Value="_selectedMonth">
+            <option value="">@Loc["ChooseMonth"]</option>
             @foreach (var month in _months)
             {
-                <option
-                    @onclick='(() => ApplySelectedMonthAsync(month))'>@month.Name</option>
+                <option value="@month.Number.ToString()">@month.Name</option>
             }
         </InputSelect>
-
     </div>
+
+    <!-- Year Selection -->
     <div>
         <label for="year" class="block text-jhooa-teal-200 mb-2">@Loc["Years"]</label>
-        <InputSelect id="year" @bind-Value="_selectedYear"
-                     class="w-full border-[3px] border-jhooa-beige-100   px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100">
-            <option
-                @onclick="() => ApplySelectedYearAsync(null)">@Loc["ChooseYear"]</option>
+        <InputSelect id="year" class="w-full border-[3px] border-jhooa-beige-100  px-[25px] py-[10px] text-jhooa-beige-100 focus:outline-none focus:ring-0  focus:border-jhooa-beige-100"
+                     @bind-Value="_selectedYear">
+            <option value="">@Loc["ChooseYear"]</option>
             @foreach (var year in _years)
             {
-                <option
-                    @onclick='(() => ApplySelectedYearAsync(year))'>@year</option>
+                <option value="@year">@year</option>
             }
         </InputSelect>
-
     </div>
+
 </div>
 
-
-@code
-
-{
+@code {
     [Parameter] public EventCallback<Guid?> SelectThemeCallback { get; set; }
-    private Guid? _selectedTheme;
-
     [Parameter] public EventCallback<int?> SelectMonthCallback { get; set; }
-    private string? _selectedMonth;
-
     [Parameter] public EventCallback<int?> SelectYearCallback { get; set; }
-    private int? _selectedYear;
 
-    private List<VideoTheme> _themes = [];
-    private List<MonthModel> _months = [];
-    private List<int> _years = [];
+    private Guid? _selectedTheme
+    {
+        get => _theme;
+        set
+        {
+            if (_theme != value)
+            {
+                _theme = value;
+                SelectThemeCallback.InvokeAsync(value);
+            }
+        }
+    }
+
+    private string? _selectedMonth
+    {
+        get => _month;
+        set
+        {
+            if (_month != value)
+            {
+                _month = value;
+                var monthNum = _months.FirstOrDefault(m => m.Number.ToString() == value)?.Number;
+                SelectMonthCallback.InvokeAsync(monthNum);
+            }
+        }
+    }
+
+    private int? _selectedYear
+    {
+        get => _year;
+        set
+        {
+            if (_year != value)
+            {
+                _year = value;
+                SelectYearCallback.InvokeAsync(value);
+            }
+        }
+    }
+
+    private Guid? _theme;
+    private string? _month;
+    private int? _year;
+
+    private List<VideoTheme> _themes = new();
+    private List<MonthModel> _months = new();
+    private List<int> _years = new();
 
     protected override async Task OnInitializedAsync()
     {
         _themes = await DbContext.VideoThemes.Take(21).ToListAsync();
         _years = Enumerable.Range(2025, 3).ToList();
-        _months = Enumerable.Range(1, 12).Select(x => new MonthModel()
+        _months = Enumerable.Range(1, 12).Select(i => new MonthModel
         {
-            Number = x,
-            Name = new DateTime(2024, x, 1).ToString("MMMM")
+            Number = i,
+            Name = new DateTime(2024, i, 1).ToString("MMMM")
         }).ToList();
     }
 
-    private void ApplySelectedThemeAsync(Guid? themeId)
+    private sealed class MonthModel
     {
-        SelectThemeCallback.InvokeAsync(themeId);
-    }
-
-    private void ApplySelectedMonthAsync(MonthModel? month)
-    {
-        SelectMonthCallback.InvokeAsync(month?.Number);
-    }
-
-    private void ApplySelectedYearAsync(int? year)
-    {
-        SelectYearCallback.InvokeAsync(year);
-    }
-
-    sealed class MonthModel
-    {
-        public required int Number { get; init; }
-        public required string Name { get; init; }
+        public int Number { get; init; }
+        public string Name { get; init; } = string.Empty;
     }
 }
