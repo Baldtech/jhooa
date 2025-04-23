@@ -19,6 +19,10 @@ public static partial class DependencyInjection
         services.AddScoped<ICodeGeneratorService, CodeGeneratorService>();
         services.AddScoped<RedirectManager>();
         services.AddFeatureFlags(config);
+        
+        services.AddMediatR(cfg => {
+            cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+        });
 
         return services;
     }

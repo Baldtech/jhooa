@@ -1,41 +1,30 @@
 using Jhooa.UI.Features.Identity.Models;
-using Jhooa.UI.Services;
+using Jhooa.UI.Jobs;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Jhooa.UI.Features.Identity;
 
-internal sealed class IdentityEmailSender (IMailService mailService, IServiceCollection serviceCollection) : IEmailSender<ApplicationUser>
+internal sealed class IdentityEmailSender(IMediator mediator) : IEmailSender<ApplicationUser>
 {
     public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink)
     {
-        var serviceDescriptor = serviceCollection.First(descriptor => descriptor.ServiceType == typeof(IMailService));
-        
-        var templateId = serviceDescriptor.ImplementationType == typeof(SendGridMailService)
-            ? "d-e34c8749182e49bfb4c27547774adb6d"
-            : "AccountConfirmation";
-        
-        return mailService.SendWithTemplateAsync(email, templateId,
-            new
-            {
-                User_Name = user.FirstName,
-                Confirmation_Link = confirmationLink
-            }, subject: "Confirm your email");
+        mediator.Publish(new EmailNotification(email, "AccountConfirmation", new
+        {
+            User_Name = user.FirstName,
+            Confirmation_Link = confirmationLink
+        }, "Confirm your email"));
+        return Task.CompletedTask;
     }
 
     public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)
     {
-        var serviceDescriptor = serviceCollection.First(descriptor => descriptor.ServiceType == typeof(IMailService));
-        
-        var templateId = serviceDescriptor.ImplementationType == typeof(SendGridMailService)
-            ? "d-71b3a3ee1e604455ae589d58612a17a8"
-            : "ResetPassword";
-        
-        return mailService.SendWithTemplateAsync(email, templateId,
-            new
-            {
-                User_Name = user.FirstName,
-                Reset_Link = resetLink,
-            }, subject: "Reset your password");
+        mediator.Publish(new EmailNotification(email, "ResetPassword", new
+        {
+            User_Name = user.FirstName,
+            Reset_Link = resetLink,
+        }, "Reset your password"));
+        return Task.CompletedTask;
     }
 
     public Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode)

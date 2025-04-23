@@ -1,6 +1,9 @@
 ﻿@page "/Account/RegisterConfirmation"
+@using System.Text.Encodings.Web
 @using Jhooa.UI.Features.Subscriptions.Models
+@using Jhooa.UI.Jobs
 @using Jhooa.UI.Services
+@using MediatR
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
 
@@ -8,7 +11,10 @@
 @inject ApplicationDbContext DbContext
 @inject IStripeService StripeService
 @inject IStringLocalizer<Resources.Identity> Loc
+@inject IdentityRedirectManager RedirectManager
 @layout LoginLayout
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IMediator Mediator
 
 <PageTitle>@Loc["RegisterConfirmation"]</PageTitle>
 
@@ -60,6 +66,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var userState = authState.User;
+
+        if (userState.Identity?.IsAuthenticated == true)
+        {
+            RedirectManager.RedirectTo("/Account/Manage");
+        }
+        
         if (CheckoutSessionId is not null)
         {
             var sub = await DbContext.Subscriptions
@@ -121,13 +135,12 @@
                         .ExecuteUpdateAsync(setters => setters
                             .SetProperty(b => b.ActivatedAt, DateTimeOffset.Now)
                             .SetProperty(b => b.EmailConfirmed, true));
-                
-                    await MailService.SendWithTemplateAsync(user.Email!, cultureInfo: CultureInfo.CurrentCulture, 
-                        templateData: new
-                        {
-                            Title = Loc["EmailAccountConfirmationTitle"],
-                            Content = Loc["EmailAccountConfirmationContent"],
-                        }, subject: Loc["EmailAccountConfirmationSubject"]);
+                    
+                    _ = Mediator.Publish(new EmailNotificationWithCulture(user.Email!, CultureInfo.CurrentCulture, new
+                    {
+                        Title = Loc["EmailAccountConfirmationTitle"],
+                        Content = Loc["EmailAccountConfirmationContent"],
+                    }, Loc["EmailAccountConfirmationSubject"]));
                 }
                 
                 await DbContext.SaveChangesAsync();

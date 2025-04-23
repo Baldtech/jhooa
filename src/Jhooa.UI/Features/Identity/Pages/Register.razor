@@ -23,6 +23,8 @@
 @inject IStripeService StripeService
 @inject ApplicationDbContext DbContext
 @inject IOptions<FeatureFlags> FeatureFlagsConfig
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IdentityRedirectManager RedirectManager
 
 <PageTitle>@LocShared["TitleRegister"]</PageTitle>
 
@@ -272,8 +274,16 @@
     private string? Message => _identityErrors is null ? null : $"{Loc["Error"]}: {string.Join(", ", _identityErrors.Select(error => error.Description))}";
 
 #if DEBUG
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            RedirectManager.RedirectTo("/Account/Manage");
+        }
+        
         if (string.IsNullOrWhiteSpace(Input.Lastname))
         {
             Input.Firstname = Guid.NewGuid().ToString();

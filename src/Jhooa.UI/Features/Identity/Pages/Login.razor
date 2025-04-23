@@ -16,6 +16,7 @@
 @inject IdentityRedirectManager RedirectManager
 @inject UserManager<ApplicationUser> UserManager
 @inject ApplicationDbContext DbContext
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>@LocShared["TitleLogin"]</PageTitle>
 
@@ -88,6 +89,14 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            RedirectManager.RedirectTo("/Account/Manage");
+        }
+        
         if (HttpMethods.IsGet(HttpContext.Request.Method))
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
