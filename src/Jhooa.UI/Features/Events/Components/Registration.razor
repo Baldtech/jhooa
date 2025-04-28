@@ -96,39 +96,37 @@
                 {
                     CanRegister = true;
                 }
-
-                CanRegister = true;
-                return;
             }
-            
-            switch (user.SubscriptionType)
+            else
             {
-                case SubscriptionType.MonthlyRecurring:
+                switch (user.SubscriptionType)
                 {
-                    var nextMonth = DateTime.Now.AddMonths(1);
-                    var endDate = new DateTime(nextMonth.Year, nextMonth.Month, user.SubscriptionStartDate!.Value.Day);
-
-                    if (Date <= endDate)
+                    case SubscriptionType.MonthlyRecurring:
                     {
-                        CanRegister = true;
+                        var nextMonth = DateTime.Now.AddMonths(1);
+                        var endDate = new DateTime(nextMonth.Year, nextMonth.Month, user.SubscriptionStartDate!.Value.Day);
+
+                        if (Date <= endDate)
+                        {
+                            CanRegister = true;
+                        }
+
+                        break;
                     }
-
-                    break;
-                }
-                case SubscriptionType.YearlyRecurring:
-                {
-                    var nextYear = DateTime.Now.AddYears(1);
-                    var endDate = new DateTime(nextYear.Year, nextYear.Month, user.SubscriptionStartDate!.Value.Day);
-
-                    if (Date <= endDate)
+                    case SubscriptionType.YearlyRecurring:
                     {
-                        CanRegister = true;
-                    }
+                        var nextYear = DateTime.Now.AddYears(1);
+                        var endDate = new DateTime(nextYear.Year, nextYear.Month, user.SubscriptionStartDate!.Value.Day);
 
-                    break;
+                        if (Date <= endDate)
+                        {
+                            CanRegister = true;
+                        }
+
+                        break;
+                    }
                 }
             }
-            
 
             if (authState.User.Claims.Any(c => c.Type == ClaimTypes.NameIdentifier))
             {

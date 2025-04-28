@@ -9,18 +9,18 @@
 <PaginationComponent TItem="UserView" Items="_users" DefaultPageSize="15">
     <ChildContentHeader>
         <tr>
-            <th>@Loc["EmailAddress"]</th>
-            <th>@Loc["FirstName"]</th>
             <th>@Loc["LastName"]</th>
+            <th>@Loc["FirstName"]</th>
+            <th>@Loc["EmailAddress"]</th>
             <th>@Loc["Type"]</th>
             <th>@Loc["Actions"]</th>
         </tr>
     </ChildContentHeader>
     <ChildContentRow Context="user">
         <tr class="even:bg-jhooa-table-even odd:bg-jhooa-table-odd">
-            <td>@user.Email</td>
-            <td>@user.FirstName</td>
             <td>@user.LastName</td>
+            <td>@user.FirstName</td>
+            <td>@user.Email</td>
             <td>@user.SubType</td>
             <td>
                 <a class="px-6 py-1 text-sm bg-jhooa-peach-100 rounded-3xl font-amsiProLight" href="/Admin/Users/@user.Id">@Loc["Details"]</a>
@@ -38,7 +38,7 @@
     {
         var participants = await DbContext.Registrations.Where(r => r.EventId == Id).Select(r => r.UserId).ToListAsync();
         
-        _users = await DbContext.UsersView.Where(u => participants.Contains(u.Id)).ToListAsync();
+        _users = await DbContext.UsersView.Where(u => participants.Contains(u.Id)).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToListAsync();
         await NbParticipantsCallback.InvokeAsync(_users.Count);
     }
 
