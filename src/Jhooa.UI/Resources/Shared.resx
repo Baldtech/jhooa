@@ -222,4 +222,7 @@
     <data name="Add" xml:space="preserve">
         <value>Add</value>
     </data>
+    <data name="Register" xml:space="preserve">
+        <value>Register</value>
+    </data>
 </root>

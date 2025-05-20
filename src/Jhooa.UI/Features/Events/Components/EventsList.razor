@@ -48,7 +48,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _events = await DbContext.Events.Include(i => i.Registrations).ToListAsync();
+        _events = await DbContext.Events.Include(i => i.Registrations).OrderByDescending(o => o.StartDate).ToListAsync();
         await NbEventsCallback.InvokeAsync(_events.Count);
     }
 

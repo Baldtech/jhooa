@@ -90,6 +90,12 @@
 
                     <InputFile OnChange="HandleFileSelected" accept=".jpg,.png,jpeg"/>
                     <InputText @bind-Value="Input.ImageName" hidden></InputText>
+                    
+                    @if (!string.IsNullOrWhiteSpace(Input.ImageUrl))
+                    {
+                        <img class="w-60" src="@Input.ImageUrl" alt="" />
+                    }
+                    
 
                     <label class="flex items-center space-x-2 cursor-pointer">
 
@@ -135,6 +141,7 @@
             var ext = Path.GetExtension(file.Name);
             var blobService = BlobService.GetBlobService("events");
             Input.ImageName = await blobService.UploadAsync($"thumbnails/{Guid.NewGuid()}{ext}", file.OpenReadStream());
+            Input.ImageUrl = Input.ImageName;
         }
     }
 
@@ -179,7 +186,8 @@
                     StartDate = ev.StartDate,
                     EndDate = ev.EndDate,
                     TitleEn = ev.TitleEn,
-                    IsPublished = ev.IsPublished
+                    IsPublished = ev.IsPublished,
+                    ImageUrl = ev.ImageUrl
                 };
 
                 _bodyFr = ev.Description;
@@ -261,6 +269,7 @@
 
         public DateTimeOffset EndDate { get; set; }
 
+        public string? ImageUrl { get; set; }
         public string? ImageName { get; set; }
         public bool IsPublished { get; set; }
     }

@@ -93,7 +93,7 @@
         <value>Modfication</value>
     </data>
     <data name="Delete" xml:space="preserve">
-        <value>Supression</value>
+        <value>Suppression</value>
     </data>
     <data name="TitleFr" xml:space="preserve">
         <value>Titre (français)</value>

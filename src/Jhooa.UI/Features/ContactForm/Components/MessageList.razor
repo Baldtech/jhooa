@@ -39,14 +39,14 @@
     
     protected override async Task OnInitializedAsync()
     {
-        _submissions = await DbContext.ContactFormSubmissions.ToListAsync();
+        _submissions = await DbContext.ContactFormSubmissions.OrderByDescending(o => o.SubmissionDate).ToListAsync();
     }
     
     private async Task DeleteMessageAsync(Guid? eventId)
     {
         if (eventId.HasValue)
         {
-            await DbContext.Events.Where(e => e.Id == eventId).ExecuteDeleteAsync();
+            await DbContext.ContactFormSubmissions.Where(e => e.Id == eventId).ExecuteDeleteAsync();
             NavigationManager.NavigateTo("/Admin/ContactForms", true);
         }
     }

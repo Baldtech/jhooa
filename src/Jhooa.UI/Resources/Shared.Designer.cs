@@ -452,5 +452,11 @@ namespace Jhooa.UI.Resources {
                 return ResourceManager.GetString("Add", resourceCulture);
             }
         }
+        
+        internal static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
     }
 }
