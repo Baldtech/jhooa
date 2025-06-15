@@ -1555,16 +1555,12 @@ input:checked + .toggle-bg {
   width: 24rem;
 }
 
-.w-\[50\%\] {
-  width: 50%;
-}
-
 .w-\[85\%\] {
   width: 85%;
 }
 
-.w-\[95\%\] {
-  width: 95%;
+.w-\[90\%\] {
+  width: 90%;
 }
 
 .w-\[96\%\] {
@@ -1720,22 +1716,12 @@ input:checked + .toggle-bg {
   resize: both;
 }
 
-.list-inside {
-  list-style-position: inside;
-}
-
 .list-outside {
   list-style-position: outside;
 }
 
 .list-disc {
   list-style-type: disc;
-}
-
-.appearance-none {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
 }
 
 .grid-cols-1 {
@@ -1828,6 +1814,10 @@ input:checked + .toggle-bg {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-y-4 {
+  row-gap: 1rem;
 }
 
 .space-x-10 > :not([hidden]) ~ :not([hidden]) {
@@ -2740,10 +2730,6 @@ input:checked + .toggle-bg {
   transition-duration: 150ms;
 }
 
-.duration-150 {
-  transition-duration: 150ms;
-}
-
 .duration-700 {
   transition-duration: 700ms;
 }
@@ -2791,18 +2777,8 @@ h1:focus {
   background-color: #FFFFFF1A;
 }
 
-.checked\:border-white:checked {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
-}
-
 .checked\:bg-transparent:checked {
   background-color: transparent;
-}
-
-.checked\:bg-white:checked {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:border-gray-300:hover {
@@ -3175,6 +3151,10 @@ h1:focus {
     width: 376px;
   }
 
+  .md\:w-\[50\%\] {
+    width: 50%;
+  }
+
   .md\:w-\[60rem\] {
     width: 60rem;
   }
@@ -3278,11 +3258,6 @@ h1:focus {
   .md\:py-0 {
     padding-top: 0px;
     padding-bottom: 0px;
-  }
-
-  .md\:py-12 {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
   }
 
   .md\:text-3xl {

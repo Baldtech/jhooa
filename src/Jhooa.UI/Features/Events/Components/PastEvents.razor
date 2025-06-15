@@ -2,6 +2,7 @@
 @using Jhooa.UI.Features.Events.Models
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.Extensions.Localization
+@inject IJSRuntime JS
 
 @inject IStringLocalizer<Resources.Events> Loc
 @inject ApplicationDbContext DbContext
@@ -16,12 +17,12 @@
             <h1 class="text-butler text-3xl text-jhooa-peach-100 mb-6 pt-8">@Loc["PastEvents"]</h1>
         }
 
-        <div class="flex flex-wrap gap-8">
+        <div class="flex flex-wrap gap-y-4">
             @if (_events is not null && _events.Count > 0)
             {
                 @foreach (var ev in _events.OrderByDescending(ev => ev.StartDate))
                 {
-                    <div class="w-[95%] md:w-1/3 px-4">
+                    <div class="w-[90%] md:w-1/3 px-4">
                         <EventCard Event="ev"/>
                     </div>
                 }
