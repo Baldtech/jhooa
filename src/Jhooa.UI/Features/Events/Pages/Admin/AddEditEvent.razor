@@ -50,18 +50,20 @@
                                     ValidationFor="@(() => Input.Title)"/>
                     <div>
                         <label for="" class="block mb-1 text-sm">@Loc["DescriptionFr"]</label>
-
-                        <BlazoredTextEditor
-                            @ref="@_richEditorDescFr"
-                            ToolbarCSSClass=""
-                            ToolbarCssStyle="background: lightgrey">
-                            <ToolbarContent>
-                                @((MarkupString)_toolbar)
-                            </ToolbarContent>
-                            <EditorContent>
-                                @((MarkupString)_bodyFr)
-                            </EditorContent>
-                        </BlazoredTextEditor>
+                        @if (_scriptsReady)
+                        {
+                            <BlazoredTextEditor
+                                @ref="@_richEditorDescFr"
+                                ToolbarCSSClass=""
+                                ToolbarCssStyle="background: lightgrey">
+                                <ToolbarContent>
+                                    @((MarkupString)_toolbar)
+                                </ToolbarContent>
+                                <EditorContent>
+                                    @((MarkupString)_bodyFr)
+                                </EditorContent>
+                            </BlazoredTextEditor>
+                        }
 
                     </div>
                     <JhooaInputText @bind-Value="Input.TitleEn" DisplayName="@Loc["TitleEn"]"
@@ -69,17 +71,20 @@
                     <div>
                         <label for="" class="block mb-1 text-sm">@Loc["DescriptionEn"]</label>
 
-                        <BlazoredTextEditor
-                            @ref="@_richEditorDescEn"
-                            ToolbarCSSClass=""
-                            ToolbarCssStyle="background: lightgrey">
-                            <ToolbarContent>
-                                @((MarkupString)_toolbar)
-                            </ToolbarContent>
-                            <EditorContent>
-                                @((MarkupString)_bodyEn)
-                            </EditorContent>
-                        </BlazoredTextEditor>
+                        @if (_scriptsReady)
+                        {
+                            <BlazoredTextEditor
+                                @ref="@_richEditorDescEn"
+                                ToolbarCSSClass=""
+                                ToolbarCssStyle="background: lightgrey">
+                                <ToolbarContent>
+                                    @((MarkupString)_toolbar)
+                                </ToolbarContent>
+                                <EditorContent>
+                                    @((MarkupString)_bodyEn)
+                                </EditorContent>
+                            </BlazoredTextEditor>
+                        }
 
                     </div>
                     <JhooaInputDate @bind-Value="Input.StartDate" DisplayName="@Loc["StartDate"]"
@@ -119,9 +124,7 @@
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-<script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
-<script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
+
 
 
 @code {
@@ -250,6 +253,19 @@
         }
 
         NavigationManager.NavigateTo($"/Admin/Events");
+    }
+    
+    bool _scriptsReady = false;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _scriptsReady = true;
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
     }
 
     private sealed class InputModel
