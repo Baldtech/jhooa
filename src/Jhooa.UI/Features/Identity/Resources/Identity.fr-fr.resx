@@ -344,4 +344,7 @@ Merci d’être des nôtres, et à très vite pour la suite de l’aventure !</v
     <data name="CodeNotValid" xml:space="preserve">
         <value>Le code n'est pas valide ou déjà utilisé</value>
     </data>
+    <data name="ResetPasswordInvalidAttempt" xml:space="preserve">
+        <value>Erreur : Tentative de changement de mot de passe invalide.</value>
+    </data>
 </root>

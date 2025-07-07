@@ -710,5 +710,11 @@ namespace Jhooa.UI.Features.Identity.Resources {
                 return ResourceManager.GetString("CodeNotValid", resourceCulture);
             }
         }
+        
+        internal static string ResetPasswordInvalidAttempt {
+            get {
+                return ResourceManager.GetString("ResetPasswordInvalidAttempt", resourceCulture);
+            }
+        }
     }
 }

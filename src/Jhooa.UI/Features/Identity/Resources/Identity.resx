@@ -358,4 +358,7 @@ Thank you for being with us, and see you soon for the next chapter of this adven
     <data name="CodeNotValid" xml:space="preserve">
         <value>The code is not valid or already used</value>
     </data>
+    <data name="ResetPasswordInvalidAttempt" xml:space="preserve">
+        <value>Error: Invalid password reset attempt.</value>
+    </data>
 </root>
