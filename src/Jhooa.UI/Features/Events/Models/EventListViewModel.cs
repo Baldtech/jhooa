@@ -8,6 +8,6 @@ public class EventListViewModel
     public DateTimeOffset StartDate { get; init; }
     public DateTimeOffset EndDate { get; init; }
     public bool IsVisible { get; set; }
-    public bool IsPast => DateTimeOffset.UtcNow > EndDate;
+    public bool IsPast => DateTimeOffset.Now.Date > EndDate;
 
 }
