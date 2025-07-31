@@ -47,8 +47,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var today = DateTimeOffset.Now.Date;
+
         _events ??= await DbContext.Events
-            .Where(ev => ev.EndDate < DateTimeOffset.Now && ev.IsPublished)
+            .Where(ev => ev.EndDate < today && ev.IsPublished)
             .Select(ev => new EventListViewModel()
             {
                 Id = ev.Id,
