@@ -70,3 +70,8 @@ label > a {
 h1:focus {
     outline: none;
 }
+
+.event-desc li {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+}
